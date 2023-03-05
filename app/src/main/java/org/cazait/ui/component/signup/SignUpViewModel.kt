@@ -1,6 +1,9 @@
 package org.cazait.ui.component.signup
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.cazait.ui.base.BaseViewModel
+import javax.inject.Inject
 
-class SignUpViewModel: BaseViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor() : BaseViewModel() {
 }

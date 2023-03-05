@@ -13,10 +13,8 @@ class SignInActivity :
     ) {
 
     override fun initAfterBinding() {
-        TODO("Not yet implemented")
     }
 
     override fun initView() {
-        TODO("Not yet implemented")
     }
 }

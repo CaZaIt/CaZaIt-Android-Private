@@ -1,6 +1,9 @@
 package org.cazait.ui.component.signin
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.cazait.ui.base.BaseViewModel
+import javax.inject.Inject
 
-class SignInViewModel: BaseViewModel() {
+@HiltViewModel
+class SignInViewModel @Inject constructor() : BaseViewModel() {
 }
