@@ -8,8 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject
 
-@HiltViewModel
-abstract class BaseViewModel @Inject constructor() : ViewModel() {
+abstract class BaseViewModel: ViewModel() {
 
     // LiveData를 사용하여 메시지를 전달하는 데 사용됩니다.
     private val _showToastMessage = MutableLiveData<SingleEvent<Any>>()

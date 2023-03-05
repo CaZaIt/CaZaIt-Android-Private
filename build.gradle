@@ -8,6 +8,9 @@ buildscript {
 
         // Glide version
         glideVersion = '4.14.2'
+
+        // ViewModel version
+        viewModel = '2.5.1'
     }
     repositories {
         google()
