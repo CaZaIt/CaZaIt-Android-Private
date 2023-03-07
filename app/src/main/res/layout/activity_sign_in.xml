@@ -51,6 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="55dp"
             android:hint="@string/hint_password"
+            android:inputType="textPassword"
             android:background="@drawable/roundcorner_name_pass"
             android:paddingStart="22.91dp"
             android:layout_marginTop="6dp"
