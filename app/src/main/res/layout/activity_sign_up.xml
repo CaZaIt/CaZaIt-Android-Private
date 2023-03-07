@@ -12,7 +12,7 @@
         <View
             android:id="@+id/view_sign_up_divide"
             android:layout_width="match_parent"
-            android:layout_height="62dp"
+            android:layout_height="86dp"
             android:background="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/tv_sign_up_enrollment"
-            android:layout_marginStart="27dp"
-            android:contentDescription="@null"
+            android:layout_marginStart="30dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_sign_up_enrollment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_sign_up_enrollment"
@@ -68,10 +67,10 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="12dp"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusTopStart="15dp"
+            app:boxCornerRadiusBottomEnd="50dp"
+            app:boxCornerRadiusBottomStart="50dp"
+            app:boxCornerRadiusTopEnd="50dp"
+            app:boxCornerRadiusTopStart="50dp"
             app:boxStrokeColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_email_double_check"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +88,7 @@
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sign_up_email_double_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,6 +110,7 @@
             android:text="@string/sign_up_password"
             android:textColor="@color/black"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_email_example" />
 
@@ -121,10 +121,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="26dp"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusTopStart="15dp"
+            app:boxCornerRadiusBottomEnd="50dp"
+            app:boxCornerRadiusBottomStart="50dp"
+            app:boxCornerRadiusTopEnd="50dp"
+            app:boxCornerRadiusTopStart="50dp"
             app:boxStrokeColor="@color/white"
             app:counterEnabled="true"
             app:counterMaxLength="16"
@@ -155,6 +155,7 @@
             android:text="@string/sign_up_password_check"
             android:textColor="@color/black"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_password_insert" />
 
@@ -165,10 +166,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="26dp"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusTopStart="15dp"
+            app:boxCornerRadiusBottomEnd="50dp"
+            app:boxCornerRadiusBottomStart="50dp"
+            app:boxCornerRadiusTopEnd="50dp"
+            app:boxCornerRadiusTopStart="50dp"
             app:boxStrokeColor="@color/white"
             app:counterEnabled="true"
             app:counterMaxLength="16"
@@ -199,6 +200,7 @@
             android:text="@string/sign_up_nick_name"
             android:textColor="@color/black"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_password_insert_more" />
 
@@ -210,10 +212,10 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="13dp"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusTopStart="15dp"
+            app:boxCornerRadiusBottomEnd="50dp"
+            app:boxCornerRadiusBottomStart="50dp"
+            app:boxCornerRadiusTopEnd="50dp"
+            app:boxCornerRadiusTopStart="50dp"
             app:boxStrokeColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_email_double_check"
             app:layout_constraintStart_toStartOf="parent"
@@ -231,7 +233,7 @@
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sign_up_nick_name_double_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -248,14 +250,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sign_up_join"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="46dp"
             android:layout_marginStart="122dp"
             android:layout_marginTop="66dp"
             android:layout_marginEnd="121dp"
             android:background="@drawable/round_orange_rectangle"
+            android:backgroundTint="@color/black"
             android:paddingLeft="25dp"
             android:paddingTop="11dp"
             android:paddingRight="25dp"

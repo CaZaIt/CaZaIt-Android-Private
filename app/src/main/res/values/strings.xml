@@ -1,13 +1,4 @@
 <resources>
     <string name="app_name">CaZaIt</string>
     <string name="action_settings">Settings</string>
-
-    <!--Signup activity-->
-    <string name="sign_up_sign_up">회원가입</string>
-    <string name="sign_up_double_check">중복확인</string>
-    <string name="sign_up_password">비밀번호</string>
-    <string name="sign_up_password_check">비밀번호 확인</string>
-    <string name="sign_up_email">이메일</string>
-    <string name="sign_up_join">가입하기</string>
-    <string name="sign_up_nick_name">닉네임</string>
 </resources>
