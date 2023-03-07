@@ -60,13 +60,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_dologin"
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:text="@string/btn_dologin"
             android:textStyle="bold"
             android:textSize="21sp"
+            android:textColor="@color/main_white"
             android:background="@drawable/roundcorner_dologin"
             android:layout_marginTop="27dp"
             android:layout_marginStart="38dp"
