@@ -2,6 +2,14 @@
     <string name="app_name">CaZaIt</string>
     <string name="action_settings">Settings</string>
 
+    <!-- 로그인 페이지 -->
+    <string name="login">LOGIN</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_id">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_dologin">로그인 하기</string>
+    <string name="btn_signup">회원가입</string>
+
     <!--Signup activity-->
     <string name="sign_up_sign_up">회원가입</string>
     <string name="sign_up_double_check">중복확인</string>

@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    // 로그인 페이지
+    <!-- 로그인 페이지 -->
     <color name="login_back">#FFDFD9</color>
     <color name="main_black">#000000</color>
     <color name="main_white">#FFFFFF</color>
