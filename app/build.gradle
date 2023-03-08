@@ -42,31 +42,29 @@ android {
 }
 
 dependencies {
-
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation "androidx.core:core-ktx:$coreKtxVersion"
+    implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation 'androidx.core:core-ktx:1.9.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // DataBinding
-    implementation 'androidx.databinding:databinding-runtime:7.4.2'
+    implementation "androidx.databinding:databinding-runtime:$databindingVersion"
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModel"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$viewModel"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$viewModelVersion"
 
     // Hilt Library
     implementation ("com.google.dagger:hilt-android:$hiltVersion")
     kapt ("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    kapt ("androidx.hilt:hilt-compiler:1.0.0")
+    kapt ("androidx.hilt:hilt-compiler:$hiltCompilerVersion")
 
     // Glide Library
     implementation "com.github.bumptech.glide:glide:$glideVersion"
