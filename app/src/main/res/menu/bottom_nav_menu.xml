@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.cazait.MainActivity">
+
+    <item
+        android:id="@+id/bnv_cafe_list"
+        android:orderInCategory="100"
+        android:title="목록"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/bnv_cafe_map"
+        android:orderInCategory="100"
+        android:title="지도"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/bnv_my_page"
+        android:orderInCategory="100"
+        android:title="마이페이지"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/bnv_app_settings"
+        android:orderInCategory="100"
+        android:title="설정"
+        app:showAsAction="never" />
+</menu>
