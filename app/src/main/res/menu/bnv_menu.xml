@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.cazait.MainActivity">
+
+    <item
+        android:id="@+id/menu_cafe_list"
+        android:title="목록" />
+
+    <item
+        android:id="@+id/menu_cafe_map"
+        android:title="지도" />
+
+    <item
+        android:id="@+id/menu_my_page"
+        android:title="마이페이지" />
+
+    <item
+        android:id="@+id/menu_app_settings"
+        android:title="설정" />
+</menu>
