@@ -4,7 +4,7 @@ buildscript {
         kotlinVersion = '1.8.0'
         hiltVersion = '2.45'
         hiltCompilerVersion = '1.0.0'
-        glideVersion = '4.14.2'
+        glideVersion = '4.15.0'
         viewModelVersion = '2.5.1'
         coreKtxVersion = '1.9.0'
         appcompatVersion = '1.6.1'
