@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import org.cazait.utils.SingleEvent
-import javax.inject.Inject
 
 abstract class BaseViewModel: ViewModel() {
 
