@@ -62,7 +62,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_dologin"
+            android:id="@+id/btn_do_login"
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:text="@string/btn_do_login"
