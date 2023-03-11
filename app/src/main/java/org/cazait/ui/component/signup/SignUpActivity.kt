@@ -9,7 +9,7 @@ import org.cazait.ui.base.BaseActivity
 class SignUpActivity :
     BaseActivity<ActivitySignUpBinding, SignUpViewModel>(
         SignUpViewModel::class.java,
-        R.layout.activity_sign_up
+        R.layout.activity_sign_up,
     ) {
 
     override fun initAfterBinding() {

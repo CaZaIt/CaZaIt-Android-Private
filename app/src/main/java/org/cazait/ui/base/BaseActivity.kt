@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 
 abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel>(
     private val viewModelClass: Class<R>,
-    @LayoutRes private val layoutResourceId: Int
+    @LayoutRes private val layoutResourceId: Int,
 ) : AppCompatActivity() {
 
     lateinit var binding: T

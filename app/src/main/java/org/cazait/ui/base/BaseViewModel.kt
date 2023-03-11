@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import org.cazait.utils.SingleEvent
-import javax.inject.Inject
 
-abstract class BaseViewModel: ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     // LiveData를 사용하여 메시지를 전달하는 데 사용됩니다.
     private val _showToastMessage = MutableLiveData<SingleEvent<Any>>()

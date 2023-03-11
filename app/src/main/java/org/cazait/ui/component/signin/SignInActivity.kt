@@ -9,7 +9,7 @@ import org.cazait.ui.base.BaseActivity
 class SignInActivity :
     BaseActivity<ActivitySignInBinding, SignInViewModel>(
         SignInViewModel::class.java,
-        R.layout.activity_sign_in
+        R.layout.activity_sign_in,
     ) {
 
     override fun initAfterBinding() {
