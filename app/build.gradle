@@ -43,6 +43,7 @@ android {
 
 configurations {
     ktlint
+    detekt
 }
 
 dependencies {
@@ -52,6 +53,9 @@ dependencies {
             attribute(Bundling.BUNDLING_ATTRIBUTE, getObjects().named(Bundling, Bundling.EXTERNAL))
         }
     }
+
+    // detekt
+    detekt ("io.gitlab.arturbosch.detekt:detekt-cli:1.22.0-RC3")
 
     implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
@@ -97,4 +101,16 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     mainClass.set("com.pinterest.ktlint.Main")
     args "-F", "src/**/*.kt"
     // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
+}
+
+task detekt(type: JavaExec) {
+    mainClass.set("io.gitlab.arturbosch.detekt.cli.Main")
+    classpath = configurations.detekt
+
+    def input = "$projectDir"
+    def exclude = ".*/build/.*,.*/resources/.*"
+    def config = "$rootDir/detekt.yml"
+    def params = [ '-i', input, '-ex', exclude, '-c', config]
+
+    args(params)
 }
