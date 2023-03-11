@@ -8,7 +8,7 @@ import org.cazait.ui.base.BaseFragment
 @AndroidEntryPoint
 class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel>(
     CafeListViewModel::class.java,
-    R.layout.fragment_cafe_list
+    R.layout.fragment_cafe_list,
 ) {
     /**
      * initiate view and click event

@@ -13,7 +13,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
 
-
 fun View.showKeyboard() {
     (this.context.getSystemService(Service.INPUT_METHOD_SERVICE) as? InputMethodManager)
         ?.showSoftInput(this, 0)
@@ -39,9 +38,8 @@ fun View.toInvisible() {
 fun View.showToast(
     lifecycleOwner: LifecycleOwner,
     ToastEvent: LiveData<SingleEvent<Any>>,
-    timeLength: Int
+    timeLength: Int,
 ) {
-
     ToastEvent.observe(lifecycleOwner) { event ->
         event.getContentIfNotHandled()?.let {
             when (it) {

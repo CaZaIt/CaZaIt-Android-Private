@@ -11,10 +11,9 @@ import org.cazait.ui.base.BaseActivity
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     MainViewModel::class.java,
-    R.layout.activity_main
+    R.layout.activity_main,
 ) {
     override fun initView() {
-
     }
 
     override fun initAfterBinding() {

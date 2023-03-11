@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 
 abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(
     private val viewModelClass: Class<R>,
-    @LayoutRes private val layoutResourceId: Int
+    @LayoutRes private val layoutResourceId: Int,
 ) : Fragment() {
 
     lateinit var binding: T
@@ -21,7 +21,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         return binding.root
