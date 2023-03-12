@@ -84,6 +84,13 @@ dependencies {
     // Glide Library
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+    // Gson
+    implementation ("com.squareup.retrofit2:converter-gson:$gsonVersion")
+
+    // okHttp
+    implementation ("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
+    implementation ("com.squareup.okhttp3:okhttp:$okHttpVersion")
 }
 
 task ktlint(type: JavaExec, group: "verification") {
