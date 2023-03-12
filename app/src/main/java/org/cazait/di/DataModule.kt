@@ -14,13 +14,12 @@ import org.cazait.data.repository.users.UserRepositoryImpl
 interface DataModule {
     @Binds
     fun provideUserRepository(
-        userRepositoryImpl: UserRepositoryImpl
+        userRepositoryImpl: UserRepositoryImpl,
     ): UserRepository
-
 
     // auths
     @Binds
     fun provideAuthRepository(
-        authRepositoryImpl: AuthRepositoryImpl
+        authRepositoryImpl: AuthRepositoryImpl,
     ): AuthRepository
 }
