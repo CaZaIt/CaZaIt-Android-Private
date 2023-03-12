@@ -2,9 +2,9 @@ package org.cazait.data.repository.users
 
 import javax.inject.Inject
 
-class UsersRepositoryImpl @Inject constructor(
+class UserRepositoryImpl @Inject constructor(
 
-) : UsersRepository {
+) : UserRepository {
     override suspend fun isNicknameDup() {
         TODO("Not yet implemented")
     }
