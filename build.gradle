@@ -15,6 +15,7 @@ buildscript {
         espressoVersion = '3.5.1'
         databindingVersion = '7.4.2'
         gsonVersion = '2.9.0'
+        okHttpVersion = '5.0.0-alpha.11'
     }
     repositories {
         google()
