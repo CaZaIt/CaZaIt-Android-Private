@@ -4,23 +4,23 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.cazait.data.repository.auths.AuthRepository
-import org.cazait.data.repository.auths.AuthRepositoryImpl
-import org.cazait.data.repository.users.UsersRepository
-import org.cazait.data.repository.users.UsersRepositoryImpl
+import org.cazait.data.repository.auth.AuthRepository
+import org.cazait.data.repository.auth.AuthRepositoryImpl
+import org.cazait.data.repository.users.UserRepository
+import org.cazait.data.repository.users.UserRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
 interface DataModule {
     @Binds
-    fun provideUsersRepository(
-        usersRepositoryImpl: UsersRepositoryImpl
-    ): UsersRepository
+    fun provideUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
 
 
     // auths
     @Binds
-    fun provideAuthsRepository(
+    fun provideAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl
     ): AuthRepository
 }
