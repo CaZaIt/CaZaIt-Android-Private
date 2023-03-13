@@ -19,5 +19,4 @@ interface AuthService {
         @Query("role") role: String = "user",
         // 헤더맵
     ): Call<RefreshTokenRes>
-
 }

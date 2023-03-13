@@ -12,7 +12,7 @@ import kotlin.coroutines.CoroutineContext
 
 class AuthRepositoryImpl @Inject constructor(
     private val remoteData: AuthRemoteData,
-    private val ioDispatcher: CoroutineContext
+    private val ioDispatcher: CoroutineContext,
 ) : AuthRepository {
     override suspend fun refreshToken() {
         TODO("Not yet implemented")
