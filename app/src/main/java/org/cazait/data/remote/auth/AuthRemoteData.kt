@@ -16,21 +16,21 @@ import javax.inject.Inject
 class AuthRemoteData @Inject constructor(
     private val serviceGenerator: ServiceGenerator,
     private val networkConnectivity: NetworkConnectivity,
-    private val errorManager: ErrorManager
-): AuthRemoteDataSource {
+    private val errorManager: ErrorManager,
+) : AuthRemoteDataSource {
     private val authService = serviceGenerator.createService(AuthService::class.java)
     override fun getRefreshToken(body: RefreshTokenReq): Resource<RefreshTokenRes> {
         TODO("NOT IMPLEMENTED YET")
     }
 
     override fun postSignIn(body: SignInReq): Resource<SignInRes> {
-        if(!networkConnectivity.isConnected()) {
+        if (!networkConnectivity.isConnected()) {
             return Resource.Error(errorManager.getError(NO_INTERNET_CONNECTION).description)
         }
 
         return try {
             val response = authService.postSignIn(signInReq = body).execute()
-            if(response.isSuccessful) {
+            if (response.isSuccessful) {
                 Resource.Success(response.body()!!)
             } else {
                 Resource.Error(response.message())

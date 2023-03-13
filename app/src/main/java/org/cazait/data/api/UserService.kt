@@ -1,4 +1,3 @@
 package org.cazait.data.api
 
-interface UserService {
-}
+interface UserService

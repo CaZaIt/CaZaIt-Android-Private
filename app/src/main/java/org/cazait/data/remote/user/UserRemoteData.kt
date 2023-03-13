@@ -13,8 +13,8 @@ import javax.inject.Inject
 class UserRemoteData @Inject constructor(
     private val serviceGenerator: ServiceGenerator,
     private val networkConnectivity: NetworkConnectivity,
-    private val errorManager: ErrorManager
-) : UserRemoteDataSource{
+    private val errorManager: ErrorManager,
+) : UserRemoteDataSource {
     override fun getIsEmailDup(): Resource<IsEmailDupRes> {
         TODO()
     }

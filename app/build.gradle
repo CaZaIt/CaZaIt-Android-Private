@@ -91,6 +91,9 @@ dependencies {
     // okHttp
     implementation ("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
     implementation ("com.squareup.okhttp3:okhttp:$okHttpVersion")
+
+    // splash
+    implementation("androidx.core:core-splashscreen:1.0.0-beta01")
 }
 
 task ktlint(type: JavaExec, group: "verification") {

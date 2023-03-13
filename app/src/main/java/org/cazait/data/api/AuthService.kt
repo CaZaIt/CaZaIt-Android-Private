@@ -4,7 +4,7 @@ import org.cazait.data.model.request.SignInReq
 import org.cazait.data.model.response.RefreshTokenRes
 import org.cazait.data.model.response.SignInRes
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.POST
 
 interface AuthService {
     @POST("/api/auths/log-in")
@@ -19,5 +19,4 @@ interface AuthService {
         @Query("role") role: String = "user",
         // 헤더맵
     ): Call<RefreshTokenRes>
-
 }

@@ -3,7 +3,7 @@ package org.cazait.data.error
 class Error(val code: Int, val description: String) {
     constructor(exception: Exception) : this(
         code = DEFAULT_ERROR,
-        description = exception.message ?: ""
+        description = exception.message ?: "",
     )
 }
 

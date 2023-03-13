@@ -2,7 +2,7 @@
 <resources>
     <color name="main_black">#000000</color>
     <color name="main_white">#FFFFFF</color>
-
+    <color name="main_beige">#FFDFD9</color>
     <!-- Sign In -->
     <color name="login_back">#FFDFD9</color>
 

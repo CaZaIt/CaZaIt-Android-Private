@@ -15,8 +15,8 @@ import javax.inject.Singleton
 
 @Singleton
 class ServiceGenerator @Inject constructor(
-    @ApplicationContext private val context: Context
-){
+    @ApplicationContext private val context: Context,
+) {
     private val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
     private val retrofit: Retrofit
     private val gson = GsonBuilder().setLenient().create()
@@ -35,7 +35,7 @@ class ServiceGenerator @Inject constructor(
     private val logger: HttpLoggingInterceptor
         get() {
             val loggingInterceptor = HttpLoggingInterceptor()
-            if(BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG) {
                 loggingInterceptor.apply { level = HttpLoggingInterceptor.Level.BODY }
             }
             return loggingInterceptor
@@ -59,11 +59,11 @@ class ServiceGenerator @Inject constructor(
     }
 
     companion object {
-        private const val TIMEOUT_READ = 30   //In seconds
+        private const val TIMEOUT_READ = 30 // In seconds
         private const val CONTENT_TYPE = "Content-Type"
         private const val CONTENT_TYPE_VALUE = "application/json"
         private const val ACCESS_TOKEN = "Authorization"
-        private const val TIMEOUT_CONNECT = 30   //In seconds
+        private const val TIMEOUT_CONNECT = 30 // In seconds
         private const val BASE_URL = "https://cazait.shop"
     }
 }

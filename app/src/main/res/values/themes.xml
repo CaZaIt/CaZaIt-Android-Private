@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.CaZaIt" parent="Base.Theme.CaZaIt" />
+
+    <!-- Splash -->
+    <style name="Theme.CaZaIt.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_cazait_splash</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.CaZaIt</item>
+        <item name="windowSplashScreenBackground">@color/main_beige</item>
+    </style>
 </resources>
