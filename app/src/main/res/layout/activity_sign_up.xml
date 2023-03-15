@@ -6,13 +6,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFDFD9"
-        tools:context=".view.SignupActivity">
+        android:background="@color/login_back"
+        tools:context=".ui.component.signin.SignInActivity">
 
         <View
             android:id="@+id/view_sign_up_divide"
             android:layout_width="match_parent"
-            android:layout_height="86dp"
+            android:layout_height="106dp"
             android:background="@color/main_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +22,12 @@
             android:id="@+id/iv_sign_up_arrow_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_sign_up_enrollment"
             android:layout_marginStart="30dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_sign_up_enrollment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_sign_up_enrollment"
-            app:srcCompat="@drawable/arrow_back" />
+            android:layout_marginTop="67dp"
+            app:layout_constraintStart_toStartOf="@+id/view_sign_up_divide"
+            app:layout_constraintTop_toTopOf="@+id/view_sign_up_divide"
+            app:srcCompat="@drawable/arrow_back"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_sign_up_enrollment"
@@ -36,22 +36,20 @@
             android:layout_marginStart="103dp"
             android:layout_marginEnd="160dp"
             android:layout_marginBottom="13dp"
-            android:fontFamily="sans-serif"
             android:text="@string/sign_up_sign_up"
-            android:textAlignment="center"
             android:textColor="@color/main_white"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/view_sign_up_divide"
             app:layout_constraintEnd_toEndOf="@+id/view_sign_up_divide"
             app:layout_constraintStart_toEndOf="@+id/iv_sign_up_arrow_back" />
 
         <TextView
-            android:id="@+id/tv_sign_up_id"
+            android:id="@+id/tv_sign_up_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="34dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="39dp"
+            android:layout_marginTop="41dp"
             android:text="@string/sign_up_email"
             android:textColor="@color/main_black"
             android:textSize="16sp"
@@ -59,53 +57,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_sign_up_divide" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:id="@+id/et_sign_up_email_example"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="12dp"
-            app:boxCornerRadiusBottomEnd="50dp"
-            app:boxCornerRadiusBottomStart="50dp"
-            app:boxCornerRadiusTopEnd="50dp"
-            app:boxCornerRadiusTopStart="50dp"
-            app:boxStrokeColor="@color/main_white"
+            android:layout_height="48dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/round_corner_name_pass"
+            android:hint="@string/sign_up_hint_email_example"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:paddingStart="17dp"
+            android:textColorHint="#757575"
             app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_email_double_check"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_id">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:importantForAccessibility="no"
-                android:paddingStart="15dp"
-                android:paddingTop="14dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="14dp"
-                android:textColor="@color/main_black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email"
+            tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sign_up_email_double_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="26dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="23dp"
             android:background="@drawable/round_orange_rectangle"
             android:text="@string/sign_up_double_check"
             android:textColor="@color/main_white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_id" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email"
+            tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         <TextView
             android:id="@+id/tv_sign_up_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="34dp"
+            android:layout_marginStart="39dp"
             android:layout_marginTop="33dp"
             android:text="@string/sign_up_password"
             android:textColor="@color/main_black"
@@ -114,44 +102,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_email_example" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:id="@+id/et_sign_up_password_insert"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="26dp"
-            app:boxCornerRadiusBottomEnd="50dp"
-            app:boxCornerRadiusBottomStart="50dp"
-            app:boxCornerRadiusTopEnd="50dp"
-            app:boxCornerRadiusTopStart="50dp"
-            app:boxStrokeColor="@color/main_white"
+            android:layout_height="48dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="23dp"
+            android:background="@drawable/round_corner_name_pass"
+            android:hint="@string/sign_up_hint_password"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:paddingStart="17dp"
+            android:textColorHint="#757575"
             app:counterEnabled="true"
             app:counterMaxLength="16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_password"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:importantForAccessibility="no"
-                android:inputType="textPassword"
-                android:paddingStart="15dp"
-                android:paddingTop="14dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="14dp"
-                android:textColor="@color/main_black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:passwordToggleEnabled="true"
+            tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
 
         <TextView
             android:id="@+id/tv_sign_up_password_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="34dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="39dp"
+            android:layout_marginTop="27dp"
             android:text="@string/sign_up_password_check"
             android:textColor="@color/main_black"
             android:textSize="16sp"
@@ -159,44 +136,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_password_insert" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:id="@+id/et_sign_up_password_insert_more"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="26dp"
-            app:boxCornerRadiusBottomEnd="50dp"
-            app:boxCornerRadiusBottomStart="50dp"
-            app:boxCornerRadiusTopEnd="50dp"
-            app:boxCornerRadiusTopStart="50dp"
-            app:boxStrokeColor="@color/main_white"
+            android:layout_height="48dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="23dp"
+            android:background="@drawable/round_corner_name_pass"
+            android:hint="@string/sign_up_hint_password_more"
+            android:inputType="textPassword"
+            android:paddingStart="17dp"
+            android:textColorHint="#757575"
             app:counterEnabled="true"
             app:counterMaxLength="16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_password_check"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:importantForAccessibility="no"
-                android:inputType="textPassword"
-                android:paddingStart="15dp"
-                android:paddingTop="14dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="14dp"
-                android:textColor="@color/main_black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:passwordToggleEnabled="true"
+            android:importantForAutofill="no"
+            tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
 
         <TextView
-            android:id="@+id/tv_sign_up_email"
+            android:id="@+id/tv_sign_up_nick_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="39dp"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="27dp"
             android:text="@string/sign_up_nick_name"
             android:textColor="@color/main_black"
             android:textSize="16sp"
@@ -204,40 +170,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_password_insert_more" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:id="@+id/et_sign_up_nick_name_example"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="13dp"
-            app:boxCornerRadiusBottomEnd="50dp"
-            app:boxCornerRadiusBottomStart="50dp"
-            app:boxCornerRadiusTopEnd="50dp"
-            app:boxCornerRadiusTopStart="50dp"
-            app:boxStrokeColor="@color/main_white"
-            app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_email_double_check"
+            android:layout_height="48dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/round_corner_name_pass"
+            android:hint="@string/sign_up_hint_nick_name"
+            android:inputType="text"
+            android:paddingStart="17dp"
+            android:textColorHint="#757575"
+            app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_nick_name_double_check"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:importantForAccessibility="no"
-                android:paddingStart="15dp"
-                android:paddingTop="14dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="14dp"
-                android:textColor="@color/main_black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_nick_name"
+            android:importantForAutofill="no"
+            tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sign_up_nick_name_double_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:layout_marginEnd="25dp"
             android:background="@drawable/round_orange_rectangle"
             android:paddingStart="19dp"
@@ -248,12 +203,13 @@
             android:textColor="@color/main_white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_nick_name"
+            tools:ignore="TextContrastCheck" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sign_up_join"
             android:layout_width="150dp"
-            android:layout_height="46dp"
+            android:layout_height="48dp"
             android:layout_marginStart="122dp"
             android:layout_marginTop="66dp"
             android:layout_marginEnd="121dp"
@@ -270,5 +226,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_nick_name_example" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

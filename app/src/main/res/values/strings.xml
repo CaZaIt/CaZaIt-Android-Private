@@ -12,12 +12,17 @@
 
     <!-- Sign Up -->
     <string name="sign_up_sign_up">회원가입</string>
+    <string name="sign_up_email">이메일</string>
+    <string name="sign_up_hint_email_example">예: kazait123@naver.com</string>
     <string name="sign_up_double_check">중복확인</string>
     <string name="sign_up_password">비밀번호</string>
+    <string name="sign_up_hint_password">비밀번호를 입력해주세요</string>
     <string name="sign_up_password_check">비밀번호 확인</string>
-    <string name="sign_up_email">이메일</string>
-    <string name="sign_up_join">가입하기</string>
+    <string name="sign_up_hint_password_more">비밀번호를 한 번 더 입력해주세요</string>
     <string name="sign_up_nick_name">닉네임</string>
+    <string name="sign_up_hint_nick_name">예:카자잇123</string>
+    <string name="sign_up_join">가입하기</string>
+
 
     <!--Error Message-->
     <string name="no_internet">인터넷 연결을 확인해 주세요</string>
