@@ -17,13 +17,6 @@ abstract class BaseViewModel : ViewModel() {
     val showErrorMessage: LiveData<SingleEvent<String>> = _showErrorMessage
 
     /**
-     * 라이브 데이터를 관찰하는 데 사용됩니다.
-     */
-    protected fun <T> observe(liveData: LiveData<T>, observer: Observer<T>) {
-        liveData.observeForever(observer)
-    }
-
-    /**
      * 메시지를 보여주는 데 사용됩니다.
      */
     protected fun showToast(message: Any) {
