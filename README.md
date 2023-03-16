@@ -5,6 +5,7 @@
 * DataStore
 * Hilt
 * ViewModel
+* DataBindind and LiveData
 * Repository and data source
 * Coroutine Flow API
 * OKHTTP
