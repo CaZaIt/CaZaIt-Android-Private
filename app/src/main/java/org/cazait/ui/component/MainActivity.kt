@@ -1,5 +1,7 @@
 package org.cazait.ui.component
 
+import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
@@ -13,6 +15,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     MainViewModel::class.java,
     R.layout.activity_main,
 ) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun initView() {
     }
 
@@ -20,7 +27,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     }
 
     private fun initBottomNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bnvMenu.setupWithNavController(navController)
 
@@ -29,6 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
                 R.id.cafeListFragment -> {
                     it.onNavDestinationSelected(navController)
                 }
+
                 else -> return@setOnItemSelectedListener false
             }
         }

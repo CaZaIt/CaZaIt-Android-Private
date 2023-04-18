@@ -6,4 +6,5 @@
     <!-- Sign In -->
     <color name="login_back">#FFDFD9</color>
 
+    <color name="cafe_list_orange">#FF735B</color>
 </resources>

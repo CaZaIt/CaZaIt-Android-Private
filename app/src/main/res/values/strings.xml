@@ -33,4 +33,6 @@
     <string name="search_hint">search</string>
     <string name="favorite_stores">찜한 매장</string>
     <string name="favorite_stores_guid">찜한 매장을 빠르게 확인!</string>
+    <string name="do_checking_cafe">카페 확인하기</string>
+    <string name="filter_type_distance">거리순</string>
 </resources>
