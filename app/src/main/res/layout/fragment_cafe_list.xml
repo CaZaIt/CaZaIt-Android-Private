@@ -9,18 +9,81 @@
         android:layout_height="match_parent"
         tools:context="org.cafelist.CafeListFragment">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@string/hello_blank_fragment"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/applesdgothic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        <ImageView
+            android:id="@+id/ic_cazait"
+            android:layout_width="28dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_it"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/searchBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/main_black"
+            android:hint="@string/search_hint"
+            app:layout_constraintBottom_toBottomOf="@+id/ic_cazait"
+            app:layout_constraintEnd_toStartOf="@id/ic_menu"
+            app:layout_constraintStart_toEndOf="@id/ic_cazait"
+            app:layout_constraintTop_toTopOf="@+id/ic_cazait" />
+
+        <ImageView
+            android:id="@+id/ic_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintBottom_toBottomOf="@+id/ic_cazait"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ic_cazait" />
+
+        <TextView
+            android:id="@+id/favorite_stores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/applesdgothic"
+            android:text="@string/favorite_stores"
+            android:textColor="@color/main_black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/ic_cazait"
+            app:layout_constraintTop_toBottomOf="@id/ic_cazait" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/favorite_stores_guid"
+            android:textColor="#FF735B"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/favorite_stores"
+            app:layout_constraintStart_toEndOf="@+id/favorite_stores"
+            app:layout_constraintTop_toTopOf="@id/favorite_stores" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_favorite_stores"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="28dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/favorite_stores" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="28dp"
+            app:dividerColor="@color/main_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_favorite_stores" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
