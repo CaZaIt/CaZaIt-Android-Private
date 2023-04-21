@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextValue">
+        <item name="android:textColor">@color/main_black</item>
+        <item name="fontFamily">@font/applesdgothic</item>
+    </style>
+</resources>

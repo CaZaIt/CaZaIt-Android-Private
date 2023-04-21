@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="170dp"
+        android:layout_height="276dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_cafe"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="44dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_cafe_name"
+            style="@style/TextValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_cafe"
+            tools:text="팬도로시" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_distance"
+            style="@style/TextValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBottomOf="@id/tv_cafe_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_cafe"
+            tools:text="200m" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_address"
+            style="@style/TextValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_state"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_cafe_name"
+            tools:text="서울특별시 광진구 광나루로 333-3333 200층(군자동)" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rectangle_cafe_list_btn_state_r50"
+            android:fontFamily="@font/applesdgothic"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:textColor="@color/main_white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="매우 혼잡" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
