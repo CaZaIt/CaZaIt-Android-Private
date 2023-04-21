@@ -8,17 +8,15 @@ import org.cazait.data.model.request.RefreshTokenReq
 import org.cazait.data.model.request.SignInReq
 import org.cazait.data.model.response.RefreshTokenRes
 import org.cazait.data.model.response.SignInRes
-import org.cazait.data.remote.ServiceGenerator
 import org.cazait.network.NetworkConnectivity
 import java.io.IOException
 import javax.inject.Inject
 
 class AuthRemoteData @Inject constructor(
-    private val serviceGenerator: ServiceGenerator,
     private val networkConnectivity: NetworkConnectivity,
     private val errorManager: ErrorManager,
+    private val authService: AuthService
 ) : AuthRemoteDataSource {
-    private val authService = serviceGenerator.createService(AuthService::class.java)
     override fun getRefreshToken(body: RefreshTokenReq): Resource<RefreshTokenRes> {
         TODO("NOT IMPLEMENTED YET")
     }

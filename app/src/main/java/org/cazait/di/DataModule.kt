@@ -22,4 +22,9 @@ interface DataModule {
     fun provideAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl,
     ): AuthRepository
+
+    @Binds
+    fun provideCafesRepository(
+
+    )
 }
