@@ -5,17 +5,21 @@
 
     <item
         android:id="@+id/menu_cafe_list"
-        android:title="목록" />
+        android:icon="@drawable/bnv_home"
+        tools:ignore="MenuTitle" />
 
     <item
         android:id="@+id/menu_cafe_map"
-        android:title="지도" />
+        android:icon="@drawable/bnv_map"
+        tools:ignore="MenuTitle" />
 
     <item
         android:id="@+id/menu_my_page"
-        android:title="마이페이지" />
+        android:icon="@drawable/bnv_my_page"
+        tools:ignore="MenuTitle" />
 
     <item
         android:id="@+id/menu_app_settings"
-        android:title="설정" />
+        android:icon="@drawable/bnv_view_more"
+        tools:ignore="MenuTitle" />
 </menu>

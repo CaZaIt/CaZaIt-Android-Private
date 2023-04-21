@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.CaZaIt" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.CaZaIt" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
@@ -12,5 +12,9 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_cazait_splash</item>
         <item name="postSplashScreenTheme">@style/Base.Theme.CaZaIt</item>
         <item name="windowSplashScreenBackground">@color/main_beige</item>
+    </style>
+
+    <style name="Theme.CaZaIt.CafeList" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
     </style>
 </resources>
