@@ -16,6 +16,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/layout_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_bottom_corners_beige"
@@ -28,18 +29,19 @@
                     android:paddingBottom="25dp"
                     app:layout_collapseMode="pin">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_cazait"
                         android:layout_width="28dp"
                         android:layout_height="39dp"
                         android:layout_marginStart="28dp"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/ic_it"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="ContentDescription" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/searchBar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -51,6 +53,7 @@
                         android:gravity="center_vertical"
                         android:hint="@string/search_hint"
                         android:importantForAccessibility="no"
+                        android:inputType="text"
                         android:paddingStart="16dp"
                         android:textColor="@color/main_white"
                         android:textColorHint="@color/main_white"
@@ -61,11 +64,12 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="RtlSymmetry" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_menu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="28dp"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/ic_menu"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -78,9 +82,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clickable="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/favorite_stores"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,7 +98,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -107,11 +112,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_favorite_stores"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="210dp"
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginEnd="28dp"
                 android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/favorite_stores" />
@@ -128,7 +134,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_favorite_stores" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_do_checking_cafes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -141,7 +147,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_ic_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,7 +158,7 @@
                 app:layout_constraintTop_toBottomOf="@id/divider"
                 tools:ignore="ContentDescription" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_filter_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -167,13 +173,16 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="28dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_do_checking_cafes" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_do_checking_cafes"
+                app:spanCount="2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
