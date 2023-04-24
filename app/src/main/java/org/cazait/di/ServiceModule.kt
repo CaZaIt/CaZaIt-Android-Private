@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.cazait.data.api.AuthService
 import org.cazait.data.api.CafeService
+import org.cazait.data.api.UserService
 import retrofit2.Retrofit
 import retrofit2.create
 import javax.inject.Singleton
@@ -20,6 +21,14 @@ object ServiceModule {
         retrofit: Retrofit
     ): CafeService {
         return retrofit.create(CafeService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesUserService(
+        retrofit: Retrofit
+    ): UserService {
+        return retrofit.create(UserService::class.java)
     }
 
     @Provides

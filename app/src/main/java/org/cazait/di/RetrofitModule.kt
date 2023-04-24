@@ -1,5 +1,6 @@
 package org.cazait.di
 
+import androidx.databinding.ktx.BuildConfig
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -8,10 +9,10 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.cazait.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module

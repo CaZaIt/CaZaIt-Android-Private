@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface CafeService {
     @GET("/api/cafes/all/user/{userId}")
-    suspend fun getListCafes(
+    fun getListCafes(
         @Path("userId") userId: Long,
         @Query("longitude") longitude: String,
         @Query("latitude") latitude: String,
@@ -18,5 +18,7 @@ interface CafeService {
     ): Call<ListCafesRes>
 
     @GET("/api/favorites/user/{userId}")
-    suspend fun getListFavorites(): Call<ListFavoritesRes>
+    fun getListFavorites(
+        @Path("userId") userId: Long
+    ): Call<ListFavoritesRes>
 }
