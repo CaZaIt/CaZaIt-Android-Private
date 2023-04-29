@@ -5,6 +5,10 @@ class Error(val code: Int, val description: String) {
         code = DEFAULT_ERROR,
         description = exception.message ?: "",
     )
+
+    override fun toString(): String {
+        return "ErrorCode:$code ErrorMessage:$description"
+    }
 }
 
 const val DEFAULT_ERROR = -1

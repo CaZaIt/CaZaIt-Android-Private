@@ -54,6 +54,7 @@
                         android:hint="@string/search_hint"
                         android:importantForAccessibility="no"
                         android:inputType="text"
+                        android:minHeight="48dp"
                         android:paddingStart="16dp"
                         android:textColor="@color/main_white"
                         android:textColorHint="@color/main_white"
@@ -89,7 +90,7 @@
                 android:id="@+id/favorite_stores"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="22dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/applesdgothic"
                 android:text="@string/favorite_stores"
@@ -120,7 +121,8 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/favorite_stores" />
+                app:layout_constraintTop_toBottomOf="@+id/favorite_stores"
+                tools:listitem="@layout/item_cafe_just_info" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"
@@ -172,6 +174,7 @@
                 app:layout_constraintTop_toTopOf="@+id/iv_ic_filter" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_stores"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="28dp"
@@ -182,7 +185,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_do_checking_cafes"
-                app:spanCount="2" />
+                app:spanCount="2"
+                tools:listitem="@layout/item_cafe_with_landscape" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

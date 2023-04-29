@@ -6,6 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.cazait.data.repository.auth.AuthRepository
 import org.cazait.data.repository.auth.AuthRepositoryImpl
+import org.cazait.data.repository.cafe.CafeRepository
+import org.cazait.data.repository.cafe.CafeRepositoryImpl
 import org.cazait.data.repository.users.UserRepository
 import org.cazait.data.repository.users.UserRepositoryImpl
 
@@ -22,4 +24,9 @@ interface DataModule {
     fun provideAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl,
     ): AuthRepository
+
+    @Binds
+    fun provideCafesRepository(
+        cafeRepositoryImpl: CafeRepositoryImpl,
+    ): CafeRepository
 }
