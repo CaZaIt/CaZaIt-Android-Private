@@ -26,13 +26,13 @@ class UserRemoteData @Inject constructor(
     }
 
     override fun postSignUp(body: SignUpReq): Resource<SignUpRes> {
-        if(!networkConnectivity.isConnected()) {
+        if (!networkConnectivity.isConnected()) {
             return Resource.Error(errorManager.getError(NO_INTERNET_CONNECTION).description)
         }
 
         return try {
             val response = userService.postSignUp(body).execute()
-            if(response.isSuccessful)
+            if (response.isSuccessful)
                 Resource.Success(response.body()!!)
             else {
                 Resource.Error(response.message())

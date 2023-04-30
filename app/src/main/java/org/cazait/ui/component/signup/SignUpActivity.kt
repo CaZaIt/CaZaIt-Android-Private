@@ -1,6 +1,7 @@
 package org.cazait.ui.component.signup
 
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,13 +77,15 @@ class SignUpActivity :
     }
 
     private fun handleSignUpResult(status: Resource<SignUpRes>) {
+        Log.d("회원가입 과정", "$status")
         when (status) {
             is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
             is Resource.Success -> status.data.let {
                 binding.pbSignUpLoaderView.toGone()
                 when (status.data.result) {
                     "SUCCESS" -> {
-                        val nextScreenIntent = Intent(applicationContext, SignInActivity::class.java)
+                        val nextScreenIntent =
+                            Intent(applicationContext, SignInActivity::class.java)
                         startActivity(nextScreenIntent)
                         finish()
                     }

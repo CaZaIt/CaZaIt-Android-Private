@@ -27,7 +27,7 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
     fun signUp(email: String, password: String, nickname: String) {
         viewModelScope.launch {
             _signUpProcess.value = Resource.Loading()
-            userRepository.signUp(body = SignUpReq(email, nickname, password)).collect {
+            userRepository.signUp(body = SignUpReq(email, password, nickname)).collect {
                 _signUpProcess.value = it
             }
         }
