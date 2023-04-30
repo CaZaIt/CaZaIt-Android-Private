@@ -4,9 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.cazait.data.Resource
+import org.cazait.data.model.request.IsEmailDupReq
+import org.cazait.data.model.request.IsNicknameDupReq
 import org.cazait.data.model.request.SignUpReq
+import org.cazait.data.model.response.IsEmailDupRes
+import org.cazait.data.model.response.IsNicknameDupRes
 import org.cazait.data.model.response.SignUpRes
 import org.cazait.data.repository.users.UserRepository
 import org.cazait.ui.base.BaseViewModel
@@ -20,6 +25,14 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
     val signUpProcess: LiveData<Resource<SignUpRes>>
         get() = _signUpProcess
 
+    private val _emailDupProcess = MutableLiveData<Resource<IsEmailDupRes>>()
+    val emailDupProcess: LiveData<Resource<IsEmailDupRes>>
+        get() = _emailDupProcess
+
+    private val _nickDupProcess = MutableLiveData<Resource<IsNicknameDupRes>>()
+    val nickDupProcess: LiveData<Resource<IsNicknameDupRes>>
+        get() = _nickDupProcess
+
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
     val showToast: LiveData<SingleEvent<Any>>
         get() = _showToast
@@ -29,6 +42,24 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
             _signUpProcess.value = Resource.Loading()
             userRepository.signUp(body = SignUpReq(email, password, nickname)).collect {
                 _signUpProcess.value = it
+            }
+        }
+    }
+
+    fun isEmailDup(email: String){
+        viewModelScope.launch {
+            _emailDupProcess.value = Resource.Loading()
+            userRepository.isEmailDup(body = IsEmailDupReq(email)).collect{
+                _emailDupProcess.value = it
+            }
+        }
+    }
+
+    fun isNicknameDup(nickname: String){
+        viewModelScope.launch {
+            _nickDupProcess.value = Resource.Loading()
+            userRepository.isNicknameDup(body = IsNicknameDupReq(nickname)).collect{
+                _nickDupProcess.value = it
             }
         }
     }

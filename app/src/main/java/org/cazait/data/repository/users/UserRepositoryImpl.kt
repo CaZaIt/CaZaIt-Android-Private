@@ -4,7 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.cazait.data.Resource
+import org.cazait.data.model.request.IsEmailDupReq
+import org.cazait.data.model.request.IsNicknameDupReq
 import org.cazait.data.model.request.SignUpReq
+import org.cazait.data.model.response.IsEmailDupRes
+import org.cazait.data.model.response.IsNicknameDupRes
 import org.cazait.data.model.response.SignUpRes
 import org.cazait.data.remote.user.UserRemoteData
 import javax.inject.Inject
@@ -20,11 +24,15 @@ class UserRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun isNicknameDup() {
-        TODO("Not yet implemented")
+    override suspend fun isNicknameDup(body: IsNicknameDupReq): Flow<Resource<IsNicknameDupRes>> {
+        return flow {
+            emit(remoteData.postIsNicknameDup(body))
+        }.flowOn(ioDispatcher)
     }
 
-    override suspend fun isEmailDup() {
-        TODO("Not yet implemented")
+    override suspend fun isEmailDup(body: IsEmailDupReq): Flow<Resource<IsEmailDupRes>> {
+        return flow {
+            emit(remoteData.postIsEmailDup(body))
+        }.flowOn(ioDispatcher)
     }
 }

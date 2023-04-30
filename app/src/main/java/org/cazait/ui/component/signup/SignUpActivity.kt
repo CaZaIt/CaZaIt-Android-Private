@@ -7,6 +7,8 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.data.Resource
+import org.cazait.data.model.response.IsEmailDupRes
+import org.cazait.data.model.response.IsNicknameDupRes
 import org.cazait.data.model.response.SignUpRes
 import org.cazait.databinding.ActivitySignUpBinding
 import org.cazait.ui.base.BaseActivity
@@ -67,12 +69,16 @@ class SignUpActivity :
     }
 
     override fun initView() {
+        initEmailBtn()
+        initNicknameBtn()
         initSignUpBtn()
         initEditTextListener()
     }
 
     private fun observeViewModel() {
         observe(viewModel.signUpProcess, ::handleSignUpResult)
+        observe(viewModel.emailDupProcess, ::handleEmailDupResult)
+        observe(viewModel.nickDupProcess, ::handleNickDupResult)
         observeToast(viewModel.showToast)
     }
 
@@ -89,6 +95,40 @@ class SignUpActivity :
                         startActivity(nextScreenIntent)
                         finish()
                     }
+                    "FAIL" -> viewModel.showToastMessage(status.data.message)
+                }
+            }
+            is Resource.Error -> {
+                binding.pbSignUpLoaderView.toGone()
+                viewModel.showToastMessage(status.message)
+            }
+        }
+    }
+
+    private fun handleEmailDupResult(status: Resource<IsEmailDupRes>){
+        when(status){
+            is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
+            is Resource.Success -> status.data.let{
+                binding.pbSignUpLoaderView.toGone()
+                when(status.data.result){
+                    "SUCCESS" -> viewModel.showToastMessage(status.data.data)
+                    "FAIL" -> viewModel.showToastMessage(status.data.message)
+                }
+            }
+            is Resource.Error -> {
+                binding.pbSignUpLoaderView.toGone()
+                viewModel.showToastMessage(status.message)
+            }
+        }
+    }
+
+    private fun handleNickDupResult(status: Resource<IsNicknameDupRes>){
+        when(status){
+            is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
+            is Resource.Success -> status.data.let{
+                binding.pbSignUpLoaderView.toGone()
+                when(status.data.result){
+                    "SUCCESS" -> viewModel.showToastMessage(status.data.data)
                     "FAIL" -> viewModel.showToastMessage(status.data.message)
                 }
             }
@@ -124,6 +164,21 @@ class SignUpActivity :
                 viewModel.signUp(email, pw, nickname)
             } else
                 viewModel.showToastMessage("비밀번호가 일치하지 않습니다")
+        }
+    }
+
+    private fun initEmailBtn() {
+        binding.btnSignUpEmailDoubleCheck.setOnClickListener {
+            val email = binding.etSignUpEmailExample.text.toString()
+            Log.d("이메일", email)
+            viewModel.isEmailDup(email)
+        }
+    }
+
+    private fun initNicknameBtn() {
+        binding.btnSignUpNickNameDoubleCheck.setOnClickListener {
+            val nickname = binding.etSignUpNickNameExample.text.toString()
+            viewModel.isNicknameDup(nickname)
         }
     }
 
