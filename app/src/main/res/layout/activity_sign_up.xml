@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="back"
+            type="org.cazait.ui.component.signup.SignUpActivity" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -102,7 +109,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_email_example" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_sign_up_password_insert"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -211,7 +218,7 @@
             android:layout_width="150dp"
             android:layout_height="48dp"
             android:layout_marginStart="122dp"
-            android:layout_marginTop="66dp"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="121dp"
             android:background="@drawable/round_orange_rectangle"
             android:backgroundTint="@color/main_black"
@@ -224,9 +231,21 @@
             android:textColor="@color/main_white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_nick_name_example" />
 
+        <RelativeLayout
+            android:id="@+id/pb_sign_up_loader_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:visibility="gone">
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

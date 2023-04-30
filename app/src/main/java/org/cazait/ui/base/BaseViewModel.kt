@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import org.cazait.data.error.ErrorManager
 import org.cazait.utils.SingleEvent
+import javax.inject.Inject
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -29,4 +31,7 @@ abstract class BaseViewModel : ViewModel() {
     protected fun showError(message: String) {
         _showErrorMessage.postValue(SingleEvent(message))
     }
+
+    @Inject
+    lateinit var errorManager: ErrorManager
 }
