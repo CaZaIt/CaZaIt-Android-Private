@@ -22,10 +22,20 @@
     <string name="sign_up_nick_name">닉네임</string>
     <string name="sign_up_hint_nick_name">예:카자잇123</string>
     <string name="sign_up_join">가입하기</string>
+
     <string name="sign_up_req_all">회원정보를 전부 입력하세요.</string>
     <string name="sign_up_req_suc">가입되었습니다.</string>
     <string name="sign_up_req_nopw">비밀번호가 일치하지 않습니다.</string>
 
+    <string name="sign_up_check_email">이메일을 입력해주세요.</string>
+    <string name="sign_up_check_email_regex">이메일 양식이 맞지 않습니다.</string>
+
+    <string name="sign_up_check_nick">닉네임을 입력해주세요.</string>
+    <string name="sign_up_check_nick_regex">한글 또는 영어로 3~15자로 조합해주세요.</string>
+
+    <string name="sign_up_check_pw">비밀번호를 입력해주세요.</string>
+    <string name="sign_up_check_pw_regex">영문/숫자/특수문자(공백 제외)으로 8~16자로 조합해주세요.</string>
+    <string name="sign_up_check_pw_not">비밀번호가 일치하지 않습니다.</string>
 
     <!--Error Message-->
     <string name="no_internet">인터넷 연결을 확인해 주세요</string>

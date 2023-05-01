@@ -211,11 +211,13 @@ class SignUpActivity :
     private fun checkEmail(email: String) {
         when {
             email.isEmpty() -> {
-                binding.etSignUpEmailExample.error = "이메일을 입력해주세요."
+//                binding.etSignUpEmailExample.error = "이메일을 입력해주세요."
+                binding.etSignUpEmailExample.error = resources.getString(R.string.sign_up_check_email)
                 emailFlag = false
             }
             !emailRegex(email) -> {
-                binding.etSignUpEmailExample.error = "이메일 양식이 맞지 않습니다"
+//                binding.etSignUpEmailExample.error = "이메일 양식이 맞지 않습니다"
+                binding.etSignUpEmailExample.error = resources.getString(R.string.sign_up_check_email_regex)
                 emailFlag = false
             }
             else -> {
@@ -228,11 +230,13 @@ class SignUpActivity :
     private fun checkNickName(nickName: String) {
         when {
             nickName.isEmpty() -> {
-                binding.etSignUpNickNameExample.error = "닉네임을 입력해주세요."
+//                binding.etSignUpNickNameExample.error = "닉네임을 입력해주세요."
+                binding.etSignUpNickNameExample.error = resources.getString(R.string.sign_up_check_nick)
                 nickNameFlag = false
             }
             !nicknameRegex(nickName) -> {
-                binding.etSignUpNickNameExample.error = "한글 또는 영어로 3~15자로 조합해 주세요"
+//                binding.etSignUpNickNameExample.error = "한글 또는 영어로 3~15자로 조합해 주세요"
+                binding.etSignUpNickNameExample.error = resources.getString(R.string.sign_up_check_nick_regex)
                 nickNameFlag = false
             }
             else -> {
@@ -245,15 +249,18 @@ class SignUpActivity :
     private fun checkPassword(password: String) {
         when {
             password.isEmpty() -> {
-                binding.etSignUpPasswordInsert.error = "비밀번호를 입력해주세요."
+//                binding.etSignUpPasswordInsert.error = "비밀번호를 입력해주세요."
+                binding.etSignUpPasswordInsert.error = resources.getString(R.string.sign_up_check_pw)
                 passwordFlag = false
             }
             !passwordRegex(password) -> {
-                binding.etSignUpPasswordInsert.error = "영문/숫자/특수문자(공백 제외)으로 8~16자로 조합"
+//                binding.etSignUpPasswordInsert.error = "영문/숫자/특수문자(공백 제외)으로 8~16자로 조합"
+                binding.etSignUpPasswordInsert.error = resources.getString(R.string.sign_up_check_pw_regex)
                 passwordFlag = false
             }
             !passwordCheckRegex(password) -> {
-                binding.etSignUpPasswordInsertMore.error = "영문/숫자/특수문자(공백 제외)으로 8~16자로 조합"
+//                binding.etSignUpPasswordInsertMore.error = "영문/숫자/특수문자(공백 제외)으로 8~16자로 조합"
+                binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw_regex)
                 passwordCheckFlag = false
             }
             password.isNotEmpty() -> {
@@ -261,7 +268,8 @@ class SignUpActivity :
                 passwordFlag = true
 
                 if (!isInvalidEditTextPassword()) {
-                    binding.etSignUpPasswordInsertMore.error = "비밀번호가 일치하지 않습니다"
+//                    binding.etSignUpPasswordInsertMore.error = "비밀번호가 일치하지 않습니다"
+                    binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw_not)
                     passwordCheckFlag = false
                     passwordFlag = true
                 } else {
@@ -275,11 +283,13 @@ class SignUpActivity :
     private fun checkPasswordAgain(password: String) {
         when {
             password.isEmpty() -> {
-                binding.etSignUpPasswordInsertMore.error = "비밀번호를 입력해주세요."
+//                binding.etSignUpPasswordInsertMore.error = "비밀번호를 입력해주세요."
+                binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw)
                 passwordFlag = false
             }
             !passwordCheckRegex(password) -> {
-                binding.etSignUpPasswordInsertMore.error = "영문/숫자/특수문자(공백 제외)으로 8~16자로 조합"
+//                binding.etSignUpPasswordInsertMore.error = "영문/숫자/특수문자(공백 제외)으로 8~16자로 조합"
+                binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw_regex)
                 passwordCheckFlag = false
             }
             password.isNotEmpty() -> {
@@ -288,7 +298,8 @@ class SignUpActivity :
                 when {
                     binding.etSignUpPasswordInsertMore.text.toString() != ""
                             && binding.etSignUpPasswordInsertMore.text.toString() != binding.etSignUpPasswordInsert.text.toString() -> {
-                        binding.etSignUpPasswordInsertMore.error = "비밀번호가 일치하지 않습니다"
+//                        binding.etSignUpPasswordInsertMore.error = "비밀번호가 일치하지 않습니다"
+                        binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw_not)
                         passwordCheckFlag = false
                         passwordFlag = true
                     }
