@@ -19,12 +19,13 @@
             android:name=".ui.component.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.CaZaIt.Splash">
-
+            
         </activity>
 
         <activity
             android:name=".ui.component.signup.SignUpActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.component.signin.SignInActivity"
             android:exported="true"

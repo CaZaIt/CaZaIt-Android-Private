@@ -47,9 +47,9 @@ class SignInActivity :
 
     private fun handleSignInResult(status: Resource<SignInRes>) {
         when (status) {
-            is Resource.Loading -> binding.pbLoginLoaderView.toVisible()
+            is Resource.Loading -> binding.pbSignInLoaderView.toVisible()
             is Resource.Success -> status.data.let {
-                binding.pbLoginLoaderView.toGone()
+                binding.pbSignInLoaderView.toGone()
                 when (status.data.result) {
                     "SUCCESS" -> {
                         val intent = Intent(this, MainActivity::class.java)
@@ -60,7 +60,7 @@ class SignInActivity :
                 }
             }
             is Resource.Error -> {
-                binding.pbLoginLoaderView.toGone()
+                binding.pbSignInLoaderView.toGone()
                 status.let {
                     viewModel.showToastMessage(it.message)
                 }
