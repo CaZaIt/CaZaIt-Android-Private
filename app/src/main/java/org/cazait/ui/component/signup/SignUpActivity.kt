@@ -105,12 +105,12 @@ class SignUpActivity :
         }
     }
 
-    private fun handleEmailDupResult(status: Resource<IsEmailDupRes>){
-        when(status){
+    private fun handleEmailDupResult(status: Resource<IsEmailDupRes>) {
+        when (status) {
             is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
-            is Resource.Success -> status.data.let{
+            is Resource.Success -> status.data.let {
                 binding.pbSignUpLoaderView.toGone()
-                when(status.data.result){
+                when (status.data.result) {
                     "SUCCESS" -> viewModel.showToastMessage(status.data.data)
                     "FAIL" -> viewModel.showToastMessage(status.data.message)
                 }
@@ -122,12 +122,12 @@ class SignUpActivity :
         }
     }
 
-    private fun handleNickDupResult(status: Resource<IsNicknameDupRes>){
-        when(status){
+    private fun handleNickDupResult(status: Resource<IsNicknameDupRes>) {
+        when (status) {
             is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
-            is Resource.Success -> status.data.let{
+            is Resource.Success -> status.data.let {
                 binding.pbSignUpLoaderView.toGone()
-                when(status.data.result){
+                when (status.data.result) {
                     "SUCCESS" -> viewModel.showToastMessage(status.data.data)
                     "FAIL" -> viewModel.showToastMessage(status.data.message)
                 }
@@ -210,11 +210,13 @@ class SignUpActivity :
     private fun checkEmail(email: String) {
         when {
             email.isEmpty() -> {
-                binding.etSignUpEmailExample.error = resources.getString(R.string.sign_up_check_email)
+                binding.etSignUpEmailExample.error =
+                    resources.getString(R.string.sign_up_check_email)
                 emailFlag = false
             }
             !emailRegex(email) -> {
-                binding.etSignUpEmailExample.error = resources.getString(R.string.sign_up_check_email_regex)
+                binding.etSignUpEmailExample.error =
+                    resources.getString(R.string.sign_up_check_email_regex)
                 emailFlag = false
             }
             else -> {
@@ -227,11 +229,13 @@ class SignUpActivity :
     private fun checkNickName(nickName: String) {
         when {
             nickName.isEmpty() -> {
-                binding.etSignUpNickNameExample.error = resources.getString(R.string.sign_up_check_nick)
+                binding.etSignUpNickNameExample.error =
+                    resources.getString(R.string.sign_up_check_nick)
                 nickNameFlag = false
             }
             !nicknameRegex(nickName) -> {
-                binding.etSignUpNickNameExample.error = resources.getString(R.string.sign_up_check_nick_regex)
+                binding.etSignUpNickNameExample.error =
+                    resources.getString(R.string.sign_up_check_nick_regex)
                 nickNameFlag = false
             }
             else -> {
@@ -244,15 +248,18 @@ class SignUpActivity :
     private fun checkPassword(password: String) {
         when {
             password.isEmpty() -> {
-                binding.etSignUpPasswordInsert.error = resources.getString(R.string.sign_up_check_pw)
+                binding.etSignUpPasswordInsert.error =
+                    resources.getString(R.string.sign_up_check_pw)
                 passwordFlag = false
             }
             !passwordRegex(password) -> {
-                binding.etSignUpPasswordInsert.error = resources.getString(R.string.sign_up_check_pw_regex)
+                binding.etSignUpPasswordInsert.error =
+                    resources.getString(R.string.sign_up_check_pw_regex)
                 passwordFlag = false
             }
             !passwordCheckRegex(password) -> {
-                binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw_regex)
+                binding.etSignUpPasswordInsertMore.error =
+                    resources.getString(R.string.sign_up_check_pw_regex)
                 passwordCheckFlag = false
             }
             password.isNotEmpty() -> {
@@ -260,7 +267,8 @@ class SignUpActivity :
                 passwordFlag = true
 
                 if (!isInvalidEditTextPassword()) {
-                    binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw_not)
+                    binding.etSignUpPasswordInsertMore.error =
+                        resources.getString(R.string.sign_up_check_pw_not)
                     passwordCheckFlag = false
                     passwordFlag = true
                 } else {
@@ -274,11 +282,13 @@ class SignUpActivity :
     private fun checkPasswordAgain(password: String) {
         when {
             password.isEmpty() -> {
-                binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw)
+                binding.etSignUpPasswordInsertMore.error =
+                    resources.getString(R.string.sign_up_check_pw)
                 passwordFlag = false
             }
             !passwordCheckRegex(password) -> {
-                binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw_regex)
+                binding.etSignUpPasswordInsertMore.error =
+                    resources.getString(R.string.sign_up_check_pw_regex)
                 passwordCheckFlag = false
             }
             password.isNotEmpty() -> {
@@ -287,7 +297,8 @@ class SignUpActivity :
                 when {
                     binding.etSignUpPasswordInsertMore.text.toString() != ""
                             && binding.etSignUpPasswordInsertMore.text.toString() != binding.etSignUpPasswordInsert.text.toString() -> {
-                        binding.etSignUpPasswordInsertMore.error = resources.getString(R.string.sign_up_check_pw_not)
+                        binding.etSignUpPasswordInsertMore.error =
+                            resources.getString(R.string.sign_up_check_pw_not)
                         passwordCheckFlag = false
                         passwordFlag = true
                     }

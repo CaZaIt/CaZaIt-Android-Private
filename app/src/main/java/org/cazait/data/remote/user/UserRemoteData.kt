@@ -1,6 +1,5 @@
 package org.cazait.data.remote.user
 
-import android.util.Log
 import org.cazait.data.Resource
 import org.cazait.data.api.UserService
 import org.cazait.data.error.ErrorManager
