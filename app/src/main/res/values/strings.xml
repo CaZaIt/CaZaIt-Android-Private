@@ -22,6 +22,9 @@
     <string name="sign_up_nick_name">닉네임</string>
     <string name="sign_up_hint_nick_name">예:카자잇123</string>
     <string name="sign_up_join">가입하기</string>
+    <string name="sign_up_req_all">회원정보를 전부 입력하세요.</string>
+    <string name="sign_up_req_suc">가입되었습니다.</string>
+    <string name="sign_up_req_nopw">비밀번호가 일치하지 않습니다.</string>
 
 
     <!--Error Message-->

@@ -158,12 +158,12 @@ class SignUpActivity :
             val nickname = binding.etSignUpNickNameExample.text.toString()
 
             if (email == "" || pw == "" || repw == "" || nickname == "")
-                viewModel.showToastMessage("회원정보를 전부 입력하세요")
+                viewModel.showToastMessage(resources.getString(R.string.sign_up_req_all))
             else if (pw == repw) {
-                viewModel.showToastMessage("가입되었습니다")
+                viewModel.showToastMessage(resources.getString(R.string.sign_up_req_suc))
                 viewModel.signUp(email, pw, nickname)
             } else
-                viewModel.showToastMessage("비밀번호가 일치하지 않습니다")
+                viewModel.showToastMessage(resources.getString(R.string.sign_up_req_nopw))
         }
     }
 
