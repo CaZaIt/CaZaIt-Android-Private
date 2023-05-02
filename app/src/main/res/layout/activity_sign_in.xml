@@ -13,82 +13,107 @@
             android:id="@+id/iv_login_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/login_logo"
             android:layout_marginTop="167dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/sign_in_logo"
+            android:src="@drawable/login_logo"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_login_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_in"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/main_black"
-            android:layout_marginTop="74dp"
             android:layout_marginStart="58dp"
-            app:layout_constraintTop_toBottomOf="@+id/iv_login_logo"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:layout_marginTop="74dp"
+            android:text="@string/sign_in"
+            android:textColor="@color/main_black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_login_logo" />
 
         <EditText
             android:id="@+id/et_id"
             android:layout_width="0dp"
             android:layout_height="55dp"
-            android:hint="@string/hint_id"
-            android:background="@drawable/round_corner_name_pass"
-            android:paddingStart="22.91dp"
-            android:layout_marginTop="7dp"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="7dp"
             android:layout_marginEnd="40dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_login_text"
+            android:autofillHints="emailAddress"
+            android:background="@drawable/round_corner_name_pass"
+            android:hint="@string/hint_id"
+            android:inputType="textEmailAddress"
+            android:paddingStart="22.91dp"
+            android:paddingEnd="22.91dp"
+            android:textColor="@color/main_black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_login_text" />
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="0dp"
             android:layout_height="55dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="40dp"
+            android:autofillHints="password"
+            android:background="@drawable/round_corner_name_pass"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
-            android:background="@drawable/round_corner_name_pass"
             android:paddingStart="22.91dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            app:layout_constraintTop_toBottomOf="@+id/et_id"
+            android:paddingEnd="22.91dp"
+            android:textColor="@color/main_black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/et_id" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_do_login"
             android:layout_width="0dp"
             android:layout_height="58dp"
-            android:text="@string/btn_do_login"
-            android:textStyle="bold"
-            android:textSize="21sp"
-            android:textColor="@color/main_white"
-            android:background="@drawable/round_corner_do_login"
-            android:layout_marginTop="27dp"
             android:layout_marginStart="38dp"
+            android:layout_marginTop="27dp"
             android:layout_marginEnd="38dp"
-            app:layout_constraintTop_toBottomOf="@+id/et_password"
+            android:background="@drawable/round_corner_do_login"
+            android:text="@string/btn_do_login"
+            android:textColor="@color/main_white"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
         <TextView
             android:id="@+id/tv_signup"
             android:layout_width="0dp"
             android:layout_height="26dp"
-            android:text="@string/btn_sign_up"
-            android:textSize="19sp"
-            android:textColor="@color/main_black"
-            android:layout_marginTop="9dp"
             android:layout_marginStart="164dp"
+            android:layout_marginTop="9dp"
             android:layout_marginEnd="164dp"
-            app:layout_constraintTop_toBottomOf="@+id/btn_do_login"
+            android:text="@string/btn_sign_up"
+            android:textColor="@color/main_black"
+            android:textSize="19sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/btn_do_login" />
+
+        <FrameLayout
+            android:id="@+id/pb_sign_in_loader_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="23dp"
+            tools:layout_editor_absoluteY="190dp"
+            tools:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

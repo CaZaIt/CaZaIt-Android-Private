@@ -2,7 +2,6 @@ package org.cazait.ui.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import org.cazait.data.error.ErrorManager
 import org.cazait.utils.SingleEvent

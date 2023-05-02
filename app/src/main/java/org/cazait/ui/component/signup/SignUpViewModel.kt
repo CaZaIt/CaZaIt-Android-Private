@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.cazait.data.Resource
 import org.cazait.data.model.request.IsEmailDupReq
@@ -46,19 +45,19 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
         }
     }
 
-    fun isEmailDup(email: String){
+    fun isEmailDup(email: String) {
         viewModelScope.launch {
             _emailDupProcess.value = Resource.Loading()
-            userRepository.isEmailDup(body = IsEmailDupReq(email)).collect{
+            userRepository.isEmailDup(body = IsEmailDupReq(email)).collect {
                 _emailDupProcess.value = it
             }
         }
     }
 
-    fun isNicknameDup(nickname: String){
+    fun isNicknameDup(nickname: String) {
         viewModelScope.launch {
             _nickDupProcess.value = Resource.Loading()
-            userRepository.isNicknameDup(body = IsNicknameDupReq(nickname)).collect{
+            userRepository.isNicknameDup(body = IsNicknameDupReq(nickname)).collect {
                 _nickDupProcess.value = it
             }
         }

@@ -44,9 +44,9 @@
             android:layout_marginEnd="160dp"
             android:layout_marginBottom="13dp"
             android:text="@string/sign_up_sign_up"
+            android:textAlignment="center"
             android:textColor="@color/main_white"
             android:textSize="20sp"
-            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/view_sign_up_divide"
             app:layout_constraintEnd_toEndOf="@+id/view_sign_up_divide"
             app:layout_constraintStart_toEndOf="@+id/iv_sign_up_arrow_back" />
@@ -152,6 +152,7 @@
             android:layout_marginEnd="23dp"
             android:background="@drawable/round_corner_name_pass"
             android:hint="@string/sign_up_hint_password_more"
+            android:importantForAutofill="no"
             android:inputType="textPassword"
             android:paddingStart="17dp"
             android:textColorHint="#757575"
@@ -161,7 +162,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_password_check"
             app:passwordToggleEnabled="true"
-            android:importantForAutofill="no"
             tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
 
         <TextView
@@ -186,13 +186,13 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/round_corner_name_pass"
             android:hint="@string/sign_up_hint_nick_name"
+            android:importantForAutofill="no"
             android:inputType="text"
             android:paddingStart="17dp"
             android:textColorHint="#757575"
             app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_nick_name_double_check"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_nick_name"
-            android:importantForAutofill="no"
             tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -235,17 +235,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_nick_name_example" />
 
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/pb_sign_up_loader_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="23dp"
+            tools:layout_editor_absoluteY="190dp"
+            tools:visibility="gone">
 
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
