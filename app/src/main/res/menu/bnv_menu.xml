@@ -5,21 +5,21 @@
 
     <item
         android:id="@+id/menu_cafe_list"
-        android:icon="@drawable/bnv_home"
+        android:icon="@drawable/ic_bnv_home"
         tools:ignore="MenuTitle" />
 
     <item
         android:id="@+id/menu_cafe_map"
-        android:icon="@drawable/bnv_map"
+        android:icon="@drawable/ic_bnv_map"
         tools:ignore="MenuTitle" />
 
     <item
         android:id="@+id/menu_my_page"
-        android:icon="@drawable/bnv_my_page"
+        android:icon="@drawable/ic_bnv_my_page"
         tools:ignore="MenuTitle" />
 
     <item
         android:id="@+id/menu_app_settings"
-        android:icon="@drawable/bnv_view_more"
+        android:icon="@drawable/ic_bnv_view_more"
         tools:ignore="MenuTitle" />
 </menu>

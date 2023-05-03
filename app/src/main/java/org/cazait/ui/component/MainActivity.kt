@@ -34,6 +34,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     }
 
     private fun initBottomNavigation() {
+        binding.bnvMenu.itemIconTintList = null
         binding.bnvMenu.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_cafe_list -> {
