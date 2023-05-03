@@ -16,6 +16,10 @@
         android:theme="@style/Theme.CaZaIt"
         tools:targetApi="31">
         <activity
+            android:name=".ui.component.cafeinfo.CafeInfoActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.component.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.CaZaIt.Splash">
