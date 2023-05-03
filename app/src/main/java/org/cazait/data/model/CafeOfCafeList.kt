@@ -1,7 +1,10 @@
 package org.cazait.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class CafeOfCafeList(
     @SerializedName("cafeId") val cafeId: Long,
     @SerializedName("congestionStatus") val congestionStatus: String,
@@ -12,4 +15,4 @@ data class CafeOfCafeList(
     @SerializedName("getCafeImageRes") val cafesImages: List<CafeImage>,
     @SerializedName("distance") val distance: Int,
     @SerializedName("favorite") val favorite: Boolean,
-)
+) : Parcelable

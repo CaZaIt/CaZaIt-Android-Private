@@ -1,1 +1,3 @@
-<resources></resources>
+<resources>
+    <dimen name="cafe_item_space">8dp</dimen>
+</resources>
