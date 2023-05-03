@@ -1,9 +1,8 @@
 package org.cazait.ui.component.cafelist
 
-import androidx.lifecycle.lifecycleScope
+import android.content.Intent
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import org.cazait.R
 import org.cazait.data.FAIL
 import org.cazait.data.Resource
@@ -13,25 +12,54 @@ import org.cazait.data.model.response.ListFavoritesRes
 import org.cazait.databinding.FragmentCafeListBinding
 import org.cazait.ui.adapter.CafeListHorizontalAdapter
 import org.cazait.ui.adapter.CafeListVerticalAdapter
+import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.observe
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel>(
     CafeListViewModel::class.java,
     R.layout.fragment_cafe_list,
 ) {
-    private val horizontalAdapter by lazy { CafeListHorizontalAdapter() }
-    private val verticalAdapter by lazy { CafeListVerticalAdapter() }
+    private val horizontalAdapter by lazy {
+        CafeListHorizontalAdapter {
+            val intent = Intent()
+            intent.putExtra(getString(R.string.cafe_name), it.name)
+            startActivity(intent)
+        }
+    }
+    private val verticalAdapter by lazy {
+        CafeListVerticalAdapter {
+            val intent = Intent()
+            intent.putExtra(getString(R.string.cafe_name), it.name)
+            startActivity(intent)
+        }
+    }
 
     override fun initView() {
-        binding.rvFavoriteStores.adapter = this.horizontalAdapter
-        binding.rvStores.adapter = this.verticalAdapter
-
+        initAdapter()
         observeViewModel()
     }
 
     override fun initAfterBinding() {
+    }
+
+    private fun initAdapter() {
+        binding.rvFavoriteStores.addItemDecoration(
+            ItemDecoration(
+                extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
+            )
+        )
+        binding.rvFavoriteStores.adapter = this.horizontalAdapter
+
+        binding.rvStores.addItemDecoration(
+            ItemDecoration(
+                bottom = resources.getDimension(R.dimen.cafe_item_space).roundToInt(),
+                extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
+            )
+        )
+        binding.rvStores.adapter = this.verticalAdapter
     }
 
     private fun observeViewModel() {
@@ -75,6 +103,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
                             val cafes = data.cafes
                             verticalAdapter.submitList(cafes[0])
                         }
+
                         FAIL -> {
 
                         }

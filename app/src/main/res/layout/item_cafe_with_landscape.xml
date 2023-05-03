@@ -10,8 +10,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:elevation="14dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        app:cardElevation="12dp"
+        app:contentPaddingBottom="13dp"
+        app:contentPaddingTop="22dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,7 +23,6 @@
                 android:id="@+id/iv_cafe"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginTop="44dp"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,10 +40,12 @@
                 android:maxLines="1"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/tv_distance"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintEnd_toStartOf="@+id/tv_distance"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_cafe"
-                tools:text="팬도로시" />
+                app:layout_constraintWidth_default="wrap"
+                tools:text="정말 긴 카페 이름입니다" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_distance"
@@ -79,9 +82,8 @@
                 android:id="@+id/btn_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 android:background="@drawable/rectangle_cafe_list_btn_state_r50"
                 android:fontFamily="@font/applesdgothic"
                 android:gravity="center"
