@@ -54,4 +54,20 @@
     <string name="favorite_stores_guid">찜한 매장을 빠르게 확인!</string>
     <string name="do_checking_cafe">카페 확인하기</string>
     <string name="filter_type_distance">거리순</string>
+
+    <!-- Cafe Info -->
+    <string name="info_cafename">제주몰빵</string>
+    <string name="info_cafeadd">서울특별시 광진구 광나루로 375-1 2층(군자동)</string>
+    <string name="info_cafemenu">카페메뉴</string>
+    <string name="info_caferev">평점 및 후기</string>
+    <string name="info_cafemap">매장 위치 확인 ></string>
+    <string name="info_review">리뷰쓰기</string>
+
+    <!-- Item Cafe Menu -->
+    <string name="menu_name">아메리카노</string>
+    <string name="menu_price">1,500원</string>
+    <string name="menu_desc">우리나라 원두를 사용하여 더욱 달달한 풍미가 살아있는 최고급 아메리카노</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
