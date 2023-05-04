@@ -13,13 +13,13 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cafe_info_menus"
+                android:id="@+id/rv_cafe_info_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <FrameLayout
-                android:id="@+id/pb_menu_loader_view"
+                android:id="@+id/pb_review_loader_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
