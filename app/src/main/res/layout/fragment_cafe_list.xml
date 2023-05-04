@@ -26,8 +26,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="28dp"
-                    android:paddingBottom="25dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
                     app:layout_collapseMode="pin">
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -66,11 +66,12 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="RtlSymmetry" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <ImageView
                         android:id="@+id/ic_menu"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_marginEnd="28dp"
+                        android:padding="5dp"
                         android:adjustViewBounds="true"
                         android:src="@drawable/ic_menu"
                         app:layout_constraintBottom_toBottomOf="parent"

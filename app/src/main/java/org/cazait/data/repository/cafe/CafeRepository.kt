@@ -7,6 +7,12 @@ import org.cazait.data.model.response.ListCafesRes
 import org.cazait.data.model.response.ListFavoritesRes
 
 interface CafeRepository {
-    suspend fun getListCafes(userId: Long, query: ListCafesReq): Flow<Resource<ListCafesRes>>
     suspend fun getListFavorites(userId: Long): Flow<Resource<ListFavoritesRes>>
+    suspend fun getListCafes(
+        userId: Long,
+        latitude: String,
+        longitude: String,
+        sort: String = "distance",
+        limit: String = "0"
+    ): Flow<Resource<ListCafesRes>>
 }

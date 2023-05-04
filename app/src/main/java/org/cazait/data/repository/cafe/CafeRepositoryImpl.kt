@@ -22,8 +22,14 @@ class CafeRepositoryImpl @Inject constructor(
 ) : CafeRepository {
     override suspend fun getListCafes(
         userId: Long,
-        query: ListCafesReq
+        latitude: String,
+        longitude: String,
+        sort: String,
+        limit: String,
     ): Flow<Resource<ListCafesRes>> {
+        val query =
+            ListCafesReq(latitude = latitude, longitude = longitude, sort = sort, limit = limit)
+
         return flow {
             emit(cafeListRemoteData.getListCafes(userId, query))
         }.flowOn(ioDispatcher)
