@@ -65,7 +65,8 @@
 
     <!-- Item Cafe Menu -->
     <string name="menu_name">아메리카노</string>
-    <string name="menu_price">1,500원</string>
+    <string name="menu_price">1,500</string>
+    <string name="menu_won">원</string>
     <string name="menu_desc">우리나라 원두를 사용하여 더욱 달달한 풍미가 살아있는 최고급 아메리카노</string>
 
     <!-- TODO: Remove or change this placeholder text -->

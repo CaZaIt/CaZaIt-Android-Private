@@ -4,15 +4,14 @@
 
     <data>
 
-        <variable
-            name="menu"
-            type="org.cazait.data.model.CafeMenu" />
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp">
+        android:layout_height="110dp"
+        android:background="@drawable/round_cafe_info"
+        android:elevation="2dp">
 
         <ImageView
             android:id="@+id/iv_cafe_menu"
@@ -33,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:layout_marginTop="16.5dp"
-            android:text="@{menu.name, default=@string/menu_name}"
+            android:text="@string/menu_name"
             android:textColor="@color/main_black"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/iv_cafe_menu"
@@ -43,20 +42,32 @@
             android:id="@+id/tv_cafe_menu_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:text="@string/menu_price"
+            android:textColor="@color/cafe_list_orange"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_won"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="24dp"
-            android:text="@{menu.stringPrice + '원', default=@string/menu_price}"
+            android:text="@string/menu_won"
             android:textColor="@color/cafe_list_orange"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_cafe_menu_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="25dp"
-            android:text="@{menu.desc, default=@string/menu_desc}"
+            android:text="@string/menu_desc"
             android:textColor="@color/main_black"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
