@@ -90,11 +90,10 @@ class CafeListViewModel @Inject constructor(
 
     private fun getList() {
         // TEST Query
-        val testQuery = ListCafesReq("0", "0")
 
         viewModelScope.launch {
             with(cafeRepository) {
-                getListCafes(0L, testQuery)
+                getListCafes(0L, "0", "0")
                     .collectLatest { result ->
                         _listCafesData.value = result
                     }

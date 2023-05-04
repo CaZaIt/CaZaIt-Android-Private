@@ -1,9 +1,8 @@
 package org.cazait.ui.component.map
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.geometry.Tm128
 import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -12,10 +11,12 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Runnable
 import org.cazait.R
+import org.cazait.data.Resource
+import org.cazait.data.model.response.ListCafesRes
 import org.cazait.databinding.FragmentMapBinding
 import org.cazait.ui.base.BaseFragment
+import org.cazait.utils.observe
 
 @AndroidEntryPoint
 class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, MapViewModel>(
@@ -25,7 +26,6 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
     private val mapFragment by lazy { MapFragment() }
-    private val handler = Handler(Looper.getMainLooper())
     private var isMapInit = false
     private var markers = emptyList<Marker>()
 
@@ -37,6 +37,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
     }
 
     override fun initAfterBinding() {
+        observeCafes()
     }
 
     override fun onMapReady(mapObject: NaverMap) {
@@ -45,22 +46,47 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
         naverMap.locationSource = locationSource
         naverMap.uiSettings.isLocationButtonEnabled = true
 
-        val runnable = Runnable {
+        naverMap.addOnCameraIdleListener {
             searchCafes()
-        }
-
-        naverMap.addOnCameraChangeListener { reason, animated ->
-            Log.i("NaverMap", "카메라 변경 - reson: $reason, animated: $animated")
-
-            handler.removeCallbacks(runnable)
-            handler.postDelayed(runnable, 300)
         }
         isMapInit = true
     }
 
     private fun searchCafes() {
-        Log.d("CafeMapFragment", "SearchCafes")
-        // viewModel.searchCafes()
+        if (isMapInit.not()) return
+
+        val cameraPosition = naverMap.cameraPosition.target
+        Log.d(
+            "CafeMapFragment",
+            "latitude = ${cameraPosition.latitude}, longitude = ${cameraPosition.longitude}"
+        )
+        viewModel.searchCafes(
+            cameraPosition.latitude.toString(),
+            cameraPosition.longitude.toString()
+        )
+    }
+
+    private fun observeCafes() {
+        observe(viewModel.cafeListLiveData, ::updateMarkers)
+    }
+
+    private fun updateMarkers(status: Resource<ListCafesRes>) {
+        when (status) {
+            is Resource.Success -> {
+                if (status.data.result != "SUCCESS") return
+                markers.forEach { it.map = null }
+                markers = status.data.cafes[0].map {
+                    Marker(
+                        LatLng(it.latitude.toDouble(), it.longitude.toDouble())
+                    ).apply {
+                        captionText = it.name
+                        map = naverMap
+                    }
+                }
+            }
+
+            else -> {}
+        }
     }
 
     private fun moveCamera(position: LatLng, zoomLevel: Double) {
