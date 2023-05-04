@@ -3,37 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.component.cafeinfo.menu.CafeInfoMenuFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cafe_info_menus"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cafe_info_menus"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        <FrameLayout
+            android:id="@+id/pb_menu_loader_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="23dp"
+            tools:layout_editor_absoluteY="190dp"
+            tools:visibility="visible">
 
-            <FrameLayout
-                android:id="@+id/pb_menu_loader_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:visibility="gone"
-                tools:layout_editor_absoluteX="23dp"
-                tools:layout_editor_absoluteY="190dp"
-                tools:visibility="visible">
-
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:indeterminate="true" />
-            </FrameLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

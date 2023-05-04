@@ -18,7 +18,7 @@ class CafeInfoMenuAdapter :
         fun bind(item: CafeMenu) {
 //            binding.ivCafeMenu.setImage(item.imageUrl)
             binding.tvCafeMenu.text = item.name
-            binding.tvCafeMenuPrice.text = item.price.toString()
+            binding.tvCafeMenuPrice.text = item.getStringPrice()
             binding.tvCafeMenuDesc.text = item.desc
         }
     }

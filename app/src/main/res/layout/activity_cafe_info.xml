@@ -74,6 +74,7 @@
 
                             <TextView
                                 android:id="@+id/tv_info_cafename"
+                                style="@style/TextValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="30dp"
@@ -87,6 +88,7 @@
 
                             <TextView
                                 android:id="@+id/tv_info_cafeadd"
+                                style="@style/TextValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="30dp"
@@ -99,6 +101,7 @@
 
                             <TextView
                                 android:id="@+id/tv_map"
+                                style="@style/TextValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="12dp"
@@ -156,6 +159,7 @@
 
                         <TextView
                             android:id="@+id/btn_cafe_menu"
+                            style="@style/TextValue"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -167,6 +171,7 @@
 
                         <TextView
                             android:id="@+id/btn_cafe_rev"
+                            style="@style/TextValue"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -195,6 +200,7 @@
 
         <TextView
             android:id="@+id/fab_review"
+            style="@style/TextValue"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="50dp"

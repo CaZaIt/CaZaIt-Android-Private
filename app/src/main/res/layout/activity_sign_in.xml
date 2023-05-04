@@ -22,6 +22,7 @@
 
         <TextView
             android:id="@+id/tv_login_text"
+            style="@style/TextValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="58dp"
@@ -35,6 +36,7 @@
 
         <EditText
             android:id="@+id/et_id"
+            style="@style/TextValue"
             android:layout_width="0dp"
             android:layout_height="55dp"
             android:layout_marginStart="40dp"
@@ -53,6 +55,7 @@
 
         <EditText
             android:id="@+id/et_password"
+            style="@style/TextValue"
             android:layout_width="0dp"
             android:layout_height="55dp"
             android:layout_marginStart="40dp"
@@ -71,6 +74,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_do_login"
+            style="@style/TextValue"
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:layout_marginStart="38dp"
@@ -87,6 +91,7 @@
 
         <TextView
             android:id="@+id/tv_signup"
+            style="@style/TextValue"
             android:layout_width="0dp"
             android:layout_height="26dp"
             android:layout_marginStart="164dp"

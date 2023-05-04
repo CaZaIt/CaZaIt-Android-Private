@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import org.cazait.data.Resource
 import org.cazait.data.model.CafeReview
 import org.cazait.data.model.response.CafeReviewRes
+import org.cazait.data.model.response.Data
 import org.cazait.ui.base.BaseViewModel
 
 class CafeInfoReviewViewModel : BaseViewModel() {
@@ -32,7 +33,7 @@ class CafeInfoReviewViewModel : BaseViewModel() {
             CafeReview(8,1,1,"와우 친구들 빡빡이 아저씨야")
         )
 
-        val fresdata = CafeReviewRes.Data(fList,9,1)
+        val fresdata = Data(fList,9,1)
 
         val fData = CafeReviewRes(
             code = 1,
