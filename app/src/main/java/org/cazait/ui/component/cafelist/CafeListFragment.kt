@@ -9,11 +9,13 @@ import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
 import org.cazait.data.model.response.ListCafesRes
 import org.cazait.data.model.response.ListFavoritesRes
+import org.cazait.databinding.ActivityCafeInfoBinding
 import org.cazait.databinding.FragmentCafeListBinding
 import org.cazait.ui.adapter.CafeListHorizontalAdapter
 import org.cazait.ui.adapter.CafeListVerticalAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.base.BaseFragment
+import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
 import kotlin.math.roundToInt
 
@@ -24,14 +26,14 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
 ) {
     private val horizontalAdapter by lazy {
         CafeListHorizontalAdapter {
-            val intent = Intent()
+            val intent = Intent(context, CafeInfoActivity::class.java)
             intent.putExtra(getString(R.string.cafe_name), it.name)
             startActivity(intent)
         }
     }
     private val verticalAdapter by lazy {
         CafeListVerticalAdapter {
-            val intent = Intent()
+            val intent = Intent(context, CafeInfoActivity::class.java)
             intent.putExtra(getString(R.string.cafe_name), it.name)
             startActivity(intent)
         }

@@ -26,6 +26,7 @@
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <FrameLayout
+                        android:id="@+id/frameLayout"
                         android:layout_width="match_parent"
                         android:layout_height="320dp"
                         app:layout_collapseMode="parallax">
@@ -35,8 +36,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="top|start"
-                            android:layout_marginStart="25dp"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:padding="12dp"
                             android:src="@drawable/arrow_back_ios" />
 
                         <androidx.viewpager2.widget.ViewPager2

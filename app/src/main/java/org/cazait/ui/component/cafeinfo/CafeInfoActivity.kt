@@ -1,5 +1,6 @@
 package org.cazait.ui.component.cafeinfo
 
+import android.util.Log
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,10 +37,18 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
             CafeInfoReviewFragment(),
             binding.fabReview
         )
+        initBackPressButton()
     }
 
     override fun initAfterBinding() {
 
+    }
+
+    private fun initBackPressButton() {
+        binding.imgBack.bringToFront() // 이 코드가 없으면 FrameLayout 내의 ImageView의 경우 클릭되지 않습니다.
+        binding.imgBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun initDefaultFrag(menuFrag: Fragment) {
