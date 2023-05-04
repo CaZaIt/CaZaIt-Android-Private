@@ -1,0 +1,74 @@
+package org.cazait.ui.component.cafeinfo
+
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
+import org.cazait.R
+import org.cazait.databinding.ActivityCafeInfoBinding
+import org.cazait.ui.adapter.CafeImgAdapter
+import org.cazait.ui.base.BaseActivity
+import org.cazait.ui.component.cafeinfo.menu.CafeInfoMenuFragment
+import org.cazait.ui.component.cafeinfo.review.CafeInfoReviewFragment
+import org.cazait.utils.toGone
+import org.cazait.utils.toVisible
+
+@AndroidEntryPoint
+class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel>(
+    CafeInfoViewModel::class.java,
+    R.layout.activity_cafe_info
+) {
+    override fun initView() {
+        val dotsIndicator = binding.dotsIndicator
+        val viewPager = binding.vpImg
+        viewPager.adapter = CafeImgAdapter(this, viewModel.cafeImgList)
+        dotsIndicator.attachTo(viewPager)
+
+        initDefaultFrag(CafeInfoMenuFragment())
+        showFragment(
+            binding.btnCafeMenu,
+            binding.btnCafeRev,
+            CafeInfoMenuFragment(),
+            binding.fabReview
+        )
+        showFragment(
+            binding.btnCafeRev,
+            binding.btnCafeMenu,
+            CafeInfoReviewFragment(),
+            binding.fabReview
+        )
+    }
+
+    override fun initAfterBinding() {
+
+    }
+
+    private fun initDefaultFrag(menuFrag: Fragment) {
+        binding.fabReview.toGone()
+        binding.btnCafeMenu.isSelected = true
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment, menuFrag)
+            .commit()
+    }
+
+    private fun showFragment(btn1: TextView, btn2: TextView, fragment: Fragment, fab: TextView) {
+        var frag: Fragment
+        btn1.setOnClickListener {
+            btn1.isSelected = true
+            btn2.isSelected = false
+            if (binding.btnCafeMenu.isSelected) {
+                frag = fragment
+//                frag.arguments = bundle
+                fab.toGone()
+            } else {
+                frag = fragment
+//                frag.arguments = bundle
+                fab.toVisible()
+            }
+            supportFragmentManager.popBackStack()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment, frag)
+                .commit()
+        }
+    }
+}
