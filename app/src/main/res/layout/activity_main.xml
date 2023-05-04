@@ -11,15 +11,13 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:name="org.cazait.ui.component.cafelist.CafeListFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@+id/bnv_menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/nav_graph"
             tools:layout="@layout/fragment_cafe_list" />
 
 
@@ -28,13 +26,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/main_black"
+            app:itemIconSize="30dp"
+            app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bnv_menu"
-            app:labelVisibilityMode="unlabeled">
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
-
+            app:menu="@menu/bnv_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

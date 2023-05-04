@@ -35,9 +35,6 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        viewBinding true
-    }
-    buildFeatures {
         dataBinding true
     }
 }
@@ -66,10 +63,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
     // DataBinding
     implementation "androidx.databinding:databinding-runtime:$databindingVersion"
 
@@ -94,7 +87,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:$okHttpVersion")
 
     // splash
-    implementation("androidx.core:core-splashscreen:1.0.0-beta01")
+    implementation("androidx.core:core-splashscreen:$splashVersion")
 
     // coil
     implementation("io.coil-kt:coil:2.2.2")
@@ -102,6 +95,14 @@ dependencies {
     // paging3
     implementation("androidx.activity:activity-ktx:1.7.0")
     implementation("androidx.paging:paging-runtime-ktx:3.1.1")
+
+    // 네이버 지도 SDK
+    implementation("com.naver.maps:map-sdk:$naverMapVersion")
+    implementation("com.google.android.gms:play-services-location:$playServicesLocationVersion")
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
 
 task ktlint(type: JavaExec, group: "verification") {

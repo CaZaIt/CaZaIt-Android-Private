@@ -16,6 +16,9 @@ buildscript {
         databindingVersion = '7.4.2'
         gsonVersion = '2.9.0'
         okHttpVersion = '5.0.0-alpha.11'
+        naverMapVersion = '3.16.2'
+        playServicesLocationVersion = '16.0.0'
+        splashVersion = '1.0.0-beta01'
     }
     repositories {
         google()
