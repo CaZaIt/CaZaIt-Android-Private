@@ -2,15 +2,12 @@ package org.cazait.ui.component
 
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.ActivityMainBinding
 import org.cazait.ui.base.BaseActivity
 import org.cazait.ui.component.cafelist.CafeListFragment
-import org.cazait.ui.component.map.MapFragment
+import org.cazait.ui.component.map.CafeMapFragment
 import org.cazait.utils.replace
 
 @AndroidEntryPoint
@@ -19,7 +16,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     R.layout.activity_main,
 ) {
     private val cafeListFragment: CafeListFragment by lazy { CafeListFragment() }
-    private val mapFragment: MapFragment by lazy { MapFragment() }
+    private val mapFragment: CafeMapFragment by lazy { CafeMapFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
