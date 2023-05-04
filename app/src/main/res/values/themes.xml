@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CaZaIt" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/main_beige</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.CaZaIt" parent="Base.Theme.CaZaIt" />
