@@ -9,6 +9,8 @@ import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.Overlay
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
@@ -81,6 +83,11 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
                     ).apply {
                         captionText = it.name
                         map = naverMap
+                        icon = OverlayImage.fromResource(R.drawable.ic_marker)
+                        setOnClickListener {
+                            icon = OverlayImage.fromResource(R.drawable.ic_marker_clicked)
+                            return@setOnClickListener true
+                        }
                     }
                 }
             }
