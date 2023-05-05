@@ -49,7 +49,7 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
             is Resource.Loading -> binding.pbMenuLoaderView.toVisible()
             is Resource.Success -> status.data.let {
                 binding.pbMenuLoaderView.toGone()
-                when (status.data.result) {
+                when (status.data?.result) {
                     SUCCESS -> {
                         val menus = status.data.menus
                         menuAdapter.submitList(menus)

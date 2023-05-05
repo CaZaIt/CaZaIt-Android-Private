@@ -1,6 +1,7 @@
 package org.cazait.ui.component.cafelist
 
 import android.content.Intent
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
@@ -71,26 +72,22 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
 
     private fun handleHorizontalCafeList(status: Resource<ListFavoritesRes>) {
         when (status) {
-            is Resource.Loading -> {
-            }
-
+            is Resource.Loading -> {}
             is Resource.Success -> {
-                status.data.let { data ->
-                    when (data.result) {
-                        SUCCESS -> {
-                            val favoriteCafes = data.favorites
-                            horizontalAdapter.submitList(favoriteCafes)
-                        }
+                when (status.data?.result) {
+                    SUCCESS -> {
+                        val favoriteCafes = status.data.favorites
+                        horizontalAdapter.submitList(favoriteCafes)
+                    }
 
-                        FAIL -> {
-
-                        }
+                    FAIL -> {
+                        Log.e("CafeListFragment", status.data.message)
                     }
                 }
             }
 
             is Resource.Error -> {
-
+                Log.e("CafeListFragment", status.data?.message ?: getString(R.string.unknown_error))
             }
         }
     }
@@ -99,21 +96,21 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         when (status) {
             is Resource.Loading -> {}
             is Resource.Success -> {
-                status.data.let { data ->
-                    when (data.result) {
-                        SUCCESS -> {
-                            val cafes = data.cafes
-                            verticalAdapter.submitList(cafes[0])
-                        }
+                when (status.data?.result) {
+                    SUCCESS -> {
+                        val cafes = status.data.cafes
+                        verticalAdapter.submitList(cafes[0])
+                    }
 
-                        FAIL -> {
-
-                        }
+                    FAIL -> {
+                        Log.e("CafeListFragment", status.data.message)
                     }
                 }
             }
 
-            is Resource.Error -> {}
+            is Resource.Error -> {
+                Log.e("CafeListFragment", status.data?.message ?: getString(R.string.unknown_error))
+            }
         }
     }
 }

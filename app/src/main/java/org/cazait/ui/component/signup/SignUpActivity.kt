@@ -6,7 +6,9 @@ import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
+import org.cazait.data.FAIL
 import org.cazait.data.Resource
+import org.cazait.data.SUCCESS
 import org.cazait.data.model.response.IsEmailDupRes
 import org.cazait.data.model.response.IsNicknameDupRes
 import org.cazait.data.model.response.SignUpRes
@@ -83,21 +85,23 @@ class SignUpActivity :
     }
 
     private fun handleSignUpResult(status: Resource<SignUpRes>) {
-        Log.d("회원가입 과정", "$status")
         when (status) {
             is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
             is Resource.Success -> status.data.let {
                 binding.pbSignUpLoaderView.toGone()
-                when (status.data.result) {
-                    "SUCCESS" -> {
+
+                when (status.data?.result) {
+                    SUCCESS -> {
                         val nextScreenIntent =
                             Intent(applicationContext, SignInActivity::class.java)
                         startActivity(nextScreenIntent)
                         finish()
                     }
-                    "FAIL" -> viewModel.showToastMessage(status.data.message)
+
+                    FAIL -> viewModel.showToastMessage(status.data.message)
                 }
             }
+
             is Resource.Error -> {
                 binding.pbSignUpLoaderView.toGone()
                 viewModel.showToastMessage(status.message)
@@ -110,11 +114,13 @@ class SignUpActivity :
             is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
             is Resource.Success -> status.data.let {
                 binding.pbSignUpLoaderView.toGone()
-                when (status.data.result) {
-                    "SUCCESS" -> viewModel.showToastMessage(status.data.data)
-                    "FAIL" -> viewModel.showToastMessage(status.data.message)
+
+                when (status.data?.result) {
+                    SUCCESS -> viewModel.showToastMessage(status.data.data)
+                    FAIL -> viewModel.showToastMessage(status.data.message)
                 }
             }
+
             is Resource.Error -> {
                 binding.pbSignUpLoaderView.toGone()
                 viewModel.showToastMessage(status.message)
@@ -127,11 +133,13 @@ class SignUpActivity :
             is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
             is Resource.Success -> status.data.let {
                 binding.pbSignUpLoaderView.toGone()
-                when (status.data.result) {
-                    "SUCCESS" -> viewModel.showToastMessage(status.data.data)
-                    "FAIL" -> viewModel.showToastMessage(status.data.message)
+
+                when (status.data?.result) {
+                    SUCCESS -> viewModel.showToastMessage(status.data.data)
+                    FAIL -> viewModel.showToastMessage(status.data.message)
                 }
             }
+
             is Resource.Error -> {
                 binding.pbSignUpLoaderView.toGone()
                 viewModel.showToastMessage(status.message)
@@ -214,11 +222,13 @@ class SignUpActivity :
                     resources.getString(R.string.sign_up_check_email)
                 emailFlag = false
             }
+
             !emailRegex(email) -> {
                 binding.etSignUpEmailExample.error =
                     resources.getString(R.string.sign_up_check_email_regex)
                 emailFlag = false
             }
+
             else -> {
                 binding.etSignUpEmailExample.error = null
                 emailFlag = true
@@ -233,11 +243,13 @@ class SignUpActivity :
                     resources.getString(R.string.sign_up_check_nick)
                 nickNameFlag = false
             }
+
             !nicknameRegex(nickName) -> {
                 binding.etSignUpNickNameExample.error =
                     resources.getString(R.string.sign_up_check_nick_regex)
                 nickNameFlag = false
             }
+
             else -> {
                 binding.etSignUpNickNameExample.error = null
                 nickNameFlag = true
@@ -252,16 +264,19 @@ class SignUpActivity :
                     resources.getString(R.string.sign_up_check_pw)
                 passwordFlag = false
             }
+
             !passwordRegex(password) -> {
                 binding.etSignUpPasswordInsert.error =
                     resources.getString(R.string.sign_up_check_pw_regex)
                 passwordFlag = false
             }
+
             !passwordCheckRegex(password) -> {
                 binding.etSignUpPasswordInsertMore.error =
                     resources.getString(R.string.sign_up_check_pw_regex)
                 passwordCheckFlag = false
             }
+
             password.isNotEmpty() -> {
                 binding.etSignUpPasswordInsert.error = null
                 passwordFlag = true
@@ -286,11 +301,13 @@ class SignUpActivity :
                     resources.getString(R.string.sign_up_check_pw)
                 passwordFlag = false
             }
+
             !passwordCheckRegex(password) -> {
                 binding.etSignUpPasswordInsertMore.error =
                     resources.getString(R.string.sign_up_check_pw_regex)
                 passwordCheckFlag = false
             }
+
             password.isNotEmpty() -> {
                 binding.etSignUpPasswordInsertMore.error = null
                 passwordFlag = true
@@ -302,6 +319,7 @@ class SignUpActivity :
                         passwordCheckFlag = false
                         passwordFlag = true
                     }
+
                     else -> {
                         binding.etSignUpPasswordInsertMore.error = null
                         passwordCheckFlag = true
