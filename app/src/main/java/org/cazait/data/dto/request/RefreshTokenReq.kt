@@ -1,4 +1,4 @@
-package org.cazait.data.model.request
+package org.cazait.data.dto.request
 
 import com.google.gson.annotations.SerializedName
 

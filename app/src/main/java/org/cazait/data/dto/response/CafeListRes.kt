@@ -1,8 +1,8 @@
-package org.cazait.data.model.response
+package org.cazait.data.dto.response
 
 import com.google.gson.annotations.SerializedName
 import org.cazait.data.model.FavoriteCafe
-import org.cazait.data.model.CafeOfCafeList
+import org.cazait.data.dto.response.CafeOfCafeList
 
 data class ListCafesRes(
     @SerializedName("code") val code: Int,
