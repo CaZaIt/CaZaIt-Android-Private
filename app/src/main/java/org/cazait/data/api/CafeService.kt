@@ -21,4 +21,20 @@ interface CafeService {
     fun getListFavorites(
         @Path("userId") userId: Long
     ): Call<ListFavoritesRes>
+
+    @GET("api/cafes/all")
+    fun getListCafesWithGuest(
+        @Query("longitude") longitude: String,
+        @Query("latitude") latitude: String,
+        @Query("sort") sort: String,
+        @Query("limit") limit: String,
+    ): Call<ListCafesRes>
+
+    @GET("api/cafes/name/{cafeName}")
+    fun getCafeByNameWithGuest(
+        @Path("cafeName") cafeName: String,
+        @Query("latitude") latitude: String,
+        @Query("sort") sort: String,
+        @Query("limit") limit: String,
+    ): Call<ListCafesRes>
 }

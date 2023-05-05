@@ -75,4 +75,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_data">데이터가 없습니다</string>
+    <string name="unknown_error">알 수 없는 이유의 에러</string>
 </resources>

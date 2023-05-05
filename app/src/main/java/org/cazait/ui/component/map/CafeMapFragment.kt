@@ -15,6 +15,7 @@ import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.data.Resource
+import org.cazait.data.SUCCESS
 import org.cazait.data.model.response.ListCafesRes
 import org.cazait.databinding.FragmentMapBinding
 import org.cazait.ui.base.BaseFragment
@@ -75,7 +76,10 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
     private fun updateMarkers(status: Resource<ListCafesRes>) {
         when (status) {
             is Resource.Success -> {
-                if (status.data.result != "SUCCESS") return
+                if (status.data?.result != SUCCESS) {
+                    return
+                }
+
                 markers.forEach { it.map = null }
                 markers = status.data.cafes[0].map {
                     Marker(

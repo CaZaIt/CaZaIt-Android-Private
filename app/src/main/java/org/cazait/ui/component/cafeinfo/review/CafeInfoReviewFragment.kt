@@ -50,7 +50,7 @@ class CafeInfoReviewFragment : BaseFragment<FragmentCafeInfoReviewBinding, CafeI
             is Resource.Loading -> binding.pbReviewLoaderView.toVisible()
             is Resource.Success -> status.data.let {
                 binding.pbReviewLoaderView.toGone()
-                when (status.data.result) {
+                when (status.data?.result) {
                     SUCCESS -> {
                         val reviews = status.data.data.reviewRes
                         reviewAdapter.submitList(reviews)

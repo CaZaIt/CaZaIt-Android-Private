@@ -2,12 +2,15 @@ package org.cazait.ui.component.signin
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
+import org.cazait.data.FAIL
 import org.cazait.data.Resource
+import org.cazait.data.SUCCESS
 import org.cazait.data.error.EMAIL_OR_PASSWORD_ERROR
 import org.cazait.data.model.response.SignInRes
 import org.cazait.databinding.ActivitySignInBinding
@@ -50,15 +53,17 @@ class SignInActivity :
             is Resource.Loading -> binding.pbSignInLoaderView.toVisible()
             is Resource.Success -> status.data.let {
                 binding.pbSignInLoaderView.toGone()
-                when (status.data.result) {
-                    "SUCCESS" -> {
+
+                when (status.data?.result) {
+                    SUCCESS -> {
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
-                    "FAIL" -> viewModel.showToastMessage(EMAIL_OR_PASSWORD_ERROR)
+                    FAIL -> viewModel.showToastMessage(EMAIL_OR_PASSWORD_ERROR)
                 }
             }
+
             is Resource.Error -> {
                 binding.pbSignInLoaderView.toGone()
                 status.let {
