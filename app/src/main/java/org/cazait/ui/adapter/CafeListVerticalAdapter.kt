@@ -5,24 +5,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.data.model.CafeOfCafeList
+import org.cazait.data.model.Cafe
 import org.cazait.databinding.ItemCafeWithLandscapeBinding
 
 class CafeListVerticalAdapter(
-    private val onClick: (CafeOfCafeList) -> Unit
+    private val onClick: (Cafe) -> Unit
 ) :
-    ListAdapter<CafeOfCafeList, CafeListVerticalAdapter.CafeListVerticalViewHolder>(diffUtil) {
+    ListAdapter<Cafe, CafeListVerticalAdapter.CafeListVerticalViewHolder>(diffUtil) {
 
     inner class CafeListVerticalViewHolder(
         private val binding: ItemCafeWithLandscapeBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: CafeOfCafeList) {
-            binding.tvCafeName.text = item.name
-            binding.tvAddress.text = item.address
-            binding.ivCafe.setImage(item.cafesImages[0].imageUrl)
-            binding.tvDistance.text = "${item.distance}m"
-            binding.btnState.text = item.congestionStatus
+        fun bind(item: Cafe) {
+            binding.item = item
+            if (item.images.isNotEmpty()) {
+                binding.ivCafe.setImage(item.images[0].imageUrl)
+            }
             binding.root.setOnClickListener {
                 onClick(item)
             }
@@ -44,17 +43,17 @@ class CafeListVerticalAdapter(
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<CafeOfCafeList>() {
+        val diffUtil = object : DiffUtil.ItemCallback<Cafe>() {
             override fun areItemsTheSame(
-                oldItem: CafeOfCafeList,
-                newItem: CafeOfCafeList
+                oldItem: Cafe,
+                newItem: Cafe
             ): Boolean {
                 return oldItem.cafeId == newItem.cafeId
             }
 
             override fun areContentsTheSame(
-                oldItem: CafeOfCafeList,
-                newItem: CafeOfCafeList
+                oldItem: Cafe,
+                newItem: Cafe
             ): Boolean {
                 return oldItem == newItem
             }

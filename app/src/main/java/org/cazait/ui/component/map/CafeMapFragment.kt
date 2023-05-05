@@ -2,21 +2,19 @@ package org.cazait.ui.component.map
 
 import android.util.Log
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.geometry.Tm128
 import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
-import org.cazait.data.model.response.ListCafesRes
+import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.databinding.FragmentMapBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.observe

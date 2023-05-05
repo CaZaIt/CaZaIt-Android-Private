@@ -4,9 +4,9 @@ import org.cazait.data.Resource
 import org.cazait.data.api.AuthService
 import org.cazait.data.error.ErrorManager
 import org.cazait.data.error.NO_INTERNET_CONNECTION
-import org.cazait.data.model.request.RefreshTokenReq
+import org.cazait.data.dto.request.RefreshTokenReq
 import org.cazait.data.model.request.SignInReq
-import org.cazait.data.model.response.RefreshTokenRes
+import org.cazait.data.dto.response.RefreshTokenRes
 import org.cazait.data.model.response.SignInRes
 import org.cazait.network.NetworkConnectivity
 import java.io.IOException

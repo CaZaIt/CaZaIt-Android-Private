@@ -2,15 +2,13 @@ package org.cazait.ui.component.cafelist
 
 import android.content.Intent
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.data.FAIL
 import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
-import org.cazait.data.model.response.ListCafesRes
-import org.cazait.data.model.response.ListFavoritesRes
-import org.cazait.databinding.ActivityCafeInfoBinding
+import org.cazait.data.dto.response.ListCafesRes
+import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.databinding.FragmentCafeListBinding
 import org.cazait.ui.adapter.CafeListHorizontalAdapter
 import org.cazait.ui.adapter.CafeListVerticalAdapter
@@ -98,8 +96,8 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
             is Resource.Success -> {
                 when (status.data?.result) {
                     SUCCESS -> {
-                        val cafes = status.data.cafes
-                        verticalAdapter.submitList(cafes[0])
+                        val cafes = viewModel.getVerticalCafes()
+                        verticalAdapter.submitList(cafes)
                     }
 
                     FAIL -> {

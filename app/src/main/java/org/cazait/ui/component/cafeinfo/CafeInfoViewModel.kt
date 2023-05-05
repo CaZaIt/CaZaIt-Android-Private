@@ -3,7 +3,7 @@ package org.cazait.ui.component.cafeinfo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.cazait.data.model.CafeImage
-import org.cazait.data.model.CafeOfCafeList
+import org.cazait.data.dto.response.CafeOfCafeList
 import org.cazait.ui.base.BaseViewModel
 
 class CafeInfoViewModel : BaseViewModel() {
