@@ -56,7 +56,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
 
         binding.rvStores.addItemDecoration(
             ItemDecoration(
-                bottom = resources.getDimension(R.dimen.cafe_item_space).roundToInt(),
+                bottom = resources.getDimension(R.dimen.cafe_item_space).roundToInt() * 2,
                 extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
             )
         )
