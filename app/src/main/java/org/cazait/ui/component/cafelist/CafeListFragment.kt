@@ -1,8 +1,11 @@
 package org.cazait.ui.component.cafelist
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
+import org.cazait.Constants
 import org.cazait.R
 import org.cazait.data.FAIL
 import org.cazait.data.Resource
@@ -16,13 +19,15 @@ import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
+import pub.devrel.easypermissions.EasyPermissions
+import pub.devrel.easypermissions.EasyPermissions.PermissionCallbacks
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel>(
     CafeListViewModel::class.java,
     R.layout.fragment_cafe_list,
-) {
+), PermissionCallbacks {
     private val horizontalAdapter by lazy {
         CafeListHorizontalAdapter {
             val intent = Intent(context, CafeInfoActivity::class.java)
@@ -39,12 +44,20 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     }
 
     override fun initView() {
+        requestPermission()
+
         initAdapter()
         observeViewModel()
     }
 
-    override fun initAfterBinding() {
+    override fun initAfterBinding() {}
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        Log.e("CafeListFragment", "$requestCode")
+        viewModel.updateList()
     }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
 
     private fun initAdapter() {
         binding.rvFavoriteStores.addItemDecoration(
@@ -109,6 +122,27 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
             is Resource.Error -> {
                 Log.e("CafeListFragment", status.data?.message ?: getString(R.string.unknown_error))
             }
+        }
+    }
+
+    private fun requestPermission() {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            EasyPermissions.requestPermissions(
+                this,
+                "이 앱을 사용하기 위해 위치 권한을 필요로 합니다.",
+                Constants.REQUEST_CODE_LOCATION_PERMISSION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                "이 앱을 사용하기 위해 위치 권한을 필요로 합니다.",
+                Constants.REQUEST_CODE_LOCATION_PERMISSION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                // ACCESS_BACKGROUND_LOCATION
+            )
         }
     }
 }
