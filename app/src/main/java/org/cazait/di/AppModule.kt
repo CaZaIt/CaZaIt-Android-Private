@@ -1,6 +1,8 @@
 package org.cazait.di
 
 import android.content.Context
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +16,7 @@ import kotlin.coroutines.CoroutineContext
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+object AppModule {
 
     @Provides
     @Singleton
@@ -26,5 +28,13 @@ class AppModule {
     @Singleton
     fun provideNetworkConnectivity(@ApplicationContext context: Context): NetworkConnectivity {
         return Network(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationClient(
+        @ApplicationContext context: Context
+    ): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(context)
     }
 }

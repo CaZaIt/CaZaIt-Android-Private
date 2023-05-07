@@ -19,6 +19,7 @@ buildscript {
         naverMapVersion = '3.16.2'
         playServicesLocationVersion = '16.0.0'
         splashVersion = '1.0.0-beta01'
+        easyPermissionVersion = '3.0.0'
     }
     repositories {
         google()
