@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="org.cazait.data.model.Cafe" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -38,13 +41,14 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{item.name}"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintHorizontal_bias="0"
+                app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toStartOf="@+id/tv_distance"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_cafe"
-                app:layout_constrainedWidth="true"
                 tools:text="정말 긴 카페 이름입니다" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -54,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
+                android:text="@{item.distance + `m`}"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_cafe_name"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +76,7 @@
                 android:layout_marginBottom="13dp"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:text="@{item.address}"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toTopOf="@+id/btn_state"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -88,6 +94,7 @@
                 android:fontFamily="@font/applesdgothic"
                 android:gravity="center"
                 android:minHeight="48dp"
+                android:text="@{item.status}"
                 android:textColor="@color/main_white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"

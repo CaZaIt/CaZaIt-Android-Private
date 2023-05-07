@@ -1,7 +1,7 @@
 package org.cazait.data.api
 
-import org.cazait.data.model.response.ListCafesRes
-import org.cazait.data.model.response.ListFavoritesRes
+import org.cazait.data.dto.response.ListCafesRes
+import org.cazait.data.dto.response.ListFavoritesRes
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

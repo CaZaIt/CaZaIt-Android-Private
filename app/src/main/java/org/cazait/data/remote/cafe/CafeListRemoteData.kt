@@ -4,10 +4,9 @@ import org.cazait.data.Resource
 import org.cazait.data.api.CafeService
 import org.cazait.data.error.ErrorManager
 import org.cazait.data.error.NO_INTERNET_CONNECTION
-import org.cazait.data.model.Empty
-import org.cazait.data.model.request.ListCafesReq
-import org.cazait.data.model.response.ListCafesRes
-import org.cazait.data.model.response.ListFavoritesRes
+import org.cazait.data.dto.response.ListCafesRes
+import org.cazait.data.dto.response.ListFavoritesRes
+import org.cazait.data.dto.request.ListCafesReq
 import org.cazait.network.NetworkConnectivity
 import java.io.IOException
 import javax.inject.Inject

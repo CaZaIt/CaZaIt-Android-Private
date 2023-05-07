@@ -1,7 +1,8 @@
 package org.cazait.data.model
 
-import org.cazait.data.model.response.ListCafesRes
-import org.cazait.data.model.response.ListFavoritesRes
+import org.cazait.data.dto.response.CafeOfCafeList
+import org.cazait.data.dto.response.ListCafesRes
+import org.cazait.data.dto.response.ListFavoritesRes
 
 object MockData {
     private val fImages = listOf(
@@ -21,7 +22,7 @@ object MockData {
     )
     private val itemCafe = CafeOfCafeList(
         1L,
-        "혼잡",
+        CafeStatus.CROWDED,
         "롬곡",
         "광진구 군자동 23-22222",
         longitude = "0",

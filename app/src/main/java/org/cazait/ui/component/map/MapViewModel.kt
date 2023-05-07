@@ -2,14 +2,12 @@ package org.cazait.ui.component.map
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import org.cazait.data.Resource
 import org.cazait.data.model.CafeImage
-import org.cazait.data.model.CafeOfCafeList
-import org.cazait.data.model.response.ListCafesRes
+import org.cazait.data.model.CafeStatus
+import org.cazait.data.dto.response.CafeOfCafeList
+import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.repository.cafe.CafeRepository
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
@@ -39,7 +37,7 @@ class MapViewModel @Inject constructor(
         )
         val itemCafe = CafeOfCafeList(
             1L,
-            "혼잡",
+            CafeStatus.CROWDED,
             "롬곡",
             "광진구 군자동 23-22222",
             longitude = "126.98606131314483",
