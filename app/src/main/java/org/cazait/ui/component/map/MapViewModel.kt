@@ -2,7 +2,10 @@ package org.cazait.ui.component.map
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.cazait.data.Resource
 import org.cazait.data.model.CafeImage
 import org.cazait.data.model.CafeStatus
@@ -21,14 +24,11 @@ class MapViewModel @Inject constructor(
         get() = _cafeListLiveData
 
     fun searchCafes(latitude: String, longitude: String) {
-        /** 원래 사용해야 할 코드
         viewModelScope.launch {
             _cafeListLiveData.value =
-                cafeRepository.getListCafes(0L, latitude = latitude, longitude = longitude)
+                cafeRepository.getListCafes(null, latitude = latitude, longitude = longitude)
                     .first()
         }
-        **/
-        setTestData()
     }
 
     private fun setTestData() {

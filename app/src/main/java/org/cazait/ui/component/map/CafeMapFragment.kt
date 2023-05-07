@@ -21,8 +21,7 @@ import org.cazait.utils.observe
 
 @AndroidEntryPoint
 class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, MapViewModel>(
-    MapViewModel::class.java,
-    R.layout.fragment_map
+    MapViewModel::class.java, R.layout.fragment_map
 ) {
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
@@ -42,7 +41,6 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
     }
 
     override fun onMapReady(mapObject: NaverMap) {
-        Log.d("MapFragment", "mapfragment")
         naverMap = mapObject
         naverMap.locationSource = locationSource
         naverMap.uiSettings.isLocationButtonEnabled = true
@@ -57,13 +55,9 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
         if (isMapInit.not()) return
 
         val cameraPosition = naverMap.cameraPosition.target
-        Log.d(
-            "CafeMapFragment",
-            "latitude = ${cameraPosition.latitude}, longitude = ${cameraPosition.longitude}"
-        )
+
         viewModel.searchCafes(
-            cameraPosition.latitude.toString(),
-            cameraPosition.longitude.toString()
+            cameraPosition.latitude.toString(), cameraPosition.longitude.toString()
         )
     }
 
@@ -101,8 +95,8 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
     private fun moveCamera(position: LatLng, zoomLevel: Double) {
         if (isMapInit.not()) return
 
-        val cameraUpdate = CameraUpdate.scrollAndZoomTo(position, zoomLevel)
-            .animate(CameraAnimation.Easing)
+        val cameraUpdate =
+            CameraUpdate.scrollAndZoomTo(position, zoomLevel).animate(CameraAnimation.Easing)
         naverMap.moveCamera(cameraUpdate)
     }
 
