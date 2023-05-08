@@ -18,25 +18,17 @@ class ItemDecoration(
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        if (left != 0) {
-            outRect.left += left
-        }
-        if (right != 0) {
-            outRect.right += right
-        }
-        if (top != 0) {
-            outRect.top += top
-        }
-        if (bottom != 0) {
-            outRect.bottom += bottom
-        }
+        if (left != 0) outRect.left += left
+        if (right != 0) outRect.right += right
+        if (top != 0) outRect.top += top
+        if (bottom != 0) outRect.bottom += bottom
         if (extraMargin != 0) {
-            outRect.apply {
-                top += extraMargin
-                right += extraMargin
-                left += extraMargin
-                bottom += extraMargin
-            }
+            outRect.set(
+                top + extraMargin,
+                right + extraMargin,
+                left + extraMargin,
+                bottom + extraMargin,
+            )
         }
     }
 }
