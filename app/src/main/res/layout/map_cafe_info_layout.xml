@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="org.cazait.data.model.Cafe" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"
+            android:text="@{item.name}"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:ellipsize="end"
+            android:text="@{item.distance + `m`}"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintStart_toEndOf="@+id/tv_title"
             tools:text="220m" />
@@ -45,6 +50,7 @@
             android:layout_marginEnd="20dp"
             android:ellipsize="end"
             android:maxLines="2"
+            android:text="@{item.address}"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,22 +59,33 @@
 
         <TextView
             android:id="@+id/tv_state"
+            style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="22dp"
             android:layout_marginBottom="14dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            style="@style/TextValue"
-            android:textSize="20sp"
             android:background="@drawable/rectangle_cafe_list_btn_state_r50"
+            android:gravity="center"
+            android:text="@{item.status}"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_address"
             tools:text="보통" />
 
+        <ImageView
+            android:id="@+id/iv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_cross_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

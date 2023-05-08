@@ -57,4 +57,25 @@ class CafeMapper @Inject constructor(
             imageUrl = url
         )
     }
+
+    fun itemCafeFromCafeOfCafeListWithLatLng(cafeOfCafeList: CafeOfCafeList): Cafe {
+        val status = when (cafeOfCafeList.congestionStatus) {
+            CafeStatus.FREE -> context.getString(R.string.state_free)
+            CafeStatus.NORMAL -> context.getString(R.string.state_normal)
+            CafeStatus.CLOSE -> context.getString(R.string.state_close)
+            CafeStatus.CROWDED -> context.getString(R.string.state_crowded)
+            CafeStatus.VERY_CROWDED -> context.getString(R.string.state_very_crowded)
+            CafeStatus.NONE -> context.getString(R.string.state_normal)
+        }
+        return Cafe(
+            cafeId = cafeOfCafeList.cafeId,
+            name = cafeOfCafeList.name,
+            address = cafeOfCafeList.address,
+            distance = cafeOfCafeList.distance,
+            status = status,
+            images = cafeOfCafeList.cafesImages,
+            latitude = cafeOfCafeList.latitude,
+            longitude = cafeOfCafeList.longitude,
+        )
+    }
 }
