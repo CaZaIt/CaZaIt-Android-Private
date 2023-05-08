@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_white"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/layout_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_corners_beige"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="28dp"
+                    android:paddingBottom="25dp"
+                    app:layout_collapseMode="pin">
+
+                    <TextView
+                        android:id="@+id/txt_log"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:text="로그인"
+                        android:textColor="@color/main_black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:minWidth="48dp"
+                        android:padding="14dp"
+                        android:src="@drawable/ic_arrow_circle_right"
+                        app:layout_constraintBottom_toBottomOf="@+id/txt_log"
+                        app:layout_constraintLeft_toRightOf="@id/txt_log"
+                        app:layout_constraintTop_toTopOf="@+id/txt_log" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/rectangle_cafe_list_btn_state_r10">
+
+            <TextView
+                android:id="@+id/txt_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text=""
+                android:textColor="@color/main_white"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="카자잇 페이" />
+
+            <TextView
+                android:id="@+id/txt_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:text="원"
+                android:textColor="@color/main_white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_won_N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/main_white"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                style="@style/TextValueWhite"
+                android:layout_marginTop="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_won"
+                app:layout_constraintTop_toBottomOf="@+id/txt_pay"
+                tools:text="1,111" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="350dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="190dp"
+            android:background="@drawable/shadow_box">
+
+            <ImageView
+                android:id="@+id/img_coupon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="35dp"
+                android:src="@drawable/ic_local_atm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_coupon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="쿠폰"
+                android:textColor="@color/main_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/img_coupon"
+                app:layout_constraintStart_toStartOf="@+id/img_coupon"
+                app:layout_constraintTop_toBottomOf="@+id/img_coupon" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="140dp"
+                android:layout_centerInParent="true"
+                android:background="#FF0000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/img_credit"
+                app:layout_constraintStart_toEndOf="@+id/img_coupon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:src="@drawable/ic_credit_card"
+                app:layout_constraintEnd_toStartOf="@+id/img_recently"
+                app:layout_constraintStart_toEndOf="@+id/img_coupon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="결제 내역"
+                android:textColor="@color/main_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/img_credit"
+                app:layout_constraintStart_toStartOf="@+id/img_credit"
+                app:layout_constraintTop_toBottomOf="@+id/img_credit" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="2dp"
+                android:layout_height="140dp"
+                android:layout_centerInParent="true"
+                android:background="#FF0000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/img_recently"
+                app:layout_constraintStart_toEndOf="@+id/img_credit"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_recently"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/ic_big_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_recently"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최근 본 매장"
+                android:textColor="@color/main_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/img_recently"
+                app:layout_constraintStart_toStartOf="@+id/img_recently"
+                app:layout_constraintTop_toBottomOf="@+id/img_recently" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

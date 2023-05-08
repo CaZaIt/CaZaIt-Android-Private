@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="350dp"
+        android:layout_height="180dp"
+        android:background="@drawable/round_corner_name_pass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_cafe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/rectangle_70"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_cafe_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="롬국"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/img_cafe"
+            app:layout_constraintTop_toTopOf="@+id/img_cafe"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/txt_cafe_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="220m"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_cafe_name"
+            app:layout_constraintStart_toEndOf="@+id/txt_cafe_name" />
+
+        <TextView
+            android:id="@+id/txt_cafe_address"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="서울특별시 광진구 광나루로 375-1 2층(군자동)"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/txt_cafe_name"
+            app:layout_constraintTop_toBottomOf="@+id/txt_cafe_name" />
+
+        <Button
+            android:id="@+id/btn_evaluation"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/cafe_list_orange"
+            android:text="보통"
+            app:layout_constraintStart_toStartOf="@+id/txt_cafe_address"
+            app:layout_constraintTop_toBottomOf="@+id/txt_cafe_address" />
+
+        <ImageView
+            android:id="@+id/img_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/favorite"
+            android:layout_marginLeft="90dp"
+            app:layout_constraintStart_toEndOf="@+id/txt_cafe_name"
+            app:layout_constraintTop_toTopOf="@+id/img_cafe" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
