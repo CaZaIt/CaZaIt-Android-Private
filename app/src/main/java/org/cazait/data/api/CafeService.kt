@@ -2,6 +2,7 @@ package org.cazait.data.api
 
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
+import org.cazait.data.model.response.CafeMenuRes
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -37,4 +38,9 @@ interface CafeService {
         @Query("sort") sort: String,
         @Query("limit") limit: String,
     ): Call<ListCafesRes>
+
+    @GET("/api/menus/cafe/{cafeId}")
+    fun getMenus(
+        @Path("cafeId") cafeId: Long
+    ): Call<CafeMenuRes>
 }

@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="menu"
+            type="org.cazait.data.model.CafeMenu" />
     </data>
 
 
@@ -33,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:layout_marginTop="16.5dp"
-            android:text="@string/menu_name"
+            android:text="@{menu.menuName, default = @string/menu_name}"
             android:textColor="@color/main_black"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/iv_cafe_menu"
@@ -45,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="21dp"
-            android:text="@string/menu_price"
+            android:text="@{menu.menuPrice, default = @string/menu_price}"
             android:textColor="@color/cafe_list_orange"
             android:textSize="13sp"
             app:layout_constraintEnd_toStartOf="@+id/tv_won"
@@ -71,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="25dp"
-            android:text="@string/menu_desc"
+            android:text="@{menu.menuDesc, default = @string/menu_desc}"
             android:textColor="@color/main_black"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"

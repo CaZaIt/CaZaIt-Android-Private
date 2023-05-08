@@ -7,11 +7,11 @@ data class CafeReviewRes(
     @SerializedName("code") val code: Int,
     @SerializedName("result") val result: String,
     @SerializedName("message") val message: String,
-    @SerializedName("data") val data: Data
+    @SerializedName("data") val data: ReviewData
 )
 
-data class Data(
+data class ReviewData(
     @SerializedName("reviewResponses") val reviewRes: List<CafeReview>,
     @SerializedName("totalElements") val total: Int,
-    @SerializedName("nextCursor") val nextCursor: Int
+    @SerializedName("nextCursor") val nextCursor: Long
 )

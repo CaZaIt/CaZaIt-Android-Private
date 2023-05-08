@@ -16,10 +16,11 @@ class CafeInfoMenuAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CafeMenu) {
-//            binding.ivCafeMenu.setImage(item.imageUrl)
-            binding.tvCafeMenu.text = item.name
-            binding.tvCafeMenuPrice.text = item.getStringPrice()
-            binding.tvCafeMenuDesc.text = item.desc
+            binding.menu = item
+            binding.ivCafeMenu.setImage(item.image)
+//            binding.tvCafeMenu.text = item.menuName
+//            binding.tvCafeMenuPrice.text = item.getStringPrice()
+//            binding.tvCafeMenuDesc.text = item.menuDesc
         }
     }
 
