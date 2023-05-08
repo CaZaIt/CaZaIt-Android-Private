@@ -2,7 +2,7 @@
 
 카자잇 안드로이드 배포용 레포지토리
 
-![](README_images/CaZaIt.gif)
+![](README_images/CaZaIt2.gif)
 
 ## Features
 
