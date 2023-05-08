@@ -1,3 +1,4 @@
 <resources>
     <dimen name="cafe_item_space">8dp</dimen>
+    <dimen name="cafe_item_space_bottom">16dp</dimen>
 </resources>
