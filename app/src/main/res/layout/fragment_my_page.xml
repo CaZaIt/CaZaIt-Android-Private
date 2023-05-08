@@ -62,8 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginEnd="28dp"
             android:layout_marginTop="100dp"
+            android:layout_marginEnd="28dp"
             android:background="@drawable/rectangle_cafe_list_btn_state_r10">
 
             <TextView
@@ -71,12 +71,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:text=""
                 android:textColor="@color/main_white"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="카자잇 페이" />
+                android:text="카자잇 페이" />
 
             <TextView
                 android:id="@+id/txt_won"
@@ -91,14 +90,14 @@
 
             <TextView
                 android:id="@+id/txt_won_N"
+                style="@style/TextValueWhite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="15dp"
                 android:textColor="@color/main_white"
                 android:textSize="35sp"
                 android:textStyle="bold"
-                style="@style/TextValueWhite"
-                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txt_won"
                 app:layout_constraintTop_toBottomOf="@+id/txt_pay"
@@ -107,17 +106,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="350dp"
-            android:layout_height="200dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="190dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginTop="200dp"
             android:background="@drawable/shadow_box">
 
             <ImageView
                 android:id="@+id/img_coupon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="35dp"
                 android:src="@drawable/ic_local_atm"
                 app:layout_constraintStart_toStartOf="parent"
@@ -181,7 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp"
                 android:src="@drawable/ic_big_home"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

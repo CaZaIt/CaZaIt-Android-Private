@@ -17,7 +17,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/arrow_back"
             app:layout_constraintBottom_toBottomOf="@+id/con_bar"
             app:layout_constraintStart_toStartOf="@+id/con_bar"
