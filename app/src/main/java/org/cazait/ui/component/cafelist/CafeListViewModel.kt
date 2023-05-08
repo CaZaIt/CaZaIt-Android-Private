@@ -49,7 +49,7 @@ class CafeListViewModel @Inject constructor(
 
         if (list.isNotEmpty()) {
             return list[0].map {
-                mapper.itemCafeFromCafeOfCafeList(it)
+                mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
             }
         }
 

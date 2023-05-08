@@ -11,50 +11,45 @@ import org.cazait.data.model.CafeImage
 import org.cazait.data.model.CafeStatus
 import org.cazait.data.dto.response.CafeOfCafeList
 import org.cazait.data.dto.response.ListCafesRes
+import org.cazait.data.mapper.CafeMapper
+import org.cazait.data.model.Cafe
 import org.cazait.data.repository.cafe.CafeRepository
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    private val cafeRepository: CafeRepository
+    private val cafeRepository: CafeRepository,
+    private val mapper: CafeMapper
 ) : BaseViewModel() {
-    private val _cafeListLiveData = MutableLiveData<Resource<ListCafesRes>>()
-    val cafeListLiveData: LiveData<Resource<ListCafesRes>>
-        get() = _cafeListLiveData
+    private val cafes = HashMap<Long, Cafe>()
+    private val _cafeStatusLiveData = MutableLiveData<Resource<ListCafesRes>>()
+    val cafeStatusLiveData: LiveData<Resource<ListCafesRes>>
+        get() = _cafeStatusLiveData
 
     fun searchCafes(latitude: String, longitude: String) {
         viewModelScope.launch {
-            _cafeListLiveData.value =
+            _cafeStatusLiveData.value =
                 cafeRepository.getListCafes(null, latitude = latitude, longitude = longitude)
                     .first()
         }
     }
 
-    private fun setTestData() {
-        val images = listOf(
-            CafeImage(1L, "sdfasdf")
-        )
-        val itemCafe = CafeOfCafeList(
-            1L,
-            CafeStatus.CROWDED,
-            "롬곡",
-            "광진구 군자동 23-22222",
-            longitude = "126.98606131314483",
-            latitude = "37.56610412874159",
-            cafesImages = images,
-            distance = 0,
-            favorite = false
-        )
-        val list = listOf(
-            itemCafe,
-        )
-        val data = ListCafesRes(
-            code = 1,
-            result = "SUCCESS",
-            message = "SUCCESS",
-            cafes = listOf(list)
-        )
-        _cafeListLiveData.value = Resource.Success(data)
+    fun getCafes(): List<Cafe> {
+        require(_cafeStatusLiveData.value is Resource.Success)
+        val list =
+            (_cafeStatusLiveData.value as Resource.Success<ListCafesRes>).data?.cafes.orEmpty()
+
+        if(list.isNotEmpty()) {
+            list[0].forEach {
+                cafes[it.cafeId] = mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
+            }
+        }
+
+        return cafes.map { it.value }
+    }
+
+    fun getCafeByCafeId(cafeId: Long): Cafe? {
+        return cafes[cafeId]
     }
 }
