@@ -8,4 +8,23 @@
         <item name="android:textColor">@color/main_white</item>
         <item name="fontFamily">@font/applesdgothicneob00</item>
     </style>
+    <style name="TextValue_R">
+        <item name="android:textColor">@color/main_black</item>
+        <item name="fontFamily">@font/apple_sd_gothic_neo_r</item>
+    </style>
+
+    <style name="TextValue_L">
+        <item name="android:textColor">@color/main_black</item>
+        <item name="fontFamily">@font/apple_sd_gothic_neo_r</item>
+    </style>
+
+    <style name="TextValue_EB">
+        <item name="android:textColor">@color/main_black</item>
+        <item name="fontFamily">@font/apple_sd_gothic_neo_eb</item>
+    </style>
+
+    <style name="TextValue_EB_white">
+        <item name="android:textColor">@color/main_white</item>
+        <item name="fontFamily">@font/apple_sd_gothic_neo_eb</item>
+    </style>
 </resources>

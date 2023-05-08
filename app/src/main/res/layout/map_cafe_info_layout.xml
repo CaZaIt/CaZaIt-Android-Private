@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/tv_distance"
-            style="@style/TextValue"
+            style="@style/TextValue_R"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
@@ -43,7 +43,7 @@
 
         <TextView
             android:id="@+id/tv_address"
-            style="@style/TextValue"
+            style="@style/TextValue_L"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -59,7 +59,7 @@
 
         <TextView
             android:id="@+id/tv_state"
-            style="@style/TextValue"
+            style="@style/TextValue_EB_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
