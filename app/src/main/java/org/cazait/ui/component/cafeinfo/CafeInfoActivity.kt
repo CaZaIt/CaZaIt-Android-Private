@@ -19,6 +19,8 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     R.layout.activity_cafe_info
 ) {
     override fun initView() {
+        val cafeName = intent.getStringExtra(getString(R.string.cafe_name))
+
         val dotsIndicator = binding.dotsIndicator
         val viewPager = binding.vpImg
         viewPager.adapter = CafeImgAdapter(this, viewModel.cafeImgList)

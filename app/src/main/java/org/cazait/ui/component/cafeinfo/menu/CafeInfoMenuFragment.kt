@@ -22,6 +22,7 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
 ) {
     private lateinit var menuAdapter: CafeInfoMenuAdapter
     override fun initView() {
+        viewModel.getMenus(0)
         initAdapter()
         observeViewModel()
     }
