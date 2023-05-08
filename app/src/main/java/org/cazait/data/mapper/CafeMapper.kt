@@ -13,40 +13,13 @@ import javax.inject.Inject
 class CafeMapper @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    fun itemCafeFromCafeOfCafeList(cafeOfCafeList: CafeOfCafeList): Cafe {
-        val status = when (cafeOfCafeList.congestionStatus) {
-            CafeStatus.FREE -> context.getString(R.string.state_free)
-            CafeStatus.NORMAL -> context.getString(R.string.state_normal)
-            CafeStatus.CLOSE -> context.getString(R.string.state_close)
-            CafeStatus.CROWDED -> context.getString(R.string.state_crowded)
-            CafeStatus.VERY_CROWDED -> context.getString(R.string.state_very_crowded)
-            CafeStatus.NONE -> context.getString(R.string.state_normal)
-        }
-        return Cafe(
-            cafeId = cafeOfCafeList.cafeId,
-            name = cafeOfCafeList.name,
-            address = cafeOfCafeList.address,
-            distance = cafeOfCafeList.distance,
-            status = status,
-            images = cafeOfCafeList.cafesImages
-        )
-    }
-
     fun itemCafeFromFavoriteCafe(cafeOfFavoriteCafe: FavoriteCafe): Cafe {
-        val status = when (cafeOfFavoriteCafe.congestionStatus) {
-            CafeStatus.FREE -> context.getString(R.string.state_free)
-            CafeStatus.NORMAL -> context.getString(R.string.state_normal)
-            CafeStatus.CLOSE -> context.getString(R.string.state_close)
-            CafeStatus.CROWDED -> context.getString(R.string.state_crowded)
-            CafeStatus.VERY_CROWDED -> context.getString(R.string.state_very_crowded)
-            CafeStatus.NONE -> context.getString(R.string.state_normal)
-        }
-        return Cafe(
+        return createCafe(
             cafeId = cafeOfFavoriteCafe.cafeId,
             name = cafeOfFavoriteCafe.name,
             address = cafeOfFavoriteCafe.address,
             distance = 0,
-            status = status,
+            congestionStatus = cafeOfFavoriteCafe.congestionStatus,
             images = cafeOfFavoriteCafe.imageUrl.map { cafeImageFromImageUrl(it) }
         )
     }
@@ -59,7 +32,20 @@ class CafeMapper @Inject constructor(
     }
 
     fun itemCafeFromCafeOfCafeListWithLatLng(cafeOfCafeList: CafeOfCafeList): Cafe {
-        val status = when (cafeOfCafeList.congestionStatus) {
+        return createCafe(
+            cafeId = cafeOfCafeList.cafeId,
+            name = cafeOfCafeList.name,
+            address = cafeOfCafeList.address,
+            distance = cafeOfCafeList.distance,
+            congestionStatus = cafeOfCafeList.congestionStatus,
+            images = cafeOfCafeList.cafesImages,
+            latitude = cafeOfCafeList.latitude,
+            longitude = cafeOfCafeList.longitude,
+        )
+    }
+
+    private fun getCafeStatusString(cafeStatus: CafeStatus): String {
+        return when (cafeStatus) {
             CafeStatus.FREE -> context.getString(R.string.state_free)
             CafeStatus.NORMAL -> context.getString(R.string.state_normal)
             CafeStatus.CLOSE -> context.getString(R.string.state_close)
@@ -67,15 +53,30 @@ class CafeMapper @Inject constructor(
             CafeStatus.VERY_CROWDED -> context.getString(R.string.state_very_crowded)
             CafeStatus.NONE -> context.getString(R.string.state_normal)
         }
-        return Cafe(
+    }
+
+    private fun createCafe(
+        cafeId: Long,
+        name: String,
+        address: String,
+        distance: Int,
+        congestionStatus: CafeStatus,
+        images: List<CafeImage>,
+        latitude: String? = null,
+        longitude: String? = null,
+    ): Cafe {
+        val status = getCafeStatusString(congestionStatus)
+        return Cafe(cafeId, name, address, distance, status, images, latitude, longitude)
+    }
+
+    fun itemCafeFromCafeOfCafeList(cafeOfCafeList: CafeOfCafeList): Cafe {
+        return createCafe(
             cafeId = cafeOfCafeList.cafeId,
             name = cafeOfCafeList.name,
             address = cafeOfCafeList.address,
             distance = cafeOfCafeList.distance,
-            status = status,
-            images = cafeOfCafeList.cafesImages,
-            latitude = cafeOfCafeList.latitude,
-            longitude = cafeOfCafeList.longitude,
+            congestionStatus = cafeOfCafeList.congestionStatus,
+            images = cafeOfCafeList.cafesImages
         )
     }
 }

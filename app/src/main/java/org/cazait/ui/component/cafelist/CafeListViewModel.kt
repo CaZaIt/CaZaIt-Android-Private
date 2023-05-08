@@ -15,7 +15,6 @@ import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.data.mapper.CafeMapper
 import org.cazait.data.model.Cafe
-import org.cazait.data.model.MockData
 import org.cazait.data.repository.cafe.CafeRepository
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.PermissionUtil
@@ -40,33 +39,25 @@ class CafeListViewModel @Inject constructor(
     val lastLocationLiveData: LiveData<Location>
         get() = _lastLocationLiveData
 
-    private val perMissionRequestLiveData = MutableLiveData<List<String>>()
+    private val permissionRequestLiveData = MutableLiveData<List<String>>()
 
 
     fun getVerticalCafes(): List<Cafe> {
         require(_listCafesData.value is Resource.Success)
         val list = (_listCafesData.value as Resource.Success<ListCafesRes>).data?.cafes.orEmpty()
 
-        if (list.isNotEmpty()) {
-            return list[0].map {
-                mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
-            }
-        }
-
-        return emptyList()
+        return list.firstOrNull()?.map {
+            mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
+        } ?: emptyList()
     }
 
     fun getFavoriteCafes(): List<Cafe> {
         require(_listFavoritesData.value is Resource.Success)
         val list = (_listFavoritesData.value as Resource.Success<ListFavoritesRes>).data?.favorites.orEmpty()
 
-        if(list.isNotEmpty()) {
-            return list.map {
-                mapper.itemCafeFromFavoriteCafe(it)
-            }
+        return list.map {
+            mapper.itemCafeFromFavoriteCafe(it)
         }
-
-        return emptyList()
     }
 
     fun updateList() {
@@ -92,6 +83,8 @@ class CafeListViewModel @Inject constructor(
         if(permissionUtil.hasLocationPermissions()) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 _lastLocationLiveData.value = location
+                if(location == null) return@addOnSuccessListener
+
                 Log.e("Location", "${location.latitude}, ${location.longitude}")
                 setList()
             }

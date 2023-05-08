@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.Constants
 import org.cazait.R
@@ -12,6 +14,7 @@ import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
+import org.cazait.data.model.Cafe
 import org.cazait.databinding.FragmentCafeListBinding
 import org.cazait.ui.adapter.CafeListHorizontalAdapter
 import org.cazait.ui.adapter.CafeListVerticalAdapter
@@ -29,51 +32,64 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     R.layout.fragment_cafe_list,
 ), PermissionCallbacks {
     private val horizontalAdapter by lazy {
-        CafeListHorizontalAdapter {
-            val intent = Intent(context, CafeInfoActivity::class.java)
-            intent.putExtra(getString(R.string.cafe_info), it)
-            startActivity(intent)
-        }
+        createCafeListHorizontalAdapter()
     }
     private val verticalAdapter by lazy {
-        CafeListVerticalAdapter {
-            val intent = Intent(context, CafeInfoActivity::class.java)
-            intent.putExtra(getString(R.string.cafe_info), it)
-            startActivity(intent)
-        }
+        createCafeListVerticalAdapter()
     }
 
     override fun initView() {
         requestPermission()
-
-        initAdapter()
+        initAdapters()
         observeViewModel()
     }
 
     override fun initAfterBinding() {}
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        Log.e("CafeListFragment", "$requestCode")
         viewModel.updateList()
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
 
-    private fun initAdapter() {
-        binding.rvFavoriteStores.addItemDecoration(
-            ItemDecoration(
-                extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
-            )
+    private fun initAdapters() {
+        setUpRecyclerView(binding.rvFavoriteStores, horizontalAdapter, R.dimen.cafe_item_space)
+        setUpRecyclerView(
+            binding.rvStores,
+            verticalAdapter,
+            R.dimen.cafe_item_space,
+            R.dimen.cafe_item_space_bottom
         )
-        binding.rvFavoriteStores.adapter = this.horizontalAdapter
+    }
 
-        binding.rvStores.addItemDecoration(
+    private fun createCafeListHorizontalAdapter() = CafeListHorizontalAdapter {
+        navigateToCafeInfo(it)
+    }
+
+    private fun createCafeListVerticalAdapter() = CafeListVerticalAdapter {
+        navigateToCafeInfo(it)
+    }
+
+    private fun setUpRecyclerView(
+        recyclerView: RecyclerView,
+        adapter: ListAdapter<*, *>,
+        spaceDimen: Int,
+        bottomSpaceDimen: Int? = null
+    ) {
+        recyclerView.addItemDecoration(
             ItemDecoration(
-                bottom = resources.getDimension(R.dimen.cafe_item_space).roundToInt() * 2,
-                extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
+                bottom = bottomSpaceDimen?.let { resources.getDimension(it).roundToInt() } ?: 0,
+                extraMargin = resources.getDimension(spaceDimen).roundToInt()
             )
         )
-        binding.rvStores.adapter = this.verticalAdapter
+        recyclerView.adapter = adapter
+    }
+
+    private fun navigateToCafeInfo(cafe: Cafe) {
+        val intent = Intent(context, CafeInfoActivity::class.java).apply {
+            putExtra(getString(R.string.cafe_info), cafe)
+        }
+        startActivity(intent)
     }
 
     private fun observeViewModel() {
@@ -84,52 +100,54 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     private fun handleHorizontalCafeList(status: Resource<ListFavoritesRes>) {
         when (status) {
             is Resource.Loading -> {}
+            is Resource.Error -> handleError(status)
             is Resource.Success -> {
                 when (status.data?.result) {
-                    SUCCESS -> {
-                        val favoriteCafes = viewModel.getFavoriteCafes()
-                        horizontalAdapter.submitList(favoriteCafes)
-                    }
+                    SUCCESS -> handleSuccess(
+                        horizontalAdapter::submitList,
+                        viewModel::getFavoriteCafes
+                    )
 
-                    FAIL -> {
-                        Log.e("CafeListFragment", status.data.message)
-                    }
+                    FAIL -> Log.e("CafeListFragment", status.data.message)
                 }
-            }
-
-            is Resource.Error -> {
-                Log.e("CafeListFragment", status.data?.message ?: getString(R.string.unknown_error))
             }
         }
     }
 
     private fun handleVerticalCafeList(status: Resource<ListCafesRes>) {
         when (status) {
+            is Resource.Error -> handleError(status)
             is Resource.Loading -> {}
             is Resource.Success -> {
                 when (status.data?.result) {
-                    SUCCESS -> {
-                        val cafes = viewModel.getVerticalCafes()
-                        verticalAdapter.submitList(cafes)
-                    }
+                    SUCCESS -> handleSuccess(
+                        verticalAdapter::submitList,
+                        viewModel::getVerticalCafes
+                    )
 
-                    FAIL -> {
-                        Log.e("CafeListFragment", status.data.message)
-                    }
+                    FAIL -> Log.e("CafeListFragment", status.data.message)
                 }
-            }
-
-            is Resource.Error -> {
-                Log.e("CafeListFragment", status.data?.message ?: getString(R.string.unknown_error))
             }
         }
     }
 
+    private fun handleSuccess(
+        submitList: (List<Cafe>) -> Unit,
+        getCafes: () -> List<Cafe>
+    ) {
+        val cafes = getCafes()
+        submitList(cafes)
+    }
+
+    private fun <T> handleError(status: Resource.Error<T>) {
+        Log.e("CafeListFragment", status.message ?: getString(R.string.unknown_error))
+    }
+
     private fun requestPermission() {
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             EasyPermissions.requestPermissions(
                 this,
-                "이 앱을 사용하기 위해 위치 권한을 필요로 합니다.",
+                getString(R.string.guid_need_location_permission),
                 Constants.REQUEST_CODE_LOCATION_PERMISSION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -137,7 +155,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         } else {
             EasyPermissions.requestPermissions(
                 this,
-                "이 앱을 사용하기 위해 위치 권한을 필요로 합니다.",
+                getString(R.string.guid_need_location_permission),
                 Constants.REQUEST_CODE_LOCATION_PERMISSION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,

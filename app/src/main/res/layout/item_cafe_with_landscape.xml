@@ -14,7 +14,7 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        app:cardElevation="12dp"
+        app:cardElevation="10dp"
         app:contentPaddingBottom="13dp"
         app:contentPaddingTop="22dp">
 
@@ -53,7 +53,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_distance"
-                style="@style/TextValue"
+                style="@style/TextValue_R"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -67,7 +67,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_address"
-                style="@style/TextValue"
+                style="@style/TextValue_L"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -86,6 +86,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_state"
+                style="@style/TextValue_EB_white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -95,7 +96,6 @@
                 android:gravity="center"
                 android:minHeight="48dp"
                 android:text="@{item.status}"
-                android:textColor="@color/main_white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
