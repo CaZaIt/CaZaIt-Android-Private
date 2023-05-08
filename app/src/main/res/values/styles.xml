@@ -2,6 +2,10 @@
 <resources>
     <style name="TextValue">
         <item name="android:textColor">@color/main_black</item>
-        <item name="fontFamily">@font/applesdgothic</item>
+        <item name="fontFamily">@font/applesdgothicneob00</item>
+    </style>
+    <style name="TextValueWhite">
+        <item name="android:textColor">@color/main_white</item>
+        <item name="fontFamily">@font/applesdgothicneob00</item>
     </style>
 </resources>

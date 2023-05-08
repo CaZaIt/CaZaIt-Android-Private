@@ -8,6 +8,7 @@ import org.cazait.databinding.ActivityMainBinding
 import org.cazait.ui.base.BaseActivity
 import org.cazait.ui.component.cafelist.CafeListFragment
 import org.cazait.ui.component.map.CafeMapFragment
+import org.cazait.ui.component.mypage.MyPageFragment
 import org.cazait.utils.replace
 
 @AndroidEntryPoint
@@ -17,7 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 ) {
     private val cafeListFragment: CafeListFragment by lazy { CafeListFragment() }
     private val mapFragment: CafeMapFragment by lazy { CafeMapFragment() }
-
+    private val myPageFragment: MyPageFragment by lazy { MyPageFragment() }
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -44,6 +45,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
                     return@setOnItemSelectedListener true
                 }
 
+                R.id.menu_my_page -> {
+                    replaceMyPageFragment()
+                    return@setOnItemSelectedListener true
+                }
+
                 else ->
                     return@setOnItemSelectedListener false
             }
@@ -58,5 +64,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     private fun replaceMapFragment() {
         supportFragmentManager.popBackStack()
         replace(R.id.fragment_container, mapFragment)
+    }
+
+    private fun replaceMyPageFragment() {
+        supportFragmentManager.popBackStack()
+        replace(R.id.fragment_container, myPageFragment)
     }
 }
