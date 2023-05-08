@@ -1,5 +1,6 @@
 package org.cazait.ui.component.cafeinfo
 
+import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -20,23 +21,32 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
 ) {
     override fun initView() {
         val cafeName = intent.getStringExtra(getString(R.string.cafe_name))
+        val cafeId = intent.getLongExtra()
+        val bundle = Bundle()
+        bundle.putLong("cafeId", cafeId)
+
+        val menuFrag = CafeInfoMenuFragment()
+        menuFrag.arguments = bundle
+
+        val reviewFrag = CafeInfoReviewFragment()
+        reviewFrag.arguments = bundle
 
         val dotsIndicator = binding.dotsIndicator
         val viewPager = binding.vpImg
         viewPager.adapter = CafeImgAdapter(this, viewModel.cafeImgList)
         dotsIndicator.attachTo(viewPager)
 
-        initDefaultFrag(CafeInfoMenuFragment())
+        initDefaultFrag(menuFrag)
         showFragment(
             binding.btnCafeMenu,
             binding.btnCafeRev,
-            CafeInfoMenuFragment(),
+            menuFrag,
             binding.fabReview
         )
         showFragment(
             binding.btnCafeRev,
             binding.btnCafeMenu,
-            CafeInfoReviewFragment(),
+            reviewFrag,
             binding.fabReview
         )
         initBackPressButton()
@@ -53,12 +63,12 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
         }
     }
 
-    private fun initDefaultFrag(menuFrag: Fragment) {
+    private fun initDefaultFrag(defaultFrag: Fragment) {
         binding.fabReview.toGone()
         binding.btnCafeMenu.isSelected = true
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment, menuFrag)
+            .replace(R.id.fragment, defaultFrag)
             .commit()
     }
 

@@ -16,10 +16,10 @@ class CafeInfoViewModel : BaseViewModel() {
         get() = _cafeIdData
 
     val cafeImgList = arrayListOf<CafeImage>(
-        CafeImage(0,"iceAmericano.png"),
-        CafeImage(1,"iceAmericano.png"),
-        CafeImage(2,"iceAmericano.png"),
-        CafeImage(3,"iceAmericano.png")
+        CafeImage(0, "iceAmericano.png"),
+        CafeImage(1, "iceAmericano.png"),
+        CafeImage(2, "iceAmericano.png"),
+        CafeImage(3, "iceAmericano.png")
     )
 
     fun makeCafeImgList(cafe: CafeOfCafeList): ArrayList<CafeImage> {
