@@ -14,7 +14,7 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        app:cardElevation="12dp"
+        app:cardElevation="10dp"
         app:contentPaddingBottom="13dp"
         app:contentPaddingTop="22dp">
 
