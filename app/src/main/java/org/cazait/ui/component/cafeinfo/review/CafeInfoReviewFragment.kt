@@ -1,5 +1,7 @@
 package org.cazait.ui.component.cafeinfo.review
 
+import android.util.Log
+import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.data.FAIL
 import org.cazait.data.Resource
@@ -15,12 +17,17 @@ import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 import kotlin.math.roundToInt
 
+@AndroidEntryPoint
 class CafeInfoReviewFragment : BaseFragment<FragmentCafeInfoReviewBinding, CafeInfoReviewViewModel>(
     CafeInfoReviewViewModel::class.java,
     R.layout.fragment_cafe_info_review
 ) {
     private lateinit var reviewAdapter: CafeInfoReviewAdapter
     override fun initView() {
+        val cafeId = arguments?.getLong("cafeId")
+        if (cafeId != null) {
+            viewModel.getReviews(cafeId, null, null, null)
+        }
         initAdapter()
         observeViewModel()
     }

@@ -5,6 +5,7 @@ import org.cazait.data.Resource
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.data.model.response.CafeMenuRes
+import org.cazait.data.model.response.CafeReviewRes
 
 interface CafeRepository {
     suspend fun getListFavorites(userId: Long): Flow<Resource<ListFavoritesRes>>
@@ -17,4 +18,10 @@ interface CafeRepository {
     ): Flow<Resource<ListCafesRes>>
 
     suspend fun getMenus(cafeId: Long): Flow<Resource<CafeMenuRes>>
+    suspend fun getReviews(
+        cafeId: Long,
+        sortBy: String?,
+        score: Int?,
+        lastId: Long?
+    ): Flow<Resource<CafeReviewRes>>
 }

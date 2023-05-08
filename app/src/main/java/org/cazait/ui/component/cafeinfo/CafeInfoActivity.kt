@@ -2,6 +2,7 @@ package org.cazait.ui.component.cafeinfo
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +36,7 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
         binding.tvInfoCafename.text = cafe.name
         binding.tvInfoCafeadd.text = cafe.address
 
+        Log.d("cafeId", cafe.cafeId.toString())
         bundle.putLong("cafeId", cafe.cafeId)
 
         val dotsIndicator = binding.dotsIndicator
