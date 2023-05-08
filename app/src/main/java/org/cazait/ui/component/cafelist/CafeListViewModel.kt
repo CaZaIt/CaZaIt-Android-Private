@@ -56,15 +56,21 @@ class CafeListViewModel @Inject constructor(
         return emptyList()
     }
 
-    fun updateList() {
-        initLastLocation()
+    fun getFavoriteCafes(): List<Cafe> {
+        require(_listFavoritesData.value is Resource.Success)
+        val list = (_listFavoritesData.value as Resource.Success<ListFavoritesRes>).data?.favorites.orEmpty()
+
+        if(list.isNotEmpty()) {
+            return list.map {
+                mapper.itemCafeFromFavoriteCafe(it)
+            }
+        }
+
+        return emptyList()
     }
 
-    private fun setTestDummyData() {
-        viewModelScope.launch {
-            _listFavoritesData.value = Resource.Success(MockData.getMockFData())
-            _listCafesData.value = Resource.Success(MockData.getListCafesMockData())
-        }
+    fun updateList() {
+        initLastLocation()
     }
 
     private fun setList() {

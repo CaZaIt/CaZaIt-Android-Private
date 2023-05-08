@@ -9,7 +9,7 @@ object MockData {
         "isdfasdfa"
     )
     private val fList = mutableListOf<FavoriteCafe>(
-        FavoriteCafe(1L, 1L, "롬곡", "광진구 군자동 32-999", "0", "0", "혼잡", fImages)
+        FavoriteCafe(1L, 1L, "롬곡", "광진구 군자동 32-999", "0", "0", CafeStatus.CROWDED, fImages)
     )
     private val fData = ListFavoritesRes(
         code = 1,
