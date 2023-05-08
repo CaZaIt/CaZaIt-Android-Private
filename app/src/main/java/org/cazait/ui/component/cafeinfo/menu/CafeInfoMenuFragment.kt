@@ -22,7 +22,10 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
 ) {
     private lateinit var menuAdapter: CafeInfoMenuAdapter
     override fun initView() {
-        viewModel.getMenus(0)
+        val cafeId = arguments?.getLong("cafeId")
+        if (cafeId != null) {
+            viewModel.getMenus(cafeId)
+        }
         initAdapter()
         observeViewModel()
     }
@@ -33,7 +36,7 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
 
     private fun initAdapter() {
         menuAdapter = CafeInfoMenuAdapter()
-        binding.rvCafeInfoMenus.adapter = this.menuAdapter
+        binding.rvCafeInfoMenus.adapter = menuAdapter
         binding.rvCafeInfoMenus.addItemDecoration(
             ItemDecoration(
                 extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
