@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
-        android:layout_height="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="172dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginEnd="23dp"
         android:background="@drawable/round_corner_name_pass"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -17,9 +21,11 @@
             android:id="@+id/img_cafe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
             android:src="@drawable/rectangle_70"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,47 +33,60 @@
             android:id="@+id/txt_cafe_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="롬국"
-            android:textSize="30sp"
+            android:layout_marginStart="18dp"
+            android:textSize="22sp"
+            android:textColor="@color/main_black"
             android:textStyle="bold"
+            android:fontFamily="@font/applesdgothicneob00"
             app:layout_constraintStart_toEndOf="@+id/img_cafe"
             app:layout_constraintTop_toTopOf="@+id/img_cafe"
-            android:layout_marginLeft="20dp"/>
+            tools:text="롬국" />
 
         <TextView
             android:id="@+id/txt_cafe_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="220m"
-            android:textSize="15sp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="7dp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/txt_cafe_name"
-            app:layout_constraintStart_toEndOf="@+id/txt_cafe_name" />
+            app:layout_constraintStart_toEndOf="@+id/txt_cafe_name"
+            tools:text="220m" />
 
         <TextView
             android:id="@+id/txt_cafe_address"
-            android:layout_width="180dp"
+            android:layout_width="173dp"
             android:layout_height="wrap_content"
-            android:text="서울특별시 광진구 광나루로 375-1 2층(군자동)"
-            android:textSize="15sp"
+            android:textSize="13sp"
+            android:layout_marginTop="7dp"
             app:layout_constraintStart_toStartOf="@+id/txt_cafe_name"
-            app:layout_constraintTop_toBottomOf="@+id/txt_cafe_name" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_cafe_name"
+            tools:text="서울특별시 광진구 광나루로 375-1 2층(군자동)" />
 
-        <Button
+
+        <TextView
             android:id="@+id/btn_evaluation"
-            android:layout_width="170dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/cafe_list_orange"
-            android:text="보통"
+            android:layout_width="173dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/btn_ic_recently"
+            android:fontFamily="@font/applesdgothicneob00"
+            android:gravity="center"
+            android:textColor="@color/main_white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txt_cafe_address"
-            app:layout_constraintTop_toBottomOf="@+id/txt_cafe_address" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_cafe_address"
+            tools:text="보통" />
 
         <ImageView
             android:id="@+id/img_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="106.5dp"
+            android:layout_marginEnd="24.5"
             android:src="@drawable/favorite"
-            android:layout_marginLeft="90dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_cafe_name"
             app:layout_constraintTop_toTopOf="@+id/img_cafe" />
     </androidx.constraintlayout.widget.ConstraintLayout>
