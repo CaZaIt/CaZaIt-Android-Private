@@ -31,14 +31,14 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     private val horizontalAdapter by lazy {
         CafeListHorizontalAdapter {
             val intent = Intent(context, CafeInfoActivity::class.java)
-            intent.putExtra(getString(R.string.cafe_name), it.name)
+            intent.putExtra(getString(R.string.cafe_info), it)
             startActivity(intent)
         }
     }
     private val verticalAdapter by lazy {
         CafeListVerticalAdapter {
             val intent = Intent(context, CafeInfoActivity::class.java)
-            intent.putExtra(getString(R.string.cafe_name), it.name)
+            intent.putExtra(getString(R.string.cafe_info), it)
             startActivity(intent)
         }
     }
@@ -87,7 +87,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
             is Resource.Success -> {
                 when (status.data?.result) {
                     SUCCESS -> {
-                        val favoriteCafes = status.data.favorites
+                        val favoriteCafes = viewModel.getFavoriteCafes()
                         horizontalAdapter.submitList(favoriteCafes)
                     }
 

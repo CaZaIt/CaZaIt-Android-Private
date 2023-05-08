@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cafe_name">CafeName</string>
+    <string name="cafe_address">CafeAddress</string>
+    <string name="cafe_lat">CafeLat</string>
+    <string name="cafe_lng">CafeLng</string>
+    <string name="cafe_id">CafeId</string>
+    <string name="cafe_info">CafeInfo</string>
 </resources>
