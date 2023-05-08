@@ -92,6 +92,8 @@ class CafeListViewModel @Inject constructor(
         if(permissionUtil.hasLocationPermissions()) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 _lastLocationLiveData.value = location
+                if(location == null) return@addOnSuccessListener
+
                 Log.e("Location", "${location.latitude}, ${location.longitude}")
                 setList()
             }
