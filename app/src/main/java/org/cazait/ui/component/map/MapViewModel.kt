@@ -36,17 +36,13 @@ class MapViewModel @Inject constructor(
     }
 
     fun getCafes(): List<Cafe> {
-        require(_cafeStatusLiveData.value is Resource.Success)
-        val list =
-            (_cafeStatusLiveData.value as Resource.Success<ListCafesRes>).data?.cafes.orEmpty()
-
-        if(list.isNotEmpty()) {
-            list[0].forEach {
-                cafes[it.cafeId] = mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
-            }
+        val data =
+            (_cafeStatusLiveData.value as? Resource.Success<ListCafesRes>)?.data?.cafes.orEmpty()
+        data.firstOrNull()?.forEach {
+            cafes[it.cafeId] = mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
         }
 
-        return cafes.map { it.value }
+        return cafes.values.toList()
     }
 
     fun getCafeByCafeId(cafeId: Long): Cafe? {
