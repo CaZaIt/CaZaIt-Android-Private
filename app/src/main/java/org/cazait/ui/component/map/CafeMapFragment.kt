@@ -1,6 +1,8 @@
 package org.cazait.ui.component.map
 
 import android.content.Intent
+import android.util.Log
+import com.google.android.material.snackbar.Snackbar
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
@@ -12,6 +14,7 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
+import org.cazait.data.FAIL
 import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
 import org.cazait.data.dto.response.ListCafesRes
@@ -24,8 +27,8 @@ import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
-class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, MapViewModel>(
-    MapViewModel::class.java, R.layout.fragment_map
+class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, CafeMapViewModel>(
+    CafeMapViewModel::class.java, R.layout.fragment_map
 ) {
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
@@ -37,17 +40,20 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
     override fun initView() {
         setUpMapFragment()
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-    }
-
-    override fun initAfterBinding() {
         observeCafes()
     }
+
+    override fun initAfterBinding() {}
 
     override fun onMapReady(mapObject: NaverMap) {
         setUpNaverMap(mapObject)
         locationSource.lastLocation?.let { location ->
             moveCamera(LatLng(location.latitude, location.longitude), ZOOM_LEVEL)
         }
+    }
+
+    private fun observeCafes() {
+        observe(viewModel.cafeStatusLiveData, ::updateMarkers)
     }
 
     private fun setUpMapFragment() {
@@ -60,11 +66,26 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
         naverMap = mapObject
         naverMap.locationSource = locationSource
         naverMap.uiSettings.isLocationButtonEnabled = true
-
-        naverMap.addOnCameraIdleListener {
-            searchCafes()
-        }
+        naverMap.addOnCameraIdleListener { searchCafes() }
         isMapInit = true
+    }
+
+    private fun setUpCafeInfoView(cafe: Cafe) {
+        binding.cafeInfoView.item = cafe
+        binding.cafeInfoView.ivCancel.setOnClickListener {
+            lastClickedMarker?.icon = OverlayImage.fromResource(R.drawable.ic_marker)
+            binding.cafeInfoView.root.toGone()
+        }
+        binding.cafeInfoView.tvState.setOnClickListener {
+            openCafeInfoActivity(cafe)
+        }
+        binding.cafeInfoView.root.toVisible()
+    }
+
+    private fun openCafeInfoActivity(cafe: Cafe) {
+        val intent = Intent(requireContext(), CafeInfoActivity::class.java)
+        intent.putExtra(getString(R.string.cafe_info), cafe)
+        startActivity(intent)
     }
 
     private fun searchCafes() {
@@ -77,21 +98,30 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
         )
     }
 
-    private fun observeCafes() {
-        observe(viewModel.cafeStatusLiveData, ::updateMarkers)
-    }
-
     private fun updateMarkers(status: Resource<ListCafesRes>) {
         when (status) {
-            is Resource.Success -> handleSuccess()
             is Resource.Loading -> {}
-            is Resource.Error -> {}
+            is Resource.Success -> handleSuccess(status.data?.result)
+            is Resource.Error -> handleError(status)
         }
     }
 
-    private fun handleSuccess() {
-        markers.forEach { it.map = null }
-        markers = viewModel.getCafes().map(::createMarker)
+    private fun handleSuccess(
+        result: String?
+    ) {
+        when (result) {
+            SUCCESS -> {
+                markers.forEach { it.map = null }
+                markers = viewModel.getCafes().map(::createMarker)
+            }
+
+            FAIL -> showMessage(result)
+        }
+    }
+
+    private fun <T> handleError(status: Resource.Error<T>) {
+        Log.e("CafeMapFragment", status.message ?: getString(R.string.unknown_error))
+        showMessage(getString(R.string.guide_error_default))
     }
 
     private fun createMarker(cafe: Cafe): Marker {
@@ -121,30 +151,16 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
         }
     }
 
-    private fun setUpCafeInfoView(cafe: Cafe) {
-        binding.cafeInfoView.item = cafe
-        binding.cafeInfoView.ivCancel.setOnClickListener {
-            lastClickedMarker?.icon = OverlayImage.fromResource(R.drawable.ic_marker)
-            binding.cafeInfoView.root.toGone()
-        }
-        binding.cafeInfoView.tvState.setOnClickListener {
-            openCafeInfoActivity(cafe)
-        }
-        binding.cafeInfoView.root.toVisible()
-    }
-
-    private fun openCafeInfoActivity(cafe: Cafe) {
-        val intent = Intent(requireContext(), CafeInfoActivity::class.java)
-        intent.putExtra(getString(R.string.cafe_info), cafe)
-        startActivity(intent)
-    }
-
     private fun moveCamera(position: LatLng, zoomLevel: Double) {
         if (isMapInit.not()) return
 
         val cameraUpdate =
             CameraUpdate.scrollAndZoomTo(position, zoomLevel).animate(CameraAnimation.Easing)
         naverMap.moveCamera(cameraUpdate)
+    }
+
+    private fun showMessage(message: String) {
+        view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show() }
     }
 
     companion object {
