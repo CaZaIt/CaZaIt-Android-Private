@@ -1,4 +1,4 @@
-package org.cazait.data.model.response
+package org.cazait.data.dto.response
 
 import com.google.gson.annotations.SerializedName
 import org.cazait.data.model.CafeReview

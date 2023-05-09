@@ -2,7 +2,6 @@ package org.cazait.ui.component.signin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
@@ -12,7 +11,7 @@ import org.cazait.data.FAIL
 import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
 import org.cazait.data.error.EMAIL_OR_PASSWORD_ERROR
-import org.cazait.data.model.response.SignInRes
+import org.cazait.data.dto.response.SignInRes
 import org.cazait.databinding.ActivitySignInBinding
 import org.cazait.ui.base.BaseActivity
 import org.cazait.ui.component.MainActivity
