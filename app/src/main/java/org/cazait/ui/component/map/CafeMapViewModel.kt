@@ -7,9 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.data.Resource
-import org.cazait.data.model.CafeImage
-import org.cazait.data.model.CafeStatus
-import org.cazait.data.dto.response.CafeOfCafeList
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.mapper.CafeMapper
 import org.cazait.data.model.Cafe
@@ -18,7 +15,7 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MapViewModel @Inject constructor(
+class CafeMapViewModel @Inject constructor(
     private val cafeRepository: CafeRepository,
     private val mapper: CafeMapper
 ) : BaseViewModel() {
