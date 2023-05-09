@@ -83,21 +83,13 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Map
 
     private fun updateMarkers(status: Resource<ListCafesRes>) {
         when (status) {
-            is Resource.Success -> {
-                status.data?.let {
-                    handleSuccess(status.data)
-                }
-            }
-
-            else -> {}
+            is Resource.Success -> handleSuccess()
+            is Resource.Loading -> {}
+            is Resource.Error -> {}
         }
     }
 
-    private fun handleSuccess(status: ListCafesRes) {
-        if (status.result != SUCCESS) {
-            return
-        }
-
+    private fun handleSuccess() {
         markers.forEach { it.map = null }
         markers = viewModel.getCafes().map(::createMarker)
     }
