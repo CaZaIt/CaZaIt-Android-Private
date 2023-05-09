@@ -5,7 +5,7 @@ import org.cazait.R
 import org.cazait.data.FAIL
 import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
-import org.cazait.data.model.response.CafeMenuRes
+import org.cazait.data.dto.response.CafeMenuRes
 import org.cazait.databinding.FragmentCafeInfoMenuBinding
 import org.cazait.ui.adapter.CafeInfoMenuAdapter
 import org.cazait.ui.adapter.ItemDecoration

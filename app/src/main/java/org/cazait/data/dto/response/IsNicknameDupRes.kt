@@ -1,4 +1,4 @@
-package org.cazait.data.model.response
+package org.cazait.data.dto.response
 
 data class IsNicknameDupRes(
     val code: Int,

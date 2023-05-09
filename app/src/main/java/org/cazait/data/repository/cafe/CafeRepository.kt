@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import org.cazait.data.Resource
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
-import org.cazait.data.model.response.CafeMenuRes
-import org.cazait.data.model.response.CafeReviewRes
+import org.cazait.data.dto.response.CafeMenuRes
+import org.cazait.data.dto.response.CafeReviewRes
 
 interface CafeRepository {
     suspend fun getListFavorites(userId: Long): Flow<Resource<ListFavoritesRes>>
