@@ -19,7 +19,7 @@ import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.model.Cafe
-import org.cazait.databinding.FragmentMapBinding
+import org.cazait.databinding.FragmentCafeMapBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
@@ -27,8 +27,8 @@ import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
-class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, CafeMapViewModel>(
-    CafeMapViewModel::class.java, R.layout.fragment_map
+class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding, CafeMapViewModel>(
+    CafeMapViewModel::class.java, R.layout.fragment_cafe_map
 ) {
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
@@ -99,6 +99,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentMapBinding, Caf
     }
 
     private fun updateMarkers(status: Resource<ListCafesRes>) {
+        if (isMapInit.not()) return
         when (status) {
             is Resource.Loading -> {}
             is Resource.Success -> handleSuccess(status.data?.result)
