@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="item"
+            type="org.cazait.data.model.Cafe" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -17,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/tv_cafe_name"
                 style="@style/TextValue"
                 android:layout_width="wrap_content"
@@ -28,11 +30,12 @@
                 android:maxLines="1"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:text="@{item.name}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="카페" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/tv_address"
                 style="@style/TextValue_L"
                 android:layout_width="match_parent"
@@ -43,13 +46,14 @@
                 android:layout_marginBottom="31dp"
                 android:ellipsize="end"
                 android:textSize="13sp"
+                android:text="@{item.address}"
                 app:layout_constraintBottom_toTopOf="@+id/btn_state"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_cafe_name"
                 tools:text="서울특별시 광진구 광나루로 333-3333 200층(군자동)" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/btn_state"
                 style="@style/TextValue_EB_white"
                 android:layout_width="match_parent"
@@ -60,6 +64,7 @@
                 android:background="@drawable/rectangle_cafe_list_btn_state_r10"
                 android:gravity="center"
                 android:textSize="18sp"
+                android:text="@{item.status}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
