@@ -41,7 +41,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
 
     override fun initView() {
         requestPermission()
-        initAdapters()
+        setUpLayout()
         observeViewModel()
     }
 
@@ -58,13 +58,24 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         observe(viewModel.listFavoritesData, ::handleHorizontalCafeList)
     }
 
-    private fun initAdapters() {
-        setUpRecyclerView(binding.rvFavoriteStores, horizontalAdapter, R.dimen.cafe_item_space)
+    private fun setUpLayout() {
+        setUpHorizontalLayout()
+        setUpVerticalLayout()
+    }
+
+    private fun setUpHorizontalLayout() {
+        binding.favoriteStoreLayout.apply {
+            tvTitle.text = getString(R.string.favorite_stores)
+            tvSubtitle.text = getString(R.string.favorite_stores_guide)
+            setUpRecyclerView(recyclerView, horizontalAdapter, R.dimen.cafe_item_space)
+        }
+    }
+
+    private fun setUpVerticalLayout() {
         setUpRecyclerView(
-            binding.rvStores,
+            binding.cafeAllLayout.recyclerView,
             verticalAdapter,
             R.dimen.cafe_item_space,
-            R.dimen.cafe_item_space_bottom
         )
     }
 

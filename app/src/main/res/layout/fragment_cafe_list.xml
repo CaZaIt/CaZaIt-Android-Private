@@ -30,7 +30,7 @@
                     android:paddingBottom="16dp"
                     app:layout_collapseMode="pin">
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <ImageView
                         android:id="@+id/ic_cazait"
                         android:layout_width="28dp"
                         android:layout_height="39dp"
@@ -42,14 +42,14 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="ContentDescription" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <EditText
                         android:id="@+id/searchBar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
+                        android:autofillHints="@null"
                         android:background="@drawable/background_search"
-                        android:backgroundTint="@color/main_black"
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
                         android:hint="@string/search_hint"
@@ -71,8 +71,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginEnd="28dp"
-                        android:padding="5dp"
                         android:adjustViewBounds="true"
+                        android:padding="5dp"
                         android:src="@drawable/ic_menu"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -92,45 +92,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/favorite_stores"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginTop="30dp"
-                    android:fontFamily="@font/applesdgothic"
-                    android:text="@string/favorite_stores"
-                    android:textColor="@color/main_black"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/favorite_stores_guid"
-                    android:textColor="@color/cafe_list_orange"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@id/favorite_stores"
-                    app:layout_constraintStart_toEndOf="@+id/favorite_stores"
-                    app:layout_constraintTop_toTopOf="@id/favorite_stores" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_favorite_stores"
+                <include
+                    android:id="@+id/favorite_store_layout"
+                    layout="@layout/horizontal_title_subtitle_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginEnd="28dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/favorite_stores"
-                    tools:listitem="@layout/item_cafe_just_info" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.divider.MaterialDivider
                     android:id="@+id/divider"
@@ -142,61 +111,16 @@
                     app:dividerColor="@color/main_black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_favorite_stores" />
+                    app:layout_constraintTop_toBottomOf="@+id/favorite_store_layout" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_do_checking_cafes"
-                    android:layout_width="wrap_content"
+                <include
+                    android:id="@+id/cafe_all_layout"
+                    layout="@layout/vertical_title_filter_layout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/applesdgothic"
-                    android:text="@string/do_checking_cafe"
-                    android:textColor="@color/main_black"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_ic_filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_filter"
-                    app:layout_constraintEnd_toStartOf="@id/tv_filter_type"
-                    app:layout_constraintTop_toBottomOf="@id/divider"
-                    tools:ignore="ContentDescription" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_filter_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="28dp"
-                    android:fontFamily="@font/applesdgothic"
-                    android:text="@string/filter_type_distance"
-                    android:textColor="@color/main_black"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_ic_filter"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/iv_ic_filter" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_stores"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="28dp"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_do_checking_cafes"
-                    app:spanCount="2"
-                    tools:listitem="@layout/item_cafe_with_landscape" />
+                    app:layout_constraintTop_toBottomOf="@id/divider" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
