@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.component.cafeinfo.review.CafeInfoReviewFragment">
@@ -12,23 +12,25 @@
             android:id="@+id/rv_cafe_info_reviews"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <FrameLayout
+        <ProgressBar
             android:id="@+id/pb_review_loader_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:visibility="gone"
-            tools:layout_editor_absoluteX="23dp"
-            tools:layout_editor_absoluteY="190dp"
-            tools:visibility="visible">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone" />
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminate="true" />
-        </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_no_review"
+            style="@style/TextValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/no_review"
+            android:textSize="20sp"
+            android:visibility="gone" />
+    </FrameLayout>
 </layout>

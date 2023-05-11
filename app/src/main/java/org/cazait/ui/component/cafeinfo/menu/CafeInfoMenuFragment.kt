@@ -1,5 +1,6 @@
 package org.cazait.ui.component.cafeinfo.menu
 
+import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.data.FAIL
@@ -53,13 +54,16 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
             is Resource.Loading -> binding.pbMenuLoaderView.toVisible()
             is Resource.Success -> status.data.let {
                 binding.pbMenuLoaderView.toGone()
-                when (status.data?.result) {
-                    SUCCESS -> {
-                        val menus = status.data.menus
-                        menuAdapter.submitList(menus)
+                Log.d("Menu Status", status.data.toString())
+                Log.d("Menu Status Empty?", status.data?.menus?.isEmpty().toString())
+                when (status.data?.menus?.isEmpty()) {
+                    true -> {
+                        binding.pbMenuLoaderView.toGone()
+                        binding.tvNoMenu.toVisible()
                     }
-                    FAIL -> {
-
+                    else -> {
+                        val menus = status.data?.menus
+                        menuAdapter.submitList(menus)
                     }
                 }
             }
