@@ -84,47 +84,36 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <include
                     android:id="@+id/favorite_store_layout"
                     layout="@layout/horizontal_title_subtitle_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <com.google.android.material.divider.MaterialDivider
                     android:id="@+id/divider"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="28dp"
-                    app:dividerColor="@color/main_black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/favorite_store_layout" />
+                    app:dividerColor="@color/main_black" />
 
                 <include
                     android:id="@+id/cafe_all_layout"
                     layout="@layout/vertical_title_filter_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
