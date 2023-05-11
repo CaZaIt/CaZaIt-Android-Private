@@ -22,7 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     private val cafeListFragment: CafeListFragment by lazy { CafeListFragment() }
     private val mapFragment: CafeMapFragment by lazy { CafeMapFragment() }
     private val myPageFragment: MyPageFragment by lazy { MyPageFragment() }
-    private val seeMoreFragment: SeeMoreFragment by lazy {SeeMoreFragment()}
+    private val seeMoreFragment: SeeMoreFragment by lazy { SeeMoreFragment() }
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -80,6 +80,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 
     private fun replaceSeeMoreFragment() {
         supportFragmentManager.popBackStack()
-        replace(R.id.fragment_container, seeMoreFragment)
+        replace(R.id.nav_host_fragment, seeMoreFragment)
     }
 }
