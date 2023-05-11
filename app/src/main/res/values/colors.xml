@@ -3,7 +3,7 @@
     <color name="main_black">#000000</color>
     <color name="main_white">#FFFFFF</color>
     <color name="main_beige">#FFDFD9</color>
-    <color name="beige_grey">#999999</color>
+    <color name="beige_gray">#999999</color>
     <!-- Sign In -->
     <color name="login_back">#FFDFD9</color>
 

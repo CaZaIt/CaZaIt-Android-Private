@@ -1,7 +1,6 @@
 package org.cazait.ui.component.signup
 
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -9,9 +8,9 @@ import org.cazait.R
 import org.cazait.data.FAIL
 import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
-import org.cazait.data.model.response.IsEmailDupRes
-import org.cazait.data.model.response.IsNicknameDupRes
-import org.cazait.data.model.response.SignUpRes
+import org.cazait.data.dto.response.IsEmailDupRes
+import org.cazait.data.dto.response.IsNicknameDupRes
+import org.cazait.data.dto.response.SignUpRes
 import org.cazait.databinding.ActivitySignUpBinding
 import org.cazait.ui.base.BaseActivity
 import org.cazait.ui.component.signin.SignInActivity

@@ -1,11 +1,11 @@
 package org.cazait.data.api
 
-import org.cazait.data.model.request.IsEmailDupReq
-import org.cazait.data.model.request.IsNicknameDupReq
-import org.cazait.data.model.request.SignUpReq
-import org.cazait.data.model.response.IsEmailDupRes
-import org.cazait.data.model.response.IsNicknameDupRes
-import org.cazait.data.model.response.SignUpRes
+import org.cazait.data.dto.request.IsEmailDupReq
+import org.cazait.data.dto.request.IsNicknameDupReq
+import org.cazait.data.dto.request.SignUpReq
+import org.cazait.data.dto.response.IsEmailDupRes
+import org.cazait.data.dto.response.IsNicknameDupRes
+import org.cazait.data.dto.response.SignUpRes
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST

@@ -19,9 +19,7 @@ class CafeListHorizontalAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Cafe) {
-            binding.tvCafeName.text = item.name
-            binding.btnState.text = item.status
-            binding.tvAddress.text = item.address
+            binding.item = item
             binding.root.setOnClickListener {
                 onClick(item)
             }

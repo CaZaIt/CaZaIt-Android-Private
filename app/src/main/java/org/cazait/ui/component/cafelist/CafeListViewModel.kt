@@ -41,21 +41,18 @@ class CafeListViewModel @Inject constructor(
 
     private val permissionRequestLiveData = MutableLiveData<List<String>>()
 
-
     fun getVerticalCafes(): List<Cafe> {
-        require(_listCafesData.value is Resource.Success)
-        val list = (_listCafesData.value as Resource.Success<ListCafesRes>).data?.cafes.orEmpty()
-
-        return list.firstOrNull()?.map {
+        val dataList =
+            (_listCafesData.value as? Resource.Success<ListCafesRes>)?.data?.cafes.orEmpty()
+        return dataList.firstOrNull()?.map {
             mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
         } ?: emptyList()
     }
 
     fun getFavoriteCafes(): List<Cafe> {
-        require(_listFavoritesData.value is Resource.Success)
-        val list = (_listFavoritesData.value as Resource.Success<ListFavoritesRes>).data?.favorites.orEmpty()
-
-        return list.map {
+        val dataList =
+            (_listFavoritesData.value as? Resource.Success<ListFavoritesRes>)?.data?.favorites.orEmpty()
+        return dataList.map {
             mapper.itemCafeFromFavoriteCafe(it)
         }
     }
@@ -80,10 +77,10 @@ class CafeListViewModel @Inject constructor(
 
     @SuppressLint("MissingPermission")
     private fun initLastLocation() {
-        if(permissionUtil.hasLocationPermissions()) {
+        if (permissionUtil.hasLocationPermissions()) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 _lastLocationLiveData.value = location
-                if(location == null) return@addOnSuccessListener
+                if (location == null) return@addOnSuccessListener
 
                 Log.e("Location", "${location.latitude}, ${location.longitude}")
                 setList()

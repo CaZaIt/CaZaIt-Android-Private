@@ -1,11 +1,11 @@
 package org.cazait.ui.component.cafeinfo.review
 
+import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.data.FAIL
 import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
-import org.cazait.data.model.response.CafeMenuRes
-import org.cazait.data.model.response.CafeReviewRes
+import org.cazait.data.dto.response.CafeReviewRes
 import org.cazait.databinding.FragmentCafeInfoReviewBinding
 import org.cazait.ui.adapter.CafeInfoReviewAdapter
 import org.cazait.ui.adapter.ItemDecoration
@@ -15,12 +15,17 @@ import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 import kotlin.math.roundToInt
 
+@AndroidEntryPoint
 class CafeInfoReviewFragment : BaseFragment<FragmentCafeInfoReviewBinding, CafeInfoReviewViewModel>(
     CafeInfoReviewViewModel::class.java,
     R.layout.fragment_cafe_info_review
 ) {
     private lateinit var reviewAdapter: CafeInfoReviewAdapter
     override fun initView() {
+        val cafeId = arguments?.getLong("cafeId")
+        if (cafeId != null) {
+            viewModel.getReviews(cafeId, null, null, null)
+        }
         initAdapter()
         observeViewModel()
     }

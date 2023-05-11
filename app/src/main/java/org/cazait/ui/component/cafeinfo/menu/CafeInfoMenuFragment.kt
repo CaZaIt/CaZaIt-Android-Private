@@ -5,7 +5,7 @@ import org.cazait.R
 import org.cazait.data.FAIL
 import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
-import org.cazait.data.model.response.CafeMenuRes
+import org.cazait.data.dto.response.CafeMenuRes
 import org.cazait.databinding.FragmentCafeInfoMenuBinding
 import org.cazait.ui.adapter.CafeInfoMenuAdapter
 import org.cazait.ui.adapter.ItemDecoration
@@ -22,6 +22,10 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
 ) {
     private lateinit var menuAdapter: CafeInfoMenuAdapter
     override fun initView() {
+        val cafeId = arguments?.getLong("cafeId")
+        if (cafeId != null) {
+            viewModel.getMenus(cafeId)
+        }
         initAdapter()
         observeViewModel()
     }
@@ -32,7 +36,7 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
 
     private fun initAdapter() {
         menuAdapter = CafeInfoMenuAdapter()
-        binding.rvCafeInfoMenus.adapter = this.menuAdapter
+        binding.rvCafeInfoMenus.adapter = menuAdapter
         binding.rvCafeInfoMenus.addItemDecoration(
             ItemDecoration(
                 extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()

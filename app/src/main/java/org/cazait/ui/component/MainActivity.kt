@@ -2,6 +2,8 @@ package org.cazait.ui.component
 
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.ActivityMainBinding
@@ -34,49 +36,46 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     }
 
     private fun initBottomNavigation() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        binding.bnvMenu.setupWithNavController(navHostFragment.navController)
         binding.bnvMenu.itemIconTintList = null
-        binding.bnvMenu.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.menu_cafe_list -> {
-                    replaceCafeListFragment()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.menu_cafe_map -> {
-                    replaceMapFragment()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.menu_my_page -> {
-                    replaceMyPageFragment()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.menu_app_settings -> {
-                    replaceSeeMoreFragment()
-                    return@setOnItemSelectedListener true
-                }
-
-                else ->
-                    return@setOnItemSelectedListener false
-
-            }
-        }
+//        binding.bnvMenu.setOnItemSelectedListener {
+//            when (it.itemId) {
+//                R.id.menu_cafe_list -> {
+//                    replaceCafeListFragment()
+//                    return@setOnItemSelectedListener true
+//                }
+//
+//                R.id.menu_cafe_map -> {
+//                    replaceMapFragment()
+//                    return@setOnItemSelectedListener true
+//                }
+//
+//                R.id.menu_my_page -> {
+//                    replaceMyPageFragment()
+//                    return@setOnItemSelectedListener true
+//                }
+//
+//                else ->
+//                    return@setOnItemSelectedListener false
+//            }
+//        }
     }
 
     private fun replaceCafeListFragment() {
         supportFragmentManager.popBackStack()
-        replace(R.id.fragment_container, cafeListFragment)
+        replace(R.id.nav_host_fragment, cafeListFragment)
     }
 
     private fun replaceMapFragment() {
         supportFragmentManager.popBackStack()
-        replace(R.id.fragment_container, mapFragment)
+        replace(R.id.nav_host_fragment, mapFragment)
     }
 
     private fun replaceMyPageFragment() {
         supportFragmentManager.popBackStack()
-        replace(R.id.fragment_container, myPageFragment)
+        replace(R.id.nav_host_fragment, myPageFragment)
     }
 
     private fun replaceSeeMoreFragment() {

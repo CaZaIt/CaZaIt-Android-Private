@@ -4,22 +4,22 @@
     tools:context="org.cazait.MainActivity">
 
     <item
-        android:id="@+id/menu_cafe_list"
+        android:id="@+id/cafeListFragment"
         android:icon="@drawable/ic_bnv_home"
         tools:ignore="MenuTitle" />
 
     <item
-        android:id="@+id/menu_cafe_map"
+        android:id="@+id/cafeMapFragment"
         android:icon="@drawable/ic_bnv_map"
         tools:ignore="MenuTitle" />
 
     <item
-        android:id="@+id/menu_my_page"
+        android:id="@+id/myPageFragment"
         android:icon="@drawable/ic_bnv_my_page"
         tools:ignore="MenuTitle" />
 
     <item
-        android:id="@+id/menu_app_settings"
+        android:id="@+id/seeMoreFragment"
         android:icon="@drawable/ic_bnv_view_more"
         tools:ignore="MenuTitle" />
 </menu>

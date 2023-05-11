@@ -7,9 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.data.Resource
-import org.cazait.data.model.CafeImage
-import org.cazait.data.model.CafeStatus
-import org.cazait.data.dto.response.CafeOfCafeList
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.mapper.CafeMapper
 import org.cazait.data.model.Cafe
@@ -18,7 +15,7 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MapViewModel @Inject constructor(
+class CafeMapViewModel @Inject constructor(
     private val cafeRepository: CafeRepository,
     private val mapper: CafeMapper
 ) : BaseViewModel() {
@@ -36,17 +33,13 @@ class MapViewModel @Inject constructor(
     }
 
     fun getCafes(): List<Cafe> {
-        require(_cafeStatusLiveData.value is Resource.Success)
-        val list =
-            (_cafeStatusLiveData.value as Resource.Success<ListCafesRes>).data?.cafes.orEmpty()
-
-        if(list.isNotEmpty()) {
-            list[0].forEach {
-                cafes[it.cafeId] = mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
-            }
+        val data =
+            (_cafeStatusLiveData.value as? Resource.Success<ListCafesRes>)?.data?.cafes.orEmpty()
+        data.firstOrNull()?.forEach {
+            cafes[it.cafeId] = mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
         }
 
-        return cafes.map { it.value }
+        return cafes.values.toList()
     }
 
     fun getCafeByCafeId(cafeId: Long): Cafe? {
