@@ -93,15 +93,20 @@
                             <TextView
                                 android:id="@+id/tv_info_cafeadd"
                                 style="@style/TextValue"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="30dp"
                                 android:layout_marginTop="4dp"
+                                android:layout_marginEnd="30dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
                                 android:text="@string/info_cafeadd"
                                 android:textColor="@color/main_black"
                                 android:textSize="15sp"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_info_cafename" />
+                                app:layout_constraintTop_toBottomOf="@+id/tv_info_cafename"
+                                tools:text="아주 긴 주소입니다.아주 긴 주소입니다.아주 긴 주소입니다.아주 긴 주소입니다." />
 
                             <TextView
                                 android:id="@+id/tv_map"
@@ -109,18 +114,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="12dp"
-                                android:layout_marginTop="38dp"
                                 android:text="@string/info_cafemap"
                                 android:textColor="@color/cafe_list_orange"
-                                app:layout_constraintStart_toEndOf="@+id/tv_info_cafename"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintBottom_toBottomOf="@id/tv_info_cafename"
+                                app:layout_constraintStart_toEndOf="@+id/tv_info_cafename" />
 
                             <ImageView
                                 android:id="@+id/iv_fabor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="23.85dp"
-                                android:layout_marginEnd="28.48dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:padding="16dp"
                                 android:src="@drawable/favorite"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -188,7 +195,7 @@
 
                     <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/fragment"
-                        android:name="org.cazait.ui.component.cafeinfo.menu.CafeInfoMenuFragment"
+                        android:name="org.cazait.ui.component.menu.CafeInfoMenuFragment"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="25dp"
@@ -219,6 +226,7 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
