@@ -1,5 +1,6 @@
 package org.cazait.ui.component.cafeinfo.review
 
+import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.data.FAIL
@@ -55,13 +56,17 @@ class CafeInfoReviewFragment : BaseFragment<FragmentCafeInfoReviewBinding, CafeI
             is Resource.Loading -> binding.pbReviewLoaderView.toVisible()
             is Resource.Success -> status.data.let {
                 binding.pbReviewLoaderView.toGone()
-                when (status.data?.result) {
-                    SUCCESS -> {
-                        val reviews = status.data.data.reviewRes
-                        reviewAdapter.submitList(reviews)
+                Log.d("Review Status", status.data.toString())
+                when (status.data?.data) {
+                    null -> {
+                        Log.d("data가 null", status.data?.data.toString())
+                        binding.pbReviewLoaderView.toGone()
+                        binding.tvNoReview.toVisible()
                     }
-                    FAIL -> {
-
+                    else -> {
+                        val reviews = status.data.data.reviewRes
+                        Log.d("data가 null이 아님", reviews.toString())
+                        reviewAdapter.submitList(reviews)
                     }
                 }
             }
