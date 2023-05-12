@@ -20,6 +20,7 @@ buildscript {
         playServicesLocationVersion = '16.0.0'
         splashVersion = '1.0.0-beta01'
         easyPermissionVersion = '3.0.0'
+        lottie_version = '5.2.0'
     }
     repositories {
         google()

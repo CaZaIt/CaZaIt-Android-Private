@@ -49,10 +49,13 @@ class SignInActivity :
 
     private fun handleSignInResult(status: Resource<SignInRes>) {
         when (status) {
-            is Resource.Loading -> binding.pbSignInLoaderView.toVisible()
+            is Resource.Loading -> {
+                binding.lottieSignin.toVisible()
+                binding.lottieSignin.playAnimation()
+            }
             is Resource.Success -> status.data.let {
-                binding.pbSignInLoaderView.toGone()
-
+                binding.lottieSignin.pauseAnimation()
+                binding.lottieSignin.toGone()
                 when (status.data?.result) {
                     SUCCESS -> {
                         val intent = Intent(this, MainActivity::class.java)
@@ -64,7 +67,8 @@ class SignInActivity :
             }
 
             is Resource.Error -> {
-                binding.pbSignInLoaderView.toGone()
+                binding.lottieSignin.pauseAnimation()
+                binding.lottieSignin.toGone()
                 status.let {
                     viewModel.showToastMessage(it.message)
                 }

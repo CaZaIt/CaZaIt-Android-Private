@@ -195,7 +195,7 @@
 
                     <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/fragment"
-                        android:name="org.cazait.ui.component.menu.CafeInfoMenuFragment"
+                        android:name="org.cazait.ui.component.cafeinfo.menu.CafeInfoMenuFragment"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="25dp"

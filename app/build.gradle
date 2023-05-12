@@ -53,7 +53,7 @@ dependencies {
     }
 
     // detekt
-    detekt ("io.gitlab.arturbosch.detekt:detekt-cli:1.22.0-RC3")
+    detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.22.0-RC3")
 
     implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
@@ -71,20 +71,20 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$viewModelVersion"
 
     // Hilt Library
-    implementation ("com.google.dagger:hilt-android:$hiltVersion")
-    kapt ("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    kapt ("androidx.hilt:hilt-compiler:$hiltCompilerVersion")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    kapt("androidx.hilt:hilt-compiler:$hiltCompilerVersion")
 
     // Glide Library
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
     // Gson
-    implementation ("com.squareup.retrofit2:converter-gson:$gsonVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$gsonVersion")
 
     // okHttp
-    implementation ("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
-    implementation ("com.squareup.okhttp3:okhttp:$okHttpVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
+    implementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
 
     // splash
     implementation("androidx.core:core-splashscreen:$splashVersion")
@@ -105,6 +105,9 @@ dependencies {
 
     // EasyPermissions
     implementation("pub.devrel:easypermissions:$easyPermissionVersion")
+
+    // Lottie Animation
+    implementation "com.airbnb.android:lottie:$lottie_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -135,7 +138,7 @@ task detekt(type: JavaExec) {
     def input = "$projectDir"
     def exclude = ".*/build/.*,.*/resources/.*"
     def config = "$rootDir/detekt.yml"
-    def params = [ '-i', input, '-ex', exclude, '-c', config]
+    def params = ['-i', input, '-ex', exclude, '-c', config]
 
     args(params)
 }

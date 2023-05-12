@@ -53,14 +53,17 @@ class CafeInfoReviewFragment : BaseFragment<FragmentCafeInfoReviewBinding, CafeI
 
     private fun handleCafeReview(status: Resource<CafeReviewRes>) {
         when (status) {
-            is Resource.Loading -> binding.pbReviewLoaderView.toVisible()
+            is Resource.Loading -> {
+                binding.lottieReview.toVisible()
+                binding.lottieReview.playAnimation()
+            }
             is Resource.Success -> status.data.let {
-                binding.pbReviewLoaderView.toGone()
+                binding.lottieReview.pauseAnimation()
+                binding.lottieReview.toGone()
                 Log.d("Review Status", status.data.toString())
                 when (status.data?.data) {
                     null -> {
                         Log.d("data가 null", status.data?.data.toString())
-                        binding.pbReviewLoaderView.toGone()
                         binding.tvNoReview.toVisible()
                     }
                     else -> {
@@ -71,7 +74,8 @@ class CafeInfoReviewFragment : BaseFragment<FragmentCafeInfoReviewBinding, CafeI
                 }
             }
             is Resource.Error -> {
-                binding.pbReviewLoaderView.toGone()
+                binding.lottieReview.pauseAnimation()
+                binding.lottieReview.toGone()
             }
         }
     }

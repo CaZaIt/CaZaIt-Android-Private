@@ -14,13 +14,14 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <ProgressBar
-            android:id="@+id/pb_menu_loader_view"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="lottie_coffee.json"
+            app:lottie_loop="true" />
 
         <TextView
             android:id="@+id/tv_no_menu"

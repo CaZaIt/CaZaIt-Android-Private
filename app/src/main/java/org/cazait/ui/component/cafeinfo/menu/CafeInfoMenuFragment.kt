@@ -51,16 +51,17 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
 
     private fun handleCafeMenu(status: Resource<CafeMenuRes>) {
         when (status) {
-            is Resource.Loading -> binding.pbMenuLoaderView.toVisible()
+            is Resource.Loading -> {
+                binding.lottieMenu.toVisible()
+                binding.lottieMenu.playAnimation()
+            }
             is Resource.Success -> status.data.let {
-                binding.pbMenuLoaderView.toGone()
+                binding.lottieMenu.pauseAnimation()
+                binding.lottieMenu.toGone()
                 Log.d("Menu Status", status.data.toString())
                 Log.d("Menu Status Empty?", status.data?.menus?.isEmpty().toString())
                 when (status.data?.menus?.isEmpty()) {
-                    true -> {
-                        binding.pbMenuLoaderView.toGone()
-                        binding.tvNoMenu.toVisible()
-                    }
+                    true -> binding.tvNoMenu.toVisible()
                     else -> {
                         val menus = status.data?.menus
                         menuAdapter.submitList(menus)
@@ -68,7 +69,8 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
                 }
             }
             is Resource.Error -> {
-                binding.pbMenuLoaderView.toGone()
+                binding.lottieMenu.pauseAnimation()
+                binding.lottieMenu.toGone()
             }
         }
     }
