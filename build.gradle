@@ -21,6 +21,7 @@ buildscript {
         splashVersion = '1.0.0-beta01'
         easyPermissionVersion = '3.0.0'
         lottie_version = '5.2.0'
+        room_version = "2.5.1"
     }
     repositories {
         google()
