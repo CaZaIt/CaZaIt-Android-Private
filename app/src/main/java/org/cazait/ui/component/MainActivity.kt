@@ -19,10 +19,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     MainViewModel::class.java,
     R.layout.activity_main,
 ) {
-    private val cafeListFragment: CafeListFragment by lazy { CafeListFragment() }
-    private val mapFragment: CafeMapFragment by lazy { CafeMapFragment() }
-    private val myPageFragment: MyPageFragment by lazy { MyPageFragment() }
-    private val seeMoreFragment: SeeMoreFragment by lazy { SeeMoreFragment() }
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -40,46 +36,5 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.bnvMenu.setupWithNavController(navHostFragment.navController)
         binding.bnvMenu.itemIconTintList = null
-//        binding.bnvMenu.setOnItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.menu_cafe_list -> {
-//                    replaceCafeListFragment()
-//                    return@setOnItemSelectedListener true
-//                }
-//
-//                R.id.menu_cafe_map -> {
-//                    replaceMapFragment()
-//                    return@setOnItemSelectedListener true
-//                }
-//
-//                R.id.menu_my_page -> {
-//                    replaceMyPageFragment()
-//                    return@setOnItemSelectedListener true
-//                }
-//
-//                else ->
-//                    return@setOnItemSelectedListener false
-//            }
-//        }
-    }
-
-    private fun replaceCafeListFragment() {
-        supportFragmentManager.popBackStack()
-        replace(R.id.nav_host_fragment, cafeListFragment)
-    }
-
-    private fun replaceMapFragment() {
-        supportFragmentManager.popBackStack()
-        replace(R.id.nav_host_fragment, mapFragment)
-    }
-
-    private fun replaceMyPageFragment() {
-        supportFragmentManager.popBackStack()
-        replace(R.id.nav_host_fragment, myPageFragment)
-    }
-
-    private fun replaceSeeMoreFragment() {
-        supportFragmentManager.popBackStack()
-        replace(R.id.nav_host_fragment, seeMoreFragment)
     }
 }
