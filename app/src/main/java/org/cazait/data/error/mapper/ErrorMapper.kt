@@ -8,6 +8,7 @@ import org.cazait.data.error.EMAIL_OR_PASSWORD_ERROR
 import org.cazait.data.error.EXPIRED_ACCESS_TOKEN
 import org.cazait.data.error.EXPIRED_REFRESH_TOKEN
 import org.cazait.data.error.INVALID_ACCESS_TOKEN
+import org.cazait.data.error.NETWORK_ERROR
 import org.cazait.data.error.NO_INTERNET_CONNECTION
 import org.cazait.data.error.PASSWORD_ERROR
 import javax.inject.Inject
