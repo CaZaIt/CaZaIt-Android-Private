@@ -43,7 +43,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         observeCafes()
     }
 
-    override fun initAfterBinding() {}
+    override fun initAfterBinding() = Unit
 
     override fun onMapReady(mapObject: NaverMap) {
         setUpNaverMap(mapObject)
