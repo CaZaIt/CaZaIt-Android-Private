@@ -85,10 +85,13 @@ class SignUpActivity :
 
     private fun handleSignUpResult(status: Resource<SignUpRes>) {
         when (status) {
-            is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
+            is Resource.Loading -> {
+                binding.lottieSignup.toVisible()
+                binding.lottieSignup.playAnimation()
+            }
             is Resource.Success -> status.data.let {
-                binding.pbSignUpLoaderView.toGone()
-
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
                 when (status.data?.result) {
                     SUCCESS -> {
                         val nextScreenIntent =
@@ -96,13 +99,12 @@ class SignUpActivity :
                         startActivity(nextScreenIntent)
                         finish()
                     }
-
                     FAIL -> viewModel.showToastMessage(status.data.message)
                 }
             }
-
             is Resource.Error -> {
-                binding.pbSignUpLoaderView.toGone()
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
                 viewModel.showToastMessage(status.message)
             }
         }
@@ -110,10 +112,13 @@ class SignUpActivity :
 
     private fun handleEmailDupResult(status: Resource<IsEmailDupRes>) {
         when (status) {
-            is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
+            is Resource.Loading -> {
+                binding.lottieSignup.toVisible()
+                binding.lottieSignup.playAnimation()
+            }
             is Resource.Success -> status.data.let {
-                binding.pbSignUpLoaderView.toGone()
-
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
                 when (status.data?.result) {
                     SUCCESS -> viewModel.showToastMessage(status.data.data)
                     FAIL -> viewModel.showToastMessage(status.data.message)
@@ -121,7 +126,8 @@ class SignUpActivity :
             }
 
             is Resource.Error -> {
-                binding.pbSignUpLoaderView.toGone()
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
                 viewModel.showToastMessage(status.message)
             }
         }
@@ -129,10 +135,13 @@ class SignUpActivity :
 
     private fun handleNickDupResult(status: Resource<IsNicknameDupRes>) {
         when (status) {
-            is Resource.Loading -> binding.pbSignUpLoaderView.toVisible()
+            is Resource.Loading -> {
+                binding.lottieSignup.toVisible()
+                binding.lottieSignup.playAnimation()
+            }
             is Resource.Success -> status.data.let {
-                binding.pbSignUpLoaderView.toGone()
-
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
                 when (status.data?.result) {
                     SUCCESS -> viewModel.showToastMessage(status.data.data)
                     FAIL -> viewModel.showToastMessage(status.data.message)
@@ -140,7 +149,8 @@ class SignUpActivity :
             }
 
             is Resource.Error -> {
-                binding.pbSignUpLoaderView.toGone()
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
                 viewModel.showToastMessage(status.message)
             }
         }
