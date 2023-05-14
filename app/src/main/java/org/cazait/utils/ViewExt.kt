@@ -44,10 +44,10 @@ fun View.toInvisible() {
 
 fun View.showToast(
     lifecycleOwner: LifecycleOwner,
-    ToastEvent: LiveData<SingleEvent<Any>>,
+    toastEvent: LiveData<SingleEvent<Any>>,
     timeLength: Int,
 ) {
-    ToastEvent.observe(lifecycleOwner) { event ->
+    toastEvent.observe(lifecycleOwner) { event ->
         event.getContentIfNotHandled()?.let {
             when (it) {
                 is String -> Toast.makeText(this.context, it, timeLength).show()

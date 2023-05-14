@@ -39,8 +39,6 @@ class CafeListViewModel @Inject constructor(
     val lastLocationLiveData: LiveData<Location>
         get() = _lastLocationLiveData
 
-    private val permissionRequestLiveData = MutableLiveData<List<String>>()
-
     fun getVerticalCafes(): List<Cafe> {
         val dataList =
             (_listCafesData.value as? Resource.Success<ListCafesRes>)?.data?.cafes.orEmpty()

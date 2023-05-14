@@ -1,8 +1,8 @@
 package org.cazait.network
 
-import android.net.NetworkInfo
+import android.net.ConnectivityManager
 
 interface NetworkConnectivity {
-    fun getNetworkInfo(): NetworkInfo?
+    fun getConnectivityManager(): ConnectivityManager
     fun isConnected(): Boolean
 }

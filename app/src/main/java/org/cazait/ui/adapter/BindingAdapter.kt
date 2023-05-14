@@ -6,6 +6,8 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import coil.load
 
+const val DURATION_CROSS_FADE = 300
+
 @BindingAdapter("visible")
 fun View.setVisible(isShow: Boolean) {
     isVisible = isShow
@@ -15,6 +17,6 @@ fun View.setVisible(isShow: Boolean) {
 fun ImageView.setImage(imageUrl: String?) {
     // `crossfade`으로 사용자 경험 개선
     load(imageUrl) {
-        crossfade(300)
+        crossfade(DURATION_CROSS_FADE)
     }
 }

@@ -4,7 +4,11 @@ import org.cazait.data.dto.request.SignInReq
 import org.cazait.data.dto.response.RefreshTokenRes
 import org.cazait.data.dto.response.SignInRes
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface AuthService {
     @POST("/api/auths/log-in")
