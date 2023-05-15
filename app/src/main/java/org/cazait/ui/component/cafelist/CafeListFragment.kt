@@ -17,6 +17,7 @@ import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.data.model.Cafe
 import org.cazait.databinding.FragmentCafeListBinding
+import org.cazait.domain.model.ListTitle
 import org.cazait.ui.adapter.CafeListHorizontalAdapter
 import org.cazait.ui.adapter.CafeListVerticalAdapter
 import org.cazait.ui.adapter.ItemDecoration
@@ -65,13 +66,18 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
 
     private fun setUpHorizontalLayout() {
         binding.favoriteStoreLayout.apply {
-            tvTitle.text = getString(R.string.favorite_stores)
-            tvSubtitle.text = getString(R.string.favorite_stores_guide)
+            title = ListTitle(
+                title = getString(R.string.favorite_stores),
+                subTitle = getString(R.string.favorite_stores_guide)
+            )
             setUpRecyclerView(recyclerView, horizontalAdapter, R.dimen.cafe_item_space)
         }
     }
 
     private fun setUpVerticalLayout() {
+        binding.cafeAllLayout.apply {
+            title = ListTitle(title = getString(R.string.do_checking_cafe))
+        }
         setUpRecyclerView(
             binding.cafeAllLayout.recyclerView,
             verticalAdapter,

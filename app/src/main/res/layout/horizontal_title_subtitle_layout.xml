@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="title"
+            type="org.cazait.domain.model.ListTitle" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,7 +21,7 @@
             android:layout_marginStart="23dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/applesdgothic"
-            android:text="@string/favorite_stores"
+            android:text="@{title.title}"
             android:textColor="@color/main_black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:text="@{title.subTitle}"
             android:textColor="@color/cafe_list_orange"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
