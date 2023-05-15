@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flowOn
 import org.cazait.data.Resource
 import org.cazait.data.dto.request.SignInReq
 import org.cazait.data.dto.response.SignInRes
-import org.cazait.data.remote.auth.AuthRemoteData
+import org.cazait.data.source.remote.auth.AuthRemoteData
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 

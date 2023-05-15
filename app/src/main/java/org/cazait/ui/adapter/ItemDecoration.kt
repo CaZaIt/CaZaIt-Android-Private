@@ -1,7 +1,12 @@
 package org.cazait.ui.adapter
 
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
+import androidx.core.view.marginBottom
+import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 
 class ItemDecoration(
@@ -30,5 +35,8 @@ class ItemDecoration(
                 bottom + extraMargin,
             )
         }
+
+        Log.e("Rect", "top: ${outRect.top}, bottom: ${outRect.bottom}, left: ${outRect.left}, right: ${outRect.right}")
+        Log.e("View", "width = ${view.width}, height = ${view.height}")
     }
 }

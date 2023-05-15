@@ -15,7 +15,7 @@ import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
-import org.cazait.data.model.Cafe
+import org.cazait.domain.model.Cafe
 import org.cazait.databinding.FragmentCafeListBinding
 import org.cazait.domain.model.ListTitle
 import org.cazait.ui.adapter.CafeListHorizontalAdapter

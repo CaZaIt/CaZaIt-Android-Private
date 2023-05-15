@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="org.cazait.data.model.Cafe" />
+            type="org.cazait.domain.model.Cafe" />
     </data>
 
     <androidx.cardview.widget.CardView

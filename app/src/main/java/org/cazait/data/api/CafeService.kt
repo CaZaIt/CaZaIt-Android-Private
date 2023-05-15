@@ -4,8 +4,10 @@ import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.data.dto.response.CafeMenuRes
 import org.cazait.data.dto.response.CafeReviewRes
+import org.cazait.data.dto.response.PostFavoriteCafeRes
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -52,4 +54,10 @@ interface CafeService {
         @Query("score") score: Int?,
         @Query("lastId") lastId: Long?
     ): Call<CafeReviewRes>
+
+    @POST("/api/favorites/user/{userId}/cafe/{cafeId}")
+    fun postFavoriteCafe(
+        @Path("userId") userId: Long,
+        @Path("cafeId") cafeId: Long,
+    ): Call<PostFavoriteCafeRes>
 }

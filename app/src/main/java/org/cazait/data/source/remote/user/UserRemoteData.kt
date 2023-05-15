@@ -1,4 +1,4 @@
-package org.cazait.data.remote.user
+package org.cazait.data.source.remote.user
 
 import org.cazait.data.Resource
 import org.cazait.data.api.UserService

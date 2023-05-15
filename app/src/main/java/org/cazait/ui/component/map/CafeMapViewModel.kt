@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.data.Resource
 import org.cazait.data.dto.response.ListCafesRes
-import org.cazait.data.mapper.CafeMapper
-import org.cazait.data.model.Cafe
-import org.cazait.data.repository.cafe.CafeRepository
+import org.cazait.data.model.mapper.CafeMapper
+import org.cazait.domain.model.Cafe
+import org.cazait.domain.repository.CafeRepository
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 

@@ -1,7 +1,8 @@
-package org.cazait.data.model
+package org.cazait.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import org.cazait.data.model.CafeImage
 
 @Parcelize
 data class Cafe(

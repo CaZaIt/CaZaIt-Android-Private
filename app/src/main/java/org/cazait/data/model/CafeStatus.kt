@@ -7,5 +7,15 @@ enum class CafeStatus {
     CROWDED,
     VERY_CROWDED,
 
-    NONE,
+    NONE;
+
+    companion object {
+        fun fromString(value: String): CafeStatus {
+            return try {
+                valueOf(value)
+            } catch (e: IllegalArgumentException) {
+                NONE
+            }
+        }
+    }
 }

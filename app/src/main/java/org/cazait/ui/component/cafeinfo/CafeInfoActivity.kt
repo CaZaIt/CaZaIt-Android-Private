@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.data.model.Cafe
+import org.cazait.domain.model.Cafe
 import org.cazait.databinding.ActivityCafeInfoBinding
 import org.cazait.ui.adapter.CafeImgAdapter
 import org.cazait.ui.base.BaseActivity

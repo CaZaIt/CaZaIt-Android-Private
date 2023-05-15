@@ -1,4 +1,4 @@
-package org.cazait.data.remote.cafe
+package org.cazait.data.source.remote.cafe
 
 import org.cazait.data.Resource
 import org.cazait.data.dto.response.CafeMenuRes

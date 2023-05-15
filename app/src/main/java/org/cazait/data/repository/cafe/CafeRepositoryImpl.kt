@@ -1,6 +1,7 @@
 package org.cazait.data.repository.cafe
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.cazait.data.Resource
@@ -9,14 +10,23 @@ import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.data.dto.response.CafeMenuRes
 import org.cazait.data.dto.response.CafeReviewRes
-import org.cazait.data.remote.cafe.CafeInfoRemoteData
-import org.cazait.data.remote.cafe.CafeListRemoteData
+import org.cazait.data.dto.response.PostFavoriteCafeRes
+import org.cazait.data.model.FavoriteCafe
+import org.cazait.data.model.mapper.CafeMapper
+import org.cazait.data.source.local.dao.CafeDAO
+import org.cazait.data.source.remote.cafe.CafeInfoRemoteData
+import org.cazait.data.source.remote.cafe.CafeListRemoteData
+import org.cazait.domain.model.Cafe
+import org.cazait.domain.repository.CafeRepository
+import java.io.IOException
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class CafeRepositoryImpl @Inject constructor(
     private val cafeListRemoteData: CafeListRemoteData,
     private val cafeInfoRemoteData: CafeInfoRemoteData,
+    private val cafeDAO: CafeDAO,
+    private val cafeMapper: CafeMapper,
     private val ioDispatcher: CoroutineContext,
 ) : CafeRepository {
     override suspend fun getListCafes(
@@ -58,6 +68,36 @@ class CafeRepositoryImpl @Inject constructor(
     ): Flow<Resource<CafeReviewRes>> {
         return flow {
             emit(cafeInfoRemoteData.getReviews(cafeId, sortBy, score, lastId))
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun insertFavoriteCafe(cafe: Cafe): Boolean {
+        return try {
+            cafeDAO.insertFavoriteCafe(cafeMapper.toFavoriteCafeEntity(cafe))
+            true
+        } catch (e: IOException) {
+            false
+        }
+    }
+
+    override suspend fun updateFavoriteCafe(cafe: Cafe): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun loadFavoriteCafes(): Flow<List<Cafe>> {
+        return flow {
+            cafeDAO.selectAllFavoriteCafe().collect { list ->
+                emit(list.map { cafeMapper.toCafeFromFavoriteCafeEntity(it) })
+            }
+        }
+    }
+
+    override suspend fun postFavoriteCafe(
+        userId: Long,
+        cafe: Cafe
+    ): Flow<Resource<PostFavoriteCafeRes>> {
+        return flow {
+            emit(cafeListRemoteData.postFavoriteCafe(userId, cafe.cafeId))
         }.flowOn(ioDispatcher)
     }
 }

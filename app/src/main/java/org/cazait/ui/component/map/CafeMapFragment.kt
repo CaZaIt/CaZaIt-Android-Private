@@ -18,7 +18,7 @@ import org.cazait.data.FAIL
 import org.cazait.data.Resource
 import org.cazait.data.SUCCESS
 import org.cazait.data.dto.response.ListCafesRes
-import org.cazait.data.model.Cafe
+import org.cazait.domain.model.Cafe
 import org.cazait.databinding.FragmentCafeMapBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.cafeinfo.CafeInfoActivity

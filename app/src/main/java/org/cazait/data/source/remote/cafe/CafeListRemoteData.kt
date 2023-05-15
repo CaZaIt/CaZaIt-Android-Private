@@ -1,4 +1,4 @@
-package org.cazait.data.remote.cafe
+package org.cazait.data.source.remote.cafe
 
 import org.cazait.data.Resource
 import org.cazait.data.api.CafeService
@@ -7,6 +7,7 @@ import org.cazait.data.error.NO_INTERNET_CONNECTION
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.data.dto.request.ListCafesReq
+import org.cazait.data.dto.response.PostFavoriteCafeRes
 import org.cazait.network.NetworkConnectivity
 import java.io.IOException
 import javax.inject.Inject
@@ -56,6 +57,28 @@ class CafeListRemoteData @Inject constructor(
             ).execute()
 
             if (response.isSuccessful) {
+                Resource.Success(response.body())
+            } else {
+                Resource.Error(response.message())
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Resource.Error(e.message)
+        }
+    }
+
+    override suspend fun postFavoriteCafe(
+        userId: Long,
+        cafeId: Long
+    ): Resource<PostFavoriteCafeRes> {
+        if (!networkConnectivity.isConnected()) {
+            val errorMessage = errorManager.getError(NO_INTERNET_CONNECTION).toString()
+            return Resource.Error(errorMessage)
+        }
+
+        return try {
+            val response = cafeService.postFavoriteCafe(userId, cafeId).execute()
+            if(response.isSuccessful) {
                 Resource.Success(response.body())
             } else {
                 Resource.Error(response.message())

@@ -1,13 +1,15 @@
-package org.cazait.data.mapper
+package org.cazait.data.model.mapper
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.cazait.R
-import org.cazait.data.model.Cafe
+import org.cazait.domain.model.Cafe
 import org.cazait.data.model.CafeStatus
 import org.cazait.data.dto.response.CafeOfCafeList
 import org.cazait.data.model.CafeImage
 import org.cazait.data.model.FavoriteCafe
+import org.cazait.data.model.entity.FavoriteCafeEntity
+import java.util.Date
 import javax.inject.Inject
 
 class CafeMapper @Inject constructor(
@@ -77,6 +79,30 @@ class CafeMapper @Inject constructor(
             distance = cafeOfCafeList.distance,
             congestionStatus = cafeOfCafeList.congestionStatus,
             images = cafeOfCafeList.cafesImages
+        )
+    }
+
+    fun toFavoriteCafeEntity(cafe: Cafe) = FavoriteCafeEntity(
+        cafeId = cafe.cafeId,
+        cafeName = cafe.name,
+        address = cafe.address,
+        latitude = cafe.latitude ?: "0",
+        longitude = cafe.longitude ?: "0",
+        congestion = CafeStatus.fromString(cafe.status),
+        imageUrl = if(cafe.images.isNotEmpty()) cafe.images[0].imageUrl else "",
+        createdDate = Date()
+    )
+
+    fun toCafeFromFavoriteCafeEntity(cafeEntity: FavoriteCafeEntity): Cafe {
+        return createCafe(
+            cafeId = cafeEntity.cafeId,
+            name = cafeEntity.cafeName,
+            address = cafeEntity.address,
+            distance = 0,
+            congestionStatus = cafeEntity.congestion,
+            images = listOf(CafeImage(0L, cafeEntity.imageUrl)),
+            latitude = cafeEntity.latitude,
+            longitude = cafeEntity.longitude,
         )
     }
 }

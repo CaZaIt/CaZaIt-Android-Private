@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.data.model.Cafe
-import org.cazait.data.model.FavoriteCafe
+import org.cazait.domain.model.Cafe
 import org.cazait.databinding.ItemCafeJustInfoBinding
 
 class CafeListHorizontalAdapter(
