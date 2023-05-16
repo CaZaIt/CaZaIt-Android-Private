@@ -58,6 +58,9 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
             binding.fabReview
         )
         initBackPressButton()
+
+        initSaveFavoriteButton()
+        initViewModel(cafe)
     }
 
     override fun initAfterBinding() {
@@ -68,6 +71,18 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
         binding.imgBack.bringToFront() // 이 코드가 없으면 FrameLayout 내의 ImageView의 경우 클릭되지 않습니다.
         binding.imgBack.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun initSaveFavoriteButton() {
+        binding.toolbar.bringToFront()
+        binding.ivFabor.bringToFront()
+        binding.toolbar.setOnClickListener {
+            Log.e("toolbar", "onclick")
+        }
+        binding.ivFabor.setOnClickListener {
+            Log.e("ivFavor", "onclick")
+            viewModel.saveFavoriteCafe()
         }
     }
 
@@ -100,5 +115,9 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
                 .replace(R.id.fragment, frag)
                 .commit()
         }
+    }
+
+    private fun initViewModel(cafe: Cafe) {
+        viewModel.initViewModel(cafe = cafe)
     }
 }

@@ -10,14 +10,19 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.Constants
 import org.cazait.R
-import org.cazait.data.FAIL
-import org.cazait.data.Resource
-import org.cazait.data.SUCCESS
+import org.cazait.domain.model.FAIL
+import org.cazait.domain.model.Resource
+import org.cazait.domain.model.SUCCESS
 import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
+import org.cazait.data.model.CafeStatus
 import org.cazait.domain.model.Cafe
 import org.cazait.databinding.FragmentCafeListBinding
+import org.cazait.domain.model.Cafes
+import org.cazait.domain.model.FavoriteCafe
+import org.cazait.domain.model.FavoriteCafes
 import org.cazait.domain.model.ListTitle
+import org.cazait.domain.model.mapper.DomainMapper.toCafe
 import org.cazait.ui.adapter.CafeListHorizontalAdapter
 import org.cazait.ui.adapter.CafeListVerticalAdapter
 import org.cazait.ui.adapter.ItemDecoration
@@ -49,7 +54,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     override fun initAfterBinding() {}
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        viewModel.updateList()
+        viewModel.updateCheckCafes()
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
@@ -86,7 +91,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     }
 
     private fun createCafeListHorizontalAdapter() = CafeListHorizontalAdapter {
-        navigateToCafeInfo(it)
+        navigateToCafeInfo(it.toCafe())
     }
 
     private fun createCafeListVerticalAdapter() = CafeListVerticalAdapter {
@@ -115,41 +120,35 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         startActivity(intent)
     }
 
-    private fun handleHorizontalCafeList(status: Resource<ListFavoritesRes>) {
+    private fun handleHorizontalCafeList(status: Resource<FavoriteCafes>) {
         when (status) {
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> handleSuccess(
-                status.data?.result,
                 horizontalAdapter::submitList,
-                viewModel::getFavoriteCafes
+                status.data?.list ?: emptyList()
             )
         }
     }
 
-    private fun handleVerticalCafeList(status: Resource<ListCafesRes>) {
+    private fun handleVerticalCafeList(status: Resource<Cafes>) {
         when (status) {
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> {
                 handleSuccess(
-                    status.data?.result,
                     verticalAdapter::submitList,
-                    viewModel::getVerticalCafes
+                    status.data?.list ?: emptyList()
                 )
             }
         }
     }
 
-    private fun handleSuccess(
-        result: String?,
-        submitList: (List<Cafe>) -> Unit,
-        getCafes: () -> List<Cafe>
+    private fun <T> handleSuccess(
+        submitList: (List<T>) -> Unit,
+        dataList: List<T>,
     ) {
-        when (result) {
-            SUCCESS -> submitList(getCafes())
-            FAIL -> showMessage(getString(R.string.guide_error_default))
-        }
+        submitList(dataList)
     }
 
     private fun <T> handleError(status: Resource.Error<T>) {

@@ -1,4 +1,4 @@
-package org.cazait.data
+package org.cazait.domain.model
 
 const val SUCCESS = "SUCCESS"
 const val FAIL = "FAIL"

@@ -5,19 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.domain.model.Cafe
 import org.cazait.databinding.ItemCafeJustInfoBinding
+import org.cazait.domain.model.FavoriteCafe
 
 class CafeListHorizontalAdapter(
-    private val onClick: (Cafe) -> Unit
+    private val onClick: (FavoriteCafe) -> Unit
 ) :
-    ListAdapter<Cafe, CafeListHorizontalAdapter.CafeListFavoritesViewHolder>(diffUtil) {
+    ListAdapter<FavoriteCafe, CafeListHorizontalAdapter.CafeListFavoritesViewHolder>(diffUtil) {
 
     inner class CafeListFavoritesViewHolder(
         private val binding: ItemCafeJustInfoBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Cafe) {
+        fun bind(item: FavoriteCafe) {
             binding.item = item
             binding.root.setOnClickListener {
                 onClick(item)
@@ -40,12 +40,12 @@ class CafeListHorizontalAdapter(
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<Cafe>() {
-            override fun areItemsTheSame(oldItem: Cafe, newItem: Cafe): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<FavoriteCafe>() {
+            override fun areItemsTheSame(oldItem: FavoriteCafe, newItem: FavoriteCafe): Boolean {
                 return oldItem.cafeId == newItem.cafeId
             }
 
-            override fun areContentsTheSame(oldItem: Cafe, newItem: Cafe): Boolean {
+            override fun areContentsTheSame(oldItem: FavoriteCafe, newItem: FavoriteCafe): Boolean {
                 return oldItem == newItem
             }
         }

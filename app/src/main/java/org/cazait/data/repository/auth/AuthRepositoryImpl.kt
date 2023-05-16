@@ -3,7 +3,7 @@ package org.cazait.data.repository.auth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.dto.request.SignInReq
 import org.cazait.data.dto.response.SignInRes
 import org.cazait.data.source.remote.auth.AuthRemoteData

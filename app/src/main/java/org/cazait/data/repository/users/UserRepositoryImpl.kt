@@ -3,7 +3,7 @@ package org.cazait.data.repository.users
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.dto.request.IsEmailDupReq
 import org.cazait.data.dto.request.IsNicknameDupReq
 import org.cazait.data.dto.request.SignUpReq

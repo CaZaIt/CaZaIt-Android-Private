@@ -35,8 +35,5 @@ class ItemDecoration(
                 bottom + extraMargin,
             )
         }
-
-        Log.e("Rect", "top: ${outRect.top}, bottom: ${outRect.bottom}, left: ${outRect.left}, right: ${outRect.right}")
-        Log.e("View", "width = ${view.width}, height = ${view.height}")
     }
 }

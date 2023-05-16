@@ -1,6 +1,5 @@
 package org.cazait.data.source.remote.cafe
 
-import org.cazait.data.Resource
 import org.cazait.data.api.CafeService
 import org.cazait.data.error.ErrorManager
 import org.cazait.data.error.NO_INTERNET_CONNECTION
@@ -8,7 +7,10 @@ import org.cazait.data.dto.response.ListCafesRes
 import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.data.dto.request.ListCafesReq
 import org.cazait.data.dto.response.PostFavoriteCafeRes
+import org.cazait.data.dto.response.DataResponse
+import org.cazait.data.error.NETWORK_ERROR
 import org.cazait.network.NetworkConnectivity
+import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
@@ -17,94 +19,94 @@ class CafeListRemoteData @Inject constructor(
     private val networkConnectivity: NetworkConnectivity,
     private val errorManager: ErrorManager,
 ) : CafeListRemoteDataSource {
-    override suspend fun getListCafes(userId: Long, query: ListCafesReq): Resource<ListCafesRes> {
-        if (!networkConnectivity.isConnected()) {
-            val errorMessage = errorManager.getError(NO_INTERNET_CONNECTION).toString()
-            return Resource.Error(errorMessage)
-        }
-
-        return try {
-            val response = cafeService.getListCafes(
+    override suspend fun getListCafes(
+        userId: Long,
+        query: ListCafesReq
+    ): DataResponse<ListCafesRes> {
+        return when (val response = processCall {
+            cafeService.getListCafes(
                 userId,
                 longitude = query.longitude,
                 latitude = query.latitude,
                 sort = query.sort,
                 limit = query.limit
-            ).execute()
-
-            if (response.isSuccessful) {
-                Resource.Success(response.body())
-            } else {
-                Resource.Error(response.message())
+            )
+        }) {
+            is ListCafesRes -> {
+                DataResponse.Success(data = response)
             }
-        } catch (e: IOException) {
-            Resource.Error(e.message)
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
         }
     }
 
-    override suspend fun getListCafesWithGuest(query: ListCafesReq): Resource<ListCafesRes> {
-        if (!networkConnectivity.isConnected()) {
-            val errorMessage = errorManager.getError(NO_INTERNET_CONNECTION).toString()
-            return Resource.Error(errorMessage)
-        }
-
-        return try {
-            val response = cafeService.getListCafesWithGuest(
+    override suspend fun getListCafesWithGuest(query: ListCafesReq): DataResponse<ListCafesRes> {
+        return when(val response = processCall {
+            cafeService.getListCafesWithGuest(
                 longitude = query.longitude,
                 latitude = query.latitude,
                 sort = query.sort,
                 limit = query.limit
-            ).execute()
-
-            if (response.isSuccessful) {
-                Resource.Success(response.body())
-            } else {
-                Resource.Error(response.message())
+            )
+        }) {
+            is ListCafesRes -> {
+                DataResponse.Success(data = response)
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Resource.Error(e.message)
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
         }
     }
 
     override suspend fun postFavoriteCafe(
         userId: Long,
         cafeId: Long
-    ): Resource<PostFavoriteCafeRes> {
-        if (!networkConnectivity.isConnected()) {
-            val errorMessage = errorManager.getError(NO_INTERNET_CONNECTION).toString()
-            return Resource.Error(errorMessage)
-        }
-
-        return try {
-            val response = cafeService.postFavoriteCafe(userId, cafeId).execute()
-            if(response.isSuccessful) {
-                Resource.Success(response.body())
-            } else {
-                Resource.Error(response.message())
+    ): DataResponse<PostFavoriteCafeRes> {
+        return when(val response = processCall {
+            cafeService.postFavoriteCafe(
+                userId,
+                cafeId,
+            )
+        }) {
+            is PostFavoriteCafeRes -> {
+                DataResponse.Success(response)
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Resource.Error(e.message)
+            else -> {
+                DataResponse.DataError(response as Int)
+            }
         }
     }
 
-    override suspend fun getListFavorites(userId: Long): Resource<ListFavoritesRes> {
-        if (!networkConnectivity.isConnected()) {
-            val errorMessage = errorManager.getError(NO_INTERNET_CONNECTION).toString()
-            return Resource.Error(errorMessage)
+    override suspend fun getListFavorites(userId: Long): DataResponse<ListFavoritesRes> {
+        return when(val response = processCall {
+            cafeService.getListFavorites(userId)
+        }) {
+            is ListFavoritesRes -> {
+                DataResponse.Success(response)
+            }
+            else -> {
+                DataResponse.DataError(response as Int)
+            }
         }
+    }
 
+    private suspend fun processCall(
+        responseCall: suspend () -> Response<*>
+    ): Any? {
+        if (!networkConnectivity.isConnected()) {
+            return NO_INTERNET_CONNECTION
+        }
         return try {
-            val response = cafeService.getListFavorites(userId).execute()
+            val response = responseCall.invoke()
+            val responseCode = response.code()
             if (response.isSuccessful) {
-                Resource.Success(response.body())
+                response.body()
             } else {
-                Resource.Error(response.message())
+                responseCode
             }
         } catch (e: IOException) {
-            e.printStackTrace()
-            Resource.Error(e.message)
+            NETWORK_ERROR
         }
     }
 }

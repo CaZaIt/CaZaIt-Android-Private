@@ -22,8 +22,8 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initBinding()
         initViewModel()
+        initBinding()
 
         initView()
         initAfterBinding()

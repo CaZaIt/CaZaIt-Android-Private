@@ -3,9 +3,7 @@ package org.cazait.ui.component.cafeinfo.review
 import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.data.FAIL
-import org.cazait.data.Resource
-import org.cazait.data.SUCCESS
+import org.cazait.domain.model.Resource
 import org.cazait.data.dto.response.CafeReviewRes
 import org.cazait.databinding.FragmentCafeInfoReviewBinding
 import org.cazait.ui.adapter.CafeInfoReviewAdapter

@@ -1,6 +1,6 @@
 package org.cazait.data.source.remote.cafe
 
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.api.CafeService
 import org.cazait.data.error.ErrorManager
 import org.cazait.data.error.NO_INTERNET_CONNECTION
