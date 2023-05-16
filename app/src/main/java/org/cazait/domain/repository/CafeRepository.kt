@@ -28,6 +28,6 @@ interface CafeRepository {
 
     suspend fun insertFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun updateFavoriteCafe(cafe: FavoriteCafe): Boolean
-    suspend fun loadFavoriteCafes(): Flow<List<FavoriteCafe>>
+    suspend fun loadFavoriteCafes(): Flow<Resource<FavoriteCafes>>
     suspend fun postFavoriteCafe(userId: Long, cafe: FavoriteCafe): Boolean
 }

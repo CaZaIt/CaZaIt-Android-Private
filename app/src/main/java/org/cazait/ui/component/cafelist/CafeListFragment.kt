@@ -2,6 +2,7 @@ package org.cazait.ui.component.cafelist
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import androidx.recyclerview.widget.ListAdapter
@@ -43,9 +44,32 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         requestPermission()
         setUpLayout()
         observeViewModel()
+        viewModel.updateFavoriteCafes()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateFavoriteCafes()
     }
 
     override fun initAfterBinding() {}
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            Constants.REQUEST_CODE_LOCATION_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    viewModel.updateCheckCafes()
+                } else {
+                    // 권한이 거부된 경우
+                }
+            }
+            // 다른 권한 요청에 대한 처리
+        }
+    }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
         viewModel.updateCheckCafes()
@@ -54,8 +78,8 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
 
     private fun observeViewModel() {
-        observe(viewModel.listCafesData, ::handleVerticalCafeList)
-        observe(viewModel.listFavoritesData, ::handleHorizontalCafeList)
+        viewLifecycleOwner.observe(viewModel.listCafesData, ::handleVerticalCafeList)
+        viewLifecycleOwner.observe(viewModel.listFavoritesData, ::handleHorizontalCafeList)
     }
 
     private fun setUpLayout() {

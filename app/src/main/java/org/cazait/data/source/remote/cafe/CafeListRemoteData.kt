@@ -1,5 +1,6 @@
 package org.cazait.data.source.remote.cafe
 
+import android.util.Log
 import org.cazait.data.api.CafeService
 import org.cazait.data.error.ErrorManager
 import org.cazait.data.error.NO_INTERNET_CONNECTION
@@ -103,6 +104,7 @@ class CafeListRemoteData @Inject constructor(
             if (response.isSuccessful) {
                 response.body()
             } else {
+                Log.e("processCall", "$responseCode")
                 responseCode
             }
         } catch (e: IOException) {

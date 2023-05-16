@@ -70,6 +70,7 @@ class CafeRepositoryImpl @Inject constructor(
                     )
                     emit(Resource.Success(fc))
                 }
+
                 is DataResponse.DataError -> {
                     emit(Resource.Error(response.toString()))
                 }
@@ -107,10 +108,10 @@ class CafeRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun loadFavoriteCafes(): Flow<List<FavoriteCafe>> {
+    override suspend fun loadFavoriteCafes(): Flow<Resource<FavoriteCafes>> {
         return flow {
             cafeDAO.selectAllFavoriteCafe().collect { list ->
-                emit(list.map { it.toFavoriteCafe() })
+                emit(Resource.Success(FavoriteCafes(list.map { it.toFavoriteCafe() })))
             }
         }
     }
