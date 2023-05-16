@@ -17,5 +17,6 @@ enum class CafeStatus {
                 NONE
             }
         }
+
     }
 }

@@ -11,7 +11,9 @@ data class FavoriteCafeEntity(
     @PrimaryKey(false)
     val cafeId: Long,
     @ColumnInfo
-    var cafeName: String,
+    val favoritesId: Long,
+    @ColumnInfo
+    var name: String,
     @ColumnInfo
     val address: String,
     @ColumnInfo
@@ -19,9 +21,9 @@ data class FavoriteCafeEntity(
     @ColumnInfo
     val longitude: String,
     @ColumnInfo
-    val congestion: CafeStatus,
+    val congestionStatus: CafeStatus,
     @ColumnInfo
-    val imageUrl: String,
+    val imageUrl: List<String>,
     @ColumnInfo
     val createdDate: Date
 )
