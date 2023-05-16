@@ -1,11 +1,12 @@
 package org.cazait.data.api
 
-import org.cazait.data.dto.response.ListCafesRes
-import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.data.dto.response.CafeMenuRes
 import org.cazait.data.dto.response.CafeReviewRes
+import org.cazait.data.dto.response.ListCafesRes
+import org.cazait.data.dto.response.ListFavoritesRes
 import org.cazait.data.dto.response.PostFavoriteCafeRes
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -13,26 +14,26 @@ import retrofit2.http.Query
 
 interface CafeService {
     @GET("/api/cafes/all/user/{userId}")
-    fun getListCafes(
+    suspend fun getListCafes(
         @Path("userId") userId: Long,
         @Query("longitude") longitude: String,
         @Query("latitude") latitude: String,
         @Query("sort") sort: String,
         @Query("limit") limit: String,
-    ): Call<ListCafesRes>
+    ): Response<ListCafesRes>
 
     @GET("/api/favorites/user/{userId}")
-    fun getListFavorites(
+    suspend fun getListFavorites(
         @Path("userId") userId: Long
-    ): Call<ListFavoritesRes>
+    ): Response<ListFavoritesRes>
 
     @GET("api/cafes/all")
-    fun getListCafesWithGuest(
+    suspend fun getListCafesWithGuest(
         @Query("longitude") longitude: String,
         @Query("latitude") latitude: String,
         @Query("sort") sort: String,
         @Query("limit") limit: String,
-    ): Call<ListCafesRes>
+    ): Response<ListCafesRes>
 
     @GET("api/cafes/name/{cafeName}")
     fun getCafeByNameWithGuest(
@@ -40,7 +41,7 @@ interface CafeService {
         @Query("latitude") latitude: String,
         @Query("sort") sort: String,
         @Query("limit") limit: String,
-    ): Call<ListCafesRes>
+    ): Response<ListCafesRes>
 
     @GET("/api/menus/cafe/{cafeId}")
     fun getMenus(
@@ -56,8 +57,8 @@ interface CafeService {
     ): Call<CafeReviewRes>
 
     @POST("/api/favorites/user/{userId}/cafe/{cafeId}")
-    fun postFavoriteCafe(
+    suspend fun postFavoriteCafe(
         @Path("userId") userId: Long,
         @Path("cafeId") cafeId: Long,
-    ): Call<PostFavoriteCafeRes>
+    ): Response<PostFavoriteCafeRes>
 }
