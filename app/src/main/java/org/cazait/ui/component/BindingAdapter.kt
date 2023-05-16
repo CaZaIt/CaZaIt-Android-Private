@@ -1,4 +1,4 @@
-package org.cazait.utils
+package org.cazait.ui.component
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
