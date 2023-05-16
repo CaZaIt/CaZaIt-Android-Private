@@ -3,14 +3,14 @@ package org.cazait.data.repository.users
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.dto.request.IsEmailDupReq
 import org.cazait.data.dto.request.IsNicknameDupReq
 import org.cazait.data.dto.request.SignUpReq
 import org.cazait.data.dto.response.IsEmailDupRes
 import org.cazait.data.dto.response.IsNicknameDupRes
 import org.cazait.data.dto.response.SignUpRes
-import org.cazait.data.remote.user.UserRemoteData
+import org.cazait.data.source.remote.user.UserRemoteData
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 

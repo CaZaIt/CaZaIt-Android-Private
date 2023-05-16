@@ -10,13 +10,13 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.Constants
 import org.cazait.R
-import org.cazait.data.FAIL
-import org.cazait.data.Resource
-import org.cazait.data.SUCCESS
-import org.cazait.data.dto.response.ListCafesRes
-import org.cazait.data.dto.response.ListFavoritesRes
-import org.cazait.data.model.Cafe
 import org.cazait.databinding.FragmentCafeListBinding
+import org.cazait.domain.model.Cafe
+import org.cazait.domain.model.Cafes
+import org.cazait.domain.model.FavoriteCafes
+import org.cazait.domain.model.ListTitle
+import org.cazait.domain.model.Resource
+import org.cazait.domain.model.mapper.DomainMapper.toCafe
 import org.cazait.ui.adapter.CafeListHorizontalAdapter
 import org.cazait.ui.adapter.CafeListVerticalAdapter
 import org.cazait.ui.adapter.ItemDecoration
@@ -48,7 +48,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     override fun initAfterBinding() {}
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        viewModel.updateList()
+        viewModel.updateCheckCafes()
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
@@ -65,13 +65,18 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
 
     private fun setUpHorizontalLayout() {
         binding.favoriteStoreLayout.apply {
-            tvTitle.text = getString(R.string.favorite_stores)
-            tvSubtitle.text = getString(R.string.favorite_stores_guide)
+            title = ListTitle(
+                title = getString(R.string.favorite_stores),
+                subTitle = getString(R.string.favorite_stores_guide)
+            )
             setUpRecyclerView(recyclerView, horizontalAdapter, R.dimen.cafe_item_space)
         }
     }
 
     private fun setUpVerticalLayout() {
+        binding.cafeAllLayout.apply {
+            title = ListTitle(title = getString(R.string.do_checking_cafe))
+        }
         setUpRecyclerView(
             binding.cafeAllLayout.recyclerView,
             verticalAdapter,
@@ -80,7 +85,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     }
 
     private fun createCafeListHorizontalAdapter() = CafeListHorizontalAdapter {
-        navigateToCafeInfo(it)
+        navigateToCafeInfo(it.toCafe())
     }
 
     private fun createCafeListVerticalAdapter() = CafeListVerticalAdapter {
@@ -109,41 +114,35 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         startActivity(intent)
     }
 
-    private fun handleHorizontalCafeList(status: Resource<ListFavoritesRes>) {
+    private fun handleHorizontalCafeList(status: Resource<FavoriteCafes>) {
         when (status) {
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> handleSuccess(
-                status.data?.result,
                 horizontalAdapter::submitList,
-                viewModel::getFavoriteCafes
+                status.data?.list ?: emptyList()
             )
         }
     }
 
-    private fun handleVerticalCafeList(status: Resource<ListCafesRes>) {
+    private fun handleVerticalCafeList(status: Resource<Cafes>) {
         when (status) {
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> {
                 handleSuccess(
-                    status.data?.result,
                     verticalAdapter::submitList,
-                    viewModel::getVerticalCafes
+                    status.data?.list ?: emptyList()
                 )
             }
         }
     }
 
-    private fun handleSuccess(
-        result: String?,
-        submitList: (List<Cafe>) -> Unit,
-        getCafes: () -> List<Cafe>
+    private fun <T> handleSuccess(
+        submitList: (List<T>) -> Unit,
+        dataList: List<T>,
     ) {
-        when (result) {
-            SUCCESS -> submitList(getCafes())
-            FAIL -> showMessage(getString(R.string.guide_error_default))
-        }
+        submitList(dataList)
     }
 
     private fun <T> handleError(status: Resource.Error<T>) {

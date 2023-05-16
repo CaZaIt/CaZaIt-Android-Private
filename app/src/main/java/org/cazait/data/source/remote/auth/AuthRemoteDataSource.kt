@@ -1,6 +1,6 @@
-package org.cazait.data.remote.auth
+package org.cazait.data.source.remote.auth
 
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.dto.request.RefreshTokenReq
 import org.cazait.data.dto.request.SignInReq
 import org.cazait.data.dto.response.RefreshTokenRes

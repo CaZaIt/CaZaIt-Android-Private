@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.dto.response.CafeReviewRes
-import org.cazait.data.repository.cafe.CafeRepository
+import org.cazait.domain.repository.CafeRepository
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 

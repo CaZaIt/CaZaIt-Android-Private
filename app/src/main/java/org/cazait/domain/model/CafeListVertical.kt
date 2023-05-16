@@ -1,4 +1,7 @@
-package org.cazait.data.model
+package org.cazait.domain.model
+
+import org.cazait.data.model.ListItem
+import org.cazait.data.model.ViewType
 
 data class CafeListVertical(
     val title: String = "",

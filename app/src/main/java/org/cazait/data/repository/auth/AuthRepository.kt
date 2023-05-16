@@ -1,7 +1,7 @@
 package org.cazait.data.repository.auth
 
 import kotlinx.coroutines.flow.Flow
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.dto.request.SignInReq
 import org.cazait.data.dto.response.SignInRes
 

@@ -22,15 +22,17 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initBinding()
         initViewModel()
+        initBinding()
 
         initView()
         initAfterBinding()
     }
 
     private fun initBinding() {
-        binding = DataBindingUtil.setContentView(this, layoutResourceId)
+        binding = DataBindingUtil.setContentView<T>(this, layoutResourceId).apply {
+            lifecycleOwner = this@BaseActivity
+        }
     }
 
     private fun initViewModel() {

@@ -7,14 +7,14 @@
 
         <variable
             name="item"
-            type="org.cazait.data.model.Cafe" />
+            type="org.cazait.domain.model.Cafe" />
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
+        app:cardElevation="4dp"
         app:contentPaddingBottom="13dp"
         app:contentPaddingTop="22dp">
 
@@ -78,7 +78,6 @@
                 android:maxLines="2"
                 android:text="@{item.address}"
                 android:textSize="13sp"
-                app:layout_constraintBottom_toTopOf="@+id/btn_state"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_cafe_name"
@@ -90,16 +89,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:background="@drawable/rectangle_cafe_list_btn_state_r50"
                 android:fontFamily="@font/applesdgothic"
                 android:gravity="center"
-                android:minHeight="48dp"
-                android:text="@{item.status}"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:status="@{item.status}"
                 tools:text="매우 혼잡" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

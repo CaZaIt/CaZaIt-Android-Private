@@ -14,12 +14,14 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.data.FAIL
-import org.cazait.data.Resource
-import org.cazait.data.SUCCESS
+import org.cazait.domain.model.FAIL
+import org.cazait.domain.model.Resource
+import org.cazait.domain.model.SUCCESS
 import org.cazait.data.dto.response.ListCafesRes
-import org.cazait.data.model.Cafe
+import org.cazait.data.model.CafeStatus
+import org.cazait.domain.model.Cafe
 import org.cazait.databinding.FragmentCafeMapBinding
+import org.cazait.domain.model.Cafes
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
@@ -52,8 +54,19 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         }
     }
 
+    fun cafeStatusToString(cafeStatus: CafeStatus): String {
+        return when (cafeStatus) {
+            CafeStatus.FREE -> getString(R.string.state_free)
+            CafeStatus.NORMAL -> getString(R.string.state_normal)
+            CafeStatus.CLOSE -> getString(R.string.state_close)
+            CafeStatus.CROWDED -> getString(R.string.state_crowded)
+            CafeStatus.VERY_CROWDED -> getString(R.string.state_very_crowded)
+            CafeStatus.NONE -> getString(R.string.state_normal)
+        }
+    }
+
     private fun observeCafes() {
-        observe(viewModel.cafeStatusLiveData, ::updateMarkers)
+        observe(viewModel.cafeListLiveData, ::updateMarkers)
     }
 
     private fun setUpMapFragment() {
@@ -98,26 +111,18 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         )
     }
 
-    private fun updateMarkers(status: Resource<ListCafesRes>) {
+    private fun updateMarkers(status: Resource<Cafes>) {
         if (isMapInit.not()) return
         when (status) {
             is Resource.Loading -> {}
-            is Resource.Success -> handleSuccess(status.data?.result)
+            is Resource.Success -> handleSuccess()
             is Resource.Error -> handleError(status)
         }
     }
 
-    private fun handleSuccess(
-        result: String?
-    ) {
-        when (result) {
-            SUCCESS -> {
-                markers.forEach { it.map = null }
-                markers = viewModel.getCafes().map(::createMarker)
-            }
-
-            FAIL -> showMessage(result)
-        }
+    private fun handleSuccess() {
+        markers.forEach { it.map = null }
+        markers = viewModel.getCafes().map(::createMarker)
     }
 
     private fun <T> handleError(status: Resource.Error<T>) {

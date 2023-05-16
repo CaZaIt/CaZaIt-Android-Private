@@ -1,6 +1,6 @@
-package org.cazait.data.remote.user
+package org.cazait.data.source.remote.user
 
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.dto.request.IsEmailDupReq
 import org.cazait.data.dto.request.IsNicknameDupReq
 import org.cazait.data.dto.request.SignUpReq

@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.data.FAIL
-import org.cazait.data.Resource
-import org.cazait.data.SUCCESS
+import org.cazait.domain.model.FAIL
+import org.cazait.domain.model.Resource
+import org.cazait.domain.model.SUCCESS
 import org.cazait.data.dto.response.IsEmailDupRes
 import org.cazait.data.dto.response.IsNicknameDupRes
 import org.cazait.data.dto.response.SignUpRes

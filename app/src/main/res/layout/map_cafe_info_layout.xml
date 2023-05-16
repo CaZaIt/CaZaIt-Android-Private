@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="org.cazait.data.model.Cafe" />
+            type="org.cazait.domain.model.Cafe" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,12 +68,12 @@
             android:layout_marginBottom="14dp"
             android:background="@drawable/rectangle_cafe_list_btn_state_r50"
             android:gravity="center"
-            android:text="@{item.status}"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_address"
+            app:status="@{item.status}"
             tools:text="보통" />
 
         <ImageView

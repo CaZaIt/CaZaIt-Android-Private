@@ -1,6 +1,6 @@
-package org.cazait.data.remote.auth
+package org.cazait.data.source.remote.auth
 
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.api.AuthService
 import org.cazait.data.error.ErrorManager
 import org.cazait.data.error.NO_INTERNET_CONNECTION

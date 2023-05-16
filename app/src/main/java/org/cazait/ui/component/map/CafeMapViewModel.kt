@@ -6,43 +6,42 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.cazait.data.Resource
+import org.cazait.domain.model.Resource
 import org.cazait.data.dto.response.ListCafesRes
-import org.cazait.data.mapper.CafeMapper
-import org.cazait.data.model.Cafe
-import org.cazait.data.repository.cafe.CafeRepository
+import org.cazait.data.model.mapper.DataMapper
+import org.cazait.domain.model.Cafe
+import org.cazait.domain.model.Cafes
+import org.cazait.domain.repository.CafeRepository
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class CafeMapViewModel @Inject constructor(
     private val cafeRepository: CafeRepository,
-    private val mapper: CafeMapper
 ) : BaseViewModel() {
-    private val cafes = HashMap<Long, Cafe>()
-    private val _cafeStatusLiveData = MutableLiveData<Resource<ListCafesRes>>()
-    val cafeStatusLiveData: LiveData<Resource<ListCafesRes>>
-        get() = _cafeStatusLiveData
+    private val cafeHashMap = HashMap<Long, Cafe>()
+    private val _cafeListLiveData = MutableLiveData<Resource<Cafes>>()
+    val cafeListLiveData: LiveData<Resource<Cafes>>
+        get() = _cafeListLiveData
 
     fun searchCafes(latitude: String, longitude: String) {
         viewModelScope.launch {
-            _cafeStatusLiveData.value =
+            _cafeListLiveData.value =
                 cafeRepository.getListCafes(null, latitude = latitude, longitude = longitude)
                     .first()
         }
     }
 
     fun getCafes(): List<Cafe> {
-        val data =
-            (_cafeStatusLiveData.value as? Resource.Success<ListCafesRes>)?.data?.cafes.orEmpty()
-        data.firstOrNull()?.forEach {
-            cafes[it.cafeId] = mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
+        val cafeList = (_cafeListLiveData.value as? Resource.Success<Cafes>)?.data?.list.orEmpty()
+        cafeList.forEach {
+            cafeHashMap[it.cafeId] = it
         }
 
-        return cafes.values.toList()
+        return cafeHashMap.values.toList()
     }
 
     fun getCafeByCafeId(cafeId: Long): Cafe? {
-        return cafes[cafeId]
+        return cafeHashMap[cafeId]
     }
 }

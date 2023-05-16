@@ -10,12 +10,11 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.cazait.data.Resource
-import org.cazait.data.dto.response.ListCafesRes
-import org.cazait.data.dto.response.ListFavoritesRes
-import org.cazait.data.mapper.CafeMapper
-import org.cazait.data.model.Cafe
-import org.cazait.data.repository.cafe.CafeRepository
+import org.cazait.data.model.CafeStatus
+import org.cazait.domain.model.Cafes
+import org.cazait.domain.model.FavoriteCafes
+import org.cazait.domain.model.Resource
+import org.cazait.domain.repository.CafeRepository
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.PermissionUtil
 import javax.inject.Inject
@@ -23,53 +22,45 @@ import javax.inject.Inject
 @HiltViewModel
 class CafeListViewModel @Inject constructor(
     private val cafeRepository: CafeRepository,
-    private val mapper: CafeMapper,
     private val fusedLocationClient: FusedLocationProviderClient,
     private val permissionUtil: PermissionUtil,
 ) : BaseViewModel() {
-    private val _listFavoritesData = MutableLiveData<Resource<ListFavoritesRes>>()
-    val listFavoritesData: LiveData<Resource<ListFavoritesRes>>
+    private val _listFavoritesData = MutableLiveData<Resource<FavoriteCafes>>()
+    val listFavoritesData: LiveData<Resource<FavoriteCafes>>
         get() = _listFavoritesData
 
-    private val _listCafesData = MutableLiveData<Resource<ListCafesRes>>()
-    val listCafesData: LiveData<Resource<ListCafesRes>>
+    private val _listCafesData = MutableLiveData<Resource<Cafes>>()
+    val listCafesData: LiveData<Resource<Cafes>>
         get() = _listCafesData
 
     private val _lastLocationLiveData = MutableLiveData<Location>()
     val lastLocationLiveData: LiveData<Location>
         get() = _lastLocationLiveData
 
-    fun getVerticalCafes(): List<Cafe> {
-        val dataList =
-            (_listCafesData.value as? Resource.Success<ListCafesRes>)?.data?.cafes.orEmpty()
-        return dataList.firstOrNull()?.map {
-            mapper.itemCafeFromCafeOfCafeListWithLatLng(it)
-        } ?: emptyList()
+
+    fun initViewModel() {
+        updateCheckCafes()
+        updateFavoriteCafes()
     }
 
-    fun getFavoriteCafes(): List<Cafe> {
-        val dataList =
-            (_listFavoritesData.value as? Resource.Success<ListFavoritesRes>)?.data?.favorites.orEmpty()
-        return dataList.map {
-            mapper.itemCafeFromFavoriteCafe(it)
+    fun updateCheckCafes() {
+        if (_lastLocationLiveData.value == null) {
+            initLastLocation()
+        }
+
+        viewModelScope.launch {
+            _listCafesData.value =
+                cafeRepository.getListCafes(
+                    userId = null,
+                    latitude = _lastLocationLiveData.value?.latitude.toString(),
+                    longitude = _lastLocationLiveData.value?.longitude.toString()
+                ).first()
         }
     }
 
-    fun updateList() {
-        initLastLocation()
-    }
-
-    private fun setList() {
+    fun updateFavoriteCafes() {
         viewModelScope.launch {
-            with(cafeRepository) {
-                _listCafesData.value =
-                    getListCafes(
-                        userId = null,
-                        latitude = lastLocationLiveData.value?.latitude.toString(),
-                        longitude = lastLocationLiveData.value?.longitude.toString()
-                    ).first()
-                _listFavoritesData.value = getListFavorites(0L).first()
-            }
+            _listFavoritesData.value = cafeRepository.getListFavorites(0L).first()
         }
     }
 
@@ -81,7 +72,6 @@ class CafeListViewModel @Inject constructor(
                 if (location == null) return@addOnSuccessListener
 
                 Log.e("Location", "${location.latitude}, ${location.longitude}")
-                setList()
             }
         } else {
             Log.e("Location", "권한이 없습니다.")

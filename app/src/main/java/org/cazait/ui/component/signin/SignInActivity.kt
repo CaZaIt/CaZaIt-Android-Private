@@ -7,9 +7,9 @@ import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.data.FAIL
-import org.cazait.data.Resource
-import org.cazait.data.SUCCESS
+import org.cazait.domain.model.FAIL
+import org.cazait.domain.model.Resource
+import org.cazait.domain.model.SUCCESS
 import org.cazait.data.error.EMAIL_OR_PASSWORD_ERROR
 import org.cazait.data.dto.response.SignInRes
 import org.cazait.databinding.ActivitySignInBinding
