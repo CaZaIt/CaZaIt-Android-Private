@@ -94,11 +94,11 @@
                 android:background="@drawable/rectangle_cafe_list_btn_state_r50"
                 android:fontFamily="@font/applesdgothic"
                 android:gravity="center"
-                android:text="@{item.status}"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:status="@{item.status}"
                 tools:text="매우 혼잡" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
