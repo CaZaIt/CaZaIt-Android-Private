@@ -37,17 +37,15 @@ class CafeListViewModel @Inject constructor(
     val lastLocationLiveData: LiveData<Location>
         get() = _lastLocationLiveData
 
-
-    fun initViewModel() {
-        updateCheckCafes()
-        updateFavoriteCafes()
-    }
-
     fun updateCheckCafes() {
-        if (_lastLocationLiveData.value == null) {
+        if (_lastLocationLiveData.value != null) {
+            updateListCafesData()
+        } else {
             initLastLocation()
         }
+    }
 
+    private fun updateListCafesData() {
         viewModelScope.launch {
             _listCafesData.value =
                 cafeRepository.getListCafes(
@@ -60,7 +58,10 @@ class CafeListViewModel @Inject constructor(
 
     fun updateFavoriteCafes() {
         viewModelScope.launch {
-            _listFavoritesData.value = cafeRepository.getListFavorites(0L).first()
+            // Auth.currentUser != null
+            // _listFavoritesData.value = cafeRepository.getListFavorites(0L).first()
+            // Auth.currentUser == null
+            _listFavoritesData.value = cafeRepository.loadFavoriteCafes().first()
         }
     }
 
@@ -72,6 +73,7 @@ class CafeListViewModel @Inject constructor(
                 if (location == null) return@addOnSuccessListener
 
                 Log.e("Location", "${location.latitude}, ${location.longitude}")
+                updateCheckCafes()
             }
         } else {
             Log.e("Location", "권한이 없습니다.")

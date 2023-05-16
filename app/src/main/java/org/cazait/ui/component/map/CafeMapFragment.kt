@@ -54,17 +54,6 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         }
     }
 
-    fun cafeStatusToString(cafeStatus: CafeStatus): String {
-        return when (cafeStatus) {
-            CafeStatus.FREE -> getString(R.string.state_free)
-            CafeStatus.NORMAL -> getString(R.string.state_normal)
-            CafeStatus.CLOSE -> getString(R.string.state_close)
-            CafeStatus.CROWDED -> getString(R.string.state_crowded)
-            CafeStatus.VERY_CROWDED -> getString(R.string.state_very_crowded)
-            CafeStatus.NONE -> getString(R.string.state_normal)
-        }
-    }
-
     private fun observeCafes() {
         observe(viewModel.cafeListLiveData, ::updateMarkers)
     }
