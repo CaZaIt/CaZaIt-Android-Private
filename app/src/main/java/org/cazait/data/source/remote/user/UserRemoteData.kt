@@ -31,7 +31,6 @@ class UserRemoteData @Inject constructor(
             }
 
             else -> {
-                Log.e("UserRemoteData", "여기부터 곱창")
                 DataResponse.DataError(errorCode = response as Int)
             }
         }
@@ -69,7 +68,6 @@ class UserRemoteData @Inject constructor(
         responseCall: suspend () -> Response<*>
     ): Any? {
         if (!networkConnectivity.isConnected()) {
-            Log.e("UserRemoteData", "NO_INTERNET_CONNECTION")
             return NO_INTERNET_CONNECTION
         }
         return try {
