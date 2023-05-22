@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="TextValue">
+    <style name="TextValue_B">
         <item name="android:textColor">@color/main_black</item>
         <item name="fontFamily">@font/applesdgothicneob00</item>
     </style>
-    <style name="TextValueWhite">
+    <style name="TextValue_B_White">
         <item name="android:textColor">@color/main_white</item>
         <item name="fontFamily">@font/applesdgothicneob00</item>
     </style>
@@ -26,5 +26,10 @@
     <style name="TextValue_EB_white">
         <item name="android:textColor">@color/main_white</item>
         <item name="fontFamily">@font/apple_sd_gothic_neo_eb</item>
+    </style>
+
+    <style name="TextValue_M">
+        <item name="android:textColor">@color/main_black</item>
+        <item name="fontFamily">@font/apple_sd_gothic_neo_m</item>
     </style>
 </resources>

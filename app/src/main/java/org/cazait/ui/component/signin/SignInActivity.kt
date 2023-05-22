@@ -1,5 +1,6 @@
 package org.cazait.ui.component.signin
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -91,5 +92,14 @@ class SignInActivity :
 
     private fun postSignIn() {
         viewModel.doSignIn(binding.etId.text.toString(), binding.etPassword.text.toString())
+    }
+
+    companion object {
+
+        fun signInIntent(
+            context: Context,
+        ): Intent {
+            return Intent(context, SignInActivity::class.java)
+        }
     }
 }

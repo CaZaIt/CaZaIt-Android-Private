@@ -19,7 +19,7 @@
         <View
             android:id="@+id/view_sign_up_divide"
             android:layout_width="match_parent"
-            android:layout_height="106dp"
+            android:layout_height="62dp"
             android:background="@color/main_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,34 +27,33 @@
 
         <ImageView
             android:id="@+id/iv_sign_up_arrow_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="67dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/content_des_back_button"
+            android:padding="12dp"
             app:layout_constraintStart_toStartOf="@+id/view_sign_up_divide"
             app:layout_constraintTop_toTopOf="@+id/view_sign_up_divide"
-            app:srcCompat="@drawable/arrow_back"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/arrow_back" />
 
         <TextView
             android:id="@+id/tv_sign_up_enrollment"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="103dp"
-            android:layout_marginEnd="160dp"
-            android:layout_marginBottom="13dp"
             android:text="@string/sign_up_sign_up"
             android:textAlignment="center"
             android:textColor="@color/main_white"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/view_sign_up_divide"
-            app:layout_constraintEnd_toEndOf="@+id/view_sign_up_divide"
-            app:layout_constraintStart_toEndOf="@+id/iv_sign_up_arrow_back" />
+            app:layout_constraintBottom_toBottomOf="@+id/iv_sign_up_arrow_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_sign_up_arrow_back" />
 
         <TextView
             android:id="@+id/tv_sign_up_email"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="39dp"
@@ -68,7 +67,7 @@
 
         <EditText
             android:id="@+id/et_sign_up_email_example"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
@@ -79,7 +78,7 @@
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
             android:paddingStart="17dp"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/edit_text_hint"
             app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_email_double_check"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email"
@@ -87,7 +86,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sign_up_email_double_check"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -102,7 +101,7 @@
 
         <TextView
             android:id="@+id/tv_sign_up_password"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="39dp"
@@ -116,7 +115,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_sign_up_password_insert"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
@@ -127,7 +126,7 @@
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:paddingStart="17dp"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/edit_text_hint"
             app:counterEnabled="true"
             app:counterMaxLength="16"
             app:layout_constraintEnd_toEndOf="parent"
@@ -138,7 +137,7 @@
 
         <TextView
             android:id="@+id/tv_sign_up_password_check"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="39dp"
@@ -152,7 +151,7 @@
 
         <EditText
             android:id="@+id/et_sign_up_password_insert_more"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
@@ -163,7 +162,7 @@
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:paddingStart="17dp"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/edit_text_hint"
             app:counterEnabled="true"
             app:counterMaxLength="16"
             app:layout_constraintEnd_toEndOf="parent"
@@ -174,7 +173,7 @@
 
         <TextView
             android:id="@+id/tv_sign_up_nick_name"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="39dp"
@@ -188,7 +187,7 @@
 
         <EditText
             android:id="@+id/et_sign_up_nick_name_example"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
@@ -199,7 +198,7 @@
             android:importantForAutofill="no"
             android:inputType="text"
             android:paddingStart="17dp"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/edit_text_hint"
             app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_nick_name_double_check"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_nick_name"
@@ -207,7 +206,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sign_up_nick_name_double_check"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -226,7 +225,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sign_up_join"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="150dp"
             android:layout_height="48dp"
             android:layout_marginStart="122dp"
@@ -252,12 +251,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_fileName="lottie_coffee.json"
-            app:lottie_loop="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:lottie_loop="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -22,7 +22,7 @@
 
             <TextView
                 android:id="@+id/tv_cafe_name"
-                style="@style/TextValue"
+                style="@style/TextValue_B"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"

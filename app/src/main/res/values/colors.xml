@@ -6,6 +6,7 @@
     <color name="beige_gray">#999999</color>
     <!-- Sign In -->
     <color name="login_back">#FFDFD9</color>
+    <color name="edit_text_hint">#B5B5B5</color>
 
     <color name="cafe_list_orange">#FF735B</color>
 </resources>

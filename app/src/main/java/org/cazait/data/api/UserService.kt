@@ -6,17 +6,17 @@ import org.cazait.data.dto.request.SignUpReq
 import org.cazait.data.dto.response.IsEmailDupRes
 import org.cazait.data.dto.response.IsNicknameDupRes
 import org.cazait.data.dto.response.SignUpRes
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface UserService {
     @POST("/api/users/sign-up")
-    fun postSignUp(@Body signUpRequest: SignUpReq): Call<SignUpRes>
+    suspend fun postSignUp(@Body signUpRequest: SignUpReq): Response<SignUpRes>
 
     @POST("/api/users/email")
-    fun postIsEmailDup(@Body email: IsEmailDupReq): Call<IsEmailDupRes>
+    suspend fun postIsEmailDup(@Body email: String): Response<IsEmailDupRes>
 
     @POST("/api/users/nickname")
-    fun postIsNicknameDup(@Body nickname: IsNicknameDupReq): Call<IsNicknameDupRes>
+    suspend fun postIsNicknameDup(@Body nickname: IsNicknameDupReq): Response<IsNicknameDupRes>
 }
