@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.cazait.databinding.ItemCafeJustInfoBinding
-import org.cazait.domain.model.FavoriteCafe
+import org.cazait.model.FavoriteCafe
 
 class CafeListHorizontalAdapter(
     private val onClick: (FavoriteCafe) -> Unit

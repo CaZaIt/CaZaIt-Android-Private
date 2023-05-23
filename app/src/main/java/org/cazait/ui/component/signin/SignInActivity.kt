@@ -8,16 +8,16 @@ import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.domain.model.FAIL
-import org.cazait.domain.model.Resource
-import org.cazait.domain.model.SUCCESS
-import org.cazait.data.error.EMAIL_OR_PASSWORD_ERROR
-import org.cazait.data.dto.response.SignInRes
 import org.cazait.databinding.ActivitySignInBinding
+import org.cazait.model.Resource
+import org.cazait.model.SignInInfo
 import org.cazait.ui.base.BaseActivity
-import org.cazait.ui.component.MainActivity
 import org.cazait.ui.component.signup.SignUpActivity
-import org.cazait.utils.*
+import org.cazait.utils.SingleEvent
+import org.cazait.utils.observe
+import org.cazait.utils.showToast
+import org.cazait.utils.toGone
+import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
 class SignInActivity :
@@ -48,25 +48,17 @@ class SignInActivity :
         binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
 
-    private fun handleSignInResult(status: Resource<SignInRes>) {
+    private fun handleSignInResult(status: Resource<SignInInfo>) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignin.toVisible()
                 binding.lottieSignin.playAnimation()
             }
 
-            is Resource.Success -> status.data.let {
+            is Resource.Success -> status.data?.let {
                 binding.lottieSignin.pauseAnimation()
                 binding.lottieSignin.toGone()
-                when (status.data?.result) {
-                    SUCCESS -> {
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-
-                    FAIL -> viewModel.showToastMessage(EMAIL_OR_PASSWORD_ERROR)
-                }
+                finish()
             }
 
             is Resource.Error -> {

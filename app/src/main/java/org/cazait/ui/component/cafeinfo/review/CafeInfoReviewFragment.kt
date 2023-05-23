@@ -3,9 +3,9 @@ package org.cazait.ui.component.cafeinfo.review
 import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.domain.model.Resource
-import org.cazait.data.dto.response.CafeReviewRes
 import org.cazait.databinding.FragmentCafeInfoReviewBinding
+import org.cazait.model.CafeReviews
+import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeInfoReviewAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.base.BaseFragment
@@ -49,7 +49,7 @@ class CafeInfoReviewFragment : BaseFragment<FragmentCafeInfoReviewBinding, CafeI
         observe(viewModel.listReviewData, ::handleCafeReview)
     }
 
-    private fun handleCafeReview(status: Resource<CafeReviewRes>) {
+    private fun handleCafeReview(status: Resource<CafeReviews>) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieReview.toVisible()
@@ -59,13 +59,13 @@ class CafeInfoReviewFragment : BaseFragment<FragmentCafeInfoReviewBinding, CafeI
                 binding.lottieReview.pauseAnimation()
                 binding.lottieReview.toGone()
                 Log.d("Review Status", status.data.toString())
-                when (status.data?.data) {
+                when (status.data?.reviews) {
                     null -> {
-                        Log.d("data가 null", status.data?.data.toString())
+                        Log.d("data가 null", status.data?.reviews.toString())
                         binding.tvNoReview.toVisible()
                     }
                     else -> {
-                        val reviews = status.data.data.reviewRes
+                        val reviews = status.data?.reviews
                         Log.d("data가 null이 아님", reviews.toString())
                         reviewAdapter.submitList(reviews)
                     }

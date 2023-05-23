@@ -7,7 +7,7 @@
 
         <variable
             name="title"
-            type="org.cazait.domain.model.ListTitle" />
+            type="org.cazait.model.ListTitle" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

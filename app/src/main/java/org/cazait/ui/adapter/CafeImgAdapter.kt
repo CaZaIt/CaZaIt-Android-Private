@@ -8,7 +8,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.cazait.R
-import org.cazait.data.model.CafeImage
+import org.cazait.model.CafeImage
 
 class CafeImgAdapter(private val context: Context, private val cafeImg: List<CafeImage>) :
     RecyclerView.Adapter<CafeImgAdapter.ImgViewHolder>() {

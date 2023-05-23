@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="org.cazait.data.model.Image" />
+            type="org.cazait.model.Image" />
     </data>
 
     <androidx.appcompat.widget.AppCompatImageView

@@ -1,6 +1,5 @@
 package org.cazait.ui.component.map
 
-import android.content.Intent
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import com.naver.maps.geometry.LatLng
@@ -14,14 +13,10 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.domain.model.FAIL
-import org.cazait.domain.model.Resource
-import org.cazait.domain.model.SUCCESS
-import org.cazait.data.dto.response.ListCafesRes
-import org.cazait.data.model.CafeStatus
-import org.cazait.domain.model.Cafe
 import org.cazait.databinding.FragmentCafeMapBinding
-import org.cazait.domain.model.Cafes
+import org.cazait.model.Cafe
+import org.cazait.model.Cafes
+import org.cazait.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
@@ -85,8 +80,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
     }
 
     private fun openCafeInfoActivity(cafe: Cafe) {
-        val intent = Intent(requireContext(), CafeInfoActivity::class.java)
-        intent.putExtra(getString(R.string.cafe_info), cafe)
+        val intent = CafeInfoActivity.cafeInfoIntent(requireContext(), cafe)
         startActivity(intent)
     }
 

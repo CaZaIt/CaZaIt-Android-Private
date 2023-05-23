@@ -5,17 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cazait.domain.model.Resource
-import org.cazait.data.dto.request.IsEmailDupReq
-import org.cazait.data.dto.request.IsNicknameDupReq
-import org.cazait.data.dto.request.SignUpReq
-import org.cazait.data.dto.response.IsEmailDupRes
-import org.cazait.data.dto.response.IsNicknameDupRes
-import org.cazait.data.dto.response.SignUpRes
-import org.cazait.domain.model.EmailDup
-import org.cazait.domain.model.NicknameDup
-import org.cazait.domain.model.SignUp
-import org.cazait.domain.repository.UserRepository
+import org.bmsk.data.repository.UserRepository
+import org.cazait.model.EmailDup
+import org.cazait.model.NicknameDup
+import org.cazait.model.Resource
+import org.cazait.model.SignUpInfo
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject
@@ -25,8 +19,8 @@ class SignUpViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
 
-    private val _signUpProcess = MutableLiveData<Resource<SignUp>>()
-    val signUpProcess: LiveData<Resource<SignUp>>
+    private val _signUpProcess = MutableLiveData<Resource<SignUpInfo>>()
+    val signUpProcess: LiveData<Resource<SignUpInfo>>
         get() = _signUpProcess
 
     private val _emailDupProcess = MutableLiveData<Resource<EmailDup>>()
@@ -44,7 +38,7 @@ class SignUpViewModel @Inject constructor(
     fun signUp(email: String, password: String, nickname: String) {
         viewModelScope.launch {
             _signUpProcess.value = Resource.Loading()
-            userRepository.signUp(body = SignUpReq(email, password, nickname)).collect {
+            userRepository.signUp(email, password, nickname).collect {
                 _signUpProcess.value = it
             }
         }
@@ -53,16 +47,17 @@ class SignUpViewModel @Inject constructor(
     fun isEmailDup(email: String) {
         viewModelScope.launch {
             _emailDupProcess.value = Resource.Loading()
-            userRepository.isEmailDup(body = IsEmailDupReq(email)).collect {
-                _emailDupProcess.value = it
-            }
+            userRepository.isEmailDup(email)
+                .collect {
+                    _emailDupProcess.value = it
+                }
         }
     }
 
     fun isNicknameDup(nickname: String) {
         viewModelScope.launch {
             _nickDupProcess.value = Resource.Loading()
-            userRepository.isNicknameDup(body = IsNicknameDupReq(nickname)).collect {
+            userRepository.isNicknameDup(nickname).collect {
                 _nickDupProcess.value = it
             }
         }
