@@ -1,5 +1,6 @@
 package org.cazait.ui.component.signup
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -77,6 +78,7 @@ class SignUpActivity :
         initEmailBtn()
         initNicknameBtn()
         initSignUpBtn()
+        initBackBtn()
         initEditTextListener()
     }
 
@@ -93,11 +95,13 @@ class SignUpActivity :
                 binding.lottieSignup.toVisible()
                 binding.lottieSignup.playAnimation()
             }
+
             is Resource.Success -> status.data.let {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
                 finish()
             }
+
             is Resource.Error -> {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
@@ -112,6 +116,7 @@ class SignUpActivity :
                 binding.lottieSignup.toVisible()
                 binding.lottieSignup.playAnimation()
             }
+
             is Resource.Success -> status.data?.let {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
@@ -133,6 +138,7 @@ class SignUpActivity :
                 binding.lottieSignup.toVisible()
                 binding.lottieSignup.playAnimation()
             }
+
             is Resource.Success -> status.data?.let {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
@@ -186,8 +192,14 @@ class SignUpActivity :
         binding.btnSignUpNickNameDoubleCheck.setOnClickListener {
             val nickname = binding.etSignUpNickNameExample.text.toString()
 
-            if(nickname.isEmpty()) return@setOnClickListener
+            if (nickname.isEmpty()) return@setOnClickListener
             viewModel.isNicknameDup(nickname)
+        }
+    }
+
+    private fun initBackBtn() {
+        binding.ivSignUpArrowBack.setOnClickListener {
+            finish()
         }
     }
 
@@ -328,6 +340,14 @@ class SignUpActivity :
                     }
                 }
             }
+        }
+    }
+
+    companion object {
+        fun signUpIntent(
+            context: Context,
+        ): Intent {
+            return Intent(context, SignUpActivity::class.java)
         }
     }
 }

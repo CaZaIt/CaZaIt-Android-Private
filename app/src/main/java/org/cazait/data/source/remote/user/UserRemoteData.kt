@@ -1,6 +1,5 @@
 package org.cazait.data.source.remote.user
 
-import android.util.Log
 import org.cazait.data.api.UserService
 import org.cazait.data.dto.request.IsEmailDupReq
 import org.cazait.data.dto.request.IsNicknameDupReq
