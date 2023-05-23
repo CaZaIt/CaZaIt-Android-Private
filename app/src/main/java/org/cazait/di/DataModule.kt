@@ -4,11 +4,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.cazait.data.repository.auth.AuthRepository
+import org.cazait.domain.repository.AuthRepository
 import org.cazait.data.repository.auth.AuthRepositoryImpl
 import org.cazait.domain.repository.CafeRepository
 import org.cazait.data.repository.cafe.CafeRepositoryImpl
-import org.cazait.data.repository.users.UserRepository
+import org.cazait.domain.repository.UserRepository
 import org.cazait.data.repository.users.UserRepositoryImpl
 
 @Module

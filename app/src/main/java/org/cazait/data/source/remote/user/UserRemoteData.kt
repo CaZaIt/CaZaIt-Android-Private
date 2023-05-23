@@ -1,70 +1,84 @@
 package org.cazait.data.source.remote.user
 
-import org.cazait.domain.model.Resource
 import org.cazait.data.api.UserService
-import org.cazait.data.error.ErrorManager
-import org.cazait.data.error.NO_INTERNET_CONNECTION
 import org.cazait.data.dto.request.IsEmailDupReq
 import org.cazait.data.dto.request.IsNicknameDupReq
 import org.cazait.data.dto.request.SignUpReq
+import org.cazait.data.dto.response.DataResponse
 import org.cazait.data.dto.response.IsEmailDupRes
 import org.cazait.data.dto.response.IsNicknameDupRes
 import org.cazait.data.dto.response.SignUpRes
+import org.cazait.data.error.NETWORK_ERROR
+import org.cazait.data.error.NO_INTERNET_CONNECTION
 import org.cazait.network.NetworkConnectivity
+import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
 class UserRemoteData @Inject constructor(
     private val networkConnectivity: NetworkConnectivity,
-    private val errorManager: ErrorManager,
     private val userService: UserService
 ) : UserRemoteDataSource {
-    override fun postIsEmailDup(body: IsEmailDupReq): Resource<IsEmailDupRes> {
-        if (!networkConnectivity.isConnected()) {
-            return Resource.Error(errorManager.getError(NO_INTERNET_CONNECTION).description)
-        }
-        return try {
-            val response = userService.postIsEmailDup(body).execute()
-            if (response.isSuccessful)
-                Resource.Success(response.body()!!)
-            else {
-                Resource.Error(response.message())
+    override suspend fun postIsEmailDup(
+        body: IsEmailDupReq
+    ): DataResponse<IsEmailDupRes> {
+        return when (val response = processCall {
+            userService.postIsEmailDup(body.email)
+        }) {
+            is IsEmailDupRes -> {
+                DataResponse.Success(data = response)
             }
-        } catch (e: IOException) {
-            Resource.Error(e.message)
+
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
         }
     }
 
-    override fun postIsNicknameDup(body: IsNicknameDupReq): Resource<IsNicknameDupRes> {
-        if (!networkConnectivity.isConnected()) {
-            return Resource.Error(errorManager.getError(NO_INTERNET_CONNECTION).description)
-        }
-        return try {
-            val response = userService.postIsNicknameDup(body).execute()
-            if (response.isSuccessful)
-                Resource.Success(response.body()!!)
-            else {
-                Resource.Error(response.message())
+    override suspend fun postIsNicknameDup(body: IsNicknameDupReq): DataResponse<IsNicknameDupRes> {
+        return when (val response = processCall {
+            userService.postIsNicknameDup(body)
+        }) {
+            is IsNicknameDupRes -> {
+                DataResponse.Success(data = response)
             }
-        } catch (e: IOException) {
-            Resource.Error(e.message)
+
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
         }
     }
 
-    override fun postSignUp(body: SignUpReq): Resource<SignUpRes> {
-        if (!networkConnectivity.isConnected()) {
-            return Resource.Error(errorManager.getError(NO_INTERNET_CONNECTION).description)
-        }
+    override suspend fun postSignUp(body: SignUpReq): DataResponse<SignUpRes> {
+        return when (val response = processCall {
+            userService.postSignUp(body)
+        }) {
+            is SignUpRes -> {
+                DataResponse.Success(data = response)
+            }
 
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+    private suspend fun processCall(
+        responseCall: suspend () -> Response<*>
+    ): Any? {
+        if (!networkConnectivity.isConnected()) {
+            return NO_INTERNET_CONNECTION
+        }
         return try {
-            val response = userService.postSignUp(body).execute()
-            if (response.isSuccessful)
-                Resource.Success(response.body()!!)
-            else {
-                Resource.Error(response.message())
+            val response = responseCall.invoke()
+            val responseCode = response.code()
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                responseCode
             }
         } catch (e: IOException) {
-            Resource.Error(e.message)
+            NETWORK_ERROR
         }
     }
 }

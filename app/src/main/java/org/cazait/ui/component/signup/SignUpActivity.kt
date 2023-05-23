@@ -1,6 +1,8 @@
 package org.cazait.ui.component.signup
 
+import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,6 +14,9 @@ import org.cazait.data.dto.response.IsEmailDupRes
 import org.cazait.data.dto.response.IsNicknameDupRes
 import org.cazait.data.dto.response.SignUpRes
 import org.cazait.databinding.ActivitySignUpBinding
+import org.cazait.domain.model.EmailDup
+import org.cazait.domain.model.NicknameDup
+import org.cazait.domain.model.SignUp
 import org.cazait.ui.base.BaseActivity
 import org.cazait.ui.component.signin.SignInActivity
 import org.cazait.utils.*
@@ -73,6 +78,7 @@ class SignUpActivity :
         initEmailBtn()
         initNicknameBtn()
         initSignUpBtn()
+        initBackBtn()
         initEditTextListener()
     }
 
@@ -83,46 +89,17 @@ class SignUpActivity :
         observeToast(viewModel.showToast)
     }
 
-    private fun handleSignUpResult(status: Resource<SignUpRes>) {
+    private fun handleSignUpResult(status: Resource<SignUp>) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignup.toVisible()
                 binding.lottieSignup.playAnimation()
             }
-            is Resource.Success -> status.data.let {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
-                when (status.data?.result) {
-                    SUCCESS -> {
-                        val nextScreenIntent =
-                            Intent(applicationContext, SignInActivity::class.java)
-                        startActivity(nextScreenIntent)
-                        finish()
-                    }
-                    FAIL -> viewModel.showToastMessage(status.data.message)
-                }
-            }
-            is Resource.Error -> {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
-                viewModel.showToastMessage(status.message)
-            }
-        }
-    }
 
-    private fun handleEmailDupResult(status: Resource<IsEmailDupRes>) {
-        when (status) {
-            is Resource.Loading -> {
-                binding.lottieSignup.toVisible()
-                binding.lottieSignup.playAnimation()
-            }
             is Resource.Success -> status.data.let {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
-                when (status.data?.result) {
-                    SUCCESS -> viewModel.showToastMessage(status.data.data)
-                    FAIL -> viewModel.showToastMessage(status.data.message)
-                }
+                finish()
             }
 
             is Resource.Error -> {
@@ -133,19 +110,39 @@ class SignUpActivity :
         }
     }
 
-    private fun handleNickDupResult(status: Resource<IsNicknameDupRes>) {
+    private fun handleEmailDupResult(status: Resource<EmailDup>) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignup.toVisible()
                 binding.lottieSignup.playAnimation()
             }
-            is Resource.Success -> status.data.let {
+
+            is Resource.Success -> status.data?.let {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
-                when (status.data?.result) {
-                    SUCCESS -> viewModel.showToastMessage(status.data.data)
-                    FAIL -> viewModel.showToastMessage(status.data.message)
-                }
+                viewModel.showToastMessage(it.message)
+            }
+
+            is Resource.Error -> {
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
+                Log.e("SignUpActivity", "${status.message}")
+                // viewModel.showToastMessage(status.message)
+            }
+        }
+    }
+
+    private fun handleNickDupResult(status: Resource<NicknameDup>) {
+        when (status) {
+            is Resource.Loading -> {
+                binding.lottieSignup.toVisible()
+                binding.lottieSignup.playAnimation()
+            }
+
+            is Resource.Success -> status.data?.let {
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
+                viewModel.showToastMessage(it.message)
             }
 
             is Resource.Error -> {
@@ -194,7 +191,15 @@ class SignUpActivity :
     private fun initNicknameBtn() {
         binding.btnSignUpNickNameDoubleCheck.setOnClickListener {
             val nickname = binding.etSignUpNickNameExample.text.toString()
+
+            if (nickname.isEmpty()) return@setOnClickListener
             viewModel.isNicknameDup(nickname)
+        }
+    }
+
+    private fun initBackBtn() {
+        binding.ivSignUpArrowBack.setOnClickListener {
+            finish()
         }
     }
 
@@ -335,6 +340,14 @@ class SignUpActivity :
                     }
                 }
             }
+        }
+    }
+
+    companion object {
+        fun signUpIntent(
+            context: Context,
+        ): Intent {
+            return Intent(context, SignUpActivity::class.java)
         }
     }
 }

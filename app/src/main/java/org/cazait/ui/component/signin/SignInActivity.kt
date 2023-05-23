@@ -1,5 +1,6 @@
 package org.cazait.ui.component.signin
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -53,6 +54,7 @@ class SignInActivity :
                 binding.lottieSignin.toVisible()
                 binding.lottieSignin.playAnimation()
             }
+
             is Resource.Success -> status.data.let {
                 binding.lottieSignin.pauseAnimation()
                 binding.lottieSignin.toGone()
@@ -62,6 +64,7 @@ class SignInActivity :
                         startActivity(intent)
                         finish()
                     }
+
                     FAIL -> viewModel.showToastMessage(EMAIL_OR_PASSWORD_ERROR)
                 }
             }
@@ -78,7 +81,7 @@ class SignInActivity :
 
     private fun initSignUpBtn() {
         binding.tvSignup.setOnClickListener {
-            val signUpIntent = Intent(this, SignUpActivity::class.java)
+            val signUpIntent = SignUpActivity.signUpIntent(this)
             startActivity(signUpIntent)
         }
     }
@@ -91,5 +94,14 @@ class SignInActivity :
 
     private fun postSignIn() {
         viewModel.doSignIn(binding.etId.text.toString(), binding.etPassword.text.toString())
+    }
+
+    companion object {
+
+        fun signInIntent(
+            context: Context,
+        ): Intent {
+            return Intent(context, SignInActivity::class.java)
+        }
     }
 }

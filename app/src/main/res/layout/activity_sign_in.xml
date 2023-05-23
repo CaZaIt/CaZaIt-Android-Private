@@ -22,10 +22,10 @@
 
         <TextView
             android:id="@+id/tv_login_text"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="58dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="74dp"
             android:text="@string/sign_in"
             android:textColor="@color/main_black"
@@ -36,7 +36,7 @@
 
         <EditText
             android:id="@+id/et_id"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="55dp"
             android:layout_marginStart="40dp"
@@ -46,16 +46,17 @@
             android:background="@drawable/round_corner_name_pass"
             android:hint="@string/hint_id"
             android:inputType="textEmailAddress"
-            android:paddingStart="22.91dp"
-            android:paddingEnd="22.91dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
             android:textColor="@color/main_black"
+            android:textColorHint="@color/edit_text_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_login_text" />
 
         <EditText
             android:id="@+id/et_password"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="55dp"
             android:layout_marginStart="40dp"
@@ -64,9 +65,10 @@
             android:autofillHints="password"
             android:background="@drawable/round_corner_name_pass"
             android:hint="@string/hint_password"
+            android:textColorHint="@color/edit_text_hint"
             android:inputType="textPassword"
-            android:paddingStart="22.91dp"
-            android:paddingEnd="22.91dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
             android:textColor="@color/main_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +76,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_do_login"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:layout_marginStart="38dp"
@@ -91,8 +93,8 @@
 
         <TextView
             android:id="@+id/tv_signup"
-            style="@style/TextValue"
-            android:layout_width="0dp"
+            style="@style/TextValue_B"
+            android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:layout_marginStart="164dp"
             android:layout_marginTop="9dp"

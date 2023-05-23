@@ -1,4 +1,4 @@
-package org.cazait.data.repository.auth
+package org.cazait.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.cazait.domain.model.Resource

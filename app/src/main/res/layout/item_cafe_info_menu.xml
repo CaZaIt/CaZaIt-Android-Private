@@ -30,7 +30,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_cafe_menu"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
@@ -43,7 +43,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_cafe_menu_price"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="21dp"
@@ -56,7 +56,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_cafe_menu_desc"
-            style="@style/TextValue"
+            style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"

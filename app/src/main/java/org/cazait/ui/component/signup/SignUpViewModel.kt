@@ -12,24 +12,29 @@ import org.cazait.data.dto.request.SignUpReq
 import org.cazait.data.dto.response.IsEmailDupRes
 import org.cazait.data.dto.response.IsNicknameDupRes
 import org.cazait.data.dto.response.SignUpRes
-import org.cazait.data.repository.users.UserRepository
+import org.cazait.domain.model.EmailDup
+import org.cazait.domain.model.NicknameDup
+import org.cazait.domain.model.SignUp
+import org.cazait.domain.repository.UserRepository
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val userRepository: UserRepository) :
-    BaseViewModel() {
-    private val _signUpProcess = MutableLiveData<Resource<SignUpRes>>()
-    val signUpProcess: LiveData<Resource<SignUpRes>>
+class SignUpViewModel @Inject constructor(
+    private val userRepository: UserRepository
+) : BaseViewModel() {
+
+    private val _signUpProcess = MutableLiveData<Resource<SignUp>>()
+    val signUpProcess: LiveData<Resource<SignUp>>
         get() = _signUpProcess
 
-    private val _emailDupProcess = MutableLiveData<Resource<IsEmailDupRes>>()
-    val emailDupProcess: LiveData<Resource<IsEmailDupRes>>
+    private val _emailDupProcess = MutableLiveData<Resource<EmailDup>>()
+    val emailDupProcess: LiveData<Resource<EmailDup>>
         get() = _emailDupProcess
 
-    private val _nickDupProcess = MutableLiveData<Resource<IsNicknameDupRes>>()
-    val nickDupProcess: LiveData<Resource<IsNicknameDupRes>>
+    private val _nickDupProcess = MutableLiveData<Resource<NicknameDup>>()
+    val nickDupProcess: LiveData<Resource<NicknameDup>>
         get() = _nickDupProcess
 
     private val _showToast = MutableLiveData<SingleEvent<Any>>()

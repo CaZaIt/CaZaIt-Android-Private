@@ -7,6 +7,7 @@ import org.cazait.domain.model.Resource
 import org.cazait.data.dto.request.SignInReq
 import org.cazait.data.dto.response.SignInRes
 import org.cazait.data.source.remote.auth.AuthRemoteData
+import org.cazait.domain.repository.AuthRepository
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
