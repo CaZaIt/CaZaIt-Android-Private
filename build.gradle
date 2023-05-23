@@ -2,7 +2,7 @@ buildscript {
     ext {
         // Versions
         kotlinVersion = '1.8.0'
-        hiltVersion = '2.45'
+        hiltVersion = '2.46.1'
         hiltCompilerVersion = '1.0.0'
         glideVersion = '4.15.0'
         viewModelVersion = '2.5.1'

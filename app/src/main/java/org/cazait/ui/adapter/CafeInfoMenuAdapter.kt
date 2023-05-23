@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.data.model.CafeMenu
+import org.cazait.model.CafeMenu
 import org.cazait.databinding.ItemCafeInfoMenuBinding
 
 class CafeInfoMenuAdapter :

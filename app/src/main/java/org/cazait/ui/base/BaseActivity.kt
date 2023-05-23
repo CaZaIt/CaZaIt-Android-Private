@@ -68,5 +68,4 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel>(
         }
         return super.dispatchTouchEvent(ev)
     }
-
 }

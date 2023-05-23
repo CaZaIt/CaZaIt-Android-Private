@@ -3,11 +3,11 @@ package org.cazait.ui.component
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import org.cazait.R
-import org.cazait.data.model.CafeStatus
+import org.cazait.model.CafeStatus
 
 @BindingAdapter("status")
 fun TextView.setStatus(cafeStatus: CafeStatus?) {
-    text = when(cafeStatus) {
+    text = when (cafeStatus) {
         null -> context.getString(R.string.state_normal)
         CafeStatus.FREE -> context.getString(R.string.state_free)
         CafeStatus.NORMAL -> context.getString(R.string.state_normal)

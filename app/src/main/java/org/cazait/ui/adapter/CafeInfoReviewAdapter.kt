@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.data.model.CafeReview
+import org.cazait.model.CafeReview
 import org.cazait.databinding.ItemCafeInfoReviewBinding
 
 class CafeInfoReviewAdapter :
@@ -16,7 +16,7 @@ class CafeInfoReviewAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CafeReview) {
-            binding.rating.setProgress(item.score)
+            binding.rating.progress = item.score
             binding.tvUser.text = item.userId.toString()
             binding.tvContent.text = item.content
         }

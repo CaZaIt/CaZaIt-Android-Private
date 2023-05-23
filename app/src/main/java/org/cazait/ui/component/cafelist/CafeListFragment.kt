@@ -1,7 +1,6 @@
 package org.cazait.ui.component.cafelist
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
@@ -12,16 +11,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.Constants
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeListBinding
-import org.cazait.domain.model.Cafe
-import org.cazait.domain.model.Cafes
-import org.cazait.domain.model.FavoriteCafes
-import org.cazait.domain.model.ListTitle
-import org.cazait.domain.model.Resource
-import org.cazait.domain.model.mapper.DomainMapper.toCafe
+import org.cazait.model.Cafe
+import org.cazait.model.Cafes
+import org.cazait.model.FavoriteCafes
+import org.cazait.model.ListTitle
+import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeListHorizontalAdapter
 import org.cazait.ui.adapter.CafeListVerticalAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.base.BaseFragment
+import org.cazait.ui.component.Mapper.toCafe
 import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
 import pub.devrel.easypermissions.EasyPermissions
@@ -132,9 +131,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     }
 
     private fun navigateToCafeInfo(cafe: Cafe) {
-        val intent = Intent(context, CafeInfoActivity::class.java).apply {
-            putExtra(getString(R.string.cafe_info), cafe)
-        }
+        val intent = CafeInfoActivity.cafeInfoIntent(requireContext(), cafe)
         startActivity(intent)
     }
 

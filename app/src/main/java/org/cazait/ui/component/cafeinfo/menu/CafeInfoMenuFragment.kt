@@ -3,9 +3,9 @@ package org.cazait.ui.component.cafeinfo.menu
 import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.domain.model.Resource
-import org.cazait.data.dto.response.CafeMenuRes
 import org.cazait.databinding.FragmentCafeInfoMenuBinding
+import org.cazait.model.CafeMenus
+import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeInfoMenuAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.base.BaseFragment
@@ -47,7 +47,7 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
         observe(viewModel.listMenuData, ::handleCafeMenu)
     }
 
-    private fun handleCafeMenu(status: Resource<CafeMenuRes>) {
+    private fun handleCafeMenu(status: Resource<CafeMenus>) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieMenu.toVisible()

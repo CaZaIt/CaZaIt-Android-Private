@@ -1,5 +1,7 @@
 package org.cazait.ui.component.cafeinfo
 
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -7,8 +9,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.domain.model.Cafe
 import org.cazait.databinding.ActivityCafeInfoBinding
+import org.cazait.model.Cafe
 import org.cazait.ui.adapter.CafeImgAdapter
 import org.cazait.ui.base.BaseActivity
 import org.cazait.ui.component.cafeinfo.menu.CafeInfoMenuFragment
@@ -21,18 +23,17 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     CafeInfoViewModel::class.java,
     R.layout.activity_cafe_info
 ) {
-
     private val bundle = Bundle()
     private val menuFrag = CafeInfoMenuFragment()
     private val reviewFrag = CafeInfoReviewFragment()
+
     override fun initView() {
         val cafe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(getString(R.string.cafe_info), Cafe::class.java)
+            intent.getSerializableExtra("cafe", Cafe::class.java)
         } else {
-            intent.getParcelableExtra(getString(R.string.cafe_info)) as? Cafe
-        }
+            intent.getSerializableExtra("cafe") as Cafe
+        }?: return
 
-        require(cafe != null)
         binding.tvInfoCafename.text = cafe.name
         binding.tvInfoCafeadd.text = cafe.address
 
@@ -119,5 +120,16 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
 
     private fun initViewModel(cafe: Cafe) {
         viewModel.initViewModel(cafe = cafe)
+    }
+
+    companion object {
+        fun cafeInfoIntent(
+            context: Context,
+            cafe: Cafe,
+        ): Intent {
+            return Intent(context, CafeInfoActivity::class.java).apply {
+                putExtra("cafe", cafe)
+            }
+        }
     }
 }

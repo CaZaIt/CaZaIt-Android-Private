@@ -8,13 +8,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.cazait.data.model.CafeStatus
-import org.cazait.domain.model.Cafes
-import org.cazait.domain.model.FavoriteCafes
-import org.cazait.domain.model.Resource
-import org.cazait.domain.repository.CafeRepository
+import org.bmsk.data.repository.CafeRepository
+import org.cazait.model.Cafes
+import org.cazait.model.FavoriteCafes
+import org.cazait.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.PermissionUtil
 import javax.inject.Inject
@@ -47,12 +47,13 @@ class CafeListViewModel @Inject constructor(
 
     private fun updateListCafesData() {
         viewModelScope.launch {
-            _listCafesData.value =
-                cafeRepository.getListCafes(
-                    userId = null,
-                    latitude = _lastLocationLiveData.value?.latitude.toString(),
-                    longitude = _lastLocationLiveData.value?.longitude.toString()
-                ).first()
+            cafeRepository.getListCafes(
+                userId = null,
+                latitude = _lastLocationLiveData.value?.latitude.toString(),
+                longitude = _lastLocationLiveData.value?.longitude.toString()
+            ).collect {
+                _listCafesData.value = it
+            }
         }
     }
 

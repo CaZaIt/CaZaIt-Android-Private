@@ -5,17 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cazait.domain.model.Resource
-import org.cazait.data.dto.response.CafeMenuRes
-import org.cazait.domain.repository.CafeRepository
+import org.bmsk.data.repository.CafeRepository
+import org.cazait.model.CafeMenus
+import org.cazait.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CafeInfoMenuViewModel @Inject constructor(private val cafeRepository: CafeRepository) :
-    BaseViewModel() {
-    private val _listMenuData = MutableLiveData<Resource<CafeMenuRes>>()
-    val listMenuData: LiveData<Resource<CafeMenuRes>>
+class CafeInfoMenuViewModel @Inject constructor(
+    private val cafeRepository: CafeRepository
+) : BaseViewModel() {
+    private val _listMenuData = MutableLiveData<Resource<CafeMenus>>()
+    val listMenuData: LiveData<Resource<CafeMenus>>
         get() = _listMenuData
 
     fun getMenus(cafeId: Long) {

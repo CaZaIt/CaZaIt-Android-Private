@@ -7,19 +7,17 @@ import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.domain.model.FAIL
-import org.cazait.domain.model.Resource
-import org.cazait.domain.model.SUCCESS
-import org.cazait.data.dto.response.IsEmailDupRes
-import org.cazait.data.dto.response.IsNicknameDupRes
-import org.cazait.data.dto.response.SignUpRes
 import org.cazait.databinding.ActivitySignUpBinding
-import org.cazait.domain.model.EmailDup
-import org.cazait.domain.model.NicknameDup
-import org.cazait.domain.model.SignUp
+import org.cazait.model.EmailDup
+import org.cazait.model.NicknameDup
+import org.cazait.model.Resource
+import org.cazait.model.SignUpInfo
 import org.cazait.ui.base.BaseActivity
-import org.cazait.ui.component.signin.SignInActivity
-import org.cazait.utils.*
+import org.cazait.utils.SingleEvent
+import org.cazait.utils.observe
+import org.cazait.utils.showToast
+import org.cazait.utils.toGone
+import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
 class SignUpActivity :
@@ -89,7 +87,7 @@ class SignUpActivity :
         observeToast(viewModel.showToast)
     }
 
-    private fun handleSignUpResult(status: Resource<SignUp>) {
+    private fun handleSignUpResult(status: Resource<SignUpInfo>) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignup.toVisible()

@@ -6,9 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cazait.domain.model.Cafe
-import org.cazait.domain.model.mapper.DomainMapper.toFavoriteCafe
-import org.cazait.domain.repository.CafeRepository
+import org.bmsk.data.repository.CafeRepository
+import org.cazait.model.Cafe
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
@@ -32,7 +31,7 @@ class CafeInfoViewModel @Inject constructor(
     fun saveFavoriteCafe() {
         Log.e("onClickSaveCafe", "onClick")
         viewModelScope.launch {
-            cafe?.let { cafeRepository.insertFavoriteCafe(it.toFavoriteCafe()) }
+            cafe?.let { cafeRepository.insertFavoriteCafe(it) }
         }
     }
 }
