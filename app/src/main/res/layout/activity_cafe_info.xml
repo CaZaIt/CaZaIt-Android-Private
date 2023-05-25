@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="cafe"
+            type="org.cazait.model.Cafe" />
+
         <variable
             name="viewModel"
             type="org.cazait.ui.component.cafeinfo.CafeInfoViewModel" />
@@ -71,7 +76,7 @@
                             app:selectedDotColor="@color/main_black" />
                     </FrameLayout>
 
-                    <androidx.appcompat.widget.Toolbar
+                    <com.google.android.material.appbar.MaterialToolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="90dp"
@@ -86,14 +91,34 @@
                             <TextView
                                 android:id="@+id/tv_info_cafename"
                                 style="@style/TextValue_B"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="30dp"
-                                android:layout_marginTop="20dp"
-                                android:text="@string/info_cafename"
+                                android:layout_marginStart="26dp"
+                                android:layout_marginTop="16dp"
+                                android:autoSizeMaxTextSize="28sp"
+                                android:autoSizeMinTextSize="18sp"
+                                android:autoSizeStepGranularity="2sp"
+                                android:autoSizeTextType="uniform"
+                                android:ellipsize="end"
+                                android:gravity="start"
+                                android:maxLines="1"
+                                android:text="@{cafe.name}"
                                 android:textColor="@color/main_black"
-                                android:textSize="26sp"
+                                android:textSize="28sp"
                                 android:textStyle="bold"
+                                app:layout_constraintEnd_toStartOf="@id/guideLine"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="카자잇카자 카페" />
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/guideLine"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintGuide_percent="0.45"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,28 +127,29 @@
                                 style="@style/TextValue_B"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="30dp"
                                 android:layout_marginTop="4dp"
-                                android:layout_marginEnd="30dp"
                                 android:ellipsize="end"
                                 android:maxLines="1"
-                                android:text="@string/info_cafeadd"
+                                android:text="@{cafe.address}"
                                 android:textColor="@color/main_black"
-                                android:textSize="15sp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toStartOf="@+id/iv_fabor"
+                                app:layout_constraintStart_toStartOf="@+id/tv_info_cafename"
                                 app:layout_constraintTop_toBottomOf="@+id/tv_info_cafename"
                                 tools:text="아주 긴 주소입니다.아주 긴 주소입니다.아주 긴 주소입니다.아주 긴 주소입니다." />
 
                             <TextView
                                 android:id="@+id/tv_map"
                                 style="@style/TextValue_B"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
+                                android:layout_marginStart="2dp"
+                                android:gravity="start"
                                 android:text="@string/info_cafemap"
                                 android:textColor="@color/cafe_list_orange"
+                                android:textSize="14sp"
                                 app:layout_constraintBottom_toBottomOf="@id/tv_info_cafename"
+                                app:layout_constraintEnd_toStartOf="@id/iv_fabor"
                                 app:layout_constraintStart_toEndOf="@+id/tv_info_cafename" />
 
                             <ImageView
@@ -139,7 +165,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.appcompat.widget.Toolbar>
+                    </com.google.android.material.appbar.MaterialToolbar>
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -165,53 +191,26 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
-                        android:id="@+id/layout_btn"
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/line">
+                        app:layout_constraintTop_toBottomOf="@id/line"
+                        app:tabIndicator="@null"
+                        app:tabSelectedTextColor="@color/cafe_list_orange"
+                        app:tabTextAppearance="@style/TabTextStyle_B"
+                        app:tabTextColor="@color/main_black" />
 
-                        <TextView
-                            android:id="@+id/btn_cafe_menu"
-                            style="@style/TextValue_B"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="@string/info_cafemenu"
-                            android:textColor="@drawable/selector_info"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/btn_cafe_rev"
-                            style="@style/TextValue_B"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="@string/info_caferev"
-                            android:textColor="@drawable/selector_info"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <androidx.fragment.app.FragmentContainerView
-                        android:id="@+id/fragment"
-                        android:name="org.cazait.ui.component.cafeinfo.menu.CafeInfoMenuFragment"
-                        android:layout_width="0dp"
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vp_fragment"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginEnd="25dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/layout_btn"
-                        tools:layout="@layout/fragment_cafe_info_menu" />
+                        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
