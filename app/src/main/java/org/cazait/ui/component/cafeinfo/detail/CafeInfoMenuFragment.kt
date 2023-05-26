@@ -1,36 +1,50 @@
-package org.cazait.ui.component.cafeinfo.menu
+package org.cazait.ui.component.cafeinfo.detail
 
+import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeInfoMenuBinding
+import org.cazait.model.Cafe
 import org.cazait.model.CafeMenus
 import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeInfoMenuAdapter
 import org.cazait.ui.adapter.ItemDecoration
-import org.cazait.ui.base.BaseFragment
+import org.cazait.ui.component.cafeinfo.CafeInfoViewModel
 import org.cazait.utils.observe
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoMenuViewModel>(
-    CafeInfoMenuViewModel::class.java,
-    R.layout.fragment_cafe_info_menu
-) {
+class CafeInfoMenuFragment(
+    private val cafe: Cafe,
+    private val viewModel: CafeInfoViewModel
+) : Fragment() {
+    private lateinit var binding: FragmentCafeInfoMenuBinding
     private lateinit var menuAdapter: CafeInfoMenuAdapter
-    override fun initView() {
-        val cafeId = arguments?.getLong("cafeId")
-        if (cafeId != null) {
-            viewModel.getMenus(cafeId)
-        }
-        initAdapter()
-        observeViewModel()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentCafeInfoMenuBinding.inflate(inflater)
+        return binding.root
     }
 
-    override fun initAfterBinding() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        val cafeId = cafe.cafeId
+
+        viewModel.getMenus(cafeId)
+        initAdapter()
+        observeViewModel()
     }
 
     private fun initAdapter() {
@@ -53,6 +67,7 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
                 binding.lottieMenu.toVisible()
                 binding.lottieMenu.playAnimation()
             }
+
             is Resource.Success -> status.data.let {
                 binding.lottieMenu.pauseAnimation()
                 binding.lottieMenu.toGone()
@@ -66,6 +81,7 @@ class CafeInfoMenuFragment : BaseFragment<FragmentCafeInfoMenuBinding, CafeInfoM
                     }
                 }
             }
+
             is Resource.Error -> {
                 binding.lottieMenu.pauseAnimation()
                 binding.lottieMenu.toGone()

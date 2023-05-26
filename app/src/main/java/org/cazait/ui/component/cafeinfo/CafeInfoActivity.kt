@@ -3,65 +3,40 @@ package org.cazait.ui.component.cafeinfo
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
-import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.ActivityCafeInfoBinding
 import org.cazait.model.Cafe
+import org.cazait.model.CafeImage
 import org.cazait.ui.adapter.CafeImgAdapter
+import org.cazait.ui.adapter.InfoViewPagerAdapter
 import org.cazait.ui.base.BaseActivity
-import org.cazait.ui.component.cafeinfo.menu.CafeInfoMenuFragment
-import org.cazait.ui.component.cafeinfo.review.CafeInfoReviewFragment
-import org.cazait.utils.toGone
-import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
 class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel>(
     CafeInfoViewModel::class.java,
     R.layout.activity_cafe_info
 ) {
-    private val bundle = Bundle()
-    private val menuFrag = CafeInfoMenuFragment()
-    private val reviewFrag = CafeInfoReviewFragment()
+    lateinit var cafe: Cafe
+    private lateinit var viewPagerImageAdapter: CafeImgAdapter
 
     override fun initView() {
-        val cafe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        cafe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getSerializableExtra("cafe", Cafe::class.java)
         } else {
             intent.getSerializableExtra("cafe") as Cafe
-        }?: return
+        } ?: return
+        binding.cafe = cafe
 
-        binding.tvInfoCafename.text = cafe.name
-        binding.tvInfoCafeadd.text = cafe.address
-
-        Log.d("cafeId", cafe.cafeId.toString())
-        bundle.putLong("cafeId", cafe.cafeId)
-
-        val dotsIndicator = binding.dotsIndicator
-        val viewPager = binding.vpImg
-        viewPager.adapter = CafeImgAdapter(this, cafe.images)
-        dotsIndicator.attachTo(viewPager)
-
-        initDefaultFrag(menuFrag)
-        showFragment(
-            binding.btnCafeMenu,
-            binding.btnCafeRev,
-            menuFrag,
-            binding.fabReview
-        )
-        showFragment(
-            binding.btnCafeRev,
-            binding.btnCafeMenu,
-            reviewFrag,
-            binding.fabReview
-        )
-        initBackPressButton()
-
-        initSaveFavoriteButton()
         initViewModel(cafe)
+        initViewPagerImageAdapter(cafe.images)
+        initDotIndicator(binding.vpImg)
+        initBackPressButton()
+        initFragmentViewPager()
+        initSaveFavoriteButton()
     }
 
     override fun initAfterBinding() {
@@ -73,6 +48,31 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
         binding.imgBack.setOnClickListener {
             finish()
         }
+    }
+
+    private fun initDotIndicator(imgViewPager: ViewPager2) {
+        val dotsIndicator = binding.dotsIndicator
+        dotsIndicator.attachTo(imgViewPager)
+    }
+
+    private fun initViewPagerImageAdapter(images: List<CafeImage>) {
+        viewPagerImageAdapter = CafeImgAdapter(this, images)
+        binding.vpImg.adapter = viewPagerImageAdapter
+    }
+
+    private fun initFragmentViewPager() {
+        val tab1 = getString(R.string.info_cafemenu)
+        val tab2 = getString(R.string.info_caferev)
+        val adapter = InfoViewPagerAdapter(this, cafe, viewModel)
+        binding.vpFragment.adapter = adapter
+        TabLayoutMediator(binding.tabLayout, binding.vpFragment) { tab, position ->
+            run {
+                tab.text = when (position) {
+                    0 -> tab1
+                    else -> tab2
+                }
+            }
+        }.attach()
     }
 
     private fun initSaveFavoriteButton() {
@@ -87,39 +87,8 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
         }
     }
 
-    private fun initDefaultFrag(defaultFrag: Fragment) {
-        binding.fabReview.toGone()
-        binding.btnCafeMenu.isSelected = true
-        defaultFrag.arguments = bundle
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment, defaultFrag)
-            .commit()
-    }
-
-    private fun showFragment(btn1: TextView, btn2: TextView, fragment: Fragment, fab: TextView) {
-        var frag: Fragment
-        btn1.setOnClickListener {
-            btn1.isSelected = true
-            btn2.isSelected = false
-            if (binding.btnCafeMenu.isSelected) {
-                frag = fragment
-                frag.arguments = bundle
-                fab.toGone()
-            } else {
-                frag = fragment
-                frag.arguments = bundle
-                fab.toVisible()
-            }
-            supportFragmentManager.popBackStack()
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, frag)
-                .commit()
-        }
-    }
-
     private fun initViewModel(cafe: Cafe) {
-        viewModel.initViewModel(cafe = cafe)
+        viewModel.initViewModel(cafe)
     }
 
     companion object {

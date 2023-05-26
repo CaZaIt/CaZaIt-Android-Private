@@ -1,5 +1,6 @@
 package org.cazait.utils
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,8 +17,28 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
 
-fun AppCompatActivity.replace(@IdRes frameId: Int, fragment: Fragment) {
-    supportFragmentManager.beginTransaction().replace(frameId, fragment, null).commit()
+@SuppressLint("CommitTransaction")
+fun AppCompatActivity.replace(
+    @IdRes frameId: Int,
+    fragment: Fragment,
+    tag: String? = fragment::class.simpleName,
+    addToBackStack: Boolean = false,
+    commitNow: Boolean = false,
+    allowStateLoss: Boolean = false
+) {
+    val transaction = supportFragmentManager.beginTransaction()
+        .replace(frameId, fragment, tag)
+
+    if(addToBackStack) {
+        transaction.addToBackStack(tag)
+    }
+
+    when {
+        commitNow && allowStateLoss -> transaction.commitNowAllowingStateLoss()
+        commitNow -> transaction.commitNow()
+        allowStateLoss -> transaction.commitAllowingStateLoss()
+        else -> transaction.commit()
+    }
 }
 
 fun View.showKeyboard() {
@@ -53,6 +74,7 @@ fun View.showToast(
                 is String -> Toast.makeText(this.context, it, timeLength).show()
                 is Int -> Toast.makeText(this.context, this.context.getString(it), timeLength)
                     .show()
+
                 else -> {
                 }
             }
