@@ -47,6 +47,7 @@ class CafeInfoReviewFragment(
         initAdapter()
         observeViewModel()
         binding.fabEditReview.setOnClickListener {
+            // TODO 여기서 만일 로그인하지 않았다면 "로그인이 필요한 서비스입니다"를 사용자에게 보여준다.
             val intent = ReviewEditActivity.reviewIntent(requireContext(), cafe)
             startActivity(intent)
         }

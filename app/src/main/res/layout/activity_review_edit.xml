@@ -8,6 +8,14 @@
         <variable
             name="cafe"
             type="org.cazait.model.Cafe" />
+
+        <variable
+            name="activity"
+            type="org.cazait.ui.component.review.ReviewEditActivity" />
+
+        <variable
+            name="viewModel"
+            type="org.cazait.ui.component.review.ReviewEditViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +54,7 @@
             android:labelFor="@+id/tv_guide_edit_rating"
             android:max="5"
             android:numStars="5"
+            android:rating="@={viewModel.reviewScoreLiveData}"
             android:scaleX="0.98"
             android:scaleY="0.98"
             android:stepSize="1"
@@ -77,6 +86,7 @@
             android:hint="@string/guide_hint_edit_review"
             android:maxLength="50"
             android:padding="18dp"
+            android:text="@={viewModel.reviewContentLiveData}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_guide_edit_review"
@@ -90,6 +100,7 @@
             android:layout_marginTop="47dp"
             android:layout_marginEnd="120dp"
             android:background="@drawable/rectangle_black_r20"
+            android:onClick="@{() -> activity.sendReviewToServer()}"
             android:text="@string/edit"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"

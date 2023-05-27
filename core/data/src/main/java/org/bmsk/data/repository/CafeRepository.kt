@@ -27,6 +27,7 @@ interface CafeRepository {
         lastId: Long?
     ): Flow<Resource<CafeReviews>>
 
+    suspend fun postReview(userId: Long, cafeId: Long, score: Int, content: String): Flow<Resource<String>>
     suspend fun insertFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun insertFavoriteCafe(cafe: Cafe): Boolean
 

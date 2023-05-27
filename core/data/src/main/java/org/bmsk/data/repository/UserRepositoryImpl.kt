@@ -20,8 +20,10 @@ import kotlin.coroutines.CoroutineContext
 
 class UserRepositoryImpl @Inject constructor(
     private val remoteData: UserRemoteData,
-    private val ioDispatcher: CoroutineContext
+    private val ioDispatcher: CoroutineContext,
 ) : UserRepository {
+    override val userId: Long? = null
+
     override suspend fun signUp(email: String, password: String, nickname: String): Flow<Resource<SignUpInfo>> {
         return flow {
             val body = SignUpReq(email, password, nickname)

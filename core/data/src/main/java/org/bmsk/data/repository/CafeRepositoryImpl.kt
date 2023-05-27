@@ -1,5 +1,6 @@
 package org.bmsk.data.repository
 
+import android.provider.ContactsContract.Data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -111,6 +112,22 @@ class CafeRepositoryImpl @Inject constructor(
                     val reviews =
                         response.data?.review?.toCafeReviews() ?: CafeReviews(emptyList(), 0, 0L)
                     emit(Resource.Success(reviews))
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun postReview(userId: Long, cafeId: Long, score: Int, content: String): Flow<Resource<String>> {
+        return flow{
+            when (val response = cafeInfoRemoteData.postReview(userId, cafeId, score, content)) {
+                is DataResponse.Success -> {
+                    val message: String =
+                        response.data?.message?: ""
+                    emit(Resource.Success(message))
                 }
 
                 is DataResponse.DataError -> {
