@@ -12,7 +12,8 @@
             android:id="@+id/rv_cafe_info_menus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_cafe_info_menu" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_menu"

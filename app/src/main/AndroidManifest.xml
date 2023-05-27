@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".CazaitApplication"
@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CaZaIt"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.component.review.ReviewEditActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
@@ -25,7 +28,6 @@
         <activity
             android:name=".ui.component.cafeinfo.CafeInfoActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.component.MainActivity"
             android:exported="true"
@@ -37,16 +39,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.component.signup.SignUpActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.component.signin.SignInActivity"
             android:exported="false"
-            android:theme="@style/Theme.CaZaIt.Splash">
-
-        </activity>
+            android:theme="@style/Theme.CaZaIt.Splash" />
     </application>
+
 </manifest>

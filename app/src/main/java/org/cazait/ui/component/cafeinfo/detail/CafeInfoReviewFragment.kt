@@ -15,6 +15,7 @@ import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeInfoReviewAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.component.cafeinfo.CafeInfoViewModel
+import org.cazait.ui.component.review.ReviewEditActivity
 import org.cazait.utils.observe
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -45,6 +46,10 @@ class CafeInfoReviewFragment(
         viewModel.getReviews(cafeId, null, null, null)
         initAdapter()
         observeViewModel()
+        binding.fabEditReview.setOnClickListener {
+            val intent = ReviewEditActivity.reviewIntent(requireContext(), cafe)
+            startActivity(intent)
+        }
     }
 
     private fun initAdapter() {

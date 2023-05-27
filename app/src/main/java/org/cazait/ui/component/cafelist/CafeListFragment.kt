@@ -179,7 +179,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             EasyPermissions.requestPermissions(
                 this,
-                getString(R.string.guid_need_location_permission),
+                getString(R.string.guide_need_location_permission),
                 Constants.REQUEST_CODE_LOCATION_PERMISSION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -187,7 +187,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         } else {
             EasyPermissions.requestPermissions(
                 this,
-                getString(R.string.guid_need_location_permission),
+                getString(R.string.guide_need_location_permission),
                 Constants.REQUEST_CODE_LOCATION_PERMISSION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,
