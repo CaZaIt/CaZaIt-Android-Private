@@ -76,7 +76,7 @@
     <string name="state_close">영업 종료</string>
     <string name="state_crowded">혼잡</string>
     <string name="state_very_crowded">매우 혼잡</string>
-    <string name="guid_need_location_permission">이 앱을 사용하기 위해 위치 권한을 필요로 합니다.</string>
+    <string name="guide_need_location_permission">이 앱을 사용하기 위해 위치 권한을 필요로 합니다.</string>
     <string name="guide_error_default">오류가 발생했습니다.</string>
     <string name="cazait_pay">카자잇 페이</string>
     <string name="money_won">원</string>
@@ -88,4 +88,10 @@
     <string name="content_des_payment_history">결제 내역</string>
     <string name="sign_in_kor">로그인</string>
     <string name="content_des_back_button">뒤로 가기 버튼</string>
+    <string name="content_des_edit_review">리뷰 작성 버튼</string>
+    <string name="edit_review">리뷰 쓰기</string>
+    <string name="guide_edit_rating">카페는 어떠셨나요? 별점을 남겨주세요.</string>
+    <string name="guide_edit_review">다른 이용자를 위해 카페 리뷰를 남겨주세요.</string>
+    <string name="guide_hint_edit_review">공백 포함 50자 이내로 작성해주세요.</string>
+    <string name="edit">작성하기</string>
 </resources>

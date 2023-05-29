@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true"
+        android:drawable="@drawable/ic_star_fill" /> <!-- 꽉 찬 별 -->
+    <item android:state_pressed="true"
+        android:drawable="@drawable/ic_star_fill" /> <!-- 눌린 상태의 별 -->
+    <item android:drawable="@drawable/ic_star_empty" /> <!-- 빈 별 -->
+</selector>

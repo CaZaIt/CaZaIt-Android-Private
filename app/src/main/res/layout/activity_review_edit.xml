@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="cafe"
+            type="org.cazait.model.Cafe" />
+
+        <variable
+            name="activity"
+            type="org.cazait.ui.component.review.ReviewEditActivity" />
+
+        <variable
+            name="viewModel"
+            type="org.cazait.ui.component.review.ReviewEditViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_beige"
+        tools:context=".ui.component.review.ReviewEditActivity">
+
+        <include
+            android:id="@+id/cl_tab"
+            layout="@layout/layout_page_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_guide_edit_rating"
+            style="@style/TextValue_M"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="45dp"
+            android:text="@string/guide_edit_rating"
+            android:textColor="@color/main_black"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_tab" />
+
+        <RatingBar
+            android:id="@+id/rb_rating"
+            style="@style/RatingBar_Orange_Star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:isIndicator="false"
+            android:labelFor="@+id/tv_guide_edit_rating"
+            android:max="5"
+            android:numStars="5"
+            android:rating="@={viewModel.reviewScoreLiveData}"
+            android:scaleX="0.98"
+            android:scaleY="0.98"
+            android:stepSize="1"
+            app:layout_constraintStart_toStartOf="@id/tv_guide_edit_rating"
+            app:layout_constraintTop_toBottomOf="@id/tv_guide_edit_rating" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_guide_edit_review"
+            style="@style/TextValue_M"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/guide_edit_review"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/tv_guide_edit_rating"
+            app:layout_constraintTop_toBottomOf="@id/rb_rating" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_review"
+            style="@style/TextValue_M"
+            android:layout_width="match_parent"
+            android:layout_height="335dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="29dp"
+            android:background="@drawable/rectangle_white_r25"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:hint="@string/guide_hint_edit_review"
+            android:maxLength="50"
+            android:padding="18dp"
+            android:text="@={viewModel.reviewContentLiveData}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_guide_edit_review"
+            tools:text="카페가 이뻐서 좋아요. 카자잇 카페 화이팅!" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/TextValue_EB_white"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="47dp"
+            android:layout_marginEnd="120dp"
+            android:background="@drawable/rectangle_black_r20"
+            android:onClick="@{() -> activity.sendReviewToServer()}"
+            android:text="@string/edit"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_review" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TextValue_B">
         <item name="android:textColor">@color/main_black</item>
         <item name="fontFamily">@font/applesdgothicneob00</item>
     </style>
+
     <style name="TextValue_B_White">
         <item name="android:textColor">@color/main_white</item>
         <item name="fontFamily">@font/applesdgothicneob00</item>
     </style>
+
     <style name="TextValue_R">
         <item name="android:textColor">@color/main_black</item>
         <item name="fontFamily">@font/apple_sd_gothic_neo_r</item>
@@ -38,5 +41,11 @@
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/applesdgothicneob00</item>
         <!-- Add more attributes if needed -->
+    </style>
+
+    <style name="RatingBar_Orange_Star" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/layerlist_rating_star</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:maxHeight">48dp</item>
     </style>
 </resources>

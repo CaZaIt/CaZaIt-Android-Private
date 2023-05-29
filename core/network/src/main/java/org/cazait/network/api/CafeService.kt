@@ -1,11 +1,14 @@
 package org.cazait.network.api
 
+import org.cazait.network.model.dto.request.CafeReviewPostReq
 import org.cazait.network.model.dto.response.CafeMenuRes
+import org.cazait.network.model.dto.response.CafeReviewPostRes
 import org.cazait.network.model.dto.response.CafeReviewRes
 import org.cazait.network.model.dto.response.ListCafesRes
 import org.cazait.network.model.dto.response.ListFavoritesRes
 import org.cazait.network.model.dto.response.PostFavoriteCafeRes
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -60,4 +63,11 @@ interface CafeService {
         @Path("userId") userId: Long,
         @Path("cafeId") cafeId: Long,
     ): Response<PostFavoriteCafeRes>
+
+    @POST("/api/reviews/user/{userId}/cafe/{cafeId}")
+    suspend fun postReview(
+        @Path("userId") userId: Long,
+        @Path("cafeId") cafeId: Long,
+        @Body reviewPostReq: CafeReviewPostReq,
+    ): Response<CafeReviewPostRes>
 }

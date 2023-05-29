@@ -15,6 +15,7 @@ import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeInfoReviewAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.component.cafeinfo.CafeInfoViewModel
+import org.cazait.ui.component.review.ReviewEditActivity
 import org.cazait.utils.observe
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -45,6 +46,11 @@ class CafeInfoReviewFragment(
         viewModel.getReviews(cafeId, null, null, null)
         initAdapter()
         observeViewModel()
+        binding.fabEditReview.setOnClickListener {
+            // TODO 여기서 만일 로그인하지 않았다면 "로그인이 필요한 서비스입니다"를 사용자에게 보여준다.
+            val intent = ReviewEditActivity.reviewIntent(requireContext(), cafe)
+            startActivity(intent)
+        }
     }
 
     private fun initAdapter() {

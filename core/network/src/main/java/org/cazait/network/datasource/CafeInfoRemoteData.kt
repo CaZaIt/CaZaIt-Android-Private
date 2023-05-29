@@ -7,6 +7,8 @@ import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.error.NO_INTERNET_CONNECTION
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.api.CafeService
+import org.cazait.network.model.dto.request.CafeReviewPostReq
+import org.cazait.network.model.dto.response.CafeReviewPostRes
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -50,6 +52,26 @@ class CafeInfoRemoteData @Inject constructor(
             else -> {
                 DataResponse.DataError(errorCode = response as Int)
             }
+        }
+    }
+
+    override suspend fun postReview(
+        userId: Long,
+        cafeId: Long,
+        score: Int,
+        content: String
+    ): DataResponse<CafeReviewPostRes> {
+        return when(val response = processCall {
+            val req = CafeReviewPostReq(score, content)
+            cafeService.postReview(
+                userId, cafeId, req
+            )
+        }) {
+            is CafeReviewPostRes -> {
+                DataResponse.Success(data = response)
+            }
+            else ->
+                DataResponse.DataError(errorCode = response as Int)
         }
     }
 

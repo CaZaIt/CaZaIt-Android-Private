@@ -7,6 +7,7 @@ import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
 
 interface UserRepository {
+    val userId: Long?
     suspend fun signUp(email: String, password: String, nickname: String): Flow<Resource<SignUpInfo>>
     suspend fun isNicknameDup(nickname: String): Flow<Resource<NicknameDup>>
     suspend fun isEmailDup(email: String): Flow<Resource<EmailDup>>
