@@ -4,6 +4,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentMyPageBinding
 import org.cazait.ui.base.BaseFragment
+import org.cazait.ui.component.recentlycafe.RecentlyCafeFragment
 import org.cazait.ui.component.signin.SignInActivity
 
 
@@ -14,6 +15,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
 ) {
     override fun initView() {
         setUpSignInButton()
+        setClickListeners()
     }
 
     override fun initAfterBinding() {
@@ -29,5 +31,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
     private fun navigateToSignInActivity() {
         val intent = SignInActivity.signInIntent(requireContext())
         startActivity(intent)
+    }
+
+    private fun setClickListeners() {
+        binding.imgRecently.setOnClickListener {
+            val recentlyCafeFragment = RecentlyCafeFragment()
+            val fragmentManager = requireFragmentManager()
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.nav_host_fragment, recentlyCafeFragment)
+            transaction.commit()
+        }
     }
 }

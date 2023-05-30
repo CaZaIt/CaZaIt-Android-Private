@@ -17,8 +17,11 @@ import javax.inject.Inject
 @HiltViewModel
 class CafeInfoViewModel @Inject constructor(
     private val cafeRepository: CafeRepository
+
 ) : BaseViewModel() {
     private val _locationData = MutableLiveData<List<String>>()
+
+
     val locationData: LiveData<List<String>>
         get() = _locationData
 
@@ -29,6 +32,7 @@ class CafeInfoViewModel @Inject constructor(
 
     fun initViewModel(cafe: Cafe) {
         this.cafe = cafe
+
     }
 
     private val _listMenuData = MutableLiveData<Resource<CafeMenus>>()
@@ -63,4 +67,7 @@ class CafeInfoViewModel @Inject constructor(
             cafe?.let { cafeRepository.insertFavoriteCafe(it) }
         }
     }
+
+
+
 }

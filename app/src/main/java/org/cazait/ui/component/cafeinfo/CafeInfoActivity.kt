@@ -43,6 +43,7 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
 
     }
 
+
     private fun initBackPressButton() {
         binding.imgBack.bringToFront() // 이 코드가 없으면 FrameLayout 내의 ImageView의 경우 클릭되지 않습니다.
         binding.imgBack.setOnClickListener {
@@ -90,7 +91,6 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     private fun initViewModel(cafe: Cafe) {
         viewModel.initViewModel(cafe)
     }
-
     companion object {
         fun cafeInfoIntent(
             context: Context,

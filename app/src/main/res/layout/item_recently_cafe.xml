@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="20dp">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="org.cazait.model.Cafe" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="172dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginStart="23dp"
-        android:layout_marginEnd="23dp"
-        android:background="@drawable/rectangle_white_r50"
+        android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_cafe"
-            android:layout_width="wrap_content"
+            android:layout_width="119dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/rectangle_70"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,64 +30,63 @@
 
         <TextView
             android:id="@+id/txt_cafe_name"
-            android:layout_width="wrap_content"
+            style="@style/TextValue_B"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
-            android:textSize="22sp"
+            android:layout_marginEnd="7dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{item.name}"
             android:textColor="@color/main_black"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:fontFamily="@font/applesdgothicneob00"
+            app:layout_constraintEnd_toStartOf="@id/txt_cafe_distance"
             app:layout_constraintStart_toEndOf="@+id/img_cafe"
             app:layout_constraintTop_toTopOf="@+id/img_cafe"
-            tools:text="롬국" />
+            tools:text="카자잇카페카자잇카페카자잇카페" />
 
         <TextView
             android:id="@+id/txt_cafe_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
+            android:text="@{item.distance + `m`}"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/txt_cafe_name"
-            app:layout_constraintStart_toEndOf="@+id/txt_cafe_name"
-            tools:text="220m" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="300m" />
 
         <TextView
             android:id="@+id/txt_cafe_address"
-            android:layout_width="173dp"
+            style="@style/TextValue_L"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
             android:layout_marginTop="7dp"
+            android:layout_marginEnd="5dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{item.address}"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txt_cafe_name"
             app:layout_constraintTop_toBottomOf="@+id/txt_cafe_name"
-            tools:text="서울특별시 광진구 광나루로 375-1 2층(군자동)" />
+            tools:text="광진구 능동 239-26" />
 
 
         <TextView
             android:id="@+id/btn_evaluation"
-            android:layout_width="173dp"
+            style="@style/TextValue_B"
+            android:layout_width="0dp"
             android:layout_height="38dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/btn_ic_recently"
-            android:fontFamily="@font/applesdgothicneob00"
             android:gravity="center"
             android:textColor="@color/main_white"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/txt_cafe_address"
-            app:layout_constraintTop_toBottomOf="@+id/txt_cafe_address"
-            tools:text="보통" />
-
-        <ImageView
-            android:id="@+id/img_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="106.5dp"
-            android:layout_marginEnd="24.5dp"
-            android:src="@drawable/favorite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/txt_cafe_name"
-            app:layout_constraintTop_toTopOf="@+id/img_cafe" />
+            app:layout_constraintStart_toStartOf="@+id/txt_cafe_address"
+            app:status="@{item.status}"
+            tools:text="보통" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

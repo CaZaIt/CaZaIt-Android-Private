@@ -18,7 +18,10 @@ import org.cazait.utils.replace
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     MainViewModel::class.java,
     R.layout.activity_main,
+
+
 ) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
