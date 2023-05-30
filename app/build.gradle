@@ -47,8 +47,6 @@ configurations {
 dependencies {
     implementation project(path: ':core:data')
     implementation project(path: ':core:model')
-    implementation project(path: ':core:network')
-    implementation project(path: ':core:database')
 
     // ktlint
     ktlint("com.pinterest:ktlint:0.48.2") {

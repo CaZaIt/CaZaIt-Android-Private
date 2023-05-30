@@ -1,4 +1,4 @@
-package org.cazait.database.converter
+package org.cazait.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

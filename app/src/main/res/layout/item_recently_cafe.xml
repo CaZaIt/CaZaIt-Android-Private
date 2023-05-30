@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="org.cazait.database.model.entity.RecentlyViewedCafe" />
+            type="org.cazait.model.Cafe" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

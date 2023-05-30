@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.database.model.entity.RecentlyViewedCafe
 import org.cazait.databinding.ItemRecentlyCafeBinding
+import org.cazait.model.Cafe
 
-class RecentlyCafeAdapter : ListAdapter<RecentlyViewedCafe, RecentlyCafeAdapter.ViewHolder>(DiffCallback()) {
+class RecentlyCafeAdapter : ListAdapter<Cafe, RecentlyCafeAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemRecentlyCafeBinding.inflate(LayoutInflater.from(parent.context), parent, false)

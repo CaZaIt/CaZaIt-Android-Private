@@ -5,7 +5,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.cazait.database.AppDatabase
-import org.cazait.database.dao.RecentlyViewedCafeDao
 import javax.inject.Singleton
 
 @Module
