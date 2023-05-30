@@ -2,6 +2,7 @@ package org.cazait.ui.component.cafeinfo
 
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
+import org.cazait.database.RecentlyDatabase
+import org.cazait.database.model.entity.RecentlyViewedCafe
 import org.cazait.databinding.ActivityCafeInfoBinding
 import org.cazait.model.Cafe
 import org.cazait.ui.adapter.CafeImgAdapter
@@ -18,6 +21,9 @@ import org.cazait.ui.component.cafeinfo.review.CafeInfoReviewFragment
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 
+
+
+
 @AndroidEntryPoint
 class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel>(
     CafeInfoViewModel::class.java,
@@ -26,13 +32,14 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     private val bundle = Bundle()
     private val menuFrag = CafeInfoMenuFragment()
     private val reviewFrag = CafeInfoReviewFragment()
-
+    lateinit var db : RecentlyDatabase
     override fun initView() {
         val cafe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getSerializableExtra("cafe", Cafe::class.java)
         } else {
             intent.getSerializableExtra("cafe") as Cafe
         }?: return
+
 
         binding.tvInfoCafename.text = cafe.name
         binding.tvInfoCafeadd.text = cafe.address
@@ -58,15 +65,20 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
             reviewFrag,
             binding.fabReview
         )
+
+
+
         initBackPressButton()
 
         initSaveFavoriteButton()
         initViewModel(cafe)
+
     }
 
     override fun initAfterBinding() {
 
     }
+
 
     private fun initBackPressButton() {
         binding.imgBack.bringToFront() // 이 코드가 없으면 FrameLayout 내의 ImageView의 경우 클릭되지 않습니다.
@@ -120,7 +132,36 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
 
     private fun initViewModel(cafe: Cafe) {
         viewModel.initViewModel(cafe = cafe)
+
+        saveCafeToDatabase(cafe)
     }
+
+
+    private fun saveCafeToDatabase(cafe: Cafe) {
+        val recentlyViewedCafe = RecentlyViewedCafe(
+            cafeId = cafe.cafeId,
+            name = cafe.name,
+            address = cafe.address,
+            distance = cafe.distance,
+            latitude = cafe.latitude,
+            status = cafe.status
+
+        )
+
+        // Room 데이터베이스 작업을 백그라운드 스레드에서 실행
+        AsyncTask.execute {
+            // RecentlyDatabase 인스턴스 가져오기
+            val database = RecentlyDatabase.getInstance(this)
+
+            // Cafe 저장
+            database?.recentlyViewedCafeDao()?.insert(recentlyViewedCafe)
+
+        }
+        Log.d("RoomDB",recentlyViewedCafe.name)
+        Log.d("RoomDB",recentlyViewedCafe.address)
+    }
+
+
 
     companion object {
         fun cafeInfoIntent(
@@ -132,4 +173,6 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
             }
         }
     }
+
+
 }

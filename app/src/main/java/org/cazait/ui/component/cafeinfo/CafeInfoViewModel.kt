@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
+import org.cazait.database.RecentlyDatabase
+import org.cazait.database.model.entity.RecentlyViewedCafe
 import org.cazait.model.Cafe
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
@@ -14,8 +16,11 @@ import javax.inject.Inject
 @HiltViewModel
 class CafeInfoViewModel @Inject constructor(
     private val cafeRepository: CafeRepository
+
 ) : BaseViewModel() {
     private val _locationData = MutableLiveData<List<String>>()
+
+
     val locationData: LiveData<List<String>>
         get() = _locationData
 
@@ -26,6 +31,7 @@ class CafeInfoViewModel @Inject constructor(
 
     fun initViewModel(cafe: Cafe) {
         this.cafe = cafe
+
     }
 
     fun saveFavoriteCafe() {
@@ -34,4 +40,7 @@ class CafeInfoViewModel @Inject constructor(
             cafe?.let { cafeRepository.insertFavoriteCafe(it) }
         }
     }
+
+
+
 }

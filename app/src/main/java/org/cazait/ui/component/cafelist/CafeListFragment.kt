@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.Constants
 import org.cazait.R
+import org.cazait.database.RecentlyDatabase
 import org.cazait.databinding.FragmentCafeListBinding
 import org.cazait.model.Cafe
 import org.cazait.model.Cafes

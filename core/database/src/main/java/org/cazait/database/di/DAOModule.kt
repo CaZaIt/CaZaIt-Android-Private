@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.cazait.database.AppDatabase
+import org.cazait.database.dao.RecentlyViewedCafeDao
 import javax.inject.Singleton
 
 @Module
@@ -14,4 +15,8 @@ object DAOModule {
     @Singleton
     @Provides
     fun providesFavoriteCafeDAO(appDatabase: AppDatabase) = appDatabase.favoriteDAO()
+
+    @Singleton
+    @Provides
+    fun providesRecentlyViewedCafeDAO(appDatabase: AppDatabase) = appDatabase.recentlyViewedCafeDao()
 }
