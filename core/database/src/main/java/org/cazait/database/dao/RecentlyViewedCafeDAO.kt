@@ -1,21 +1,21 @@
 package org.cazait.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import org.cazait.database.model.entity.RecentlyViewedCafe
+import kotlinx.coroutines.flow.Flow
+import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 
 @Dao
 interface RecentlyViewedCafeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(recentlyViewedCafe: RecentlyViewedCafe)
+    suspend fun insert(recentlyViewedCafe: RecentlyViewedCafeEntity)
 
-    @Query("SELECT * FROM recently_viewed_cafes")
-    fun getAllRecentlyViewedCafes(): LiveData<List<RecentlyViewedCafe>>
+    @Query("SELECT * FROM RecentlyViewedCafe")
+    fun getAllRecentlyViewedCafes(): Flow<List<RecentlyViewedCafeEntity>>
 
     @Delete
-    fun delete(recentlyViewedCafe: RecentlyViewedCafe)
+    fun delete(recentlyViewedCafe: RecentlyViewedCafeEntity)
 }

@@ -14,6 +14,12 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -34,7 +40,7 @@ android {
 dependencies {
     implementation project(path: ':core:model')
 
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation ("androidx.core:core-ktx:1.10.1")
 
     // Gson
     implementation("com.squareup.retrofit2:converter-gson:$gsonVersion")
@@ -49,5 +55,4 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     kapt("androidx.hilt:hilt-compiler:$hiltCompilerVersion")
-
 }
