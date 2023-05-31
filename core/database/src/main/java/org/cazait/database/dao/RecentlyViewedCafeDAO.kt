@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 
 @Dao
-interface RecentlyViewedCafeDao {
+interface RecentlyViewedCafeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(recentlyViewedCafe: RecentlyViewedCafeEntity)
 
