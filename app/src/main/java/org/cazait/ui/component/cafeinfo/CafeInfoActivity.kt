@@ -2,19 +2,13 @@ package org.cazait.ui.component.cafeinfo
 
 import android.content.Context
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.cazait.R
-import org.cazait.database.RecentlyDatabase
-import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import org.cazait.databinding.ActivityCafeInfoBinding
 import org.cazait.model.Cafe
 import org.cazait.ui.adapter.CafeImgAdapter
@@ -25,8 +19,6 @@ import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 
 
-
-
 @AndroidEntryPoint
 class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel>(
     CafeInfoViewModel::class.java,
@@ -35,7 +27,6 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     private val bundle = Bundle()
     private val menuFrag = CafeInfoMenuFragment()
     private val reviewFrag = CafeInfoReviewFragment()
-    lateinit var db : RecentlyDatabase
     override fun initView() {
         val cafe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getSerializableExtra("cafe", Cafe::class.java)
@@ -135,23 +126,7 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
 
     private fun initViewModel(cafe: Cafe) {
         viewModel.initViewModel(cafe = cafe)
-
-        saveCafeToDatabase(cafe)
     }
-
-
-    private fun saveCafeToDatabase(cafe: Cafe) {
-        val recentlyViewedCafeEntity = RecentlyViewedCafeEntity(cafeId = cafe.cafeId)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val database = RecentlyDatabase.getInstance(applicationContext)
-            database?.recentlyViewedCafeDao()?.insert(recentlyViewedCafeEntity)
-        }
-
-        Log.d("RoomDB","$recentlyViewedCafeEntity.cafeId")
-    }
-
-
 
     companion object {
         fun cafeInfoIntent(
@@ -163,6 +138,4 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
             }
         }
     }
-
-
 }
