@@ -91,6 +91,7 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     private fun initViewModel(cafe: Cafe) {
         viewModel.initViewModel(cafe)
     }
+
     companion object {
         fun cafeInfoIntent(
             context: Context,

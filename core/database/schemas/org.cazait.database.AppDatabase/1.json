@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c801f3a6454d23542e8eaabf7df0c889",
+    "identityHash": "1bcbc90e6320970114ac443c07651ec6",
     "entities": [
       {
         "tableName": "FavoriteCafe",
@@ -74,11 +74,11 @@
       },
       {
         "tableName": "RecentlyViewedCafe",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cafeId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cafe_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "cafeId",
-            "columnName": "cafeId",
+            "columnName": "cafe_id",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -86,7 +86,7 @@
         "primaryKey": {
           "autoGenerate": true,
           "columnNames": [
-            "cafeId"
+            "cafe_id"
           ]
         },
         "indices": [],
@@ -96,7 +96,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c801f3a6454d23542e8eaabf7df0c889')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1bcbc90e6320970114ac443c07651ec6')"
     ]
   }
 }

@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 @Entity("RecentlyViewedCafe")
 data class RecentlyViewedCafeEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo
+    @ColumnInfo(name = "cafe_id")
     val cafeId: Long,
 )
