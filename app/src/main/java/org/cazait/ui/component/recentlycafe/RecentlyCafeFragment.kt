@@ -13,6 +13,7 @@ class RecentlyCafeFragment: BaseFragment<FragmentRecentlyCafeBinding, RecentlyCa
     ) {
 
     override fun initView() {
+
     }
 
     override fun initAfterBinding() {

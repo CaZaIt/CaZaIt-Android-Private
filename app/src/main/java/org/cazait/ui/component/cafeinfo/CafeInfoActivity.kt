@@ -15,6 +15,7 @@ import org.cazait.ui.adapter.CafeImgAdapter
 import org.cazait.ui.adapter.InfoViewPagerAdapter
 import org.cazait.ui.base.BaseActivity
 
+
 @AndroidEntryPoint
 class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel>(
     CafeInfoViewModel::class.java,

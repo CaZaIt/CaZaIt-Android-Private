@@ -14,5 +14,4 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun favoriteDAO(): CafeDAO
 
     abstract fun recentlyViewedCafeDao(): RecentlyViewedCafeDAO
-
 }
