@@ -1,11 +1,10 @@
 package org.cazait.ui.component.recentlycafe
 
-import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentRecentlyCafeBinding
 import org.cazait.model.Cafe
-import org.cazait.ui.adapter.CafeListVerticalAdapter
+import org.cazait.ui.adapter.RecentlyViewedVerticalAdapter
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
@@ -20,6 +19,8 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
     }
 
     override fun initView() {
+        binding.clTop.includedTvTitle.text = getString(R.string.recent_view_store)
+
         binding.recycleCafe.adapter = verticalAdapter
         observeRecentlyViewedCafes()
 
@@ -35,11 +36,10 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
     }
 
     private fun handleRecentlyViewedCafes(cafes: List<Cafe>) {
-        Log.e("RecentlyCafeFragment", "submit")
         verticalAdapter.submitList(cafes)
     }
 
-    private fun createCafeListVerticalAdapter() = CafeListVerticalAdapter {
+    private fun createCafeListVerticalAdapter() = RecentlyViewedVerticalAdapter {
         navigateToCafeInfo(it)
     }
 

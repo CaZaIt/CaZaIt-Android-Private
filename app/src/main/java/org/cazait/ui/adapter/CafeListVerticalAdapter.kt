@@ -37,7 +37,6 @@ class CafeListVerticalAdapter(
             )
         )
     }
-
     override fun onBindViewHolder(holder: CafeListVerticalViewHolder, position: Int) {
         holder.bind(currentList[position])
     }

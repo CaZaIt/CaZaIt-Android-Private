@@ -13,50 +13,23 @@
         android:layout_height="match_parent"
         android:background="@color/main_beige">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/con_bar"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/main_black"
+        <include
+            android:id="@+id/cl_top"
+            layout="@layout/layout_page_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:padding="12dp"
-                android:src="@drawable/arrow_back"
-                app:layout_constraintBottom_toBottomOf="@+id/con_bar"
-                app:layout_constraintStart_toStartOf="@+id/con_bar"
-                app:layout_constraintTop_toTopOf="@+id/con_bar" />
-
-            <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="최근 본 매장"
-                android:textColor="@color/main_white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/con_bar"
-                app:layout_constraintEnd_toEndOf="@+id/con_bar"
-                app:layout_constraintStart_toStartOf="@+id/con_bar"
-                app:layout_constraintTop_toTopOf="@+id/con_bar" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_cafe"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="23dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="23dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/con_bar"
+            app:layout_constraintTop_toBottomOf="@+id/cl_top"
             tools:listitem="@layout/item_recently_cafe" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
