@@ -35,11 +35,6 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun showToastMessage(errorCode: Int) {
-        val error = errorManager.getError(errorCode)
-        _showToast.value = SingleEvent(error.description)
-    }
-
     fun showToastMessage(errorMessage: String?) {
         if (errorMessage == null) return
         _showToast.value = SingleEvent(errorMessage)

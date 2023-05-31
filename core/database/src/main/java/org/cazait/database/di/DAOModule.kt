@@ -17,5 +17,5 @@ object DAOModule {
 
     @Singleton
     @Provides
-    fun providesRecentlyViewedCafeDAO(appDatabase: AppDatabase) = appDatabase.recentlyViewedCafeDao()
+    fun providesRecentlyViewedCafeDAO(appDatabase: AppDatabase) = appDatabase.recentlyViewedCafeDAO()
 }

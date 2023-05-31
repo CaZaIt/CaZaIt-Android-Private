@@ -13,5 +13,5 @@ import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 abstract class AppDatabase: RoomDatabase() {
     abstract fun favoriteDAO(): CafeDAO
 
-    abstract fun recentlyViewedCafeDao(): RecentlyViewedCafeDAO
+    abstract fun recentlyViewedCafeDAO(): RecentlyViewedCafeDAO
 }
