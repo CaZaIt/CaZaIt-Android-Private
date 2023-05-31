@@ -3,9 +3,7 @@ package org.cazait.ui.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.cazait.network.error.ErrorManager
 import org.cazait.utils.SingleEvent
-import javax.inject.Inject
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -32,7 +30,4 @@ abstract class BaseViewModel : ViewModel() {
     protected fun showError(message: String) {
         _showErrorMessage.postValue(SingleEvent(message))
     }
-
-    @Inject
-    lateinit var errorManager: ErrorManager
 }
