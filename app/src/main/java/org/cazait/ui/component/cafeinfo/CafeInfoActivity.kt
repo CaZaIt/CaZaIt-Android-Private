@@ -9,9 +9,12 @@ import android.util.Log
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.cazait.R
 import org.cazait.database.RecentlyDatabase
-import org.cazait.database.model.entity.RecentlyViewedCafe
+import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import org.cazait.databinding.ActivityCafeInfoBinding
 import org.cazait.model.Cafe
 import org.cazait.ui.adapter.CafeImgAdapter
@@ -138,27 +141,14 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
 
 
     private fun saveCafeToDatabase(cafe: Cafe) {
-        val recentlyViewedCafe = RecentlyViewedCafe(
-            cafeId = cafe.cafeId,
-            name = cafe.name,
-            address = cafe.address,
-            distance = cafe.distance,
-            latitude = cafe.latitude,
-            status = cafe.status
+        val recentlyViewedCafeEntity = RecentlyViewedCafeEntity(cafeId = cafe.cafeId)
 
-        )
-
-        // Room 데이터베이스 작업을 백그라운드 스레드에서 실행
-        AsyncTask.execute {
-            // RecentlyDatabase 인스턴스 가져오기
-            val database = RecentlyDatabase.getInstance(this)
-
-            // Cafe 저장
-            database?.recentlyViewedCafeDao()?.insert(recentlyViewedCafe)
-
+        CoroutineScope(Dispatchers.IO).launch {
+            val database = RecentlyDatabase.getInstance(applicationContext)
+            database?.recentlyViewedCafeDao()?.insert(recentlyViewedCafeEntity)
         }
-        Log.d("RoomDB",recentlyViewedCafe.name)
-        Log.d("RoomDB",recentlyViewedCafe.address)
+
+        Log.d("RoomDB","$recentlyViewedCafeEntity.cafeId")
     }
 
 

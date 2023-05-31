@@ -7,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
-import org.cazait.database.RecentlyDatabase
-import org.cazait.database.model.entity.RecentlyViewedCafe
 import org.cazait.model.Cafe
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject

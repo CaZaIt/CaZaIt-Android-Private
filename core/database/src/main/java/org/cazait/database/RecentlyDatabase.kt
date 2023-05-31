@@ -1,4 +1,3 @@
-/*
 package org.cazait.database
 
 import android.content.Context
@@ -9,7 +8,7 @@ import org.cazait.database.dao.RecentlyViewedCafeDao
 import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 
 
-@Database(entities = arrayOf(RecentlyViewedCafeEntity::class), version = 2, exportSchema = false)
+@Database(entities = arrayOf(RecentlyViewedCafeEntity::class), version = 1, exportSchema = false)
 abstract class RecentlyDatabase : RoomDatabase() {
     abstract fun recentlyViewedCafeDao(): RecentlyViewedCafeDao
 
@@ -29,4 +28,4 @@ abstract class RecentlyDatabase : RoomDatabase() {
         }
     }
 }
-*/
+

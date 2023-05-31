@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.database.model.entity.RecentlyViewedCafe
 import org.cazait.databinding.FragmentRecentlyCafeBinding
 import org.cazait.ui.adapter.RecentlyCafeAdapter
 import org.cazait.ui.base.BaseFragment
@@ -29,10 +28,6 @@ class RecentlyCafeFragment: BaseFragment<FragmentRecentlyCafeBinding, RecentlyCa
     }
 
     override fun initAfterBinding() {
-        viewModel.getAllRecentlyViewedCafes().observe(viewLifecycleOwner, Observer { cafes ->
-            cafes?.let {
-                adapter.submitList(cafes)
-            }
-        })
+
     }
 }
