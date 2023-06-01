@@ -3,8 +3,7 @@ package org.cazait.ui.component.map
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraAnimation
-import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -12,6 +11,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
+import org.cazait.Constants
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeMapBinding
 import org.cazait.model.Cafe
@@ -22,6 +22,7 @@ import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
+import kotlin.math.abs
 
 @AndroidEntryPoint
 class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding, CafeMapViewModel>(
@@ -33,20 +34,24 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
     private var isMapInit = false
     private var markers = emptyList<Marker>()
     private var lastClickedMarker: Marker? = null
-
+    private var lastCameraPosition: LatLng? = null
     override fun initView() {
         setUpMapFragment()
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        locationSource = FusedLocationSource(
+            this, Constants.REQUEST_CODE_LOCATION_PERMISSION,
+        )
         observeCafes()
     }
 
     override fun initAfterBinding() = Unit
 
     override fun onMapReady(mapObject: NaverMap) {
-        setUpNaverMap(mapObject)
-        locationSource.lastLocation?.let { location ->
-            moveCamera(LatLng(location.latitude, location.longitude), ZOOM_LEVEL)
-        }
+        naverMap = mapObject
+        naverMap.locationSource = locationSource
+        naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        naverMap.addOnCameraIdleListener { searchCafes() }
+        isMapInit = true
     }
 
     private fun observeCafes() {
@@ -57,14 +62,6 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         val fm = childFragmentManager
         fm.beginTransaction().replace(R.id.fragmentContainerView, mapFragment, null).commit()
         mapFragment.getMapAsync(this)
-    }
-
-    private fun setUpNaverMap(mapObject: NaverMap) {
-        naverMap = mapObject
-        naverMap.locationSource = locationSource
-        naverMap.uiSettings.isLocationButtonEnabled = true
-        naverMap.addOnCameraIdleListener { searchCafes() }
-        isMapInit = true
     }
 
     private fun setUpCafeInfoView(cafe: Cafe) {
@@ -87,11 +84,24 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
     private fun searchCafes() {
         if (isMapInit.not()) return
 
-        val cameraPosition = naverMap.cameraPosition.target
+        val newCameraPosition = naverMap.cameraPosition.target
+        if (isCameraPositionChanged(newCameraPosition)) {
+            lastCameraPosition = newCameraPosition
+        } else return
 
-        viewModel.searchCafes(
-            cameraPosition.latitude.toString(), cameraPosition.longitude.toString()
-        )
+        lastCameraPosition?.let {
+            viewModel.searchCafes(
+                it.latitude.toString(),
+                it.longitude.toString()
+            )
+        }
+    }
+
+    private fun isCameraPositionChanged(newCameraPos: LatLng): Boolean {
+        return lastCameraPosition == null || (
+                abs(lastCameraPosition!!.latitude - newCameraPos.latitude) > TOLERANCE
+                        && abs(lastCameraPosition!!.longitude - newCameraPos.longitude) > TOLERANCE
+                )
     }
 
     private fun updateMarkers(status: Resource<Cafes>) {
@@ -140,20 +150,11 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         }
     }
 
-    private fun moveCamera(position: LatLng, zoomLevel: Double) {
-        if (isMapInit.not()) return
-
-        val cameraUpdate =
-            CameraUpdate.scrollAndZoomTo(position, zoomLevel).animate(CameraAnimation.Easing)
-        naverMap.moveCamera(cameraUpdate)
-    }
-
     private fun showMessage(message: String) {
         view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show() }
     }
 
     companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
-        private const val ZOOM_LEVEL = 15.0
+        const val TOLERANCE = 0.001
     }
 }
