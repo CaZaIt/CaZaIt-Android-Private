@@ -1,6 +1,7 @@
 package org.bmsk.data.model
 
 import org.cazait.database.model.entity.FavoriteCafeEntity
+import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import org.cazait.model.Cafe
 import org.cazait.model.CafeMenu
 import org.cazait.model.CafeReviews
@@ -9,8 +10,8 @@ import org.cazait.model.FavoriteCafe
 import org.cazait.model.NicknameDup
 import org.cazait.model.SignInInfo
 import org.cazait.model.SignUpInfo
+import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
-import org.cazait.network.model.dto.response.CafeOfCafeListDTO
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
 import org.cazait.network.model.dto.response.IsEmailDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
@@ -29,6 +30,10 @@ fun Cafe.toFavoriteCafeEntity() = FavoriteCafeEntity(
     congestionStatus = status,
     imageUrl = if (images.isNotEmpty()) listOf(images[0].imageUrl) else emptyList(),
     createdDate = Date()
+)
+
+fun Cafe.toRecentlyViewedCafeEntity() = RecentlyViewedCafeEntity(
+    cafeId = cafeId
 )
 
 fun FavoriteCafe.toFavoriteCafeEntity() = FavoriteCafeEntity(
@@ -54,7 +59,7 @@ fun FavoriteCafeEntity.toFavoriteCafe() = FavoriteCafe(
     imageUrl = imageUrl,
 )
 
-fun CafeOfCafeListDTO.toCafe() = Cafe(
+fun CafeDTO.toCafe() = Cafe(
     cafeId = cafeId,
     name = name,
     address = address,

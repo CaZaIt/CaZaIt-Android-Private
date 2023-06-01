@@ -19,6 +19,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_cafe_menu"
+            style="@style/ImageViewBoarder"
             android:layout_width="105dp"
             android:layout_height="0dp"
             android:layout_marginStart="15.22dp"
@@ -53,9 +54,9 @@
             android:text="@{menu.stringPrice + '원'}"
             android:textColor="@color/cafe_list_orange"
             android:textSize="13sp"
-            tools:text="3000원"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="3000원" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_cafe_menu_desc"
@@ -67,9 +68,9 @@
             android:text="@{menu.menuDesc}"
             android:textColor="@color/main_black"
             android:textSize="12sp"
-            tools:text="카자잇카페의 맛있는 아메리카노"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_cafe_menu"
-            app:layout_constraintTop_toBottomOf="@+id/tv_cafe_menu" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_cafe_menu"
+            tools:text="카자잇카페의 맛있는 아메리카노" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

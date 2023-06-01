@@ -15,6 +15,7 @@ import org.cazait.ui.adapter.CafeImgAdapter
 import org.cazait.ui.adapter.InfoViewPagerAdapter
 import org.cazait.ui.base.BaseActivity
 
+
 @AndroidEntryPoint
 class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel>(
     CafeInfoViewModel::class.java,
@@ -42,6 +43,7 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     override fun initAfterBinding() {
 
     }
+
 
     private fun initBackPressButton() {
         binding.imgBack.bringToFront() // 이 코드가 없으면 FrameLayout 내의 ImageView의 경우 클릭되지 않습니다.

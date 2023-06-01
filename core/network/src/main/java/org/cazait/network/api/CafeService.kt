@@ -2,6 +2,7 @@ package org.cazait.network.api
 
 import org.cazait.network.model.dto.request.CafeReviewPostReq
 import org.cazait.network.model.dto.response.CafeMenuRes
+import org.cazait.network.model.dto.response.CafeRes
 import org.cazait.network.model.dto.response.CafeReviewPostRes
 import org.cazait.network.model.dto.response.CafeReviewRes
 import org.cazait.network.model.dto.response.ListCafesRes
@@ -15,6 +16,11 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CafeService {
+    @GET("/api/cafes/id/{cafeId}")
+    suspend fun getCafe(
+        @Path("cafeId") cafeId: Long,
+    ): Response<CafeRes>
+
     @GET("/api/cafes/all/user/{userId}")
     suspend fun getListCafes(
         @Path("userId") userId: Long,

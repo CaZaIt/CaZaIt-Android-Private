@@ -1,14 +1,16 @@
 package org.cazait.network.datasource
 
-import org.cazait.network.model.dto.response.CafeMenuRes
-import org.cazait.network.model.dto.response.CafeReviewRes
 import org.cazait.network.NetworkConnectivity
+import org.cazait.network.api.CafeService
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.error.NO_INTERNET_CONNECTION
+import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.api.CafeService
 import org.cazait.network.model.dto.request.CafeReviewPostReq
+import org.cazait.network.model.dto.response.CafeMenuRes
+import org.cazait.network.model.dto.response.CafeRes
 import org.cazait.network.model.dto.response.CafeReviewPostRes
+import org.cazait.network.model.dto.response.CafeReviewRes
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -17,6 +19,19 @@ class CafeInfoRemoteData @Inject constructor(
     private val cafeService: CafeService,
     private val networkConnectivity: NetworkConnectivity,
 ) : CafeInfoRemoteDataSource {
+    override suspend fun getCafe(cafeId: Long): DataResponse<CafeRes> {
+        return when(val response = processCall {
+            cafeService.getCafe(cafeId)
+        }) {
+            is CafeRes -> {
+                DataResponse.Success(data = response)
+            }
+
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
+        }
+    }
 
     override suspend fun getMenus(cafeId: Long): DataResponse<CafeMenuRes> {
         return when (val response = processCall {

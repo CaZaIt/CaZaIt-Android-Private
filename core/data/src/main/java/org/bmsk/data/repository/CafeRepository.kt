@@ -10,6 +10,8 @@ import org.cazait.model.FavoriteCafes
 import org.cazait.model.Resource
 
 interface CafeRepository {
+    suspend fun getCafeById(cafeId: Long): Flow<Resource<Cafe>>
+
     suspend fun getListFavorites(userId: Long): Flow<Resource<FavoriteCafes>>
     suspend fun getListCafes(
         userId: Long?,
@@ -34,4 +36,9 @@ interface CafeRepository {
     suspend fun updateFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun loadFavoriteCafes(): Flow<Resource<FavoriteCafes>>
     suspend fun postFavoriteCafe(userId: Long, cafe: FavoriteCafe): Boolean
+
+    suspend fun insertRecentlyViewedCafe(cafe: Cafe): Boolean
+
+    suspend fun updateRecentlyViewedCafe(cafe: Cafe): Boolean
+    suspend fun loadRecentlyViewedCafes(): Flow<Long>
 }

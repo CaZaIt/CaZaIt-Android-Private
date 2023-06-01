@@ -1,12 +1,15 @@
 package org.cazait.network.datasource
 
-import android.os.Looper
-import org.cazait.network.model.dto.response.CafeMenuRes
-import org.cazait.network.model.dto.response.CafeReviewRes
+import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.DataResponse
+import org.cazait.network.model.dto.response.CafeMenuRes
+import org.cazait.network.model.dto.response.CafeRes
 import org.cazait.network.model.dto.response.CafeReviewPostRes
+import org.cazait.network.model.dto.response.CafeReviewRes
 
 interface CafeInfoRemoteDataSource {
+    suspend fun getCafe(cafeId: Long): DataResponse<CafeRes>
+
     suspend fun getMenus(cafeId: Long): DataResponse<CafeMenuRes>
     suspend fun getReviews(
         cafeId: Long,
