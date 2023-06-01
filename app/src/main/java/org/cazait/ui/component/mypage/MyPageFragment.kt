@@ -1,5 +1,6 @@
 package org.cazait.ui.component.mypage
 
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentMyPageBinding
@@ -14,12 +15,16 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
     R.layout.fragment_my_page,
 ) {
     override fun initView() {
+        binding.fragment = this
         setUpSignInButton()
-        setClickListeners()
     }
 
     override fun initAfterBinding() {
 
+    }
+
+    fun navigateToRecentlyCafeFragment() {
+        findNavController().navigate(MyPageFragmentDirections.actionMyPageFragmentToRecentlyCafeFragment())
     }
 
     private fun setUpSignInButton() {
@@ -31,15 +36,5 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
     private fun navigateToSignInActivity() {
         val intent = SignInActivity.signInIntent(requireContext())
         startActivity(intent)
-    }
-
-    private fun setClickListeners() {
-        binding.imgRecently.setOnClickListener {
-            val recentlyCafeFragment = RecentlyCafeFragment()
-            val fragmentManager = requireFragmentManager()
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment, recentlyCafeFragment)
-            transaction.commit()
-        }
     }
 }

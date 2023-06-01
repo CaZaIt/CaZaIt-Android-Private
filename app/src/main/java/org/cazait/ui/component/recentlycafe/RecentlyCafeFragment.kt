@@ -1,5 +1,6 @@
 package org.cazait.ui.component.recentlycafe
 
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentRecentlyCafeBinding
@@ -20,7 +21,9 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
 
     override fun initView() {
         binding.clTop.includedTvTitle.text = getString(R.string.recent_view_store)
-
+        binding.clTop.btnBack.setOnClickListener {
+            findNavController().navigate(RecentlyCafeFragmentDirections.actionRecentlyCafeFragmentToMyPageFragment())
+        }
         binding.recycleCafe.adapter = verticalAdapter
         observeRecentlyViewedCafes()
 
