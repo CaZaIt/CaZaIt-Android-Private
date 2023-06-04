@@ -18,8 +18,8 @@ data class CafeDTO(
     val longitude: String,
     @SerializedName("latitude")
     val latitude: String,
-    @SerializedName("getCafeImageRes")
-    val cafesImages: List<CafeImage>,
+    @SerializedName("cafeImages")
+    val cafesImages: List<String>,
     @SerializedName("distance")
     val distance: Int,
     @SerializedName("favorite")

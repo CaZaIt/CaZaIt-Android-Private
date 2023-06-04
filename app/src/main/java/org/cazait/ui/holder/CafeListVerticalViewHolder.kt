@@ -13,7 +13,7 @@ class CafeListVerticalViewHolder(
     fun bind(item: Cafe) {
         binding.item = item
         if (item.images.isNotEmpty()) {
-            binding.ivCafe.setImage(item.images[0].imageUrl)
+            binding.ivCafe.setImage(item.images[0])
         }
         binding.root.setOnClickListener {
             onClick(item)

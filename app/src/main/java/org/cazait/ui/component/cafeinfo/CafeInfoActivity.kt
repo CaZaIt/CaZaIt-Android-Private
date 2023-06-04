@@ -57,7 +57,7 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
         dotsIndicator.attachTo(imgViewPager)
     }
 
-    private fun initViewPagerImageAdapter(images: List<CafeImage>) {
+    private fun initViewPagerImageAdapter(images: List<String>) {
         viewPagerImageAdapter = CafeImgAdapter(this, images)
         binding.vpImg.adapter = viewPagerImageAdapter
     }

@@ -28,7 +28,7 @@ fun Cafe.toFavoriteCafeEntity() = FavoriteCafeEntity(
     latitude = latitude ?: "0",
     longitude = longitude ?: "0",
     congestionStatus = status,
-    imageUrl = if (images.isNotEmpty()) listOf(images[0].imageUrl) else emptyList(),
+    imageUrl = images,
     createdDate = Date()
 )
 
