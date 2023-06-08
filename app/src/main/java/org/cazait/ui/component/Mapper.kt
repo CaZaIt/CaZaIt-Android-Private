@@ -11,7 +11,7 @@ object Mapper {
         address = address,
         distance = 0,
         status = congestionStatus,
-        images = imageUrl.map { CafeImage(0L, it) },
+        images = imageUrl,
         latitude = latitude,
         longitude = longitude,
     )

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import org.cazait.R
 import org.cazait.model.CafeImage
 
-class CafeImgAdapter(private val context: Context, private val cafeImg: List<CafeImage>) :
+class CafeImgAdapter(private val context: Context, private val cafeImg: List<String>) :
     RecyclerView.Adapter<CafeImgAdapter.ImgViewHolder>() {
     inner class ImgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.cafe_info_img)
@@ -22,7 +22,7 @@ class CafeImgAdapter(private val context: Context, private val cafeImg: List<Caf
     }
 
     override fun onBindViewHolder(holder: ImgViewHolder, position: Int) {
-        val imgUrl = cafeImg[position].imageUrl
+        val imgUrl = cafeImg[position]
         Glide.with(context).load(imgUrl).into(holder.imageView)
     }
 

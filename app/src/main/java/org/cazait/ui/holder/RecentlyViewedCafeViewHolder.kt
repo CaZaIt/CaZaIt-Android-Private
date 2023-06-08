@@ -13,7 +13,7 @@ class RecentlyViewedCafeViewHolder(
     fun bind(item: Cafe) {
         binding.item = item
         if (item.images.isNotEmpty()) {
-            binding.imgCafe.setImage(item.images[0].imageUrl)
+            binding.imgCafe.setImage(item.images[0])
         }
         binding.root.setOnClickListener {
             onClick(item)

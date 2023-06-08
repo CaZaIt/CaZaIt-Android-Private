@@ -43,6 +43,11 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         observeCafes()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (isMapInit) naverMap.locationTrackingMode = LocationTrackingMode.Follow
+    }
+
     override fun initAfterBinding() = Unit
 
     override fun onMapReady(mapObject: NaverMap) {
