@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName
 data class SignInRes(
     @SerializedName("code")
     val code: Int,
-    @SerializedName("message")
-    val message: String,
     @SerializedName("result")
     val result: String,
+    @SerializedName("message")
+    val message: String,
     @SerializedName("data")
     val signInInfo: SignInInfoDTO,
-    )
+)
 
 data class SignInInfoDTO(
-    @SerializedName("email")
-    val email: String,
     @SerializedName("id")
     val id: Long,
+    @SerializedName("email")
+    val email: String,
     @SerializedName("jwtToken")
     val jwtToken: String,
     @SerializedName("refreshToken")

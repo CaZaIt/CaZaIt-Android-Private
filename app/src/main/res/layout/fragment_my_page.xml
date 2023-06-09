@@ -8,6 +8,10 @@
         <variable
             name="fragment"
             type="org.cazait.ui.component.mypage.MyPageFragment" />
+
+        <variable
+            name="viewModel"
+            type="org.cazait.ui.component.mypage.MyPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,12 +36,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:drawablePadding="4dp"
-                android:text="@string/sign_in_kor"
                 android:textSize="20sp"
                 app:drawableEndCompat="@drawable/ic_arrow_circle_right"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:signInStatus="@{viewModel.signInStateFlow}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

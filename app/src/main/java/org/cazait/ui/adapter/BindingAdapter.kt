@@ -36,3 +36,11 @@ fun TextView.setStatus(cafeStatus: CafeStatus?) {
         CafeStatus.NONE -> context.getString(R.string.state_normal)
     }
 }
+
+@BindingAdapter("signInStatus")
+fun TextView.setSignInStatus(isLoggedIn: Boolean?) {
+    text = when (isLoggedIn) {
+        true -> context.getString(R.string.sign_out_kor)
+        else -> context.getString(R.string.sign_in_kor)
+    }
+}

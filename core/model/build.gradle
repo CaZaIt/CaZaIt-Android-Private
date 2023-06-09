@@ -1,5 +1,6 @@
 plugins {
     id 'kotlin'
+    id 'kotlinx-serialization'
 }
 
 java {
@@ -8,5 +9,6 @@ java {
 }
 
 dependencies {
-    implementation 'androidx.room:room-common:2.5.1'
+    implementation("androidx.room:room-common:$room_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kxSerializationVersion")
 }

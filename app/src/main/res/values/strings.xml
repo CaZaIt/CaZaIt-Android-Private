@@ -86,7 +86,6 @@
     <string name="recent_view_store">최근 본 매장</string>
     <string name="content_des_recent_view_store">최근 본 매장</string>
     <string name="content_des_payment_history">결제 내역</string>
-    <string name="sign_in_kor">로그인</string>
     <string name="content_des_back_button">뒤로 가기 버튼</string>
     <string name="content_des_edit_review">리뷰 작성 버튼</string>
     <string name="edit_review">리뷰 쓰기</string>
@@ -94,4 +93,6 @@
     <string name="guide_edit_review">다른 이용자를 위해 카페 리뷰를 남겨주세요.</string>
     <string name="guide_hint_edit_review">공백 포함 50자 이내로 작성해주세요.</string>
     <string name="edit">작성하기</string>
+    <string name="sign_in_kor">로그인</string>
+    <string name="sign_out_kor">로그아웃</string>
 </resources>
