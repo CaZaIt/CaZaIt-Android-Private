@@ -1,5 +1,6 @@
 package org.bmsk.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -151,10 +152,12 @@ class CafeRepositoryImpl @Inject constructor(
                 is DataResponse.Success -> {
                     val message: String =
                         response.data?.message ?: ""
+                    Log.d("CafeRepository", "등록 성공")
                     emit(Resource.Success(message))
                 }
 
                 is DataResponse.DataError -> {
+                    Log.d("CafeRepository", "등록 실패")
                     emit(Resource.Error(response.toString()))
                 }
             }

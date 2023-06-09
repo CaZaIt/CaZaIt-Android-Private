@@ -41,9 +41,6 @@ class CafeInfoReviewFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cafeId = cafe.cafeId
-
-        viewModel.getReviews(cafeId, null, null, null)
         initAdapter()
         observeViewModel()
         binding.fabEditReview.setOnClickListener {
@@ -51,6 +48,12 @@ class CafeInfoReviewFragment(
             val intent = ReviewEditActivity.reviewIntent(requireContext(), cafe)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        val cafeId = cafe.cafeId
+        viewModel.getReviews(cafeId, null, null, null)
+        super.onResume()
     }
 
     private fun initAdapter() {
@@ -79,16 +82,13 @@ class CafeInfoReviewFragment(
             is Resource.Success -> status.data.let {
                 binding.lottieReview.pauseAnimation()
                 binding.lottieReview.toGone()
-                Log.d("Review Status", status.data.toString())
                 when (status.data?.reviews) {
                     null -> {
-                        Log.d("data가 null", status.data?.reviews.toString())
                         binding.tvNoReview.toVisible()
                     }
 
                     else -> {
                         val reviews = status.data?.reviews
-                        Log.d("data가 null이 아님", reviews.toString())
                         reviewAdapter.submitList(reviews)
                     }
                 }

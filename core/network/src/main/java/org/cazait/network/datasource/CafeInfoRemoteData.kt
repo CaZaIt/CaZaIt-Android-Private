@@ -78,15 +78,14 @@ class CafeInfoRemoteData @Inject constructor(
     ): DataResponse<CafeReviewPostRes> {
         return when(val response = processCall {
             val req = CafeReviewPostReq(score, content)
-            cafeService.postReview(
-                userId, cafeId, req
-            )
+            cafeService.postReview(userId, cafeId, req)
         }) {
             is CafeReviewPostRes -> {
                 DataResponse.Success(data = response)
             }
-            else ->
+            else -> {
                 DataResponse.DataError(errorCode = response as Int)
+            }
         }
     }
 

@@ -28,7 +28,11 @@ class UserRepositoryImpl @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository,
 ) : UserRepository {
 
-    override suspend fun signUp(email: String, password: String, nickname: String): Flow<Resource<SignUpInfo>> {
+    override suspend fun signUp(
+        email: String,
+        password: String,
+        nickname: String
+    ): Flow<Resource<SignUpInfo>> {
         return flow {
             val body = SignUpReq(email, password, nickname)
 
@@ -85,15 +89,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun isLoggedIn(): Flow<Boolean> {
         val userPreference = userPreferenceRepository.getUserPreference().first()
         Log.e("UserRepository", "id = ${userPreference.id}")
-        return if(userPreference.id != -99L) {
-            flow {
-                emit(true)
-            }
-        } else {
-            flow {
-                emit(false)
-            }
-        }
+        return flow { emit(userPreference.isLoggedIn) }
     }
 
     override suspend fun getUserInfo(): Flow<UserPreference> {

@@ -48,6 +48,7 @@ class AuthRepositoryImpl @Inject constructor(
                         emit(Resource.Error(message = message))
                     } else {
                         userPreferenceRepository.updateUserPreference(
+                            isLoggedIn = true,
                             id = signInInfoDTO.id,
                             email = signInInfoDTO.email,
                             role = signInInfoDTO.role,
