@@ -12,6 +12,7 @@ class UserPreferenceRepository @Inject constructor(
     fun getUserPreference() = userPreferenceDataSource.data
 
     suspend fun updateUserPreference(
+        isLoggedIn: Boolean,
         id: Long,
         email: String,
         role: String,
@@ -20,6 +21,7 @@ class UserPreferenceRepository @Inject constructor(
     ) {
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
+                isLoggedIn = isLoggedIn,
                 id = id,
                 email = email,
                 role = role,

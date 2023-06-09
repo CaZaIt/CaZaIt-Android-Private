@@ -19,14 +19,13 @@ class CafeInfoViewModel @Inject constructor(
     private val cafeRepository: CafeRepository
 ) : BaseViewModel() {
     private val _locationData = MutableLiveData<List<String>>()
-
-
     val locationData: LiveData<List<String>>
         get() = _locationData
 
     private val _cafeIdData = MutableLiveData<Long>()
     val cafeIdData: LiveData<Long>
         get() = _cafeIdData
+
     private var cafe: Cafe? = null
 
     fun initViewModel(cafe: Cafe) {

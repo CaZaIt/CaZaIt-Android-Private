@@ -12,6 +12,6 @@ data class CafeReviewReq(
 data class CafeReviewPostReq(
     @SerializedName("score")
     val score: Int,
-    @SerializedName("score")
+    @SerializedName("content")
     val content: String,
 )
