@@ -66,9 +66,6 @@ class UserRemoteData @Inject constructor(
     private suspend fun processCall(
         responseCall: suspend () -> Response<*>
     ): Any? {
-        if (!networkConnectivity.isConnected()) {
-            return NO_INTERNET_CONNECTION
-        }
         return try {
             val response = responseCall.invoke()
             val responseCode = response.code()

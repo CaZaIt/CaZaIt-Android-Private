@@ -1,23 +1,38 @@
 package org.bmsk.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.bmsk.data.model.toSignInInfo
-import org.cazait.network.model.dto.request.SignInReq
+import org.cazait.datastore.data.repository.UserPreferenceRepository
+import org.cazait.datastore.data.repository.UserPreferenceRepository.TokenType.UPDATE_REFRESH_TOKEN
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
 import org.cazait.network.datasource.AuthRemoteData
+import org.cazait.network.error.DEFAULT_ERROR
 import org.cazait.network.model.dto.DataResponse
+import org.cazait.network.model.dto.request.SignInReq
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class AuthRepositoryImpl @Inject constructor(
     private val authRemoteData: AuthRemoteData,
     private val ioDispatcher: CoroutineContext,
+    private val userPreferenceRepository: UserPreferenceRepository
 ) : AuthRepository {
     override suspend fun refreshToken() {
-        TODO("Not yet implemented")
+        with(userPreferenceRepository.getUserPreference().first()) {
+            val updatedRefreshToken = authRemoteData.getRefreshToken(
+                userId = id,
+                role = role,
+                jwtToken = jwtToken,
+                refreshToken = refreshToken
+            ).data?.result ?: refreshToken
+
+            userPreferenceRepository.updateUserToken(updatedRefreshToken, UPDATE_REFRESH_TOKEN)
+        }
     }
 
     override suspend fun signIn(email: String, password: String): Flow<Resource<SignInInfo>> {
@@ -26,15 +41,40 @@ class AuthRepositoryImpl @Inject constructor(
 
             when (val response = authRemoteData.postSignIn(body)) {
                 is DataResponse.Success -> {
-                    response.data?.signInInfo?.toSignInInfo()?.let {
-                        emit(Resource.Success(it))
-                    }?: emit(Resource.Error(response.toString()))
+                    val message = response.data?.message
+                    val signInInfoDTO = response.data?.signInInfo
+
+                    if (signInInfoDTO == null) {
+                        emit(Resource.Error(message = message))
+                    } else {
+                        userPreferenceRepository.updateUserPreference(
+                            id = signInInfoDTO.id,
+                            email = signInInfoDTO.email,
+                            role = signInInfoDTO.role,
+                            jwtToken = signInInfoDTO.jwtToken,
+                            refreshToken = signInInfoDTO.refreshToken,
+                        )
+                        emit(Resource.Success(signInInfoDTO.toSignInInfo()))
+                    }
                 }
 
                 is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
+                    if (response.errorCode == DEFAULT_ERROR) {
+                        emit(Resource.Error(message = "네트워크 상태를 확인해주세요."))
+                    } else {
+                        Log.e("AuthRepository", response.toString())
+                        emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
+                    }
                 }
             }
         }.flowOn(ioDispatcher)
     }
+
+    private fun emptyInfo() = SignInInfo(
+        email = "",
+        id = 0L,
+        jwtToken = "",
+        refreshToken = "",
+        role = ""
+    )
 }

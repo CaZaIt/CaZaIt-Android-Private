@@ -1,11 +1,14 @@
 package org.bmsk.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.bmsk.data.model.toEmailDup
 import org.bmsk.data.model.toNicknameDup
 import org.bmsk.data.model.toSignUpInfo
+import org.cazait.datastore.data.repository.UserPreferenceRepository
 import org.cazait.network.model.dto.request.IsEmailDupReq
 import org.cazait.network.model.dto.request.IsNicknameDupReq
 import org.cazait.network.model.dto.request.SignUpReq
@@ -13,6 +16,7 @@ import org.cazait.model.EmailDup
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
+import org.cazait.model.local.UserPreference
 import org.cazait.network.datasource.UserRemoteData
 import org.cazait.network.model.dto.DataResponse
 import javax.inject.Inject
@@ -21,8 +25,8 @@ import kotlin.coroutines.CoroutineContext
 class UserRepositoryImpl @Inject constructor(
     private val remoteData: UserRemoteData,
     private val ioDispatcher: CoroutineContext,
+    private val userPreferenceRepository: UserPreferenceRepository,
 ) : UserRepository {
-    override val userId: Long? = null
 
     override suspend fun signUp(email: String, password: String, nickname: String): Flow<Resource<SignUpInfo>> {
         return flow {
@@ -76,5 +80,29 @@ class UserRepositoryImpl @Inject constructor(
                 }
             }
         }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun isLoggedIn(): Flow<Boolean> {
+        val userPreference = userPreferenceRepository.getUserPreference().first()
+        Log.e("UserRepository", "id = ${userPreference.id}")
+        return if(userPreference.id != -99L) {
+            flow {
+                emit(true)
+            }
+        } else {
+            flow {
+                emit(false)
+            }
+        }
+    }
+
+    override suspend fun getUserInfo(): Flow<UserPreference> {
+        return flow {
+            emit(userPreferenceRepository.getUserPreference().first())
+        }
+    }
+
+    override suspend fun signOut() {
+        userPreferenceRepository.clearUserPreference()
     }
 }

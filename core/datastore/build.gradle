@@ -1,13 +1,11 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
-    id 'kotlin-parcelize'
 }
 
 android {
-    namespace 'org.cazait.data'
+    namespace 'org.cazait.datastore'
     compileSdk 33
 
     defaultConfig {
@@ -35,23 +33,22 @@ android {
 
 dependencies {
     implementation project(path: ':core:model')
-    implementation project(path: ':core:database')
-    implementation project(path: ':core:network')
-    implementation project(path: ':core:datastore')
 
     implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+
+    // json
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kxSerializationVersion")
+
+    // datastore
+    implementation("androidx.datastore:datastore-core:1.1.0-alpha04")
 
     // Hilt Library
     implementation("com.google.dagger:hilt-android:$hiltVersion")
-
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     kapt("androidx.hilt:hilt-compiler:$hiltCompilerVersion")
 
-    // Gson
-    implementation("com.squareup.retrofit2:converter-gson:$gsonVersion")
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
