@@ -15,7 +15,10 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(
     @LayoutRes private val layoutResourceId: Int,
 ) : Fragment() {
 
-    lateinit var binding: T
+    private var _binding: T? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    protected val binding get() = _binding!!
+
     lateinit var viewModel: R
 
     override fun onCreateView(
@@ -23,7 +26,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = DataBindingUtil.inflate<T>(inflater, layoutResourceId, container, false).apply {
+        _binding = DataBindingUtil.inflate<T>(inflater, layoutResourceId, container, false).apply {
             lifecycleOwner = this@BaseFragment.viewLifecycleOwner
         }
         return binding.root
@@ -35,6 +38,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(
         initBeforeBinding()
         initView()
         initAfterBinding()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun initBeforeBinding() {
