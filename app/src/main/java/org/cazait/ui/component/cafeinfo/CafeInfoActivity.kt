@@ -22,7 +22,7 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     CafeInfoViewModel::class.java,
     R.layout.activity_cafe_info
 ) {
-    lateinit var cafe: Cafe
+    private lateinit var cafe: Cafe
     private lateinit var viewPagerImageAdapter: CafeImgAdapter
     private lateinit var fragmentList: List<Fragment>
 
@@ -34,32 +34,52 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
         } ?: return
         val isFavoriteCafe = intent.getBooleanExtra(IS_FAVORITE_CAFE, false)
 
-        binding.cafe = cafe
-        binding.viewModel = viewModel
-        fragmentList =
-            listOf(CafeInfoMenuFragment(cafe, viewModel), CafeInfoReviewFragment(cafe, viewModel))
+        setupCafe()
+        setupViewPager()
+        setupButtons()
         initViewModel(cafe, isFavoriteCafe)
+    }
+
+    override fun initAfterBinding() {}
+
+    private fun setupCafe() {
+        with(binding) {
+            cafe = this@CafeInfoActivity.cafe
+            viewModel = this@CafeInfoActivity.viewModel
+            fragmentList =
+                listOf(
+                    CafeInfoMenuFragment(
+                        this@CafeInfoActivity.cafe,
+                        this@CafeInfoActivity.viewModel
+                    ),
+                    CafeInfoReviewFragment(
+                        this@CafeInfoActivity.cafe,
+                        this@CafeInfoActivity.viewModel
+                    )
+                )
+        }
+    }
+
+    private fun setupViewPager() {
         initViewPagerImageAdapter(cafe.images)
         initDotIndicator(binding.vpImg)
-        initBackPressButton()
         initFragmentViewPager()
+    }
+
+    private fun setupButtons() {
+        initBackPressButton()
         initFavoriteButton()
     }
 
-    override fun initAfterBinding() {
-
-    }
-
     private fun initBackPressButton() {
-        binding.imgBack.bringToFront() // 이 코드가 없으면 FrameLayout 내의 ImageView의 경우 클릭되지 않습니다.
-        binding.imgBack.setOnClickListener {
-            finish()
+        binding.imgBack.apply {
+            bringToFront()
+            setOnClickListener { finish() }
         }
     }
 
     private fun initDotIndicator(imgViewPager: ViewPager2) {
-        val dotsIndicator = binding.dotsIndicator
-        dotsIndicator.attachTo(imgViewPager)
+        binding.dotsIndicator.attachTo(imgViewPager)
     }
 
     private fun initViewPagerImageAdapter(images: List<String>) {
@@ -68,29 +88,29 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     }
 
     private fun initFragmentViewPager() {
-        val cafeMenuTabText = getString(R.string.info_cafemenu)
-        val cafeReviewTabText = getString(R.string.info_caferev)
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
+
         binding.vpFragment.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.vpFragment) { tab, position ->
-            tab.text = if (fragmentList[position] is CafeInfoMenuFragment) {
-                cafeMenuTabText
-            } else {
-                cafeReviewTabText
-            }
+            tab.text = getString(
+                if (fragmentList[position] is CafeInfoMenuFragment)
+                    R.string.info_cafemenu
+                else
+                    R.string.info_caferev
+            )
         }.attach()
     }
 
     private fun initFavoriteButton() {
-        binding.toolbar.bringToFront()
-        binding.ivFabor.bringToFront()
-
-        binding.ivFabor.setOnClickListener {
-            Log.e("ivFavor", "onclick")
-            if (viewModel.isFavoriteCafe.value) {
-                viewModel.deleteFavoriteCafe()
-            } else {
-                viewModel.saveFavoriteCafe()
+        with(binding.btnFavorite) {
+            bringToFront()
+            setOnClickListener {
+                Log.e("ivFavor", "onclick")
+                if (viewModel.isFavoriteCafe.value) {
+                    viewModel.deleteFavoriteCafe()
+                } else {
+                    viewModel.saveFavoriteCafe()
+                }
             }
         }
     }
