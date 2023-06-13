@@ -43,7 +43,6 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         requestPermission()
         setUpLayout()
         observeViewModel()
-        viewModel.updateFavoriteCafes()
     }
 
     override fun onResume() {

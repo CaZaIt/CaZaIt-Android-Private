@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
+import org.bmsk.data.repository.UserRepository
 import org.cazait.model.Cafes
 import org.cazait.model.FavoriteCafes
 import org.cazait.model.Resource
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CafeListViewModel @Inject constructor(
     private val cafeRepository: CafeRepository,
+    private val userRepository: UserRepository,
     private val fusedLocationClient: FusedLocationProviderClient,
     private val permissionUtil: PermissionUtil,
 ) : BaseViewModel() {
@@ -59,10 +61,13 @@ class CafeListViewModel @Inject constructor(
 
     fun updateFavoriteCafes() {
         viewModelScope.launch {
-            // Auth.currentUser != null
-            // _listFavoritesData.value = cafeRepository.getListFavorites(0L).first()
-            // Auth.currentUser == null
-            _listFavoritesData.value = cafeRepository.loadFavoriteCafes().first()
+            val isLoggedIn = userRepository.isLoggedIn().first()
+            if(isLoggedIn) {
+//                val user = userRepository.getUserInfo().first()
+//                _listFavoritesData.value = cafeRepository.getListFavorites(user.id).first()
+            } else {
+                _listFavoritesData.value = cafeRepository.loadFavoriteCafes().first()
+            }
         }
     }
 

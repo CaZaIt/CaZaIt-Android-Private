@@ -27,14 +27,6 @@ class CafeInfoViewModel @Inject constructor(
 ) : BaseViewModel() {
     private var cafe: Cafe? = null
 
-    private val _locationData = MutableLiveData<List<String>>()
-    val locationData: LiveData<List<String>>
-        get() = _locationData
-
-    private val _cafeIdData = MutableLiveData<Long>()
-    val cafeIdData: LiveData<Long>
-        get() = _cafeIdData
-
     private val _isFavoriteCafe = MutableStateFlow(false)
     val isFavoriteCafe = _isFavoriteCafe.asStateFlow()
 
