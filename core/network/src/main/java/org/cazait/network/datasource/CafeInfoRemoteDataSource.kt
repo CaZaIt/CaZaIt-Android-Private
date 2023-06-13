@@ -7,6 +7,8 @@ import org.cazait.network.model.dto.response.CafeRes
 import org.cazait.network.model.dto.response.CafeResTemp
 import org.cazait.network.model.dto.response.CafeReviewPostRes
 import org.cazait.network.model.dto.response.CafeReviewRes
+import org.cazait.network.model.dto.response.DeleteFavoriteCafeRes
+import org.cazait.network.model.dto.response.PostFavoriteCafeRes
 
 interface CafeInfoRemoteDataSource {
     suspend fun getCafe(cafeId: Long): DataResponse<CafeResTemp>
@@ -25,4 +27,7 @@ interface CafeInfoRemoteDataSource {
         score: Int,
         content: String,
     ): DataResponse<CafeReviewPostRes>
+
+    suspend fun postFavoriteCafe(userId: Long, cafeId: Long): DataResponse<PostFavoriteCafeRes>
+    suspend fun deleteFavoriteCafe(userId: Long, cafeId: Long): DataResponse<DeleteFavoriteCafeRes>
 }

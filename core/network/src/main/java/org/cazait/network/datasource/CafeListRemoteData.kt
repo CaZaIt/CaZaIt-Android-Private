@@ -59,26 +59,6 @@ class CafeListRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postFavoriteCafe(
-        userId: Long,
-        cafeId: Long
-    ): DataResponse<PostFavoriteCafeRes> {
-        return when (val response = processCall {
-            cafeService.postFavoriteCafe(
-                userId,
-                cafeId,
-            )
-        }) {
-            is PostFavoriteCafeRes -> {
-                DataResponse.Success(response)
-            }
-
-            else -> {
-                DataResponse.DataError(response as Int)
-            }
-        }
-    }
-
     override suspend fun getListFavorites(userId: Long): DataResponse<ListFavoritesRes> {
         return when (val response = processCall {
             cafeService.getListFavorites(userId)

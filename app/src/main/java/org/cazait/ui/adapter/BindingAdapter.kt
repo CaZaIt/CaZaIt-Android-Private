@@ -1,5 +1,6 @@
 package org.cazait.ui.adapter
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,6 +23,11 @@ fun ImageView.setImage(imageUrl: String?) {
     load(imageUrl) {
         crossfade(DURATION_CROSS_FADE)
     }
+}
+
+@BindingAdapter("favorite")
+fun ImageView.setFavorite(isFavorite: Boolean) {
+    setImageResource(if (isFavorite) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24)
 }
 
 @BindingAdapter("status")

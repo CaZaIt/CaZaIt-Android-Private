@@ -185,7 +185,8 @@ class CafeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateFavoriteCafe(cafe: FavoriteCafe): Boolean {
-        TODO("Not yet implemented")
+        // TODO 좋아요 표시한 매장의 정보가 변경될 필요가 있을 경우 이 함수를 구현함
+        return true
     }
 
     override suspend fun loadFavoriteCafes(): Flow<Resource<FavoriteCafes>> {
@@ -200,11 +201,45 @@ class CafeRepositoryImpl @Inject constructor(
         userId: Long,
         cafe: FavoriteCafe
     ): Boolean {
-        return cafeListRemoteData.postFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
+        return cafeInfoRemoteData.postFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
+    }
+
+    override suspend fun postFavoriteCafe(
+        userId: Long,
+        cafe: Cafe
+    ): Boolean {
+        return cafeInfoRemoteData.postFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
+    }
+
+    override suspend fun remoteDeleteFavoriteCafe(userId: Long, cafe: Cafe): Boolean {
+        return cafeInfoRemoteData.deleteFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
+    }
+
+    override suspend fun remoteDeleteFavoriteCafe(userId: Long, cafe: FavoriteCafe): Boolean {
+        return cafeInfoRemoteData.deleteFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
+    }
+
+    override suspend fun localDeleteFavoriteCafe(cafe: Cafe): Boolean {
+        return try {
+            cafeDAO.deleteFavoriteCafe(cafe.toFavoriteCafeEntity())
+            true
+        } catch (e: IOException) {
+            false
+        }
+    }
+
+    override suspend fun localDeleteFavoriteCafe(cafe: FavoriteCafe): Boolean {
+        return try {
+            cafeDAO.deleteFavoriteCafe(cafe.toFavoriteCafeEntity())
+            true
+        } catch (e: IOException) {
+            false
+        }
     }
 
     override suspend fun updateRecentlyViewedCafe(cafe: Cafe): Boolean {
-        TODO("Not yet implemented")
+        // TODO 최근 본 매장의 정보가 변경될 상황이 있을 경우 이 함수를 구현함
+        return true
     }
 
     override suspend fun loadRecentlyViewedCafes(): Flow<Long> {
