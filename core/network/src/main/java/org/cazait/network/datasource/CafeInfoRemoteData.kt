@@ -11,6 +11,8 @@ import org.cazait.network.model.dto.response.CafeMenuRes
 import org.cazait.network.model.dto.response.CafeRes
 import org.cazait.network.model.dto.response.CafeReviewPostRes
 import org.cazait.network.model.dto.response.CafeReviewRes
+import org.cazait.network.model.dto.response.DeleteFavoriteCafeRes
+import org.cazait.network.model.dto.response.PostFavoriteCafeRes
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -85,6 +87,46 @@ class CafeInfoRemoteData @Inject constructor(
             }
             else -> {
                 DataResponse.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+    override suspend fun postFavoriteCafe(
+        userId: Long,
+        cafeId: Long
+    ): DataResponse<PostFavoriteCafeRes> {
+        return when (val response = processCall {
+            cafeService.postFavoriteCafe(
+                userId,
+                cafeId,
+            )
+        }) {
+            is PostFavoriteCafeRes -> {
+                DataResponse.Success(response)
+            }
+
+            else -> {
+                DataResponse.DataError(response as Int)
+            }
+        }
+    }
+
+    override suspend fun deleteFavoriteCafe(
+        userId: Long,
+        cafeId: Long,
+    ): DataResponse<DeleteFavoriteCafeRes> {
+        return when (val response = processCall {
+            cafeService.deleteFavoriteCafe(
+                userId,
+                cafeId,
+            )
+        }) {
+            is DeleteFavoriteCafeRes -> {
+                DataResponse.Success(response)
+            }
+
+            else -> {
+                DataResponse.DataError(response as Int)
             }
         }
     }

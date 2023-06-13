@@ -5,19 +5,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
+import org.bmsk.data.repository.UserRepository
 import org.cazait.model.Cafe
 import org.cazait.model.CafeMenus
 import org.cazait.model.CafeReviews
+import org.cazait.model.FavoriteCafes
 import org.cazait.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class CafeInfoViewModel @Inject constructor(
-    private val cafeRepository: CafeRepository
+    private val cafeRepository: CafeRepository,
+    private val userRepository: UserRepository,
 ) : BaseViewModel() {
+    private var cafe: Cafe? = null
+
     private val _locationData = MutableLiveData<List<String>>()
     val locationData: LiveData<List<String>>
         get() = _locationData
@@ -26,12 +35,8 @@ class CafeInfoViewModel @Inject constructor(
     val cafeIdData: LiveData<Long>
         get() = _cafeIdData
 
-    private var cafe: Cafe? = null
-
-    fun initViewModel(cafe: Cafe) {
-        this.cafe = cafe
-        insertRecentlyViewedCafe(cafe)
-    }
+    private val _isFavoriteCafe = MutableStateFlow(false)
+    val isFavoriteCafe = _isFavoriteCafe.asStateFlow()
 
     private val _listMenuData = MutableLiveData<Resource<CafeMenus>>()
     val listMenuData: LiveData<Resource<CafeMenus>>
@@ -40,6 +45,12 @@ class CafeInfoViewModel @Inject constructor(
     private val _listReviewData = MutableLiveData<Resource<CafeReviews>>()
     val listReviewData: LiveData<Resource<CafeReviews>>
         get() = _listReviewData
+
+    fun initViewModel(cafe: Cafe, isFavorite: Boolean) {
+        this.cafe = cafe
+        this._isFavoriteCafe.value = isFavorite
+        insertRecentlyViewedCafe(cafe)
+    }
 
     fun getMenus(cafeId: Long) {
         viewModelScope.launch {
@@ -60,9 +71,32 @@ class CafeInfoViewModel @Inject constructor(
     }
 
     fun saveFavoriteCafe() {
-        Log.e("onClickSaveCafe", "onClick")
         viewModelScope.launch {
-            cafe?.let { cafeRepository.insertFavoriteCafe(it) }
+            val isLoggedIn = userRepository.isLoggedIn().first()
+            val currentCafe = cafe ?: return@launch
+
+            if(isLoggedIn) {
+                val userPreference = userRepository.getUserInfo().first()
+                cafeRepository.postFavoriteCafe(userPreference.id, currentCafe)
+            } else {
+                cafeRepository.insertFavoriteCafe(currentCafe)
+            }
+            _isFavoriteCafe.value = true
+        }
+    }
+
+    fun deleteFavoriteCafe() {
+        viewModelScope.launch {
+            val isLoggedIn = userRepository.isLoggedIn().first()
+            val currentCafe = cafe ?: return@launch
+
+            if(isLoggedIn) {
+                val userPreference = userRepository.getUserInfo().first()
+                cafeRepository.remoteDeleteFavoriteCafe(userPreference.id, currentCafe)
+            } else {
+                cafeRepository.localDeleteFavoriteCafe(currentCafe)
+            }
+            _isFavoriteCafe.value = false
         }
     }
 
