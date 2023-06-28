@@ -1,6 +1,7 @@
 package org.cazait.ui.component.cafelist
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
@@ -22,6 +23,7 @@ import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.Mapper.toCafe
 import org.cazait.ui.component.cafeinfo.CafeInfoActivity
+import org.cazait.ui.component.search.SearchActivity
 import org.cazait.utils.observe
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.EasyPermissions.PermissionCallbacks
@@ -43,6 +45,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         requestPermission()
         setUpLayout()
         observeViewModel()
+        setSearch()
         viewModel.updateFavoriteCafes()
     }
 
@@ -105,6 +108,13 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
             verticalAdapter,
             R.dimen.cafe_item_space,
         )
+    }
+
+    private fun setSearch(){
+        binding.searchBar.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun createCafeListHorizontalAdapter() = CafeListHorizontalAdapter {

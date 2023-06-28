@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.component.search.SearchActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_black"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_corners_beige"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:layout_collapseMode="pin">
+
+                <ImageView
+                    android:id="@+id/ic_arrow_back"
+                    android:layout_width="28dp"
+                    android:layout_height="39dp"
+                    android:layout_marginStart="28dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/arrow_back_ios_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/searchBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints="@null"
+                    android:background="@drawable/background_search"
+                    android:drawablePadding="16dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/search_hint"
+                    android:importantForAccessibility="no"
+                    android:inputType="text"
+                    android:minHeight="48dp"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/main_white"
+                    android:textColorHint="@color/main_white"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/ic_search_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ic_menu_search"
+                    app:layout_constraintStart_toEndOf="@id/ic_arrow_back"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry">
+
+                    <requestFocus />
+                </EditText>
+
+                <ImageView
+                    android:id="@+id/ic_menu_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="28dp"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_menu"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ListView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/main_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout_search" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
