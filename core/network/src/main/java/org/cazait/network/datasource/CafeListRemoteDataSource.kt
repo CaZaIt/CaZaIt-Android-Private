@@ -11,4 +11,5 @@ interface CafeListRemoteDataSource {
     suspend fun getListCafes(userId: Long, query: ListCafesReq): DataResponse<ListCafesRes>
     suspend fun getListCafesWithGuest(query: ListCafesReq): DataResponse<ListCafesRes>
     suspend fun postFavoriteCafe(userId: Long, cafeId: Long): DataResponse<PostFavoriteCafeRes>
+    suspend fun getCafeSearch(cafeName: String, query: ListCafesReq): DataResponse<ListCafesRes>
 }

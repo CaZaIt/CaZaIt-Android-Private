@@ -76,4 +76,13 @@ interface CafeService {
         @Path("cafeId") cafeId: Long,
         @Body reviewPostReq: CafeReviewPostReq,
     ): Response<CafeReviewPostRes>
+
+    @GET("/api/cafes/name/{cafeName}")
+    suspend fun getCafeSearch(
+        @Path("cafeName") cafeName: String,
+        @Query("longitude") longitude: String,
+        @Query("latitude") latitude: String,
+        @Query("sort") sort: String,
+        @Query("limit") limit: String
+    ): Response<ListCafesRes>
 }

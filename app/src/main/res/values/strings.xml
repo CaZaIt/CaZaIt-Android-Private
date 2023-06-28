@@ -39,6 +39,7 @@
     <string name="sign_up_check_pw_not">비밀번호가 일치하지 않습니다.</string>
 
     <!-- Cafe List -->
+    <string name="search">카페명을 입력해주세요.</string>
     <string name="search_hint">search</string>
     <string name="favorite_stores">찜한 매장</string>
     <string name="favorite_stores_guide">찜한 매장을 빠르게 확인!</string>

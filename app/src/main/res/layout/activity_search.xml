@@ -40,7 +40,7 @@
                     tools:ignore="ContentDescription" />
 
                 <EditText
-                    android:id="@+id/searchBar"
+                    android:id="@+id/searchBar_search"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -49,14 +49,14 @@
                     android:background="@drawable/background_search"
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
-                    android:hint="@string/search_hint"
+                    android:hint="@string/search"
                     android:importantForAccessibility="no"
                     android:inputType="text"
                     android:minHeight="48dp"
                     android:paddingStart="16dp"
                     android:textColor="@color/main_white"
                     android:textColorHint="@color/main_white"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     app:drawableStartCompat="@drawable/ic_search_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ic_menu_search"
@@ -82,10 +82,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/main_black"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

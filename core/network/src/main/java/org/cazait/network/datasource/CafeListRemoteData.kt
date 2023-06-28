@@ -93,6 +93,29 @@ class CafeListRemoteData @Inject constructor(
         }
     }
 
+    override suspend fun getCafeSearch(
+        cafeName: String,
+        query: ListCafesReq
+    ): DataResponse<ListCafesRes> {
+        return when (val response = processCall {
+            cafeService.getCafeSearch(
+                cafeName,
+                longitude = query.longitude,
+                latitude = query.latitude,
+                sort = query.sort,
+                limit = query.limit
+            )
+        }) {
+            is ListCafesRes -> {
+                DataResponse.Success(data = response)
+            }
+
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
     private suspend fun processCall(
         responseCall: suspend () -> Response<*>
     ): Any? {
