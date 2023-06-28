@@ -8,7 +8,7 @@ import org.cazait.database.dao.RecentlyViewedCafeDAO
 import org.cazait.database.model.entity.FavoriteCafeEntity
 import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 
-@Database(entities = [FavoriteCafeEntity::class, RecentlyViewedCafeEntity::class], version = 1)
+@Database(entities = [FavoriteCafeEntity::class, RecentlyViewedCafeEntity::class], version = 2)
 @TypeConverters(DateConverter::class, ImageConverter::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun favoriteDAO(): CafeDAO

@@ -26,7 +26,6 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
         }
         binding.recycleCafe.adapter = verticalAdapter
         observeRecentlyViewedCafes()
-
         viewModel.fetchRecentlyViewedCafes()
     }
 

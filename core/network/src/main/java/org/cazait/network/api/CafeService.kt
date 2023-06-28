@@ -3,6 +3,7 @@ package org.cazait.network.api
 import org.cazait.network.model.dto.request.CafeReviewPostReq
 import org.cazait.network.model.dto.response.CafeMenuRes
 import org.cazait.network.model.dto.response.CafeRes
+import org.cazait.network.model.dto.response.CafeResTemp
 import org.cazait.network.model.dto.response.CafeReviewPostRes
 import org.cazait.network.model.dto.response.CafeReviewRes
 import org.cazait.network.model.dto.response.ListCafesRes
@@ -19,7 +20,7 @@ interface CafeService {
     @GET("/api/cafes/id/{cafeId}")
     suspend fun getCafe(
         @Path("cafeId") cafeId: Long,
-    ): Response<CafeRes>
+    ): Response<CafeResTemp>
 
     @GET("/api/cafes/all/user/{userId}")
     suspend fun getListCafes(
