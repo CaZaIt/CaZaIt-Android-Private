@@ -31,6 +31,7 @@ class CafeInfoViewModel @Inject constructor(
     fun initViewModel(cafe: Cafe) {
         this.cafe = cafe
         insertRecentlyViewedCafe(cafe)
+        Log.e("RoomDB", "${cafe.cafeId}")
     }
 
     private val _listMenuData = MutableLiveData<Resource<CafeMenus>>()

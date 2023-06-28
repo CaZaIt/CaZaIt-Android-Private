@@ -29,10 +29,10 @@ class RecentlyCafeViewModel @Inject constructor(
                 val res = cafeRepository.getCafeById(it).first()
                 if (res is Resource.Success) {
                     res.data?.let { cafe -> cafeList.add(cafe) }
-                    _recentlyViewedCafes.value = cafeList
                     Log.e("RecentCafe", cafeList.toString())
                 }
             }
+            _recentlyViewedCafes.value = cafeList
         }
     }
 }

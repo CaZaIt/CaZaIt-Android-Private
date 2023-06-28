@@ -2,6 +2,7 @@ package org.bmsk.data.repository
 
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.bmsk.data.model.toCafe
@@ -23,6 +24,7 @@ import org.cazait.network.datasource.CafeInfoRemoteData
 import org.cazait.network.datasource.CafeListRemoteData
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.ListCafesReq
+import org.cazait.network.model.dto.response.toCafe
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -207,10 +209,8 @@ class CafeRepositoryImpl @Inject constructor(
 
     override suspend fun loadRecentlyViewedCafes(): Flow<Long> {
         return flow {
-            recentlyViewedCafeDAO.selectAllRecentlyViewedCafes().collect { list ->
-                list.forEach {
-                    emit(it.cafeId)
-                }
+            recentlyViewedCafeDAO.selectAllRecentlyViewedCafes().first().forEach {
+                emit(it.cafeId)
             }
         }
     }

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CaZaIt" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@color/main_beige</item>
+        <item name="android:statusBarColor">@color/main_black</item>
         <item name="android:navigationBarColor">@color/main_black</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
