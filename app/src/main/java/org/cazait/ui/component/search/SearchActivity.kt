@@ -6,11 +6,13 @@ import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.ActivitySearchBinding
+import org.cazait.model.Cafe
 import org.cazait.model.Cafes
 import org.cazait.model.Resource
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.adapter.SearchAdapter
 import org.cazait.ui.base.BaseActivity
+import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
 import kotlin.math.roundToInt
 
@@ -18,7 +20,7 @@ import kotlin.math.roundToInt
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(
     SearchViewModel::class.java,
     R.layout.activity_search
-) {
+), OnSearchClick {
     private lateinit var searchAdapter: SearchAdapter
     override fun initView() {
         viewModel.initLocation()
@@ -33,14 +35,17 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(
 
     }
 
-    private fun search(){
-        binding.searchBarSearch.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    override fun onSearchClick(item: Cafe) {
+        val intent = CafeInfoActivity.cafeInfoIntent(this, item)
+        startActivity(intent)
+    }
 
+    private fun search() {
+        binding.searchBarSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun afterTextChanged(s: Editable) {
@@ -54,8 +59,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(
         observe(viewModel.cafeSearchData, ::handleCafeSearch)
     }
 
-    private fun handleCafeSearch(status: Resource<Cafes>){
-        when(status){
+    private fun handleCafeSearch(status: Resource<Cafes>) {
+        when (status) {
             is Resource.Error -> {}
             is Resource.Loading -> {}
             is Resource.Success -> {
@@ -66,7 +71,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(
     }
 
     private fun initAdapter() {
-        searchAdapter = SearchAdapter()
+        searchAdapter = SearchAdapter(this)
         binding.rvSearch.adapter = searchAdapter
         binding.rvSearch.addItemDecoration(
             ItemDecoration(
@@ -75,7 +80,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(
         )
     }
 
-    private fun setBackBtn(){
+    private fun setBackBtn() {
         binding.icArrowBack.setOnClickListener {
             finish()
         }

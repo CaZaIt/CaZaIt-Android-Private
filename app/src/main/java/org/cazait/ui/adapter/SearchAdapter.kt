@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.cazait.databinding.ItemCafeSearchBinding
 import org.cazait.model.Cafe
+import org.cazait.ui.component.search.OnSearchClick
 
-class SearchAdapter :
+class SearchAdapter(private val listener: OnSearchClick) :
     ListAdapter<Cafe, SearchAdapter.SearchViewHolder>(diffUtil) {
 
     inner class SearchViewHolder(
@@ -17,6 +18,9 @@ class SearchAdapter :
 
         fun bind(item: Cafe) {
             binding.tvSearchName.text = item.name
+            binding.root.setOnClickListener {
+                listener.onSearchClick(item)
+            }
         }
     }
 
