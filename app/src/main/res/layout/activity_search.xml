@@ -50,6 +50,7 @@
                     android:drawablePadding="16dp"
                     android:gravity="center_vertical"
                     android:hint="@string/search"
+                    android:imeOptions="actionSearch"
                     android:importantForAccessibility="no"
                     android:inputType="text"
                     android:minHeight="48dp"
@@ -82,15 +83,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_search"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/search_frag"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/main_black"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout_search" />
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout_search" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

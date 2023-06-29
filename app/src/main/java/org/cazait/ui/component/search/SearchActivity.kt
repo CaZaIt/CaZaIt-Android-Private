@@ -1,43 +1,39 @@
 package org.cazait.ui.component.search
 
+import android.content.Context
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.ActivitySearchBinding
-import org.cazait.model.Cafe
-import org.cazait.model.Cafes
-import org.cazait.model.Resource
-import org.cazait.ui.adapter.ItemDecoration
-import org.cazait.ui.adapter.SearchAdapter
 import org.cazait.ui.base.BaseActivity
-import org.cazait.ui.component.cafeinfo.CafeInfoActivity
-import org.cazait.utils.observe
-import kotlin.math.roundToInt
+
 
 @AndroidEntryPoint
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(
     SearchViewModel::class.java,
     R.layout.activity_search
-), OnSearchClick {
-    private lateinit var searchAdapter: SearchAdapter
+) {
     override fun initView() {
         viewModel.initLocation()
         Log.d("location", viewModel.locationLiveData.toString())
-        initAdapter()
         setBackBtn()
         search()
-        observeViewModel()
+        initEditText()
+        val searchFrag = SearchCurFragment(viewModel)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.search_frag, searchFrag)
+            .commit()
     }
 
     override fun initAfterBinding() {
 
-    }
-
-    override fun onSearchClick(item: Cafe) {
-        val intent = CafeInfoActivity.cafeInfoIntent(this, item)
-        startActivity(intent)
     }
 
     private fun search() {
@@ -53,31 +49,42 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(
                 viewModel.getCafeSearch(query)
             }
         })
-    }
 
-    private fun observeViewModel() {
-        observe(viewModel.cafeSearchData, ::handleCafeSearch)
-    }
+        binding.searchBarSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                // 키보드 자동으로 내림
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
 
-    private fun handleCafeSearch(status: Resource<Cafes>) {
-        when (status) {
-            is Resource.Error -> {}
-            is Resource.Loading -> {}
-            is Resource.Success -> {
-                val name = status.data?.list
-                searchAdapter.submitList(name)
+                binding.appBarLayoutSearch.setBackgroundColor(ContextCompat.getColor(this, R.color.main_white))
+
+                val query = v.text.toString()
+                Log.d("v", query)
+                viewModel.getCafeSearchResult(query)
+
+                val resultFrag = SearchResultFragment(viewModel)
+                val bundle = Bundle()
+                bundle.putString("SearchText", query)
+                resultFrag.arguments = bundle
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.search_frag, resultFrag)
+                    .commit()
+                true
+            } else {
+                false
             }
         }
     }
 
-    private fun initAdapter() {
-        searchAdapter = SearchAdapter(this)
-        binding.rvSearch.adapter = searchAdapter
-        binding.rvSearch.addItemDecoration(
-            ItemDecoration(
-                extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
-            )
-        )
+    private fun initEditText(){
+        binding.searchBarSearch.setOnClickListener {
+            binding.appBarLayoutSearch.setBackgroundColor(ContextCompat.getColor(this, R.color.main_black))
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.search_frag, SearchCurFragment(viewModel))
+                .commit()
+        }
     }
 
     private fun setBackBtn() {

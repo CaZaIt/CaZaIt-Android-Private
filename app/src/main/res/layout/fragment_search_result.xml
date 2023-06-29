@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_white"
+        tools:context=".ui.component.search.SearchResultFragment">
+
+        <TextView
+            android:id="@+id/text1"
+            style="@style/TextValue_B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/search_text1"
+            android:textColor="@color/main_black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/search_text"
+            style="@style/TextValue_B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_body"
+            android:textColor="@color/main_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text1"
+            app:layout_constraintStart_toEndOf="@+id/text1"
+            app:layout_constraintTop_toTopOf="@+id/text1" />
+
+        <TextView
+            android:id="@+id/text2"
+            style="@style/TextValue_B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_text2"
+            android:textColor="@color/main_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text1"
+            app:layout_constraintStart_toEndOf="@+id/search_text"
+            app:layout_constraintTop_toTopOf="@+id/text1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_result"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

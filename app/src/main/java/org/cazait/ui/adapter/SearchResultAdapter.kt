@@ -1,25 +1,30 @@
 package org.cazait.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.databinding.ItemCafeSearchBinding
+import com.bumptech.glide.Glide
+import org.cazait.databinding.ItemSearchResultBinding
 import org.cazait.model.Cafe
-import org.cazait.ui.component.search.clicklistener.OnSearchClick
+import org.cazait.ui.component.search.clicklistener.OnResultClick
 
-class SearchAdapter(private val listener: OnSearchClick) :
-    ListAdapter<Cafe, SearchAdapter.SearchViewHolder>(diffUtil) {
+class SearchResultAdapter(private val listener: OnResultClick) :
+    ListAdapter<Cafe, SearchResultAdapter.SearchResultViewHolder>(diffUtil) {
 
-    inner class SearchViewHolder(
-        private val binding: ItemCafeSearchBinding
+    inner class SearchResultViewHolder(
+        private val binding: ItemSearchResultBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(item: Cafe) {
-            binding.tvSearchName.text = item.name
+            binding.txtCafeNameSearch.text = item.name
+            binding.txtCafeAddressSearch.text = item.address
+            binding.btnEvaluation.text = item.status.toString()
+            val imgUrl = item.images[0]
+            Glide.with(binding.root.context).load(imgUrl).into(binding.imgCafeSearch)
             binding.root.setOnClickListener {
-                listener.onSearchClick(item)
+                listener.onResultClick(item)
             }
         }
     }
@@ -27,9 +32,9 @@ class SearchAdapter(private val listener: OnSearchClick) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SearchViewHolder {
-        return SearchViewHolder(
-            ItemCafeSearchBinding.inflate(
+    ): SearchResultViewHolder {
+        return SearchResultViewHolder(
+            ItemSearchResultBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -37,7 +42,7 @@ class SearchAdapter(private val listener: OnSearchClick) :
         )
     }
 
-    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchResultAdapter.SearchResultViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 

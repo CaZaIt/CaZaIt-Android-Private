@@ -1,4 +1,4 @@
-package org.cazait.ui.component.search
+package org.cazait.ui.component.search.clicklistener
 
 import org.cazait.model.Cafe
 

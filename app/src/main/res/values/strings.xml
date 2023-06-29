@@ -96,4 +96,9 @@
     <string name="edit">작성하기</string>
     <string name="sign_in_kor">로그인</string>
     <string name="sign_out_kor">로그아웃</string>
+
+    <!-- Cafe Search -->
+    <string name="search_text1"><![CDATA["]]></string>
+    <string name="search_text2"><![CDATA[" 검색 결과]]></string>
+    <string name="search_body">검색할 내용</string>
 </resources>
