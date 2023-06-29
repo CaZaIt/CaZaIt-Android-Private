@@ -223,4 +223,31 @@ class CafeRepositoryImpl @Inject constructor(
             false
         }
     }
+
+    override suspend fun getCafeSearch(
+        cafeName: String,
+        longitude: String,
+        latitude: String,
+        sort: String,
+        limit: String
+    ): Flow<Resource<Cafes>> {
+        val query =
+            ListCafesReq(longitude = longitude, latitude = latitude, sort = sort, limit = limit)
+
+        return flow {
+            val response = cafeListRemoteData.getCafeSearch(cafeName, query)
+            when (response) {
+                is DataResponse.Success -> {
+                    response.data?.cafes?.forEach { list ->
+                        val cafes = list.map { it.toCafe() }
+                        emit(Resource.Success(Cafes(cafes)))
+                    } ?: emit(Resource.Success(Cafes(emptyList())))
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }.flowOn(ioDispatcher)
+    }
 }

@@ -42,7 +42,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="ContentDescription" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/searchBar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -54,11 +54,11 @@
                         android:gravity="center_vertical"
                         android:hint="@string/search_hint"
                         android:importantForAccessibility="no"
-                        android:inputType="text"
                         android:minHeight="48dp"
                         android:paddingStart="16dp"
                         android:textColor="@color/main_white"
                         android:textColorHint="@color/main_white"
+                        android:textSize="20sp"
                         app:drawableStartCompat="@drawable/ic_search_24"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/ic_menu"
