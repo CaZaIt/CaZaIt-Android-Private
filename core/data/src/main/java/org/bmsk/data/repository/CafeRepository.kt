@@ -1,17 +1,18 @@
 package org.bmsk.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import org.cazait.database.dao.RecentlyViewedCafeDAO
 import org.cazait.model.Cafe
 import org.cazait.model.CafeMenus
 import org.cazait.model.CafeReviews
 import org.cazait.model.Cafes
 import org.cazait.model.FavoriteCafe
 import org.cazait.model.FavoriteCafes
+import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.Resource
 
 interface CafeRepository {
     suspend fun getCafeById(cafeId: Long): Flow<Resource<Cafe>>
-
     suspend fun getListFavorites(userId: Long): Flow<Resource<FavoriteCafes>>
     suspend fun getListCafes(
         userId: Long?,
@@ -40,5 +41,5 @@ interface CafeRepository {
     suspend fun insertRecentlyViewedCafe(cafe: Cafe): Boolean
 
     suspend fun updateRecentlyViewedCafe(cafe: Cafe): Boolean
-    suspend fun loadRecentlyViewedCafes(): Flow<Long>
+    suspend fun loadRecentlyViewedCafes(): Flow<RecentlyViewedCafe>
 }

@@ -69,7 +69,12 @@ class CafeInfoViewModel @Inject constructor(
 
     private fun insertRecentlyViewedCafe(cafe: Cafe) {
         viewModelScope.launch {
-            cafeRepository.insertRecentlyViewedCafe(cafe)
+            //cafeRepository.insertRecentlyViewedCafe(cafe)
+            val cafeWithTimestamp = cafe.copy(timestamp = System.currentTimeMillis())
+            //Log.e("timestamp","${cafeWithTimestamp.timestamp}")
+            cafeRepository.insertRecentlyViewedCafe(cafeWithTimestamp)
+            //Log.e("@@timestamp",cafeWithTimestamp.toString())
         }
+
     }
 }

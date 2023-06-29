@@ -1,5 +1,6 @@
 package org.cazait.ui.component.recentlycafe
 
+import android.util.Log
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
@@ -20,6 +21,8 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
     }
 
     override fun initView() {
+
+
         binding.clTop.includedTvTitle.text = getString(R.string.recent_view_store)
         binding.clTop.btnBack.setOnClickListener {
             findNavController().navigate(RecentlyCafeFragmentDirections.actionRecentlyCafeFragmentToMyPageFragment())
@@ -38,7 +41,10 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
     }
 
     private fun handleRecentlyViewedCafes(cafes: List<Cafe>) {
-        verticalAdapter.submitList(cafes)
+        // verticalAdapter.submitList(cafes)
+        val sortedCafes = cafes.sortedByDescending { it.timestamp } // 시간순으로 정렬
+        Log.e("RecentCafe", cafes.toString())
+        verticalAdapter.submitList(sortedCafes)
     }
 
     private fun createCafeListVerticalAdapter() = RecentlyViewedVerticalAdapter {
@@ -50,3 +56,8 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
         startActivity(intent)
     }
 }
+/*
+timestamp=1688008150267
+timestamp=1688008150241
+timestamp=1688008150142
+ */

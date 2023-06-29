@@ -37,6 +37,8 @@ data class CafeResTemp(
         val distance: Int,
         @SerializedName("favorite")
         val favorite: Boolean,
+        @SerializedName("timestamp")
+        val timestamp: Long,
     )
 
     data class CafeImage(
@@ -56,4 +58,5 @@ fun CafeResTemp.Data.toCafe() = Cafe(
     images = cafesImages.map { it.imageUrl },
     latitude = latitude,
     longitude = longitude,
+    timestamp = timestamp,
 )

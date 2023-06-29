@@ -8,6 +8,7 @@ import org.cazait.model.CafeReviews
 import org.cazait.model.EmailDup
 import org.cazait.model.FavoriteCafe
 import org.cazait.model.NicknameDup
+import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.SignInInfo
 import org.cazait.model.SignUpInfo
 import org.cazait.network.model.dto.CafeDTO
@@ -30,10 +31,6 @@ fun Cafe.toFavoriteCafeEntity() = FavoriteCafeEntity(
     congestionStatus = status,
     imageUrl = images,
     createdDate = Date()
-)
-
-fun Cafe.toRecentlyViewedCafeEntity() = RecentlyViewedCafeEntity(
-    cafeId = cafeId
 )
 
 fun FavoriteCafe.toFavoriteCafeEntity() = FavoriteCafeEntity(
@@ -59,6 +56,21 @@ fun FavoriteCafeEntity.toFavoriteCafe() = FavoriteCafe(
     imageUrl = imageUrl,
 )
 
+fun Cafe.toRecentlyViewedCafeEntity() = RecentlyViewedCafeEntity(
+    cafeId = cafeId,
+    timestamp = timestamp
+)
+
+fun RecentlyViewedCafe.toRecentlyViewedCafeEntity() = RecentlyViewedCafeEntity(
+    cafeId = cafeId,
+    timestamp = timestamp
+)
+
+fun RecentlyViewedCafeEntity.toRecently() = RecentlyViewedCafe(
+    cafeId = cafeId,
+    timestamp = timestamp
+)
+
 fun CafeDTO.toCafe() = Cafe(
     cafeId = cafeId,
     name = name,
@@ -68,6 +80,7 @@ fun CafeDTO.toCafe() = Cafe(
     images = cafesImages,
     latitude = latitude,
     longitude = longitude,
+    timestamp = System.currentTimeMillis()
 )
 
 fun FavoriteCafeDTO.toFavoriteCafe() = FavoriteCafe(

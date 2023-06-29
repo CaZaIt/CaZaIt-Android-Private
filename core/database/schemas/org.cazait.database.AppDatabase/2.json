@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "1bcbc90e6320970114ac443c07651ec6",
+    "identityHash": "dcbccaff621462839d081cf9ac581093",
     "entities": [
       {
         "tableName": "FavoriteCafe",
@@ -74,11 +74,17 @@
       },
       {
         "tableName": "RecentlyViewedCafe",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cafe_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cafe_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "cafeId",
             "columnName": "cafe_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -96,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1bcbc90e6320970114ac443c07651ec6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dcbccaff621462839d081cf9ac581093')"
     ]
   }
 }
