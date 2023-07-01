@@ -98,7 +98,7 @@ fun ReviewDTO.toCafeReviews() = CafeReviews(
 fun SignInInfoDTO.toSignInInfo() = SignInInfo(
     email = email,
     id = id,
-    jwtToken = jwtToken,
+    accessToken = accessToken,
     refreshToken = refreshToken,
     role = role,
 )

@@ -64,7 +64,7 @@ class CafeInfoViewModel @Inject constructor(
             val isLoggedIn = userRepository.isLoggedIn().first()
             val currentCafe = cafe ?: return@launch
 
-            if(isLoggedIn) {
+            if (isLoggedIn) {
                 val userPreference = userRepository.getUserInfo().first()
                 cafeRepository.postFavoriteCafe(userPreference.id, currentCafe)
             } else {
@@ -79,7 +79,7 @@ class CafeInfoViewModel @Inject constructor(
             val isLoggedIn = userRepository.isLoggedIn().first()
             val currentCafe = cafe ?: return@launch
 
-            if(isLoggedIn) {
+            if (isLoggedIn) {
                 val userPreference = userRepository.getUserInfo().first()
                 cafeRepository.remoteDeleteFavoriteCafe(userPreference.id, currentCafe)
             } else {

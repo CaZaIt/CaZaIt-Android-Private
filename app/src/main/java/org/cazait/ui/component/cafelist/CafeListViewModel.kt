@@ -63,8 +63,8 @@ class CafeListViewModel @Inject constructor(
         viewModelScope.launch {
             val isLoggedIn = userRepository.isLoggedIn().first()
             if(isLoggedIn) {
-//                val user = userRepository.getUserInfo().first()
-//                _listFavoritesData.value = cafeRepository.getListFavorites(user.id).first()
+                val user = userRepository.getUserInfo().first()
+                _listFavoritesData.value = cafeRepository.getListFavorites(user.id).first()
             } else {
                 _listFavoritesData.value = cafeRepository.loadFavoriteCafes().first()
             }
