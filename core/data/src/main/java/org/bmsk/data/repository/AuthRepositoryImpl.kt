@@ -27,7 +27,7 @@ class AuthRepositoryImpl @Inject constructor(
             val updatedRefreshToken = authRemoteData.getRefreshToken(
                 userId = id,
                 role = role,
-                jwtToken = jwtToken,
+                accessToken = accessToken,
                 refreshToken = refreshToken
             ).data?.result ?: refreshToken
 
@@ -52,7 +52,7 @@ class AuthRepositoryImpl @Inject constructor(
                             id = signInInfoDTO.id,
                             email = signInInfoDTO.email,
                             role = signInInfoDTO.role,
-                            jwtToken = signInInfoDTO.jwtToken,
+                            accessToken = signInInfoDTO.accessToken,
                             refreshToken = signInInfoDTO.refreshToken,
                         )
                         emit(Resource.Success(signInInfoDTO.toSignInInfo()))
@@ -74,7 +74,7 @@ class AuthRepositoryImpl @Inject constructor(
     private fun emptyInfo() = SignInInfo(
         email = "",
         id = 0L,
-        jwtToken = "",
+        accessToken = "",
         refreshToken = "",
         role = ""
     )

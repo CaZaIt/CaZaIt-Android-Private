@@ -16,7 +16,7 @@ class UserPreferenceRepository @Inject constructor(
         id: Long,
         email: String,
         role: String,
-        jwtToken: String,
+        accessToken: String,
         refreshToken: String
     ) {
         userPreferenceDataSource.updateData { savedUserPreferences ->
@@ -25,19 +25,19 @@ class UserPreferenceRepository @Inject constructor(
                 id = id,
                 email = email,
                 role = role,
-                jwtToken = jwtToken,
+                accessToken = accessToken,
                 refreshToken = refreshToken
             )
         }
     }
 
     suspend fun updateUserToken(
-        jwtToken: String,
+        accessToken: String,
         refreshToken: String,
     ) {
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
-                jwtToken = jwtToken,
+                accessToken = accessToken,
                 refreshToken = refreshToken
             )
         }
@@ -50,7 +50,7 @@ class UserPreferenceRepository @Inject constructor(
         if (updateMode == UPDATE_JWT_TOKEN) {
             userPreferenceDataSource.updateData { savedUserPreferences ->
                 savedUserPreferences.copy(
-                    jwtToken = token
+                    accessToken = token
                 )
             }
         } else if (updateMode == UPDATE_REFRESH_TOKEN) {

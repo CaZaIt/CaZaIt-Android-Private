@@ -68,6 +68,7 @@ fun CafeDTO.toCafe() = Cafe(
     images = cafesImages,
     latitude = latitude,
     longitude = longitude,
+    isFavorite = favorite,
 )
 
 fun FavoriteCafeDTO.toFavoriteCafe() = FavoriteCafe(
@@ -98,7 +99,7 @@ fun ReviewDTO.toCafeReviews() = CafeReviews(
 fun SignInInfoDTO.toSignInInfo() = SignInInfo(
     email = email,
     id = id,
-    jwtToken = jwtToken,
+    accessToken = accessToken,
     refreshToken = refreshToken,
     role = role,
 )

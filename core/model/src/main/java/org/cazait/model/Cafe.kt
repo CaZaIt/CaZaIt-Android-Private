@@ -15,4 +15,5 @@ data class Cafe(
     val images: List<String>,
     val latitude: String? = null,
     val longitude: String? = null,
+    val isFavorite: Boolean = false,
 ): Serializable

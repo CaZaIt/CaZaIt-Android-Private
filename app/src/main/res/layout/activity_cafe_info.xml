@@ -133,7 +133,7 @@
                                 android:text="@{cafe.address}"
                                 android:textColor="@color/main_black"
                                 android:textSize="14sp"
-                                app:layout_constraintEnd_toStartOf="@+id/iv_fabor"
+                                app:layout_constraintEnd_toStartOf="@+id/btn_favorite"
                                 app:layout_constraintStart_toStartOf="@+id/tv_info_cafename"
                                 app:layout_constraintTop_toBottomOf="@+id/tv_info_cafename"
                                 tools:text="아주 긴 주소입니다.아주 긴 주소입니다.아주 긴 주소입니다.아주 긴 주소입니다." />
@@ -149,19 +149,19 @@
                                 android:textColor="@color/cafe_list_orange"
                                 android:textSize="14sp"
                                 app:layout_constraintBottom_toBottomOf="@id/tv_info_cafename"
-                                app:layout_constraintEnd_toStartOf="@id/iv_fabor"
+                                app:layout_constraintEnd_toStartOf="@id/btn_favorite"
                                 app:layout_constraintStart_toEndOf="@+id/tv_info_cafename" />
 
                             <ImageView
-                                android:id="@+id/iv_fabor"
+                                android:id="@+id/btn_favorite"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:minWidth="48dp"
                                 android:minHeight="48dp"
-                                android:padding="16dp"
-                                android:src="@drawable/favorite"
+                                android:padding="8dp"
+                                app:favorite="@{viewModel.isFavoriteCafe}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
