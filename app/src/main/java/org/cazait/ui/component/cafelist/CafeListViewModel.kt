@@ -27,6 +27,7 @@ class CafeListViewModel @Inject constructor(
     private val fusedLocationClient: FusedLocationProviderClient,
     private val permissionUtil: PermissionUtil,
 ) : BaseViewModel() {
+
     private val _listFavoritesData = MutableLiveData<Resource<FavoriteCafes>>()
     val listFavoritesData: LiveData<Resource<FavoriteCafes>>
         get() = _listFavoritesData
@@ -49,12 +50,26 @@ class CafeListViewModel @Inject constructor(
 
     private fun updateListCafesData() {
         viewModelScope.launch {
-            cafeRepository.getListCafes(
-                userId = null,
-                latitude = _lastLocationLiveData.value?.latitude.toString(),
-                longitude = _lastLocationLiveData.value?.longitude.toString()
-            ).collect {
-                _listCafesData.value = it
+            // TODO: 로그인 상태에 따라 ACCESS_TOKEN 과 REFRESH_TOKEN 발급, 헤더요청, 현재 false 조정
+            val isLoggedIn = false /* userRepository.isLoggedIn().first() */
+
+            if (isLoggedIn) {
+                val userId = userRepository.getUserInfo().first().id
+                cafeRepository.getListCafes(
+                    userId = userId,
+                    latitude = _lastLocationLiveData.value?.latitude.toString(),
+                    longitude = _lastLocationLiveData.value?.longitude.toString()
+                ).collect {
+                    _listCafesData.value = it
+                }
+            } else {
+                cafeRepository.getListCafes(
+                    userId = null,
+                    latitude = _lastLocationLiveData.value?.latitude.toString(),
+                    longitude = _lastLocationLiveData.value?.longitude.toString()
+                ).collect {
+                    _listCafesData.value = it
+                }
             }
         }
     }
@@ -62,7 +77,7 @@ class CafeListViewModel @Inject constructor(
     fun updateFavoriteCafes() {
         viewModelScope.launch {
             val isLoggedIn = userRepository.isLoggedIn().first()
-            if(isLoggedIn) {
+            if (isLoggedIn) {
                 val user = userRepository.getUserInfo().first()
                 _listFavoritesData.value = cafeRepository.getListFavorites(user.id).first()
             } else {

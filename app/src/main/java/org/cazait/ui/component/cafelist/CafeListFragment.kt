@@ -109,7 +109,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         )
     }
 
-    private fun setSearch(){
+    private fun setSearch() {
         binding.searchBar.setOnClickListener {
             val intent = Intent(requireContext(), SearchActivity::class.java)
             startActivity(intent)
@@ -117,7 +117,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     }
 
     private fun createCafeListHorizontalAdapter() = CafeListHorizontalAdapter {
-        navigateToCafeInfo(it.toCafe())
+        navigateToCafeInfo(it.toCafe().copy(isFavorite = true))
     }
 
     private fun createCafeListVerticalAdapter() = CafeListVerticalAdapter {
@@ -140,7 +140,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     }
 
     private fun navigateToCafeInfo(cafe: Cafe) {
-        val intent = CafeInfoActivity.cafeInfoIntent(requireContext(), cafe)
+        val intent = CafeInfoActivity.cafeInfoIntent(requireContext(), cafe, cafe.isFavorite)
         startActivity(intent)
     }
 

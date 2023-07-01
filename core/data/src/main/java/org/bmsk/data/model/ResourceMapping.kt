@@ -68,6 +68,7 @@ fun CafeDTO.toCafe() = Cafe(
     images = cafesImages,
     latitude = latitude,
     longitude = longitude,
+    isFavorite = favorite,
 )
 
 fun FavoriteCafeDTO.toFavoriteCafe() = FavoriteCafe(
