@@ -3,15 +3,15 @@ package org.cazait.ui.component.signin
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.ActivitySignInBinding
+import org.cazait.databinding.FragmentSignInBinding
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
-import org.cazait.ui.base.BaseActivity
+import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.signup.SignUpActivity
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -20,13 +20,12 @@ import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
-class SignInActivity :
-    BaseActivity<ActivitySignInBinding, SignInViewModel>(
+class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         SignInViewModel::class.java,
-        R.layout.activity_sign_in,
+        R.layout.fragment_sign_in,
     ) {
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+//        installSplashScreen()
         super.onCreate(savedInstanceState)
     }
 
@@ -58,7 +57,7 @@ class SignInActivity :
             is Resource.Success -> status.data?.let {
                 binding.lottieSignin.pauseAnimation()
                 binding.lottieSignin.toGone()
-                finish()
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMyPageFragment())
             }
 
             is Resource.Error -> {
@@ -73,7 +72,7 @@ class SignInActivity :
 
     private fun initSignUpBtn() {
         binding.tvSignup.setOnClickListener {
-            val signUpIntent = SignUpActivity.signUpIntent(this)
+            val signUpIntent = SignUpActivity.signUpIntent(requireContext())
             startActivity(signUpIntent)
         }
     }
@@ -93,7 +92,7 @@ class SignInActivity :
         fun signInIntent(
             context: Context,
         ): Intent {
-            return Intent(context, SignInActivity::class.java)
+            return Intent(context, SignInFragment::class.java)
         }
     }
 }
