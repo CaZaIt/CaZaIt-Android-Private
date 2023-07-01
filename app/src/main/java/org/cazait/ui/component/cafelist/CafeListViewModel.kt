@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
@@ -51,38 +50,37 @@ class CafeListViewModel @Inject constructor(
     private fun updateListCafesData() {
         viewModelScope.launch {
             // TODO: 로그인 상태에 따라 ACCESS_TOKEN 과 REFRESH_TOKEN 발급, 헤더요청, 현재 false 조정
-            val isLoggedIn = false /* userRepository.isLoggedIn().first() */
-
-            if (isLoggedIn) {
-                val userId = userRepository.getUserInfo().first().id
-                cafeRepository.getListCafes(
-                    userId = userId,
-                    latitude = _lastLocationLiveData.value?.latitude.toString(),
-                    longitude = _lastLocationLiveData.value?.longitude.toString()
-                ).collect {
-                    _listCafesData.value = it
-                }
-            } else {
-                cafeRepository.getListCafes(
-                    userId = null,
-                    latitude = _lastLocationLiveData.value?.latitude.toString(),
-                    longitude = _lastLocationLiveData.value?.longitude.toString()
-                ).collect {
-                    _listCafesData.value = it
-                }
-            }
+            val userId = fetchUserIdIfLoggedIn()
+            updateCafeListByLocation(userId)
         }
     }
 
     fun updateFavoriteCafes() {
         viewModelScope.launch {
-            val isLoggedIn = userRepository.isLoggedIn().first()
-            if (isLoggedIn) {
-                val user = userRepository.getUserInfo().first()
-                _listFavoritesData.value = cafeRepository.getListFavorites(user.id).first()
-            } else {
-                _listFavoritesData.value = cafeRepository.loadFavoriteCafes().first()
-            }
+            val userId = fetchUserIdIfLoggedIn()
+            updateFavoritesList(userId)
+        }
+    }
+
+    private suspend fun fetchUserIdIfLoggedIn(): Long? {
+        val isLoggedIn = false /* userRepository.isLoggedIn().first() */
+        return if (isLoggedIn) userRepository.getUserInfo().first().id else null
+    }
+
+    private suspend fun updateCafeListByLocation(userId: Long?) {
+        val latitude = _lastLocationLiveData.value?.latitude.toString()
+        val longitude = _lastLocationLiveData.value?.longitude.toString()
+
+        cafeRepository.getListCafes(userId, latitude, longitude).collect {
+            _listCafesData.value = it
+        }
+    }
+
+    private suspend fun updateFavoritesList(userId: Long?) {
+        if (userId != null) {
+            _listFavoritesData.value = cafeRepository.getListFavorites(userId).first()
+        } else {
+            _listFavoritesData.value = cafeRepository.loadFavoriteCafes().first()
         }
     }
 
