@@ -95,4 +95,10 @@
     <string name="edit">작성하기</string>
     <string name="sign_in_kor">로그인</string>
     <string name="sign_out_kor">로그아웃</string>
+
+
+    <string name="see_more_verified">공지사항</string>
+    <string name="see_more_headset">고객센터</string>
+    <string name="see_more_setting">앱 설정</string>
+    <string name="see_more_badge">약관 및 정책</string>
 </resources>
