@@ -30,16 +30,34 @@ interface CafeRepository {
         lastId: Long?
     ): Flow<Resource<CafeReviews>>
 
-    suspend fun postReview(userId: Long, cafeId: Long, score: Int, content: String): Flow<Resource<String>>
+    suspend fun postReview(
+        userId: Long,
+        cafeId: Long,
+        score: Int,
+        content: String
+    ): Flow<Resource<String>>
+
     suspend fun insertFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun insertFavoriteCafe(cafe: Cafe): Boolean
 
     suspend fun updateFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun loadFavoriteCafes(): Flow<Resource<FavoriteCafes>>
     suspend fun postFavoriteCafe(userId: Long, cafe: FavoriteCafe): Boolean
-
+    suspend fun postFavoriteCafe(userId: Long, cafe: Cafe): Boolean
+    suspend fun remoteDeleteFavoriteCafe(userId: Long, cafe: Cafe): Boolean
+    suspend fun remoteDeleteFavoriteCafe(userId: Long, cafe: FavoriteCafe): Boolean
+    suspend fun localDeleteFavoriteCafe(cafe: Cafe): Boolean
+    suspend fun localDeleteFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun insertRecentlyViewedCafe(cafe: Cafe): Boolean
 
     suspend fun updateRecentlyViewedCafe(cafe: Cafe): Boolean
     suspend fun loadRecentlyViewedCafes(): Flow<RecentlyViewedCafe>
+
+    suspend fun getCafeSearch(
+        cafeName: String,
+        longitude: String,
+        latitude: String,
+        sort: String = "distance",
+        limit: String = "0"
+    ): Flow<Resource<Cafes>>
 }

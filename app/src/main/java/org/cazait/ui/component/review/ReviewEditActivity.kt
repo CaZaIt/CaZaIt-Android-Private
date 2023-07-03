@@ -25,18 +25,31 @@ class ReviewEditActivity : BaseActivity<ActivityReviewEditBinding, ReviewEditVie
         } else {
             intent.getSerializableExtra("cafe") as Cafe
         } ?: return
-        binding.cafe = cafe
-        binding.activity = this
-        binding.viewModel = viewModel
-        binding.clTab.includedTvTitle.text = getString(R.string.edit_review)
+
+        setupCafe()
+        setupBackPressButton()
     }
 
     override fun initAfterBinding() {}
+
+    private fun setupCafe() {
+        binding.apply {
+            cafe = this@ReviewEditActivity.cafe
+            activity = this@ReviewEditActivity
+            viewModel = this@ReviewEditActivity.viewModel
+            clTab.includedTvTitle.text = getString(R.string.edit_review)
+        }
+    }
     fun sendReviewToServer() {
         binding.etReview.text?: return
-
         viewModel.sendReviewToServer(cafe.cafeId)
         finish()
+    }
+
+    private fun setupBackPressButton() {
+        binding.clTab.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     companion object {

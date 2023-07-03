@@ -1,27 +1,36 @@
-# CaZaIt-Android-Private
+<h1 align="center">
+  CaZaIt-Android-Private
+</h1>
+<p align="center">
+  카자잇 안드로이드 배포용 레포지토리
+</p>
 
-카자잇 안드로이드 배포용 레포지토리
-
+<p align="center">
 <img src="/README_images/CaZaIt2.gif" width="260" height="520"/>
+</p>
 
-## Features
+# Tech stack & Open-source libraries
 
-* DataStore
-* Hilt
-* ViewModel
-* DataBinding and LiveData
-* Repository and data source
-* Coroutine Flow API
-* OKHTTP
-* Retrofit
+- **Jetpack**
+  - Lifecycle
+  - DataStore
+  - ViewModel
+  - Navigation
+  - Room
+  - DataBinding, LiveData, StateFlow
+ 
 
-### Material View Pager Dots Indicator
+- **Dependency Injection**
+  - Hilt
+- Repository Pattern
 
-[Material View Pager Dots Indicator](https://github.com/tommybuonomo/dotsindicator)
 
-### Naver Maps
+- Glide
+- [Retrofit2 & OkHttp3](https://github.com/square/retrofit)
+- Coroutine Flow
+- [Material View Pager Dots Indicator](https://github.com/tommybuonomo/dotsindicator)
+- [Naver Maps](https://navermaps.github.io/android-map-sdk/guide-ko/)
 
-[네이버 지도 SDK](https://navermaps.github.io/android-map-sdk/guide-ko/)
 
 ## Modularization
                  +-----+

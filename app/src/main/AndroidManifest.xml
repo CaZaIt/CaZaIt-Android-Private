@@ -18,6 +18,9 @@
         android:theme="@style/Theme.CaZaIt"
         tools:targetApi="31">
         <activity
+            android:name=".ui.component.search.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.component.review.ReviewEditActivity"
             android:exported="false" />
 

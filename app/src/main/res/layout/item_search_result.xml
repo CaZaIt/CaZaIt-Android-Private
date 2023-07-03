@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="145dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/img_cafe_search"
+                    style="@style/ImageViewBoarder"
+                    android:layout_width="103dp"
+                    android:layout_height="103dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/rectangle_70"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_cafe_name_search"
+                    style="@style/TextValue_B"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="7dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/info_cafename"
+                    android:textColor="@color/main_black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/img_cafe_search"
+                    app:layout_constraintTop_toTopOf="@+id/img_cafe_search" />
+
+                <TextView
+                    android:id="@+id/txt_cafe_address_search"
+                    style="@style/TextValue_L"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="5dp"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:maxLines="2"
+                    android:text="@string/info_cafeadd"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_evaluation"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/txt_cafe_name_search"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_cafe_name_search" />
+
+
+                <TextView
+                    android:id="@+id/btn_evaluation"
+                    style="@style/TextValue_B"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/btn_ic_recently"
+                    android:gravity="center"
+                    android:textColor="@color/main_white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/img_cafe_search"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/txt_cafe_address_search" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

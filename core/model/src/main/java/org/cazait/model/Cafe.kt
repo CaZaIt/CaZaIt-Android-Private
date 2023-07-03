@@ -16,6 +16,7 @@ data class Cafe(
     val latitude: String? = null,
     val longitude: String? = null,
     val timestamp: Long,
+    val isFavorite: Boolean = false,
 ): Serializable
 
 data class RecentCafe(

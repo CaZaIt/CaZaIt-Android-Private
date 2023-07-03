@@ -4,7 +4,6 @@ import android.util.Log
 import org.cazait.network.NetworkConnectivity
 import org.cazait.network.api.AuthService
 import org.cazait.network.error.NETWORK_ERROR
-import org.cazait.network.error.NO_INTERNET_CONNECTION
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.SignInReq
 import org.cazait.network.model.dto.response.RefreshTokenRes
@@ -17,9 +16,9 @@ class AuthRemoteData @Inject constructor(
     private val networkConnectivity: NetworkConnectivity,
     private val authService: AuthService
 ) : AuthRemoteDataSource {
-    override suspend fun getRefreshToken(userId: Long, role: String, jwtToken: String, refreshToken: String): DataResponse<RefreshTokenRes> {
+    override suspend fun getRefreshToken(userId: Long, role: String, accessToken: String, refreshToken: String): DataResponse<RefreshTokenRes> {
         return when(val response = processCall {
-            authService.getRefreshToken(userId, role, jwtToken, refreshToken)
+            authService.getRefreshToken(userId, role, accessToken, refreshToken)
         }) {
             is RefreshTokenRes -> {
                 DataResponse.Success(response)

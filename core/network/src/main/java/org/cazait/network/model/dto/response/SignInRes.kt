@@ -18,8 +18,8 @@ data class SignInInfoDTO(
     val id: Long,
     @SerializedName("email")
     val email: String,
-    @SerializedName("jwtToken")
-    val jwtToken: String,
+    @SerializedName("accessToken")
+    val accessToken: String,
     @SerializedName("refreshToken")
     val refreshToken: String,
     @SerializedName("role")

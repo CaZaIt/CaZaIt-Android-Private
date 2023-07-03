@@ -81,6 +81,7 @@ fun CafeDTO.toCafe() = Cafe(
     latitude = latitude,
     longitude = longitude,
     timestamp = System.currentTimeMillis()
+    isFavorite = favorite,
 )
 
 fun FavoriteCafeDTO.toFavoriteCafe() = FavoriteCafe(
@@ -111,7 +112,7 @@ fun ReviewDTO.toCafeReviews() = CafeReviews(
 fun SignInInfoDTO.toSignInInfo() = SignInInfo(
     email = email,
     id = id,
-    jwtToken = jwtToken,
+    accessToken = accessToken,
     refreshToken = refreshToken,
     role = role,
 )

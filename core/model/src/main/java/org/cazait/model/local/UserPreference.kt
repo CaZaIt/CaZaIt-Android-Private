@@ -8,7 +8,7 @@ data class UserPreference(
     val id: Long,
     val email: String,
     val role: String,
-    val jwtToken: String,
+    val accessToken: String,
     val refreshToken: String,
 ) {
     companion object {
@@ -17,7 +17,7 @@ data class UserPreference(
             id = -99L,
             email = "",
             role = "",
-            jwtToken = "",
+            accessToken = "",
             refreshToken = "",
         )
     }
