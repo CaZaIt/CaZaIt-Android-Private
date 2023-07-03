@@ -97,6 +97,11 @@
     <string name="sign_in_kor">로그인</string>
     <string name="sign_out_kor">로그아웃</string>
 
+    <string name="see_more_verified">공지사항</string>
+    <string name="see_more_headset">고객센터</string>
+    <string name="see_more_setting">앱 설정</string>
+    <string name="see_more_badge">약관 및 정책</string>
+
     <!-- Cafe Search -->
     <string name="search_text1"><![CDATA["]]></string>
     <string name="search_text2"><![CDATA[" 검색 결과]]></string>

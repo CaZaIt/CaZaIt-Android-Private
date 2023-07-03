@@ -14,5 +14,6 @@ object Mapper {
         images = imageUrl,
         latitude = latitude,
         longitude = longitude,
+        timestamp = System.currentTimeMillis(),
     )
 }

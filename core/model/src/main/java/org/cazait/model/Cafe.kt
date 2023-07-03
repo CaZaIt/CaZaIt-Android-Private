@@ -15,5 +15,18 @@ data class Cafe(
     val images: List<String>,
     val latitude: String? = null,
     val longitude: String? = null,
+    val timestamp: Long,
     val isFavorite: Boolean = false,
 ): Serializable
+
+data class RecentCafe(
+    val cafeId: Long,
+    val name: String,
+    val address: String,
+    val distance: Int,
+    val status: CafeStatus = CafeStatus.NONE,
+    val images: List<String>,
+    val latitude: String? = null,
+    val longitude: String? = null,
+    val timestamp: Long,
+)

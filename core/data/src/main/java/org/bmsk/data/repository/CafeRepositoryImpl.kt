@@ -10,6 +10,7 @@ import org.bmsk.data.model.toCafeMenu
 import org.bmsk.data.model.toCafeReviews
 import org.bmsk.data.model.toFavoriteCafe
 import org.bmsk.data.model.toFavoriteCafeEntity
+import org.bmsk.data.model.toRecently
 import org.bmsk.data.model.toRecentlyViewedCafeEntity
 import org.cazait.database.dao.CafeDAO
 import org.cazait.database.dao.RecentlyViewedCafeDAO
@@ -19,6 +20,7 @@ import org.cazait.model.CafeReviews
 import org.cazait.model.Cafes
 import org.cazait.model.FavoriteCafe
 import org.cazait.model.FavoriteCafes
+import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.Resource
 import org.cazait.network.datasource.CafeInfoRemoteData
 import org.cazait.network.datasource.CafeListRemoteData
@@ -52,6 +54,7 @@ class CafeRepositoryImpl @Inject constructor(
             }
         }
     }
+
 
     override suspend fun getListCafes(
         userId: Long?,
@@ -242,10 +245,10 @@ class CafeRepositoryImpl @Inject constructor(
         return true
     }
 
-    override suspend fun loadRecentlyViewedCafes(): Flow<Long> {
+    override suspend fun loadRecentlyViewedCafes(): Flow<RecentlyViewedCafe> {
         return flow {
             recentlyViewedCafeDAO.selectAllRecentlyViewedCafes().first().forEach {
-                emit(it.cafeId)
+                emit(it.toRecently())
             }
         }
     }
