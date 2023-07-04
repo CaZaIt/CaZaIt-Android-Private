@@ -10,7 +10,7 @@ import org.cazait.R
 import org.cazait.databinding.FragmentMyPageBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.recentlycafe.RecentlyCafeFragment
-import org.cazait.ui.component.signin.SignInActivity
+import org.cazait.ui.component.signin.SignInFragment
 import org.cazait.utils.observe
 
 
@@ -39,6 +39,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
         findNavController().navigate(MyPageFragmentDirections.actionMyPageFragmentToRecentlyCafeFragment())
     }
 
+    private fun navigateToSignInFragment() {
+        findNavController().navigate(MyPageFragmentDirections.actionMyPageFragmentToSignInFragment())
+    }
+
     private fun setUpSignInButton() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -51,18 +55,12 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
                         }
                         false -> {
                             binding.btnSignIn.setOnClickListener {
-                                navigateToSignInActivity()
+                                navigateToSignInFragment()
                             }
                         }
                     }
                 }
             }
         }
-
-    }
-
-    private fun navigateToSignInActivity() {
-        val intent = SignInActivity.signInIntent(requireContext())
-        startActivity(intent)
     }
 }

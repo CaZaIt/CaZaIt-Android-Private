@@ -9,7 +9,7 @@
         android:id="@+id/cafeListFragment"
         android:name="org.cazait.ui.component.cafelist.CafeListFragment"
         android:label="CafeListFragment"
-        tools:layout="@layout/fragment_cafe_list"/>
+        tools:layout="@layout/fragment_cafe_list" />
     <fragment
         android:id="@+id/cafeMapFragment"
         android:name="org.cazait.ui.component.map.CafeMapFragment"
@@ -19,10 +19,13 @@
         android:id="@+id/myPageFragment"
         android:name="org.cazait.ui.component.mypage.MyPageFragment"
         android:label="MyPageFragment"
-        tools:layout="@layout/fragment_my_page" >
+        tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_myPageFragment_to_recentlyCafeFragment"
             app:destination="@id/recentlyCafeFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_signInFragment"
+            app:destination="@+id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeMoreFragment"
@@ -36,6 +39,15 @@
         tools:layout="@layout/fragment_recently_cafe">
         <action
             android:id="@+id/action_recentlyCafeFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="org.cazait.ui.component.signin.SignInFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_myPageFragment"
             app:destination="@id/myPageFragment" />
     </fragment>
 </navigation>
