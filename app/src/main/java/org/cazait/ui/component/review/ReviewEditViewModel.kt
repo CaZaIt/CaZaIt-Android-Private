@@ -35,7 +35,7 @@ class ReviewEditViewModel @Inject constructor(
             val content = reviewContentLiveData.value ?: return@launch
 
             Log.d("ReviewEditViewModel", "$userId, $score, $content")
-            cafeRepository.postReview(userId, cafeId, score.toInt(), content).first()
+            cafeRepository.postReviewAuth(userId, cafeId, score.toInt(), content).first()
         }
     }
 }

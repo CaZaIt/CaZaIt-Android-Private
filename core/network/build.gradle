@@ -35,12 +35,14 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':core:model')
+    implementation project(path: ':core:datastore')
+
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
 
     // Hilt Library
     implementation("com.google.dagger:hilt-android:$hiltVersion")
-    implementation project(path: ':core:model')
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     kapt("androidx.hilt:hilt-compiler:$hiltCompilerVersion")
 

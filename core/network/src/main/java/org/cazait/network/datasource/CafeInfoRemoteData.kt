@@ -2,6 +2,8 @@ package org.cazait.network.datasource
 
 import org.cazait.network.NetworkConnectivity
 import org.cazait.network.api.CafeService
+import org.cazait.network.di.Authenticated
+import org.cazait.network.di.Unauthenticated
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.error.NO_INTERNET_CONNECTION
 import org.cazait.network.model.dto.CafeDTO
@@ -19,7 +21,8 @@ import java.io.IOException
 import javax.inject.Inject
 
 class CafeInfoRemoteData @Inject constructor(
-    private val cafeService: CafeService,
+    @Unauthenticated private val cafeService: CafeService,
+    @Authenticated private val cafeServiceAuth: CafeService,
     private val networkConnectivity: NetworkConnectivity,
 ) : CafeInfoRemoteDataSource {
     override suspend fun getCafe(cafeId: Long): DataResponse<CafeResTemp> {
@@ -73,7 +76,7 @@ class CafeInfoRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postReview(
+    override suspend fun postReviewAuth(
         userId: Long,
         cafeId: Long,
         score: Int,
@@ -81,7 +84,7 @@ class CafeInfoRemoteData @Inject constructor(
     ): DataResponse<CafeReviewPostRes> {
         return when(val response = processCall {
             val req = CafeReviewPostReq(score, content)
-            cafeService.postReview(userId, cafeId, req)
+            cafeServiceAuth.postReviewAuth(userId, cafeId, req)
         }) {
             is CafeReviewPostRes -> {
                 DataResponse.Success(data = response)

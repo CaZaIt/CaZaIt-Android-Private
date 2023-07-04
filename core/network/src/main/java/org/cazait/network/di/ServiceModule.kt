@@ -16,25 +16,55 @@ object ServiceModule {
 
     @Provides
     @Singleton
+    @Unauthenticated
     fun providesCafeService(
-        retrofit: Retrofit
+        @Unauthenticated retrofit: Retrofit
     ): CafeService {
         return retrofit.create(CafeService::class.java)
     }
 
     @Provides
     @Singleton
+    @Unauthenticated
     fun providesUserService(
-        retrofit: Retrofit
+        @Unauthenticated retrofit: Retrofit
     ): UserService {
         return retrofit.create(UserService::class.java)
     }
 
     @Provides
     @Singleton
+    @Unauthenticated
     fun providesAuthService(
-        retrofit: Retrofit
+        @Unauthenticated retrofit: Retrofit
     ): AuthService {
         return retrofit.create(AuthService::class.java)
     }
+
+    @Provides
+    @Singleton
+    @Authenticated
+    fun providesCafeServiceAuth(
+        @Authenticated retrofit: Retrofit
+    ): CafeService {
+        return retrofit.create(CafeService::class.java)
+    }
+
+//    @Provides
+//    @Singleton
+//    @Authenticated
+//    fun providesUserServiceAuth(
+//        @Authenticated retrofit: Retrofit
+//    ): UserService {
+//        return retrofit.create(UserService::class.java)
+//    }
+//
+//    @Provides
+//    @Singleton
+//    @Authenticated
+//    fun providesAuthServiceAuth(
+//        @Authenticated retrofit: Retrofit
+//    ): AuthService {
+//        return retrofit.create(AuthService::class.java)
+//    }
 }

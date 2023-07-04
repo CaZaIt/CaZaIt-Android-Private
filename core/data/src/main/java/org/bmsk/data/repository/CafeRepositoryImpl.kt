@@ -146,14 +146,14 @@ class CafeRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun postReview(
+    override suspend fun postReviewAuth(
         userId: Long,
         cafeId: Long,
         score: Int,
         content: String
     ): Flow<Resource<String>> {
         return flow {
-            when (val response = cafeInfoRemoteData.postReview(userId, cafeId, score, content)) {
+            when (val response = cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
                 is DataResponse.Success -> {
                     val message: String =
                         response.data?.message ?: ""

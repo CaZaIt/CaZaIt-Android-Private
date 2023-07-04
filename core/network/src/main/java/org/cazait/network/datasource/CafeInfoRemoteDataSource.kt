@@ -1,9 +1,7 @@
 package org.cazait.network.datasource
 
-import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.response.CafeMenuRes
-import org.cazait.network.model.dto.response.CafeRes
 import org.cazait.network.model.dto.response.CafeResTemp
 import org.cazait.network.model.dto.response.CafeReviewPostRes
 import org.cazait.network.model.dto.response.CafeReviewRes
@@ -21,7 +19,7 @@ interface CafeInfoRemoteDataSource {
         lastId: Long?
     ): DataResponse<CafeReviewRes>
 
-    suspend fun postReview(
+    suspend fun postReviewAuth(
         userId: Long,
         cafeId: Long,
         score: Int,

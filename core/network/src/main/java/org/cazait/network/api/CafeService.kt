@@ -81,7 +81,7 @@ interface CafeService {
     ): Response<DeleteFavoriteCafeRes>
 
     @POST("/api/reviews/user/{userId}/cafe/{cafeId}")
-    suspend fun postReview(
+    suspend fun postReviewAuth(
         @Path("userId") userId: Long,
         @Path("cafeId") cafeId: Long,
         @Body reviewPostReq: CafeReviewPostReq,
