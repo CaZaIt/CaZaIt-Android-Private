@@ -80,7 +80,7 @@ fun CafeDTO.toCafe() = Cafe(
     images = cafesImages,
     latitude = latitude,
     longitude = longitude,
-    timestamp = System.currentTimeMillis()
+    timestamp = System.currentTimeMillis(),
     isFavorite = favorite,
 )
 

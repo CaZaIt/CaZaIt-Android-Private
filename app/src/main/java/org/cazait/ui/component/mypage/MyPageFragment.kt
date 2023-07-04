@@ -9,10 +9,6 @@ import kotlinx.coroutines.launch
 import org.cazait.R
 import org.cazait.databinding.FragmentMyPageBinding
 import org.cazait.ui.base.BaseFragment
-import org.cazait.ui.component.recentlycafe.RecentlyCafeFragment
-import org.cazait.ui.component.signin.SignInFragment
-import org.cazait.utils.observe
-
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
@@ -47,12 +43,13 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.signInStateFlow.collect { isLoggedIn ->
-                    when(isLoggedIn) {
+                    when (isLoggedIn) {
                         true -> {
                             binding.btnSignIn.setOnClickListener {
                                 viewModel.signOut()
                             }
                         }
+
                         false -> {
                             binding.btnSignIn.setOnClickListener {
                                 navigateToSignInFragment()
