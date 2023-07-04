@@ -1,8 +1,5 @@
 package org.cazait.ui.component.signin
 
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -24,16 +21,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         SignInViewModel::class.java,
         R.layout.fragment_sign_in,
     ) {
-    override fun onCreate(savedInstanceState: Bundle?) {
-//        installSplashScreen()
-        super.onCreate(savedInstanceState)
-    }
-
     override fun initAfterBinding() {
         observeViewModel()
     }
 
     override fun initView() {
+        viewModel.initViewModel()
         initSignUpBtn()
         initSignInBtn()
     }
@@ -47,7 +40,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
 
-    private fun handleSignInResult(status: Resource<SignInInfo>) {
+    private fun handleSignInResult(status: Resource<SignInInfo>?) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignin.toVisible()
@@ -57,7 +50,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             is Resource.Success -> status.data?.let {
                 binding.lottieSignin.pauseAnimation()
                 binding.lottieSignin.toGone()
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMyPageFragment())
+                findNavController().popBackStack()
             }
 
             is Resource.Error -> {
@@ -67,6 +60,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
                     viewModel.showToastMessage(it.message)
                 }
             }
+
+            null -> {}
         }
     }
 
@@ -85,14 +80,5 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun postSignIn() {
         viewModel.doSignIn(binding.etId.text.toString(), binding.etPassword.text.toString())
-    }
-
-    companion object {
-
-        fun signInIntent(
-            context: Context,
-        ): Intent {
-            return Intent(context, SignInFragment::class.java)
-        }
     }
 }

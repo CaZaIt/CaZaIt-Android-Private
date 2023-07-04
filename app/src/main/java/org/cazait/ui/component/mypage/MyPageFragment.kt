@@ -17,7 +17,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
 ) {
     override fun initView() {
         binding.fragment = this
-        binding.viewModel = viewModel
+        binding.viewModel = this.viewModel
 
         setUpSignInButton()
     }
@@ -40,23 +40,18 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
     }
 
     private fun setUpSignInButton() {
+        binding.btnSignIn.setOnClickListener {
+            val isLoggedIn = viewModel.signInStateFlow.value
+            if (isLoggedIn) {
+                viewModel.signOut()
+            } else {
+                navigateToSignInFragment()
+            }
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.signInStateFlow.collect { isLoggedIn ->
-                    when (isLoggedIn) {
-                        true -> {
-                            binding.btnSignIn.setOnClickListener {
-                                viewModel.signOut()
-                            }
-                        }
-
-                        false -> {
-                            binding.btnSignIn.setOnClickListener {
-                                navigateToSignInFragment()
-                            }
-                        }
-                    }
-                }
+                viewModel.signInStateFlow.collect {}
             }
         }
     }
