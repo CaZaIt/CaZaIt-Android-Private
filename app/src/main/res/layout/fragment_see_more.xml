@@ -44,7 +44,7 @@
             android:layout_marginEnd="20dp">
 
             <View
-                android:id="@+id/view_2"
+                android:id="@+id/view_1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/ic_verified_user_final"
-                app:layout_constraintTop_toTopOf="@id/view_2"
+                app:layout_constraintTop_toTopOf="@id/view_1"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="10dp"/>
 
@@ -77,7 +77,7 @@
                 app:layout_constraintTop_toTopOf="@+id/img_verified" />
 
             <View
-                android:id="@+id/view_3"
+                android:id="@+id/view_2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/ic_settings_final"
-                app:layout_constraintTop_toTopOf="@id/view_3"
+                app:layout_constraintTop_toTopOf="@id/view_2"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="10dp"/>
 
@@ -111,7 +111,7 @@
                 app:layout_constraintTop_toTopOf="@+id/img_setting" />
 
             <View
-                android:id="@+id/view_4"
+                android:id="@+id/view_3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/ic_headset_mic_final"
-                app:layout_constraintTop_toTopOf="@id/view_4"
+                app:layout_constraintTop_toTopOf="@id/view_3"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="10dp"/>
 
@@ -145,7 +145,7 @@
                 app:layout_constraintTop_toTopOf="@+id/img_headset" />
 
             <View
-                android:id="@+id/view_5"
+                android:id="@+id/view_4"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/ic_badge_final"
-                app:layout_constraintTop_toTopOf="@id/view_5"
+                app:layout_constraintTop_toTopOf="@id/view_4"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="10dp"/>
 
@@ -179,7 +179,7 @@
                 app:layout_constraintTop_toTopOf="@+id/img_badge" />
 
             <View
-                android:id="@+id/view_6"
+                android:id="@+id/view_5"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"

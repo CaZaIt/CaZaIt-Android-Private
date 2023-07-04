@@ -43,20 +43,12 @@
             android:textColor="@color/main_black"
             android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/txt_cafe_distance"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_cafe"
             app:layout_constraintTop_toTopOf="@+id/img_cafe"
             tools:text="카자잇카페카자잇카페카자잇카페" />
 
-        <TextView
-            android:id="@+id/txt_cafe_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{item.distance + `m`}"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_cafe_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="300m" />
+
 
         <TextView
             android:id="@+id/txt_cafe_address"
