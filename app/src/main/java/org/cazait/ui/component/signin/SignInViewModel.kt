@@ -20,8 +20,8 @@ class SignInViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _signInProcess = MutableLiveData<Resource<SignInInfo>>()
-    val signInProcess: LiveData<Resource<SignInInfo>>
+    private val _signInProcess = MutableLiveData<Resource<SignInInfo>?>()
+    val signInProcess: LiveData<Resource<SignInInfo>?>
         get() = _signInProcess
 
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
@@ -38,5 +38,9 @@ class SignInViewModel @Inject constructor(
     fun showToastMessage(errorMessage: String?) {
         if (errorMessage == null) return
         _showToast.value = SingleEvent(errorMessage)
+    }
+
+    fun initViewModel() {
+        _signInProcess.value = null
     }
 }
