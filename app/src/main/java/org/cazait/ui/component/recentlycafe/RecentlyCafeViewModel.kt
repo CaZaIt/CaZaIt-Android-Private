@@ -26,23 +26,14 @@ class RecentlyCafeViewModel @Inject constructor(
         viewModelScope.launch {
             val cafeList = mutableListOf<Cafe>()
             cafeRepository.loadRecentlyViewedCafes().collect { recentlyViewedCafe ->
-                // 일단 id만이 아니라 timestamp값도 가져오도록 만들어
-                // HashMap<id, timestamp>
-                //Log.e("id timestamp",it.toString())
-                val hashMap = mapOf<Long, Long>()
-                hashMap.toSortedMap().keys
                 val res = cafeRepository.getCafeById(recentlyViewedCafe.cafeId).first()
                 if (res is Resource.Success) {
                     res.data?.let { cafe ->
                         val cafeWithTimestamp = cafe.copy(timestamp = recentlyViewedCafe.timestamp)
-                        //val recentCafe = cafe.toRecentCafe(recentlyViewedCafe.timestamp)
                         cafeList.add(cafeWithTimestamp)
-                        Log.e("RecentCafe", cafe.toString())
                     }
-
                 }
             }
-            cafeList.sortByDescending { it.timestamp }
             _recentlyViewedCafes.value = cafeList
         }
     }

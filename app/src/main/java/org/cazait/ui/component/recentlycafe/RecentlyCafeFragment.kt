@@ -41,9 +41,7 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
     }
 
     private fun handleRecentlyViewedCafes(cafes: List<Cafe>) {
-        // verticalAdapter.submitList(cafes)
-        val sortedCafes = cafes.sortedByDescending { it.timestamp } // 시간순으로 정렬
-        Log.e("RecentCafe", cafes.toString())
+        val sortedCafes = cafes.sortedByDescending { it.timestamp }
         verticalAdapter.submitList(sortedCafes)
     }
 
@@ -56,8 +54,3 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
         startActivity(intent)
     }
 }
-/*
-timestamp=1688008150267
-timestamp=1688008150241
-timestamp=1688008150142
- */
