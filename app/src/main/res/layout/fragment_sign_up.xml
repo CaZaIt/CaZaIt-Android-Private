@@ -7,14 +7,14 @@
 
         <variable
             name="back"
-            type="org.cazait.ui.component.signup.SignUpActivity" />
+            type="org.cazait.ui.component.signup.SignUpFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/login_back"
-        tools:context=".ui.component.signin.SignInActivity">
+        tools:context=".ui.component.signup.SignUpFragment">
 
         <View
             android:id="@+id/view_sign_up_divide"

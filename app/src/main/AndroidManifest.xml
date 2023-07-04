@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.component.signup.SignUpActivity"
+            android:name=".ui.component.signup.SignUpFragment"
             android:exported="false" />
         <activity
             android:name=".ui.component.signin.SignInActivity"

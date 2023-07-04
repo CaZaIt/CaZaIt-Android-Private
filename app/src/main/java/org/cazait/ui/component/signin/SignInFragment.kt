@@ -9,7 +9,6 @@ import org.cazait.databinding.FragmentSignInBinding
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
 import org.cazait.ui.base.BaseFragment
-import org.cazait.ui.component.signup.SignUpActivity
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
 import org.cazait.utils.showToast
@@ -65,10 +64,13 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         }
     }
 
+    private fun navigateToSignUpFragment(){
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
+    }
+
     private fun initSignUpBtn() {
         binding.tvSignup.setOnClickListener {
-            val signUpIntent = SignUpActivity.signUpIntent(requireContext())
-            startActivity(signUpIntent)
+            navigateToSignUpFragment()
         }
     }
 

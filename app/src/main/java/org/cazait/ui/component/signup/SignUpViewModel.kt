@@ -19,16 +19,16 @@ class SignUpViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
 
-    private val _signUpProcess = MutableLiveData<Resource<SignUpInfo>>()
-    val signUpProcess: LiveData<Resource<SignUpInfo>>
+    private val _signUpProcess = MutableLiveData<Resource<SignUpInfo>?>()
+    val signUpProcess: LiveData<Resource<SignUpInfo>?>
         get() = _signUpProcess
 
-    private val _emailDupProcess = MutableLiveData<Resource<EmailDup>>()
-    val emailDupProcess: LiveData<Resource<EmailDup>>
+    private val _emailDupProcess = MutableLiveData<Resource<EmailDup>?>()
+    val emailDupProcess: LiveData<Resource<EmailDup>?>
         get() = _emailDupProcess
 
-    private val _nickDupProcess = MutableLiveData<Resource<NicknameDup>>()
-    val nickDupProcess: LiveData<Resource<NicknameDup>>
+    private val _nickDupProcess = MutableLiveData<Resource<NicknameDup>?>()
+    val nickDupProcess: LiveData<Resource<NicknameDup>?>
         get() = _nickDupProcess
 
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
@@ -61,6 +61,12 @@ class SignUpViewModel @Inject constructor(
                 _nickDupProcess.value = it
             }
         }
+    }
+
+    fun initViewModel() {
+        _signUpProcess.value = null
+        _emailDupProcess.value = null
+        _nickDupProcess.value = null
     }
 
     fun showToastMessage(errorMessage: String?) {
