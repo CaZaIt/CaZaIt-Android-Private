@@ -29,12 +29,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     override fun initAfterBinding() {
     }
 
+
     private fun initBottomNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.bnvMenu.setupWithNavController(navHostFragment.navController)
         navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.signInFragment || destination.id == R.id.signupFragment){
+            if(destination.id == R.id.signInFragment || destination.id == R.id.signupFragment || destination.id == R.id.recentlyCafeFragment){
                 binding.bnvMenu.visibility = View.GONE
             }
             else{
@@ -42,5 +43,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
             }
         }
         binding.bnvMenu.itemIconTintList = null
+
     }
+
 }
