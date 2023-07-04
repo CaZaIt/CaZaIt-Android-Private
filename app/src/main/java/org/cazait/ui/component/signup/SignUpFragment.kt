@@ -4,15 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.ActivitySignUpBinding
+import org.cazait.databinding.FragmentSignUpBinding
 import org.cazait.model.EmailDup
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
-import org.cazait.ui.base.BaseActivity
+import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
 import org.cazait.utils.showToast
@@ -20,10 +21,10 @@ import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
-class SignUpActivity :
-    BaseActivity<ActivitySignUpBinding, SignUpViewModel>(
+class SignUpFragment :
+    BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         SignUpViewModel::class.java,
-        R.layout.activity_sign_up,
+        R.layout.fragment_sign_up,
     ) {
 
     private var nickNameFlag = false
@@ -73,6 +74,7 @@ class SignUpActivity :
     }
 
     override fun initView() {
+        viewModel.initViewModel()
         initEmailBtn()
         initNicknameBtn()
         initSignUpBtn()
@@ -87,7 +89,7 @@ class SignUpActivity :
         observeToast(viewModel.showToast)
     }
 
-    private fun handleSignUpResult(status: Resource<SignUpInfo>) {
+    private fun handleSignUpResult(status: Resource<SignUpInfo>?) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignup.toVisible()
@@ -97,7 +99,7 @@ class SignUpActivity :
             is Resource.Success -> status.data.let {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
-                finish()
+                findNavController().popBackStack()
             }
 
             is Resource.Error -> {
@@ -105,10 +107,12 @@ class SignUpActivity :
                 binding.lottieSignup.toGone()
                 viewModel.showToastMessage(status.message)
             }
+
+            null -> {}
         }
     }
 
-    private fun handleEmailDupResult(status: Resource<EmailDup>) {
+    private fun handleEmailDupResult(status: Resource<EmailDup>?) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignup.toVisible()
@@ -125,12 +129,13 @@ class SignUpActivity :
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
                 Log.e("SignUpActivity", "${status.message}")
-                // viewModel.showToastMessage(status.message)
             }
+
+            null -> {}
         }
     }
 
-    private fun handleNickDupResult(status: Resource<NicknameDup>) {
+    private fun handleNickDupResult(status: Resource<NicknameDup>?) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignup.toVisible()
@@ -148,6 +153,8 @@ class SignUpActivity :
                 binding.lottieSignup.toGone()
                 viewModel.showToastMessage(status.message)
             }
+
+            null -> {}
         }
     }
 
@@ -197,7 +204,7 @@ class SignUpActivity :
 
     private fun initBackBtn() {
         binding.ivSignUpArrowBack.setOnClickListener {
-            finish()
+            findNavController().popBackStack()
         }
     }
 
@@ -345,7 +352,7 @@ class SignUpActivity :
         fun signUpIntent(
             context: Context,
         ): Intent {
-            return Intent(context, SignUpActivity::class.java)
+            return Intent(context, SignUpFragment::class.java)
         }
     }
 }
