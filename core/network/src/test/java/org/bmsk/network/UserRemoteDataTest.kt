@@ -2,7 +2,7 @@ package org.bmsk.network
 
 import kotlinx.coroutines.runBlocking
 import org.cazait.network.NetworkConnectivity
-import org.cazait.network.api.UserService
+import org.cazait.network.api.unauth.UserService
 import org.cazait.network.datasource.UserRemoteData
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.IsEmailDupReq

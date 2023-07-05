@@ -1,4 +1,4 @@
-package org.cazait.network.api
+package org.cazait.network.api.auth
 
 import org.cazait.network.model.dto.request.CafeReviewPostReq
 import org.cazait.network.model.dto.response.CafeReviewPostRes

@@ -4,10 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.cazait.network.api.AuthService
-import org.cazait.network.api.AuthedService
-import org.cazait.network.api.CafeService
-import org.cazait.network.api.UserService
+import org.cazait.network.api.unauth.AuthService
+import org.cazait.network.api.auth.AuthedService
+import org.cazait.network.api.unauth.CafeService
+import org.cazait.network.api.unauth.UserService
 import retrofit2.Retrofit
 import javax.inject.Singleton
 

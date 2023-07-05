@@ -2,7 +2,7 @@ package org.cazait.network.datasource
 
 import android.util.Log
 import org.cazait.network.NetworkConnectivity
-import org.cazait.network.api.AuthService
+import org.cazait.network.api.unauth.AuthService
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.SignInReq

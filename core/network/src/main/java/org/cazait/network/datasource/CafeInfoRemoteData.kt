@@ -1,8 +1,8 @@
 package org.cazait.network.datasource
 
 import org.cazait.network.NetworkConnectivity
-import org.cazait.network.api.CafeService
-import org.cazait.network.api.AuthedService
+import org.cazait.network.api.unauth.CafeService
+import org.cazait.network.api.auth.AuthedService
 import org.cazait.network.di.Authenticated
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
