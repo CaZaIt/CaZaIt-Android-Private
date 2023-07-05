@@ -35,6 +35,9 @@ class CafeInfoViewModel @Inject constructor(
     val listReviewData: LiveData<Resource<CafeReviews>>
         get() = _listReviewData
 
+    private val _signInStateFlow = MutableStateFlow(false)
+    val signInStateFlow = _signInStateFlow.asStateFlow()
+
     fun initViewModel(cafe: Cafe, isFavorite: Boolean) {
         this.cafe = cafe
         this._isFavoriteCafe.value = isFavorite
@@ -86,6 +89,12 @@ class CafeInfoViewModel @Inject constructor(
                 cafeRepository.localDeleteFavoriteCafe(currentCafe)
             }
             _isFavoriteCafe.value = false
+        }
+    }
+
+    fun updateSignInState() {
+        viewModelScope.launch {
+            _signInStateFlow.value = userRepository.isLoggedIn().first()
         }
     }
 

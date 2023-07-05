@@ -1,4 +1,4 @@
-package org.cazait.network.api
+package org.cazait.network.api.unauth
 
 import org.cazait.network.model.dto.request.CafeReviewPostReq
 import org.cazait.network.model.dto.response.CafeId
@@ -80,12 +80,12 @@ interface CafeService {
         @Path("cafeId") cafeId: Long,
     ): Response<DeleteFavoriteCafeRes>
 
-    @POST("/api/reviews/user/{userId}/cafe/{cafeId}")
-    suspend fun postReview(
-        @Path("userId") userId: Long,
-        @Path("cafeId") cafeId: Long,
-        @Body reviewPostReq: CafeReviewPostReq,
-    ): Response<CafeReviewPostRes>
+//    @POST("/api/reviews/user/{userId}/cafe/{cafeId}")
+//    suspend fun postReviewAuth(
+//        @Path("userId") userId: Long,
+//        @Path("cafeId") cafeId: Long,
+//        @Body reviewPostReq: CafeReviewPostReq,
+//    ): Response<CafeReviewPostRes>
 
     @GET("/api/cafes/name/{cafeName}")
     suspend fun getCafeSearch(

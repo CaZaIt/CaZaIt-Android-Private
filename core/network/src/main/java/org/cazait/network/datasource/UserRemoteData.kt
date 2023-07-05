@@ -9,8 +9,7 @@ import org.cazait.network.model.dto.response.IsNicknameDupRes
 import org.cazait.network.model.dto.response.SignUpRes
 import org.cazait.network.NetworkConnectivity
 import org.cazait.network.error.NETWORK_ERROR
-import org.cazait.network.error.NO_INTERNET_CONNECTION
-import org.cazait.network.api.UserService
+import org.cazait.network.api.unauth.UserService
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject

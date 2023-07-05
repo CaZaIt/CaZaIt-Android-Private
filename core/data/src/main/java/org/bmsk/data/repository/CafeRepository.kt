@@ -30,7 +30,7 @@ interface CafeRepository {
         lastId: Long?
     ): Flow<Resource<CafeReviews>>
 
-    suspend fun postReview(
+    suspend fun postReviewAuth(
         userId: Long,
         cafeId: Long,
         score: Int,

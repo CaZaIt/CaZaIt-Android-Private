@@ -1,9 +1,8 @@
 package org.cazait.network.datasource
 
 import org.cazait.network.NetworkConnectivity
-import org.cazait.network.api.CafeService
+import org.cazait.network.api.unauth.CafeService
 import org.cazait.network.error.NETWORK_ERROR
-import org.cazait.network.error.NO_INTERNET_CONNECTION
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.ListCafesReq
 import org.cazait.network.model.dto.response.ListCafesRes

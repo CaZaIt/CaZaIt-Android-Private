@@ -1,4 +1,4 @@
-package org.cazait.network.api
+package org.cazait.network.api.unauth
 
 import org.cazait.network.model.dto.request.IsNicknameDupReq
 import org.cazait.network.model.dto.request.SignUpReq

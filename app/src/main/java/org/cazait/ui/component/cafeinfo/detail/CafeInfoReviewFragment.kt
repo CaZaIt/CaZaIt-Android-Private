@@ -1,7 +1,7 @@
 package org.cazait.ui.component.cafeinfo.detail
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +29,11 @@ class CafeInfoReviewFragment(
     private lateinit var binding: FragmentCafeInfoReviewBinding
     private lateinit var reviewAdapter: CafeInfoReviewAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.updateSignInState()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,9 +49,18 @@ class CafeInfoReviewFragment(
         initAdapter()
         observeViewModel()
         binding.fabEditReview.setOnClickListener {
-            // TODO 여기서 만일 로그인하지 않았다면 "로그인이 필요한 서비스입니다"를 사용자에게 보여준다.
-            val intent = ReviewEditActivity.reviewIntent(requireContext(), cafe)
-            startActivity(intent)
+            val isLoggedIn = viewModel.signInStateFlow.value
+            if (isLoggedIn) {
+                val intent = ReviewEditActivity.reviewIntent(requireContext(), cafe)
+                startActivity(intent)
+            } else {
+                AlertDialog.Builder(requireContext())
+                    .setMessage(resources.getString(R.string.need_login))
+                    .setPositiveButton("확인") { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
         }
     }
 
