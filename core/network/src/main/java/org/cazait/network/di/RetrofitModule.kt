@@ -24,10 +24,6 @@ import javax.inject.Singleton
 @Retention(AnnotationRetention.BINARY)
 annotation class Authenticated
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class Unauthenticated
-
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
@@ -60,7 +56,6 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    @Unauthenticated
     fun providesHeaderInterceptor(): Interceptor {
         return Interceptor { chain ->
             val original = chain.request()
@@ -75,7 +70,6 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    @Unauthenticated
     fun providesOkHttpClient(
         logger: HttpLoggingInterceptor,
         headerInterceptor: Interceptor,
@@ -91,7 +85,6 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    @Unauthenticated
     fun providesRetrofit(
         client: OkHttpClient.Builder,
         gsonConverterFactory: GsonConverterFactory,
