@@ -15,7 +15,7 @@ data class RefreshTokenRes(
 
 data class RefreshTokenDTO(
     @SerializedName("id")
-    val id: Long,
+    val id: String,
     @SerializedName("email")
     val email: String,
     @SerializedName("jwtToken")

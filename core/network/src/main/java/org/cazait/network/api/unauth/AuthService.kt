@@ -14,15 +14,21 @@ import retrofit2.http.Query
 interface AuthService {
     @POST("/api/auths/log-in")
     suspend fun postSignIn(
-        @Query("role") role: String = "user",
-        @Body signInReq: SignInReq,
+        @Query("role")
+        role: String = "user",
+        @Body
+        signInReq: SignInReq,
     ): Response<SignInRes>
 
     @GET("api/auths/refresh/{userIdx}")
     suspend fun getRefreshToken(
-        @Path("userId") userId: Long,
-        @Query("role") role: String = "user",
-        @Header("Authorization") jwtToken: String,
-        @Header("REFRESH-TOKEN") refreshToken: String,
+        @Path("userId")
+        userId: String,
+        @Query("role")
+        role: String = "user",
+        @Header("Authorization")
+        jwtToken: String,
+        @Header("REFRESH-TOKEN")
+        refreshToken: String,
     ): Response<RefreshTokenRes>
 }

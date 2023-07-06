@@ -73,7 +73,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     private fun emptyInfo() = SignInInfo(
         email = "",
-        id = 0L,
+        id = "",
         accessToken = "",
         refreshToken = "",
         role = ""

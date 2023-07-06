@@ -13,9 +13,9 @@ import org.cazait.model.Resource
 
 interface CafeRepository {
     suspend fun getCafeById(cafeId: Long): Flow<Resource<Cafe>>
-    suspend fun getListFavorites(userId: Long): Flow<Resource<FavoriteCafes>>
+    suspend fun getListFavorites(userId: String): Flow<Resource<FavoriteCafes>>
     suspend fun getListCafes(
-        userId: Long?,
+        userId: String?,
         latitude: String,
         longitude: String,
         sort: String = "distance",
@@ -31,7 +31,7 @@ interface CafeRepository {
     ): Flow<Resource<CafeReviews>>
 
     suspend fun postReviewAuth(
-        userId: Long,
+        userId: String,
         cafeId: Long,
         score: Int,
         content: String
@@ -42,10 +42,10 @@ interface CafeRepository {
 
     suspend fun updateFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun loadFavoriteCafes(): Flow<Resource<FavoriteCafes>>
-    suspend fun postFavoriteCafe(userId: Long, cafe: FavoriteCafe): Boolean
-    suspend fun postFavoriteCafe(userId: Long, cafe: Cafe): Boolean
-    suspend fun remoteDeleteFavoriteCafe(userId: Long, cafe: Cafe): Boolean
-    suspend fun remoteDeleteFavoriteCafe(userId: Long, cafe: FavoriteCafe): Boolean
+    suspend fun postFavoriteCafe(userId: String, cafe: FavoriteCafe): Boolean
+    suspend fun postFavoriteCafe(userId: String, cafe: Cafe): Boolean
+    suspend fun remoteDeleteFavoriteCafe(userId: String, cafe: Cafe): Boolean
+    suspend fun remoteDeleteFavoriteCafe(userId: String, cafe: FavoriteCafe): Boolean
     suspend fun localDeleteFavoriteCafe(cafe: Cafe): Boolean
     suspend fun localDeleteFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun insertRecentlyViewedCafe(cafe: Cafe): Boolean

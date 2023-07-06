@@ -8,7 +8,7 @@ import org.cazait.network.model.dto.response.SignInRes
 interface AuthRemoteDataSource {
     suspend fun postSignIn(body: SignInReq): DataResponse<SignInRes>
     suspend fun getRefreshToken(
-        userId: Long,
+        userId: String,
         role: String,
         jwtToken: String,
         refreshToken: String

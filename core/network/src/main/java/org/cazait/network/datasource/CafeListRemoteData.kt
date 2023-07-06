@@ -17,7 +17,7 @@ class CafeListRemoteData @Inject constructor(
     private val networkConnectivity: NetworkConnectivity,
 ) : CafeListRemoteDataSource {
     override suspend fun getListCafes(
-        userId: Long,
+        userId: String,
         query: ListCafesReq
     ): DataResponse<ListCafesRes> {
         return when (val response = processCall {
@@ -59,13 +59,13 @@ class CafeListRemoteData @Inject constructor(
     }
 
     override suspend fun postFavoriteCafe(
-        userId: Long,
+        userId: String,
         cafeId: Long
     ): DataResponse<PostFavoriteCafeRes> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getListFavorites(userId: Long): DataResponse<ListFavoritesRes> {
+    override suspend fun getListFavorites(userId: String): DataResponse<ListFavoritesRes> {
         return when (val response = processCall {
             cafeService.getListFavorites(userId)
         }) {

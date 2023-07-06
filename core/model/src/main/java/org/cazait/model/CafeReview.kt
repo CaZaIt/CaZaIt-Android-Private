@@ -7,7 +7,7 @@ data class CafeReviews(
 )
 
 data class CafeReview(
-    val userId: Long,
+    val userId: String,
     val cafeId: Long,
     val score: Int,
     val content: String

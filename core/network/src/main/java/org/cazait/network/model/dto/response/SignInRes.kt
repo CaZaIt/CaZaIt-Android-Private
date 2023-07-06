@@ -15,7 +15,7 @@ data class SignInRes(
 
 data class SignInInfoDTO(
     @SerializedName("id")
-    val id: Long,
+    val id: String,
     @SerializedName("email")
     val email: String,
     @SerializedName("accessToken")

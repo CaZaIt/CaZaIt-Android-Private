@@ -22,7 +22,7 @@ class UserPreferenceRepository @Inject constructor(
 
     suspend fun updateUserPreference(
         isLoggedIn: Boolean,
-        id: Long,
+        id: String,
         email: String,
         role: String,
         accessToken: String,

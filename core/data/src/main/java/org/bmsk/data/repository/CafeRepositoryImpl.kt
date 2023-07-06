@@ -57,7 +57,7 @@ class CafeRepositoryImpl @Inject constructor(
 
 
     override suspend fun getListCafes(
-        userId: Long?,
+        userId: String?,
         latitude: String,
         longitude: String,
         sort: String,
@@ -87,7 +87,7 @@ class CafeRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun getListFavorites(userId: Long): Flow<Resource<FavoriteCafes>> {
+    override suspend fun getListFavorites(userId: String): Flow<Resource<FavoriteCafes>> {
         return flow {
             when (val response = cafeListRemoteData.getListFavorites(userId)) {
                 is DataResponse.Success -> {
@@ -147,7 +147,7 @@ class CafeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postReviewAuth(
-        userId: Long,
+        userId: String,
         cafeId: Long,
         score: Int,
         content: String
@@ -201,24 +201,24 @@ class CafeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postFavoriteCafe(
-        userId: Long,
+        userId: String,
         cafe: FavoriteCafe
     ): Boolean {
         return cafeInfoRemoteData.postFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
     }
 
     override suspend fun postFavoriteCafe(
-        userId: Long,
+        userId: String,
         cafe: Cafe
     ): Boolean {
         return cafeInfoRemoteData.postFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
     }
 
-    override suspend fun remoteDeleteFavoriteCafe(userId: Long, cafe: Cafe): Boolean {
+    override suspend fun remoteDeleteFavoriteCafe(userId: String, cafe: Cafe): Boolean {
         return cafeInfoRemoteData.deleteFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
     }
 
-    override suspend fun remoteDeleteFavoriteCafe(userId: Long, cafe: FavoriteCafe): Boolean {
+    override suspend fun remoteDeleteFavoriteCafe(userId: String, cafe: FavoriteCafe): Boolean {
         return cafeInfoRemoteData.deleteFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
     }
 
