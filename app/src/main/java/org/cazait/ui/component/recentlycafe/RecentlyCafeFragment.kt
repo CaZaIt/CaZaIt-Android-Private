@@ -32,6 +32,11 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
         viewModel.fetchRecentlyViewedCafes()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("RecentlyCafeFragment", "onDestroy called")
+    }
+
     override fun initAfterBinding() {
 
     }

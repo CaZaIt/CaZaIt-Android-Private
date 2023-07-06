@@ -22,7 +22,9 @@
         tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_myPageFragment_to_recentlyCafeFragment"
-            app:destination="@id/recentlyCafeFragment" />
+            app:destination="@id/recentlyCafeFragment"
+            app:popUpTo="@id/myPageFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_myPageFragment_to_signInFragment"
             app:destination="@+id/signInFragment" />
