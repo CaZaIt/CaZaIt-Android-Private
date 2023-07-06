@@ -10,7 +10,7 @@ import retrofit2.http.Path
 interface AuthedService {
     @POST("/api/reviews/user/{userId}/cafe/{cafeId}")
     suspend fun postReviewAuth(
-        @Path("userId") userId: Long,
+        @Path("userId") userId: String,
         @Path("cafeId") cafeId: Long,
         @Body reviewPostReq: CafeReviewPostReq,
     ): Response<CafeReviewPostRes>

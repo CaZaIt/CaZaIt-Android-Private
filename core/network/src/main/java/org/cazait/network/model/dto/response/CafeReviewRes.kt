@@ -33,7 +33,7 @@ data class ReviewPostDTO(
     @SerializedName("cafeId")
     val cafeId: Long,
     @SerializedName("userId")
-    val userId: Long,
+    val userId: String,
     @SerializedName("score")
     val score: Int,
     @SerializedName("content")

@@ -62,12 +62,12 @@ class CafeListViewModel @Inject constructor(
         }
     }
 
-    private suspend fun fetchUserIdIfLoggedIn(): Long? {
+    private suspend fun fetchUserIdIfLoggedIn(): String? {
         val isLoggedIn = false /* userRepository.isLoggedIn().first() */
         return if (isLoggedIn) userRepository.getUserInfo().first().id else null
     }
 
-    private suspend fun updateCafeListByLocation(userId: Long?) {
+    private suspend fun updateCafeListByLocation(userId: String?) {
         val latitude = _lastLocationLiveData.value?.latitude.toString()
         val longitude = _lastLocationLiveData.value?.longitude.toString()
 
@@ -76,7 +76,7 @@ class CafeListViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateFavoritesList(userId: Long?) {
+    private suspend fun updateFavoritesList(userId: String?) {
         if (userId != null) {
             _listFavoritesData.value = cafeRepository.getListFavorites(userId).first()
         } else {

@@ -74,7 +74,7 @@ class CafeInfoRemoteData @Inject constructor(
     }
 
     override suspend fun postReviewAuth(
-        userId: Long,
+        userId: String,
         cafeId: Long,
         score: Int,
         content: String
@@ -94,7 +94,7 @@ class CafeInfoRemoteData @Inject constructor(
     }
 
     override suspend fun postFavoriteCafe(
-        userId: Long,
+        userId: String,
         cafeId: Long
     ): DataResponse<PostFavoriteCafeRes> {
         return when (val response = processCall {
@@ -114,7 +114,7 @@ class CafeInfoRemoteData @Inject constructor(
     }
 
     override suspend fun deleteFavoriteCafe(
-        userId: Long,
+        userId: String,
         cafeId: Long,
     ): DataResponse<DeleteFavoriteCafeRes> {
         return when (val response = processCall {
