@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserPreference(
     val isLoggedIn: Boolean,
-    val id: Long,
+    val id: String,
     val email: String,
     val role: String,
     val accessToken: String,
@@ -14,7 +14,7 @@ data class UserPreference(
     companion object {
         fun getDefaultInstance() = UserPreference(
             isLoggedIn = false,
-            id = -99L,
+            id = "",
             email = "",
             role = "",
             accessToken = "",
