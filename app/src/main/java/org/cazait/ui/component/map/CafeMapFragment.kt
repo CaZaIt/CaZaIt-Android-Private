@@ -1,6 +1,7 @@
 package org.cazait.ui.component.map
 
 import android.util.Log
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
@@ -18,11 +19,8 @@ import org.cazait.model.Cafe
 import org.cazait.model.Cafes
 import org.cazait.model.Resource
 import org.cazait.ui.base.BaseFragment
-import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.ui.component.cafeinfo.CafeInfoDialogFragment
 import org.cazait.utils.observe
-import org.cazait.utils.toGone
-import org.cazait.utils.toVisible
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -132,10 +130,6 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         showMessage(getString(R.string.guide_error_default))
     }
 
-    private fun onCancelDialog() {
-        lastClickedMarker?.icon = OverlayImage.fromResource(R.drawable.ic_marker)
-    }
-
     private fun handleMarkerClick(marker: Marker) {
         lastClickedMarker?.icon = OverlayImage.fromResource(R.drawable.ic_marker)
         marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_clicked)
@@ -145,11 +139,26 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
 
     private fun showCafeInfoView(cafeId: Long) {
         viewModel.getCafeByCafeId(cafeId)?.let { cafe ->
-            CafeInfoDialogFragment(cafe, ::onCancelDialog).show(
+            CafeInfoDialogFragment(
+                cafe,
+                { navigateToCafeInfoFragment(cafe) },
+                { onCancelDialog() }
+            ).show(
                 parentFragmentManager,
                 "cafe_info_dialog_fragment"
             )
         }
+    }
+
+    private fun navigateToCafeInfoFragment(cafe: Cafe) {
+        findNavController().navigate(
+            CafeMapFragmentDirections
+                .actionCafeMapFragmentToCafeInfoFragment(cafe)
+        )
+    }
+
+    private fun onCancelDialog() {
+        lastClickedMarker?.icon = OverlayImage.fromResource(R.drawable.ic_marker)
     }
 
     private fun showMessage(message: String) {

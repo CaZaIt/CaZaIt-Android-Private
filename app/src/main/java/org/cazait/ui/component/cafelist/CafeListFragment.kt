@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -22,7 +23,6 @@ import org.cazait.ui.adapter.CafeListVerticalAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.Mapper.toCafe
-import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.ui.component.search.SearchActivity
 import org.cazait.utils.observe
 import pub.devrel.easypermissions.EasyPermissions
@@ -140,8 +140,9 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     }
 
     private fun navigateToCafeInfo(cafe: Cafe) {
-        val intent = CafeInfoActivity.cafeInfoIntent(requireContext(), cafe, cafe.isFavorite)
-        startActivity(intent)
+        findNavController().navigate(
+            CafeListFragmentDirections.actionCafeListFragmentToCafeInfoFragment(cafe)
+        )
     }
 
     private fun handleHorizontalCafeList(status: Resource<FavoriteCafes>) {

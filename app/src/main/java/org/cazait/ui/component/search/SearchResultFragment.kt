@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentSearchResultBinding
@@ -13,7 +14,6 @@ import org.cazait.model.Cafes
 import org.cazait.model.Resource
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.adapter.SearchResultAdapter
-import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.ui.component.search.clicklistener.OnResultClick
 import org.cazait.utils.observe
 import kotlin.math.roundToInt
@@ -44,8 +44,15 @@ class SearchResultFragment(
     }
 
     override fun onResultClick(item: Cafe) {
-        val intent = CafeInfoActivity.cafeInfoIntent(requireContext(), item)
-        startActivity(intent)
+        navigateToCafeInfoFragment(cafe = item)
+    }
+
+    private fun navigateToCafeInfoFragment(cafe: Cafe) {
+        findNavController().navigate(
+            SearchCurFragmentDirections.actionSearchCurFragmentToCafeInfoFragment(
+                cafe
+            )
+        )
     }
 
     private fun observeViewModel() {

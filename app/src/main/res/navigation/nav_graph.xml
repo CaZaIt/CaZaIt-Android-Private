@@ -9,12 +9,20 @@
         android:id="@+id/cafeListFragment"
         android:name="org.cazait.ui.component.cafelist.CafeListFragment"
         android:label="CafeListFragment"
-        tools:layout="@layout/fragment_cafe_list" />
+        tools:layout="@layout/fragment_cafe_list">
+        <action
+            android:id="@+id/action_cafeListFragment_to_cafeInfoFragment"
+            app:destination="@id/cafeInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cafeMapFragment"
         android:name="org.cazait.ui.component.map.CafeMapFragment"
         android:label="CafeMapFragment"
-        tools:layout="@layout/fragment_cafe_map" />
+        tools:layout="@layout/fragment_cafe_map">
+        <action
+            android:id="@+id/action_cafeMapFragment_to_cafeInfoFragment"
+            app:destination="@id/cafeInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myPageFragment"
         android:name="org.cazait.ui.component.mypage.MyPageFragment"
@@ -42,6 +50,9 @@
         <action
             android:id="@+id/action_recentlyCafeFragment_to_myPageFragment"
             app:destination="@id/myPageFragment" />
+        <action
+            android:id="@+id/action_recentlyCafeFragment_to_cafeInfoFragment"
+            app:destination="@id/cafeInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -63,5 +74,32 @@
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@+id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cafeInfoFragment"
+        android:name="org.cazait.ui.component.cafeinfo.CafeInfoFragment"
+        android:label="CafeInfoFragment"
+        tools:layout="@layout/fragment_cafe_info">
+        <argument
+            android:name="cafe"
+            app:argType="org.cazait.model.Cafe" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchCurFragment"
+        android:name="org.cazait.ui.component.search.SearchCurFragment"
+        android:label="SearchCurFragment"
+        tools:layout="@layout/fragment_search_cur">
+        <action
+            android:id="@+id/action_searchCurFragment_to_cafeInfoFragment"
+            app:destination="@id/cafeInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="org.cazait.ui.component.search.SearchResultFragment"
+        android:label="SearchResultFragment"
+        tools:layout="@layout/fragment_search_result">
+        <action
+            android:id="@+id/action_searchResultFragment_to_cafeInfoFragment"
+            app:destination="@id/cafeInfoFragment" />
     </fragment>
 </navigation>
