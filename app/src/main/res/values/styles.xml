@@ -53,4 +53,8 @@
         <item name="android:background">@drawable/border_w2</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
+
+    <style name="DialogTheme" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/rectangle_map_cafe_info_r10</item>
+    </style>
 </resources>
