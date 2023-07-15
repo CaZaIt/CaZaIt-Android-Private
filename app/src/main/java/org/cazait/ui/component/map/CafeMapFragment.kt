@@ -19,6 +19,7 @@ import org.cazait.model.Cafes
 import org.cazait.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.cafeinfo.CafeInfoActivity
+import org.cazait.ui.component.cafeinfo.CafeInfoDialogFragment
 import org.cazait.utils.observe
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -35,12 +36,21 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
     private var markers = emptyList<Marker>()
     private var lastClickedMarker: Marker? = null
     private var lastCameraPosition: LatLng? = null
+
     override fun initView() {
-        setUpMapFragment()
+        setupMapFragment()
+        initLocationSource()
+        observeCafes()
+    }
+
+    private fun initLocationSource() {
         locationSource = FusedLocationSource(
             this, Constants.REQUEST_CODE_LOCATION_PERMISSION,
         )
-        observeCafes()
+    }
+
+    private fun observeCafes() {
+        observe(viewModel.cafeListLiveData, ::updateMarkers)
     }
 
     override fun onResume() {
@@ -49,6 +59,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
     }
 
     override fun initAfterBinding() = Unit
+
 
     override fun onMapReady(mapObject: NaverMap) {
         naverMap = mapObject
@@ -59,31 +70,10 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         isMapInit = true
     }
 
-    private fun observeCafes() {
-        observe(viewModel.cafeListLiveData, ::updateMarkers)
-    }
-
-    private fun setUpMapFragment() {
+    private fun setupMapFragment() {
         val fm = childFragmentManager
         fm.beginTransaction().replace(R.id.fragmentContainerView, mapFragment, null).commit()
         mapFragment.getMapAsync(this)
-    }
-
-    private fun setUpCafeInfoView(cafe: Cafe) {
-        binding.cafeInfoView.item = cafe
-        binding.cafeInfoView.ivCancel.setOnClickListener {
-            lastClickedMarker?.icon = OverlayImage.fromResource(R.drawable.ic_marker)
-            binding.cafeInfoView.root.toGone()
-        }
-        binding.cafeInfoView.tvState.setOnClickListener {
-            openCafeInfoActivity(cafe)
-        }
-        binding.cafeInfoView.root.toVisible()
-    }
-
-    private fun openCafeInfoActivity(cafe: Cafe) {
-        val intent = CafeInfoActivity.cafeInfoIntent(requireContext(), cafe)
-        startActivity(intent)
     }
 
     private fun searchCafes() {
@@ -123,11 +113,6 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         markers = viewModel.getCafes().map(::createMarker)
     }
 
-    private fun <T> handleError(status: Resource.Error<T>) {
-        Log.e("CafeMapFragment", status.message ?: getString(R.string.unknown_error))
-        showMessage(getString(R.string.guide_error_default))
-    }
-
     private fun createMarker(cafe: Cafe): Marker {
         val latLng = LatLng(cafe.latitude?.toDouble() ?: 0.0, cafe.longitude?.toDouble() ?: 0.0)
         return Marker(latLng).apply {
@@ -142,6 +127,15 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         }
     }
 
+    private fun <T> handleError(status: Resource.Error<T>) {
+        Log.e("CafeMapFragment", status.message ?: getString(R.string.unknown_error))
+        showMessage(getString(R.string.guide_error_default))
+    }
+
+    private fun onCancelDialog() {
+        lastClickedMarker?.icon = OverlayImage.fromResource(R.drawable.ic_marker)
+    }
+
     private fun handleMarkerClick(marker: Marker) {
         lastClickedMarker?.icon = OverlayImage.fromResource(R.drawable.ic_marker)
         marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_clicked)
@@ -151,7 +145,10 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
 
     private fun showCafeInfoView(cafeId: Long) {
         viewModel.getCafeByCafeId(cafeId)?.let { cafe ->
-            setUpCafeInfoView(cafe)
+            CafeInfoDialogFragment(cafe, ::onCancelDialog).show(
+                parentFragmentManager,
+                "cafe_info_dialog_fragment"
+            )
         }
     }
 
@@ -160,6 +157,6 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
     }
 
     companion object {
-        const val TOLERANCE = 0.001
+        private const val TOLERANCE = 0.001
     }
 }
