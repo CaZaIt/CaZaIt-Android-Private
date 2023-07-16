@@ -1,7 +1,6 @@
 package org.cazait.ui.component.search
 
 import android.content.Context
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -35,6 +34,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
     private lateinit var resultAdapter: SearchResultAdapter
     override fun initView() {
         viewModel.initLocation()
+        // 키보드 자동으로 올림
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(binding.searchBarSearch, 0)
         Log.d("location", viewModel.locationLiveData.toString())
         setBackBtn()
         search()
@@ -48,7 +51,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
 
     }
 
+    private fun setBackBtn() {
+        binding.icArrowBack.setOnClickListener {
+            navigateToCafeListFragment()
+        }
+    }
+
     private fun search() {
+        onSearchTextChanged()
+        onSearchDone()
+    }
+
+    private fun onSearchTextChanged() {
         binding.searchBarSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -61,14 +75,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
                 viewModel.getCafeSearch(query)
             }
         })
+    }
 
+    private fun onSearchDone() {
         binding.searchBarSearch.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = v.text.toString()
-                viewModel.getCafeSearchResult(query)
+                viewModel.getCafeSearch(query)
 
-                binding.rvSearch.toGone()
-                binding.layoutSearchResult.toVisible()
+                convertToSearchResult()
                 binding.searchText.text = query
 
                 // 키보드 자동으로 내림
@@ -97,54 +112,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
                     R.color.main_black
                 )
             )
-            binding.layoutSearchResult.toGone()
-            binding.rvSearch.toVisible()
+            convertToSearchCur()
         }
-    }
-
-    private fun observeViewModel() {
-        observe(viewModel.cafeSearchData, ::handleCafeSearch)
-        observe(viewModel.cafeSearchData, ::handleCafeSearchResult)
-    }
-
-    private fun handleCafeSearch(status: Resource<Cafes>) {
-        when (status) {
-            is Resource.Error -> {}
-            is Resource.Loading -> {}
-            is Resource.Success -> {
-                val name = status.data?.list
-                searchAdapter.submitList(name)
-            }
-        }
-    }
-
-    private fun handleCafeSearchResult(status: Resource<Cafes>) {
-        when (status) {
-            is Resource.Error -> {}
-            is Resource.Loading -> {}
-            is Resource.Success -> {
-                val cafes = status.data?.list
-                resultAdapter.submitList(cafes)
-            }
-        }
-    }
-
-    private fun setBackBtn() {
-        binding.icArrowBack.setOnClickListener {
-            navigateToCafeListFragment()
-        }
-    }
-
-    private fun navigateToCafeListFragment() {
-        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToCafeListFragment())
-    }
-
-    private fun navigateToCafeInfoFragment(cafe: Cafe) {
-        findNavController().navigate(
-            SearchFragmentDirections.actionSearchFragmentToCafeInfoFragment(
-                cafe
-            )
-        )
     }
 
     private fun initCurAdapter() {
@@ -155,6 +124,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
                 extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
             )
         )
+        searchAdapter.submitList(null)
     }
 
     private fun initResultAdapter() {
@@ -163,6 +133,45 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
         binding.rvSearchResult.addItemDecoration(
             ItemDecoration(
                 extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
+            )
+        )
+        resultAdapter.submitList(null)
+    }
+
+    private fun observeViewModel() {
+        observe(viewModel.cafeSearchData, ::handleCafeSearch)
+    }
+
+    private fun handleCafeSearch(status: Resource<Cafes>) {
+        when (status) {
+            is Resource.Error -> {}
+            is Resource.Loading -> {}
+            is Resource.Success -> {
+                val cafes = status.data?.list
+                searchAdapter.submitList(cafes)
+                resultAdapter.submitList(cafes)
+            }
+        }
+    }
+
+    private fun convertToSearchCur() {
+        binding.layoutSearchResult.toGone()
+        binding.rvSearch.toVisible()
+    }
+
+    private fun convertToSearchResult() {
+        binding.rvSearch.toGone()
+        binding.layoutSearchResult.toVisible()
+    }
+
+    private fun navigateToCafeListFragment() {
+        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToCafeListFragment())
+    }
+
+    private fun navigateToCafeInfoFragment(cafe: Cafe) {
+        findNavController().navigate(
+            SearchFragmentDirections.actionSearchFragmentToCafeInfoFragment(
+                cafe
             )
         )
     }
