@@ -49,14 +49,17 @@ data class CafeResTemp(
 
 }
 
-fun CafeResTemp.Data.toCafe() = Cafe(
-    cafeId = cafeId,
-    name = name,
-    address = address,
-    distance = distance,
-    status = congestionStatus,
-    images = cafesImages.map { it.imageUrl },
-    latitude = latitude,
-    longitude = longitude,
-    timestamp = timestamp,
-)
+fun CafeResTemp.Data.toCafe(): Cafe {
+    val cafesImages = cafesImages ?: emptyList()
+    return Cafe(
+        cafeId = cafeId,
+        name = name,
+        address = address,
+        distance = distance,
+        status = congestionStatus,
+        images = cafesImages.map { it.imageUrl },
+        latitude = latitude,
+        longitude = longitude,
+        timestamp = timestamp
+    )
+}
