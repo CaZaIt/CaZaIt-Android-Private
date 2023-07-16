@@ -37,7 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.bnvMenu.setupWithNavController(navHostFragment.navController)
         navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.signInFragment || destination.id == R.id.signupFragment) {
+            if (destination.id == R.id.signInFragment || destination.id == R.id.signupFragment || destination.id == R.id.searchFragment) {
                 binding.bnvMenu.visibility = View.GONE
             } else {
                 binding.bnvMenu.visibility = View.VISIBLE
