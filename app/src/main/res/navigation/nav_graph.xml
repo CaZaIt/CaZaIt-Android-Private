@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_cafeListFragment_to_cafeInfoFragment"
             app:destination="@id/cafeInfoFragment" />
+        <action
+            android:id="@+id/action_cafeListFragment_to_searchFragment"
+            app:destination="@+id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/cafeMapFragment"
@@ -85,21 +88,15 @@
             app:argType="org.cazait.model.Cafe" />
     </fragment>
     <fragment
-        android:id="@+id/searchCurFragment"
-        android:name="org.cazait.ui.component.search.SearchCurFragment"
-        android:label="SearchCurFragment"
-        tools:layout="@layout/fragment_search_cur">
+        android:id="@+id/searchFragment"
+        android:name="org.cazait.ui.component.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
         <action
-            android:id="@+id/action_searchCurFragment_to_cafeInfoFragment"
-            app:destination="@id/cafeInfoFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchResultFragment"
-        android:name="org.cazait.ui.component.search.SearchResultFragment"
-        android:label="SearchResultFragment"
-        tools:layout="@layout/fragment_search_result">
+            android:id="@+id/action_searchFragment_to_cafeListFragment"
+            app:destination="@+id/cafeListFragment" />
         <action
-            android:id="@+id/action_searchResultFragment_to_cafeInfoFragment"
-            app:destination="@id/cafeInfoFragment" />
+            android:id="@+id/action_searchFragment_to_cafeInfoFragment"
+            app:destination="@+id/cafeInfoFragment" />
     </fragment>
 </navigation>
