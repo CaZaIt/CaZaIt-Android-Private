@@ -13,14 +13,6 @@ class UserPreferenceRepository @Inject constructor(
 ) {
     fun getUserPreference() = userPreferenceDataSource.data
 
-    suspend fun getAccessToken(): String {
-        return getUserPreference().first().accessToken
-    }
-
-    suspend fun getRefreshToken(): String {
-        return getUserPreference().first().refreshToken
-    }
-
     suspend fun updateUserPreference(
         isLoggedIn: Boolean,
         uuid: String,
