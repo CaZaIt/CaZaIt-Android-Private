@@ -1,6 +1,7 @@
 package org.cazait.network.model.dto.response
 
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class SignInRes(
     @SerializedName("code")
@@ -15,9 +16,9 @@ data class SignInRes(
 
 data class SignInInfoDTO(
     @SerializedName("id")
-    val id: String,
-    @SerializedName("email")
-    val email: String,
+    val uuid: String,
+    @SerializedName("accountNumber")
+    val userId: String,
     @SerializedName("accessToken")
     val accessToken: String,
     @SerializedName("refreshToken")

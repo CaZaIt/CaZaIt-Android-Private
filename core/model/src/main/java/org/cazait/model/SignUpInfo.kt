@@ -1,13 +1,14 @@
 package org.cazait.model
 
 data class SignUpInfo(
-    val id: String,
-    val email: String,
+    val uuid: String,
+    val userId: String,
     val password: String,
+    val phoneNumber: String,
     val nickname: String,
 )
 
-data class EmailDup(
+data class IdDup(
     val isDup: Boolean = false,
     val message: String,
 )
@@ -15,4 +16,14 @@ data class EmailDup(
 data class NicknameDup(
     val isDup: Boolean = false,
     val message: String,
+)
+
+data class Message(
+    val verify: Boolean = false,
+    val message: String
+)
+
+data class VerifyCode(
+    val verify: Boolean = false,
+    val message: String
 )

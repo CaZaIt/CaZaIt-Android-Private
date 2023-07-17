@@ -5,20 +5,24 @@ import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import org.cazait.model.Cafe
 import org.cazait.model.CafeMenu
 import org.cazait.model.CafeReviews
-import org.cazait.model.EmailDup
+import org.cazait.model.IdDup
 import org.cazait.model.FavoriteCafe
+import org.cazait.model.Message
 import org.cazait.model.NicknameDup
 import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.SignInInfo
 import org.cazait.model.SignUpInfo
+import org.cazait.model.VerifyCode
 import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
-import org.cazait.network.model.dto.response.IsEmailDupRes
+import org.cazait.network.model.dto.response.IsUserIdDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
+import org.cazait.network.model.dto.response.MessageRes
 import org.cazait.network.model.dto.response.ReviewDTO
 import org.cazait.network.model.dto.response.SignInInfoDTO
 import org.cazait.network.model.dto.response.SignUpInfoDTO
+import org.cazait.network.model.dto.response.VerifyCodeRes
 import java.util.Date
 
 fun Cafe.toFavoriteCafeEntity() = FavoriteCafeEntity(
@@ -110,17 +114,18 @@ fun ReviewDTO.toCafeReviews() = CafeReviews(
 )
 
 fun SignInInfoDTO.toSignInInfo() = SignInInfo(
-    email = email,
-    id = id,
+    userId = userId,
+    uuid,
     accessToken = accessToken,
     refreshToken = refreshToken,
     role = role,
 )
 
 fun SignUpInfoDTO.toSignUpInfo() = SignUpInfo(
-    id = id,
-    email = email,
+    uuid = uuid,
+    userId = userId,
     password = password,
+    phoneNumber,
     nickname = nickname,
 )
 
@@ -129,7 +134,17 @@ fun IsNicknameDupRes.toNicknameDup() = NicknameDup(
     isDup = data == null,
 )
 
-fun IsEmailDupRes.toEmailDup() = EmailDup(
+fun IsUserIdDupRes.toIdNumberDup() = IdDup(
     message = message,
     isDup = data == null,
+)
+
+fun MessageRes.toMessage() = Message(
+    verify = false,
+    message = message
+)
+
+fun VerifyCodeRes.toVerify() = VerifyCode(
+    verify = false,
+    message = message
 )

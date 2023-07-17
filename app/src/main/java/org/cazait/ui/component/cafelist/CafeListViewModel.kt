@@ -64,7 +64,7 @@ class CafeListViewModel @Inject constructor(
 
     private suspend fun fetchUserIdIfLoggedIn(): String? {
         val isLoggedIn = false /* userRepository.isLoggedIn().first() */
-        return if (isLoggedIn) userRepository.getUserInfo().first().id else null
+        return if (isLoggedIn) userRepository.getUserInfo().first().uuid else null
     }
 
     private suspend fun updateCafeListByLocation(userId: String?) {

@@ -13,8 +13,8 @@
 
     <!-- Sign Up -->
     <string name="sign_up_sign_up">회원가입</string>
-    <string name="sign_up_email">이메일</string>
-    <string name="sign_up_hint_email_example">예: kazait123@naver.com</string>
+    <string name="sign_up_id">아이디</string>
+    <string name="sign_up_hint_id_example">예: cazait1234</string>
     <string name="sign_up_double_check">중복확인</string>
     <string name="sign_up_password">비밀번호</string>
     <string name="sign_up_hint_password">비밀번호를 입력해주세요</string>
@@ -22,14 +22,20 @@
     <string name="sign_up_hint_password_more">비밀번호를 한 번 더 입력해주세요</string>
     <string name="sign_up_nick_name">닉네임</string>
     <string name="sign_up_hint_nick_name">예:카자잇123</string>
+    <string name="sign_up_phone_number">휴대폰 번호</string>
+    <string name="sign_up_hint_phone_number">01012345678</string>
+    <string name="sign_up_phone_number_send_code">인증번호받기</string>
+    <string name="sign_up_verification_code">인증번호</string>
+    <string name="sign_up_hint_verification_code">인증번호 입력</string>
+    <string name="sign_up_check_verification_code">인증번호확인</string>
     <string name="sign_up_join">가입하기</string>
 
     <string name="sign_up_req_all">회원정보를 전부 입력하세요.</string>
     <string name="sign_up_req_suc">가입되었습니다.</string>
     <string name="sign_up_req_nopw">비밀번호가 일치하지 않습니다.</string>
 
-    <string name="sign_up_check_email">이메일을 입력해주세요.</string>
-    <string name="sign_up_check_email_regex">이메일 양식이 맞지 않습니다.</string>
+    <string name="sign_up_check_id">아이디를 입력해주세요.</string>
+    <string name="sign_up_check_id_regex">아이디 양식이 맞지 않습니다.</string>
 
     <string name="sign_up_check_nick">닉네임을 입력해주세요.</string>
     <string name="sign_up_check_nick_regex">한글 또는 영어로 3~15자로 조합해주세요.</string>
@@ -37,6 +43,10 @@
     <string name="sign_up_check_pw">비밀번호를 입력해주세요.</string>
     <string name="sign_up_check_pw_regex">영문/숫자/특수문자(공백 제외)으로 8~16자로 조합해주세요.</string>
     <string name="sign_up_check_pw_not">비밀번호가 일치하지 않습니다.</string>
+
+    <string name="sign_up_check_phone">휴대폰 번호를 입력해주세요.</string>
+
+    <string name="sign_up_check_verify">인증번호를 입력해주세요.</string>
 
     <!-- Cafe List -->
     <string name="search">카페명을 입력해주세요.</string>

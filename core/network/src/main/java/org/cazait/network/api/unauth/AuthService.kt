@@ -1,8 +1,12 @@
 package org.cazait.network.api.unauth
 
+import org.cazait.network.model.dto.request.MessageReq
 import org.cazait.network.model.dto.request.SignInReq
+import org.cazait.network.model.dto.request.VerifyCodeReq
+import org.cazait.network.model.dto.response.MessageRes
 import org.cazait.network.model.dto.response.RefreshTokenRes
 import org.cazait.network.model.dto.response.SignInRes
+import org.cazait.network.model.dto.response.VerifyCodeRes
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -31,4 +35,14 @@ interface AuthService {
         @Header("REFRESH-TOKEN")
         refreshToken: String,
     ): Response<RefreshTokenRes>
+
+    @POST("api/auths/messages/codes/send/test")
+    suspend fun postMessage(
+        @Body messageReq: MessageReq
+    ): Response<MessageRes>
+
+    @POST("api/auths/messages/codes/verify")
+    suspend fun postVerifyCode(
+        @Body verifyCode: VerifyCodeReq
+    ): Response<VerifyCodeRes>
 }

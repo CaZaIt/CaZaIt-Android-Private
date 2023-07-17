@@ -1,6 +1,9 @@
 package org.cazait.network.model.dto.request
 
+import com.google.gson.annotations.SerializedName
+
 data class SignInReq(
-    val email: String,
+    @SerializedName("accountNumber")
+    val userId: String,
     val password: String,
 )

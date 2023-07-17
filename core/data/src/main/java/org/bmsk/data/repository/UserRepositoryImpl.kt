@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.bmsk.data.model.toEmailDup
+import org.bmsk.data.model.toIdNumberDup
 import org.bmsk.data.model.toNicknameDup
 import org.bmsk.data.model.toSignUpInfo
 import org.cazait.datastore.data.repository.UserPreferenceRepository
-import org.cazait.network.model.dto.request.IsEmailDupReq
+import org.cazait.network.model.dto.request.IsUserIdDupReq
 import org.cazait.network.model.dto.request.IsNicknameDupReq
 import org.cazait.network.model.dto.request.SignUpReq
-import org.cazait.model.EmailDup
+import org.cazait.model.IdDup
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
@@ -29,17 +29,36 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     override suspend fun signUp(
-        email: String,
+        userId: String,
         password: String,
+        phoneNumber: String,
         nickname: String
     ): Flow<Resource<SignUpInfo>> {
         return flow {
-            val body = SignUpReq(email, password, nickname)
+            val body = SignUpReq(userId, password, phoneNumber, nickname)
 
             when (val response = remoteData.postSignUp(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
                         emit(Resource.Success(it.signUpInfo.toSignUpInfo()))
+                    } ?: emit(Resource.Error("잘못된 결과입니다."))
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun isUserIdDup(userId: String): Flow<Resource<IdDup>> {
+        return flow {
+            val body = IsUserIdDupReq(userId)
+
+            when (val response = remoteData.postIsUserIdDup(body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.toIdNumberDup()))
                     } ?: emit(Resource.Error("잘못된 결과입니다."))
                 }
 
@@ -68,27 +87,9 @@ class UserRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun isEmailDup(email: String): Flow<Resource<EmailDup>> {
-        return flow {
-            val body = IsEmailDupReq(email)
-
-            when (val response = remoteData.postIsEmailDup(body)) {
-                is DataResponse.Success -> {
-                    response.data?.let {
-                        emit(Resource.Success(it.toEmailDup()))
-                    } ?: emit(Resource.Error("잘못된 결과입니다."))
-                }
-
-                is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
-                }
-            }
-        }.flowOn(ioDispatcher)
-    }
-
     override suspend fun isLoggedIn(): Flow<Boolean> {
         val userPreference = userPreferenceRepository.getUserPreference().first()
-        Log.e("UserRepository", "id = ${userPreference.id}")
+        Log.e("UserRepository", "id = ${userPreference.uuid}")
         return flow { emit(userPreference.isLoggedIn) }
     }
 

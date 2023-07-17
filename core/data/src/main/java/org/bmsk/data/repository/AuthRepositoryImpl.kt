@@ -5,15 +5,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import org.bmsk.data.model.toMessage
 import org.bmsk.data.model.toSignInInfo
+import org.bmsk.data.model.toVerify
 import org.cazait.datastore.data.repository.UserPreferenceRepository
 import org.cazait.datastore.data.repository.UserPreferenceRepository.TokenType.UPDATE_REFRESH_TOKEN
+import org.cazait.model.Message
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
+import org.cazait.model.VerifyCode
 import org.cazait.network.datasource.AuthRemoteData
 import org.cazait.network.error.DEFAULT_ERROR
 import org.cazait.network.model.dto.DataResponse
+import org.cazait.network.model.dto.request.MessageReq
 import org.cazait.network.model.dto.request.SignInReq
+import org.cazait.network.model.dto.request.VerifyCodeReq
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -25,7 +31,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun refreshToken() {
         with(userPreferenceRepository.getUserPreference().first()) {
             val updatedRefreshToken = authRemoteData.getRefreshToken(
-                userId = id,
+                userId = uuid,
                 role = role,
                 accessToken = accessToken,
                 refreshToken = refreshToken
@@ -35,9 +41,9 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signIn(email: String, password: String): Flow<Resource<SignInInfo>> {
+    override suspend fun signIn(userId: String, password: String): Flow<Resource<SignInInfo>> {
         return flow {
-            val body = SignInReq(email, password)
+            val body = SignInReq(userId, password)
 
             when (val response = authRemoteData.postSignIn(body)) {
                 is DataResponse.Success -> {
@@ -49,8 +55,8 @@ class AuthRepositoryImpl @Inject constructor(
                     } else {
                         userPreferenceRepository.updateUserPreference(
                             isLoggedIn = true,
-                            id = signInInfoDTO.id,
-                            email = signInInfoDTO.email,
+                            uuid = signInInfoDTO.uuid,
+                            userId = signInInfoDTO.userId,
                             role = signInInfoDTO.role,
                             accessToken = signInInfoDTO.accessToken,
                             refreshToken = signInInfoDTO.refreshToken,
@@ -71,9 +77,46 @@ class AuthRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
+    override suspend fun postMessage(phoneNumber: String): Flow<Resource<Message>> {
+        return flow {
+            val body = MessageReq(phoneNumber)
+            when (val response = authRemoteData.postMessage(body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.toMessage()))
+                    } ?: emit(Resource.Error("잘못된 결과입니다."))
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun postVerifyCode(
+        phoneNumber: String,
+        verifyCode: Int
+    ): Flow<Resource<VerifyCode>> {
+        return flow {
+            val body = VerifyCodeReq(phoneNumber, verifyCode)
+            when (val response = authRemoteData.postVerifyCode(body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.toVerify()))
+                    } ?: emit(Resource.Error("잘못된 결과입니다."))
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }.flowOn(ioDispatcher)
+    }
+
     private fun emptyInfo() = SignInInfo(
-        email = "",
-        id = "",
+        userId = "",
+        uuid = "",
         accessToken = "",
         refreshToken = "",
         role = ""

@@ -3,6 +3,7 @@ package org.cazait.datastore.data.repository
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.first
 import org.cazait.model.local.UserPreference
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,8 +23,8 @@ class UserPreferenceRepository @Inject constructor(
 
     suspend fun updateUserPreference(
         isLoggedIn: Boolean,
-        id: String,
-        email: String,
+        uuid: String,
+        userId: String,
         role: String,
         accessToken: String,
         refreshToken: String
@@ -31,8 +32,8 @@ class UserPreferenceRepository @Inject constructor(
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
                 isLoggedIn = isLoggedIn,
-                id = id,
-                email = email,
+                uuid = uuid,
+                userId = userId,
                 role = role,
                 accessToken = accessToken,
                 refreshToken = refreshToken
