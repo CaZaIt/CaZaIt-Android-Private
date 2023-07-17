@@ -1,5 +1,5 @@
 package org.cazait.network.model.dto.request
 
-data class IsEmailDupReq(
-    val email: String
+data class IsIdNumberDupReq(
+    val accountNumber: String
 )

@@ -5,8 +5,8 @@ import org.cazait.network.NetworkConnectivity
 import org.cazait.network.api.unauth.UserService
 import org.cazait.network.datasource.UserRemoteData
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.request.IsEmailDupReq
-import org.cazait.network.model.dto.response.IsEmailDupRes
+import org.cazait.network.model.dto.request.IsIdNumberDupReq
+import org.cazait.network.model.dto.response.IsIdNumberDupRes
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -29,8 +29,8 @@ class UserRemoteDataTest {
     fun `postIsEmailDup returns DataResponse Success when UserService postIsEmailDup returns IsEmailDupRes`() = runBlocking {
         // Given
         val email = "12345@gmail.com"
-        val isEmailDupReq = IsEmailDupReq(email)
-        val expectedIsEmailDupRes = IsEmailDupRes(
+        val isEmailDupReq = IsIdNumberDupReq(email)
+        val expectedIsEmailDupRes = IsIdNumberDupRes(
             code = 400,
             result = "FAIL",
             message = "이미 존재하는 이메일입니다.",
@@ -38,10 +38,10 @@ class UserRemoteDataTest {
         )
 
         `when`(mockNetworkConnectivity.isConnected()).thenReturn(true)
-        `when`(mockUserService.postIsEmailDup(email)).thenReturn(Response.success(expectedIsEmailDupRes))
+        `when`(mockUserService.postIsIdNumberDup(email)).thenReturn(Response.success(expectedIsEmailDupRes))
 
         // When
-        val actualResponse = userRemoteData.postIsEmailDup(isEmailDupReq) as DataResponse.Success
+        val actualResponse = userRemoteData.postIsIdNumberDup(isEmailDupReq) as DataResponse.Success
 
         // Then
         val expectedResponse = DataResponse.Success(expectedIsEmailDupRes)

@@ -14,7 +14,7 @@ import org.cazait.model.SignUpInfo
 import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
-import org.cazait.network.model.dto.response.IsEmailDupRes
+import org.cazait.network.model.dto.response.IsIdNumberDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
 import org.cazait.network.model.dto.response.ReviewDTO
 import org.cazait.network.model.dto.response.SignInInfoDTO
@@ -129,7 +129,7 @@ fun IsNicknameDupRes.toNicknameDup() = NicknameDup(
     isDup = data == null,
 )
 
-fun IsEmailDupRes.toEmailDup() = EmailDup(
+fun IsIdNumberDupRes.toEmailDup() = EmailDup(
     message = message,
     isDup = data == null,
 )

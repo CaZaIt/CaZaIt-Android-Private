@@ -1,10 +1,10 @@
 package org.cazait.network.datasource
 
-import org.cazait.network.model.dto.request.IsEmailDupReq
+import org.cazait.network.model.dto.request.IsIdNumberDupReq
 import org.cazait.network.model.dto.request.IsNicknameDupReq
 import org.cazait.network.model.dto.request.SignUpReq
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.response.IsEmailDupRes
+import org.cazait.network.model.dto.response.IsIdNumberDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
 import org.cazait.network.model.dto.response.SignUpRes
 import org.cazait.network.NetworkConnectivity
@@ -18,13 +18,27 @@ class UserRemoteData @Inject constructor(
     private val networkConnectivity: NetworkConnectivity,
     private val userService: UserService
 ) : UserRemoteDataSource {
-    override suspend fun postIsEmailDup(
-        body: IsEmailDupReq
-    ): DataResponse<IsEmailDupRes> {
+    override suspend fun postSignUp(body: SignUpReq): DataResponse<SignUpRes> {
         return when (val response = processCall {
-            userService.postIsEmailDup(body.email)
+            userService.postSignUp(body)
         }) {
-            is IsEmailDupRes -> {
+            is SignUpRes -> {
+                DataResponse.Success(data = response)
+            }
+
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+    override suspend fun postIsIdNumberDup(
+        body: IsIdNumberDupReq
+    ): DataResponse<IsIdNumberDupRes> {
+        return when (val response = processCall {
+            userService.postIsIdNumberDup(body)
+        }) {
+            is IsIdNumberDupRes -> {
                 DataResponse.Success(data = response)
             }
 
@@ -39,20 +53,6 @@ class UserRemoteData @Inject constructor(
             userService.postIsNicknameDup(body)
         }) {
             is IsNicknameDupRes -> {
-                DataResponse.Success(data = response)
-            }
-
-            else -> {
-                DataResponse.DataError(errorCode = response as Int)
-            }
-        }
-    }
-
-    override suspend fun postSignUp(body: SignUpReq): DataResponse<SignUpRes> {
-        return when (val response = processCall {
-            userService.postSignUp(body)
-        }) {
-            is SignUpRes -> {
                 DataResponse.Success(data = response)
             }
 

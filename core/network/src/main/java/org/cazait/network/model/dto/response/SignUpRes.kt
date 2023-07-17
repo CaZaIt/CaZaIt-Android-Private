@@ -17,9 +17,11 @@ data class SignUpInfoDTO(
     @SerializedName("id")
     val id: String,
     @SerializedName("email")
-    val email: String,
+    val idNumber: String,
     @SerializedName("password")
     val password: String,
+    @SerializedName("phoneNumber")
+    val phoneNumber: String,
     @SerializedName("nickname")
     val nickname: String,
 )

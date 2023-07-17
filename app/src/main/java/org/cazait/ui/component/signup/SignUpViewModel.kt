@@ -47,7 +47,7 @@ class SignUpViewModel @Inject constructor(
     fun isEmailDup(email: String) {
         viewModelScope.launch {
             _emailDupProcess.value = Resource.Loading()
-            userRepository.isEmailDup(email)
+            userRepository.isIdNumberDup(email)
                 .collect {
                     _emailDupProcess.value = it
                 }
