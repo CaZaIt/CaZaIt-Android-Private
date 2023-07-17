@@ -5,14 +5,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import org.bmsk.data.model.toMessage
 import org.bmsk.data.model.toSignInInfo
 import org.cazait.datastore.data.repository.UserPreferenceRepository
 import org.cazait.datastore.data.repository.UserPreferenceRepository.TokenType.UPDATE_REFRESH_TOKEN
+import org.cazait.model.Message
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
 import org.cazait.network.datasource.AuthRemoteData
 import org.cazait.network.error.DEFAULT_ERROR
 import org.cazait.network.model.dto.DataResponse
+import org.cazait.network.model.dto.request.MessageReq
 import org.cazait.network.model.dto.request.SignInReq
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -66,6 +69,23 @@ class AuthRepositoryImpl @Inject constructor(
                         Log.e("AuthRepository", response.toString())
                         emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
                     }
+                }
+            }
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun postMessage(phoneNumber: String): Flow<Resource<Message>> {
+        return flow {
+            val body = MessageReq(phoneNumber)
+            when (val response = authRemoteData.postMessage(body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.toMessage()))
+                    } ?: emit(Resource.Error("잘못된 결과입니다."))
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
                 }
             }
         }.flowOn(ioDispatcher)

@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentSignUpBinding
 import org.cazait.model.IdDup
+import org.cazait.model.Message
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
@@ -31,11 +32,13 @@ class SignUpFragment :
     private var passwordFlag = false
     private var passwordCheckFlag = false
     private var nickNameFlag = false
+    private var phoneNumberFlag = false
+    private var verifyCodeFlag = false
 
     private val nickNameListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
         }
 
         override fun checkText(text: String) = checkNickName(text)
@@ -44,7 +47,7 @@ class SignUpFragment :
     private val passwordListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
         }
 
         override fun checkText(text: String) = checkPassword(text)
@@ -53,7 +56,7 @@ class SignUpFragment :
     private val passwordAgainListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
         }
 
         override fun checkText(text: String) = checkPasswordAgain(text)
@@ -62,7 +65,25 @@ class SignUpFragment :
     private val idListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
+        }
+
+        override fun checkText(text: String) = checkid(text)
+    }
+
+    private val phoneNumberListener = object : CheckTextWatcher() {
+        override fun checkFlag() {
+            binding.btnSignUpJoin.isEnabled =
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
+        }
+
+        override fun checkText(text: String) = checkid(text)
+    }
+
+    private val verifyCodeListener = object : CheckTextWatcher() {
+        override fun checkFlag() {
+            binding.btnSignUpJoin.isEnabled =
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
         }
 
         override fun checkText(text: String) = checkid(text)
@@ -77,6 +98,7 @@ class SignUpFragment :
         viewModel.initViewModel()
         initIdBtn()
         initNicknameBtn()
+        initPhoneBtn()
         initSignUpBtn()
         initBackBtn()
         initEditTextListener()
@@ -86,6 +108,7 @@ class SignUpFragment :
         observe(viewModel.signUpProcess, ::handleSignUpResult)
         observe(viewModel.idDupProcess, ::handleidDupResult)
         observe(viewModel.nickDupProcess, ::handleNickDupResult)
+        observe(viewModel.phoneNumberProcess, ::handlePhone)
         observeToast(viewModel.showToast)
     }
 
@@ -158,6 +181,29 @@ class SignUpFragment :
         }
     }
 
+    private fun handlePhone(status: Resource<Message>?) {
+        when (status) {
+            is Resource.Loading -> {
+                binding.lottieSignup.toVisible()
+                binding.lottieSignup.playAnimation()
+            }
+
+            is Resource.Success -> status.data?.let {
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
+                viewModel.showToastMessage(it.message)
+            }
+
+            is Resource.Error -> {
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
+                viewModel.showToastMessage(status.message)
+            }
+
+            null -> {}
+        }
+    }
+
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {
         binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
@@ -167,6 +213,8 @@ class SignUpFragment :
         binding.etSignUpPasswordInsert.addTextChangedListener(passwordListener)
         binding.etSignUpPasswordInsertMore.addTextChangedListener(passwordAgainListener)
         binding.etSignUpNickNameExample.addTextChangedListener(nickNameListener)
+        binding.etSignUpPhoneNumber.addTextChangedListener(phoneNumberListener)
+        binding.etSignUpVarificationCode.addTextChangedListener(verifyCodeListener)
     }
 
     private fun initSignUpBtn() {
@@ -176,8 +224,9 @@ class SignUpFragment :
             val repw = binding.etSignUpPasswordInsertMore.text.toString()
             val nickname = binding.etSignUpNickNameExample.text.toString()
             val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
+            val verifyCode = binding.etSignUpVarificationCode.text.toString()
 
-            if (id == "" || pw == "" || repw == "" || nickname == "")
+            if (id == "" || pw == "" || repw == "" || nickname == "" || phoneNumber == "" || verifyCode == "")
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_all))
             else if (pw == repw) {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_suc))
@@ -200,6 +249,13 @@ class SignUpFragment :
 
             if (nickname.isEmpty()) return@setOnClickListener
             viewModel.isNicknameDup(nickname)
+        }
+    }
+
+    private fun initPhoneBtn(){
+        binding.btnSignUpSendVarificationCode.setOnClickListener {
+            val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
+            viewModel.postPhoneNumber(phoneNumber)
         }
     }
 

@@ -7,6 +7,7 @@ import org.cazait.model.CafeMenu
 import org.cazait.model.CafeReviews
 import org.cazait.model.IdDup
 import org.cazait.model.FavoriteCafe
+import org.cazait.model.Message
 import org.cazait.model.NicknameDup
 import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.SignInInfo
@@ -16,6 +17,7 @@ import org.cazait.network.model.dto.response.CafeMenuDTO
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
 import org.cazait.network.model.dto.response.IsIdNumberDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
+import org.cazait.network.model.dto.response.MessageRes
 import org.cazait.network.model.dto.response.ReviewDTO
 import org.cazait.network.model.dto.response.SignInInfoDTO
 import org.cazait.network.model.dto.response.SignUpInfoDTO
@@ -132,4 +134,9 @@ fun IsNicknameDupRes.toNicknameDup() = NicknameDup(
 fun IsIdNumberDupRes.toIdNumberDup() = IdDup(
     message = message,
     isDup = data == null,
+)
+
+fun MessageRes.toMessage() = Message(
+    verify = false,
+    message = message
 )

@@ -16,3 +16,8 @@ data class NicknameDup(
     val isDup: Boolean = false,
     val message: String,
 )
+
+data class Message(
+    val verify: Boolean = false,
+    val message: String
+)

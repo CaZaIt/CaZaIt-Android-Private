@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.bmsk.data.repository.AuthRepository
 import org.bmsk.data.repository.UserRepository
 import org.cazait.model.IdDup
+import org.cazait.model.Message
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val authRepository: AuthRepository
 ) : BaseViewModel() {
 
     private val _signUpProcess = MutableLiveData<Resource<SignUpInfo>?>()
@@ -30,6 +33,10 @@ class SignUpViewModel @Inject constructor(
     private val _nickDupProcess = MutableLiveData<Resource<NicknameDup>?>()
     val nickDupProcess: LiveData<Resource<NicknameDup>?>
         get() = _nickDupProcess
+
+    private val _phoneNumberProcess = MutableLiveData<Resource<Message>?>()
+    val phoneNumberProcess: LiveData<Resource<Message>?>
+        get() = _phoneNumberProcess
 
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
     val showToast: LiveData<SingleEvent<Any>>
@@ -59,6 +66,15 @@ class SignUpViewModel @Inject constructor(
             _nickDupProcess.value = Resource.Loading()
             userRepository.isNicknameDup(nickname).collect {
                 _nickDupProcess.value = it
+            }
+        }
+    }
+
+    fun postPhoneNumber(phoneNumber: String){
+        viewModelScope.launch {
+            _phoneNumberProcess.value = Resource.Loading()
+            authRepository.postMessage(phoneNumber).collect{
+                _phoneNumberProcess.value = it
             }
         }
     }
