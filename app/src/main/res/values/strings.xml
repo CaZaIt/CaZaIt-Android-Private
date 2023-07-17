@@ -27,6 +27,7 @@
     <string name="sign_up_phone_number_send_code">인증번호받기</string>
     <string name="sign_up_varification_code">인증번호</string>
     <string name="sign_up_hint_varification_code">인증번호 입력</string>
+    <string name="sign_up_check_varification_code">인증번호확인</string>
     <string name="sign_up_join">가입하기</string>
 
     <string name="sign_up_req_all">회원정보를 전부 입력하세요.</string>
