@@ -13,8 +13,8 @@
 
     <!-- Sign Up -->
     <string name="sign_up_sign_up">회원가입</string>
-    <string name="sign_up_email">이메일</string>
-    <string name="sign_up_hint_email_example">예: kazait123@naver.com</string>
+    <string name="sign_up_id">아이디</string>
+    <string name="sign_up_hint_id_example">예: cazait1234</string>
     <string name="sign_up_double_check">중복확인</string>
     <string name="sign_up_password">비밀번호</string>
     <string name="sign_up_hint_password">비밀번호를 입력해주세요</string>
@@ -22,6 +22,11 @@
     <string name="sign_up_hint_password_more">비밀번호를 한 번 더 입력해주세요</string>
     <string name="sign_up_nick_name">닉네임</string>
     <string name="sign_up_hint_nick_name">예:카자잇123</string>
+    <string name="sign_up_phone_number">휴대폰 번호</string>
+    <string name="sign_up_hint_phone_number">01012345678</string>
+    <string name="sign_up_phone_number_send_code">인증번호받기</string>
+    <string name="sign_up_varification_code">인증번호</string>
+    <string name="sign_up_hint_varification_code">인증번호 입력</string>
     <string name="sign_up_join">가입하기</string>
 
     <string name="sign_up_req_all">회원정보를 전부 입력하세요.</string>
