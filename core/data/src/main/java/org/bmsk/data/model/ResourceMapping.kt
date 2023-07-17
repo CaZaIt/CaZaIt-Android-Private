@@ -125,6 +125,7 @@ fun SignUpInfoDTO.toSignUpInfo() = SignUpInfo(
     id = id,
     idNumber = idNumber,
     password = password,
+    phoneNumber,
     nickname = nickname,
 )
 

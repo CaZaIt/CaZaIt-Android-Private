@@ -16,7 +16,7 @@ data class SignUpRes(
 data class SignUpInfoDTO(
     @SerializedName("id")
     val id: String,
-    @SerializedName("email")
+    @SerializedName("accountNumber")
     val idNumber: String,
     @SerializedName("password")
     val password: String,
