@@ -14,7 +14,7 @@ interface UserService {
     @POST("/api/users/sign-up")
     suspend fun postSignUp(@Body signUpRequest: SignUpReq): Response<SignUpRes>
 
-    @POST("/api/users/accountNumber")
+    @POST("/api/users/accountnumber")
     suspend fun postIsIdNumberDup(@Body accountNumber: IsIdNumberDupReq): Response<IsIdNumberDupRes>
 
     @POST("/api/users/nickname")
