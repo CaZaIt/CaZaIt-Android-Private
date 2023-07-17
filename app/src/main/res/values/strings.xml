@@ -25,9 +25,9 @@
     <string name="sign_up_phone_number">휴대폰 번호</string>
     <string name="sign_up_hint_phone_number">01012345678</string>
     <string name="sign_up_phone_number_send_code">인증번호받기</string>
-    <string name="sign_up_varification_code">인증번호</string>
-    <string name="sign_up_hint_varification_code">인증번호 입력</string>
-    <string name="sign_up_check_varification_code">인증번호확인</string>
+    <string name="sign_up_verification_code">인증번호</string>
+    <string name="sign_up_hint_verification_code">인증번호 입력</string>
+    <string name="sign_up_check_verification_code">인증번호확인</string>
     <string name="sign_up_join">가입하기</string>
 
     <string name="sign_up_req_all">회원정보를 전부 입력하세요.</string>
@@ -43,6 +43,10 @@
     <string name="sign_up_check_pw">비밀번호를 입력해주세요.</string>
     <string name="sign_up_check_pw_regex">영문/숫자/특수문자(공백 제외)으로 8~16자로 조합해주세요.</string>
     <string name="sign_up_check_pw_not">비밀번호가 일치하지 않습니다.</string>
+
+    <string name="sign_up_check_phone">휴대폰 번호를 입력해주세요.</string>
+
+    <string name="sign_up_check_verify">인증번호를 입력해주세요.</string>
 
     <!-- Cafe List -->
     <string name="search">카페명을 입력해주세요.</string>

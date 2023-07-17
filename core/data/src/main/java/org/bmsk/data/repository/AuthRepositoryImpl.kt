@@ -7,16 +7,19 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.bmsk.data.model.toMessage
 import org.bmsk.data.model.toSignInInfo
+import org.bmsk.data.model.toVerify
 import org.cazait.datastore.data.repository.UserPreferenceRepository
 import org.cazait.datastore.data.repository.UserPreferenceRepository.TokenType.UPDATE_REFRESH_TOKEN
 import org.cazait.model.Message
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
+import org.cazait.model.VerifyCode
 import org.cazait.network.datasource.AuthRemoteData
 import org.cazait.network.error.DEFAULT_ERROR
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.MessageReq
 import org.cazait.network.model.dto.request.SignInReq
+import org.cazait.network.model.dto.request.VerifyCodeReq
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -81,6 +84,26 @@ class AuthRepositoryImpl @Inject constructor(
                 is DataResponse.Success -> {
                     response.data?.let {
                         emit(Resource.Success(it.toMessage()))
+                    } ?: emit(Resource.Error("잘못된 결과입니다."))
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun postVerifyCode(
+        phoneNumber: String,
+        verifyCode: Int
+    ): Flow<Resource<VerifyCode>> {
+        return flow {
+            val body = VerifyCodeReq(phoneNumber, verifyCode)
+            when (val response = authRemoteData.postVerifyCode(body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.toVerify()))
                     } ?: emit(Resource.Error("잘못된 결과입니다."))
                 }
 

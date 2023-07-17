@@ -14,6 +14,7 @@ import org.cazait.model.Message
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
+import org.cazait.model.VerifyCode
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -77,7 +78,7 @@ class SignUpFragment :
                 nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
         }
 
-        override fun checkText(text: String) = checkid(text)
+        override fun checkText(text: String) = checkPhoneNumber(text)
     }
 
     private val verifyCodeListener = object : CheckTextWatcher() {
@@ -86,7 +87,7 @@ class SignUpFragment :
                 nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
         }
 
-        override fun checkText(text: String) = checkid(text)
+        override fun checkText(text: String) = checkVerifyCode(text)
     }
 
     override fun initAfterBinding() {
@@ -99,6 +100,7 @@ class SignUpFragment :
         initIdBtn()
         initNicknameBtn()
         initPhoneBtn()
+        initVerifyBtn()
         initSignUpBtn()
         initBackBtn()
         initEditTextListener()
@@ -109,6 +111,7 @@ class SignUpFragment :
         observe(viewModel.idDupProcess, ::handleidDupResult)
         observe(viewModel.nickDupProcess, ::handleNickDupResult)
         observe(viewModel.phoneNumberProcess, ::handlePhone)
+        observe(viewModel.verifyProcess, ::handleVerify)
         observeToast(viewModel.showToast)
     }
 
@@ -204,6 +207,29 @@ class SignUpFragment :
         }
     }
 
+    private fun handleVerify(status: Resource<VerifyCode>?) {
+        when (status) {
+            is Resource.Loading -> {
+                binding.lottieSignup.toVisible()
+                binding.lottieSignup.playAnimation()
+            }
+
+            is Resource.Success -> status.data?.let {
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
+                viewModel.showToastMessage(it.message)
+            }
+
+            is Resource.Error -> {
+                binding.lottieSignup.pauseAnimation()
+                binding.lottieSignup.toGone()
+                viewModel.showToastMessage(status.message)
+            }
+
+            null -> {}
+        }
+    }
+
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {
         binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
@@ -252,10 +278,19 @@ class SignUpFragment :
         }
     }
 
-    private fun initPhoneBtn(){
+    private fun initPhoneBtn() {
         binding.btnSignUpSendVarificationCode.setOnClickListener {
             val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
             viewModel.postPhoneNumber(phoneNumber)
+        }
+    }
+
+    private fun initVerifyBtn() {
+        binding.btnSignUpCheckVarificationCode.setOnClickListener {
+            val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
+            val codeString = binding.etSignUpVarificationCode.text.toString()
+            val codeInt = codeString.toInt()
+            viewModel.postVerifyCode(phoneNumber, codeInt)
         }
     }
 
@@ -398,6 +433,36 @@ class SignUpFragment :
                         passwordCheckFlag = true
                     }
                 }
+            }
+        }
+    }
+
+    private fun checkPhoneNumber(phone: String){
+        when {
+            phone.isEmpty() -> {
+                binding.etSignUpPhoneNumber.error =
+                    resources.getString(R.string.sign_up_check_phone)
+                phoneNumberFlag = false
+            }
+
+            else -> {
+                binding.etSignUpPhoneNumber.error = null
+                phoneNumberFlag = true
+            }
+        }
+    }
+
+    private fun checkVerifyCode(code: String){
+        when {
+            code.isEmpty() -> {
+                binding.etSignUpVarificationCode.error =
+                    resources.getString(R.string.sign_up_check_verify)
+                verifyCodeFlag = false
+            }
+
+            else -> {
+                binding.etSignUpVarificationCode.error = null
+                verifyCodeFlag = true
             }
         }
     }

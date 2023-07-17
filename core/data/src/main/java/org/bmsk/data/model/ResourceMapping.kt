@@ -12,6 +12,7 @@ import org.cazait.model.NicknameDup
 import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.SignInInfo
 import org.cazait.model.SignUpInfo
+import org.cazait.model.VerifyCode
 import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
@@ -21,6 +22,7 @@ import org.cazait.network.model.dto.response.MessageRes
 import org.cazait.network.model.dto.response.ReviewDTO
 import org.cazait.network.model.dto.response.SignInInfoDTO
 import org.cazait.network.model.dto.response.SignUpInfoDTO
+import org.cazait.network.model.dto.response.VerifyCodeRes
 import java.util.Date
 
 fun Cafe.toFavoriteCafeEntity() = FavoriteCafeEntity(
@@ -137,6 +139,11 @@ fun IsIdNumberDupRes.toIdNumberDup() = IdDup(
 )
 
 fun MessageRes.toMessage() = Message(
+    verify = false,
+    message = message
+)
+
+fun VerifyCodeRes.toVerify() = VerifyCode(
     verify = false,
     message = message
 )

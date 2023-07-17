@@ -7,9 +7,11 @@ import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.MessageReq
 import org.cazait.network.model.dto.request.SignInReq
+import org.cazait.network.model.dto.request.VerifyCodeReq
 import org.cazait.network.model.dto.response.MessageRes
 import org.cazait.network.model.dto.response.RefreshTokenRes
 import org.cazait.network.model.dto.response.SignInRes
+import org.cazait.network.model.dto.response.VerifyCodeRes
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -57,6 +59,20 @@ class AuthRemoteData @Inject constructor(
             authService.postMessage(body)
         }) {
             is MessageRes -> {
+                DataResponse.Success(response)
+            }
+
+            else -> {
+                DataResponse.DataError(response as Int)
+            }
+        }
+    }
+
+    override suspend fun postVerifyCode(body: VerifyCodeReq): DataResponse<VerifyCodeRes> {
+        return when (val response = processCall {
+            authService.postVerifyCode(body)
+        }) {
+            is VerifyCodeRes -> {
                 DataResponse.Success(response)
             }
 

@@ -21,3 +21,8 @@ data class Message(
     val verify: Boolean = false,
     val message: String
 )
+
+data class VerifyCode(
+    val verify: Boolean = false,
+    val message: String
+)

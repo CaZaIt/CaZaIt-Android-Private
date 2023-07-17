@@ -12,6 +12,7 @@ import org.cazait.model.Message
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
+import org.cazait.model.VerifyCode
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject
@@ -37,6 +38,10 @@ class SignUpViewModel @Inject constructor(
     private val _phoneNumberProcess = MutableLiveData<Resource<Message>?>()
     val phoneNumberProcess: LiveData<Resource<Message>?>
         get() = _phoneNumberProcess
+
+    private val _verifyProcess = MutableLiveData<Resource<VerifyCode>?>()
+    val verifyProcess: LiveData<Resource<VerifyCode>?>
+        get() = _verifyProcess
 
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
     val showToast: LiveData<SingleEvent<Any>>
@@ -70,11 +75,20 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun postPhoneNumber(phoneNumber: String){
+    fun postPhoneNumber(phoneNumber: String) {
         viewModelScope.launch {
             _phoneNumberProcess.value = Resource.Loading()
-            authRepository.postMessage(phoneNumber).collect{
+            authRepository.postMessage(phoneNumber).collect {
                 _phoneNumberProcess.value = it
+            }
+        }
+    }
+
+    fun postVerifyCode(phoneNumber: String, verifyCode: Int) {
+        viewModelScope.launch {
+            _verifyProcess.value = Resource.Loading()
+            authRepository.postVerifyCode(phoneNumber, verifyCode).collect{
+                _verifyProcess.value = it
             }
         }
     }
