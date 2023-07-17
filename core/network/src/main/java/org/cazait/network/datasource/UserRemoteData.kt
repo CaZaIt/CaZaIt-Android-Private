@@ -1,10 +1,10 @@
 package org.cazait.network.datasource
 
-import org.cazait.network.model.dto.request.IsIdNumberDupReq
+import org.cazait.network.model.dto.request.IsUserIdDupReq
 import org.cazait.network.model.dto.request.IsNicknameDupReq
 import org.cazait.network.model.dto.request.SignUpReq
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.response.IsIdNumberDupRes
+import org.cazait.network.model.dto.response.IsUserIdDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
 import org.cazait.network.model.dto.response.SignUpRes
 import org.cazait.network.NetworkConnectivity
@@ -32,13 +32,13 @@ class UserRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postIsIdNumberDup(
-        body: IsIdNumberDupReq
-    ): DataResponse<IsIdNumberDupRes> {
+    override suspend fun postIsUserIdDup(
+        body: IsUserIdDupReq
+    ): DataResponse<IsUserIdDupRes> {
         return when (val response = processCall {
-            userService.postIsIdNumberDup(body)
+            userService.postIsUserIdDup(body)
         }) {
-            is IsIdNumberDupRes -> {
+            is IsUserIdDupRes -> {
                 DataResponse.Success(data = response)
             }
 

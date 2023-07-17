@@ -31,7 +31,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun refreshToken() {
         with(userPreferenceRepository.getUserPreference().first()) {
             val updatedRefreshToken = authRemoteData.getRefreshToken(
-                userId = id,
+                userId = uuid,
                 role = role,
                 accessToken = accessToken,
                 refreshToken = refreshToken
@@ -41,9 +41,9 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signIn(email: String, password: String): Flow<Resource<SignInInfo>> {
+    override suspend fun signIn(userId: String, password: String): Flow<Resource<SignInInfo>> {
         return flow {
-            val body = SignInReq(email, password)
+            val body = SignInReq(userId, password)
 
             when (val response = authRemoteData.postSignIn(body)) {
                 is DataResponse.Success -> {
@@ -55,8 +55,8 @@ class AuthRepositoryImpl @Inject constructor(
                     } else {
                         userPreferenceRepository.updateUserPreference(
                             isLoggedIn = true,
-                            id = signInInfoDTO.id,
-                            email = signInInfoDTO.email,
+                            uuid = signInInfoDTO.uuid,
+                            userId = signInInfoDTO.userId,
                             role = signInInfoDTO.role,
                             accessToken = signInInfoDTO.accessToken,
                             refreshToken = signInInfoDTO.refreshToken,
@@ -115,8 +115,8 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     private fun emptyInfo() = SignInInfo(
-        email = "",
-        id = "",
+        userId = "",
+        uuid = "",
         accessToken = "",
         refreshToken = "",
         role = ""

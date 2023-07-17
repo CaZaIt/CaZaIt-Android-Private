@@ -2,7 +2,7 @@ package org.cazait.network.model.dto.response
 
 import com.google.gson.annotations.SerializedName
 
-data class IsIdNumberDupRes(
+data class IsUserIdDupRes(
     @SerializedName("code")
     val code: Int,
     @SerializedName("result")

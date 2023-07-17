@@ -5,14 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
 import org.bmsk.data.repository.UserRepository
-import org.cazait.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
@@ -30,7 +26,7 @@ class ReviewEditViewModel @Inject constructor(
 
     fun sendReviewToServer(cafeId: Long) {
         viewModelScope.launch {
-            val userId = userRepository.getUserInfo().first().id
+            val userId = userRepository.getUserInfo().first().uuid
             val score = reviewScoreLiveData.value ?: return@launch
             val content = reviewContentLiveData.value ?: return@launch
 

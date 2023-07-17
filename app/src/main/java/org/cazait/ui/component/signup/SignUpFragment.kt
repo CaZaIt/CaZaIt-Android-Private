@@ -29,7 +29,7 @@ class SignUpFragment :
         R.layout.fragment_sign_up,
     ) {
 
-    private var idFlag = false
+    private var userIdFlag = false
     private var passwordFlag = false
     private var passwordCheckFlag = false
     private var nickNameFlag = false
@@ -39,7 +39,7 @@ class SignUpFragment :
     private val nickNameListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
         }
 
         override fun checkText(text: String) = checkNickName(text)
@@ -48,7 +48,7 @@ class SignUpFragment :
     private val passwordListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
         }
 
         override fun checkText(text: String) = checkPassword(text)
@@ -57,7 +57,7 @@ class SignUpFragment :
     private val passwordAgainListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
         }
 
         override fun checkText(text: String) = checkPasswordAgain(text)
@@ -66,16 +66,16 @@ class SignUpFragment :
     private val idListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
         }
 
-        override fun checkText(text: String) = checkid(text)
+        override fun checkText(text: String) = checkUserId(text)
     }
 
     private val phoneNumberListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
         }
 
         override fun checkText(text: String) = checkPhoneNumber(text)
@@ -84,7 +84,7 @@ class SignUpFragment :
     private val verifyCodeListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
         }
 
         override fun checkText(text: String) = checkVerifyCode(text)
@@ -245,18 +245,18 @@ class SignUpFragment :
 
     private fun initSignUpBtn() {
         binding.btnSignUpJoin.setOnClickListener {
-            val id = binding.etSignUpIdExample.text.toString()
+            val userId = binding.etSignUpIdExample.text.toString()
             val pw = binding.etSignUpPasswordInsert.text.toString()
             val repw = binding.etSignUpPasswordInsertMore.text.toString()
             val nickname = binding.etSignUpNickNameExample.text.toString()
             val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
             val verifyCode = binding.etSignUpVarificationCode.text.toString()
 
-            if (id == "" || pw == "" || repw == "" || nickname == "" || phoneNumber == "" || verifyCode == "")
+            if (userId == "" || pw == "" || repw == "" || nickname == "" || phoneNumber == "" || verifyCode == "")
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_all))
             else if (pw == repw) {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_suc))
-                viewModel.signUp(id, pw, phoneNumber, nickname)
+                viewModel.signUp(userId, pw, phoneNumber, nickname)
             } else
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_nopw))
         }
@@ -323,23 +323,23 @@ class SignUpFragment :
         return true
     }
 
-    private fun checkid(id: String) {
+    private fun checkUserId(userId: String) {
         when {
-            id.isEmpty() -> {
+            userId.isEmpty() -> {
                 binding.etSignUpIdExample.error =
                     resources.getString(R.string.sign_up_check_id)
-                idFlag = false
+                userIdFlag = false
             }
 
-            !idRegex(id) -> {
+            !idRegex(userId) -> {
                 binding.etSignUpIdExample.error =
                     resources.getString(R.string.sign_up_check_id_regex)
-                idFlag = false
+                userIdFlag = false
             }
 
             else -> {
                 binding.etSignUpIdExample.error = null
-                idFlag = true
+                userIdFlag = true
             }
         }
     }

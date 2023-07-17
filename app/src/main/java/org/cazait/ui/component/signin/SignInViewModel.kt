@@ -28,10 +28,10 @@ class SignInViewModel @Inject constructor(
     val showToast: LiveData<SingleEvent<Any>>
         get() = _showToast
 
-    fun doSignIn(email: String, password: String) {
+    fun doSignIn(userId: String, password: String) {
         viewModelScope.launch {
             _signInProcess.value = Resource.Loading()
-            _signInProcess.value = authRepository.signIn(email, password).first()
+            _signInProcess.value = authRepository.signIn(userId, password).first()
         }
     }
 

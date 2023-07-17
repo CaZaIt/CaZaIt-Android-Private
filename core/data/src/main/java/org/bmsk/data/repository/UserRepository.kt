@@ -9,13 +9,13 @@ import org.cazait.model.local.UserPreference
 
 interface UserRepository {
     suspend fun signUp(
-        idNumber: String,
+        userId: String,
         password: String,
         phoneNumber: String,
         nickname: String
     ): Flow<Resource<SignUpInfo>>
 
-    suspend fun isIdNumberDup(idNumber: String): Flow<Resource<IdDup>>
+    suspend fun isUserIdDup(userId: String): Flow<Resource<IdDup>>
     suspend fun isNicknameDup(nickname: String): Flow<Resource<NicknameDup>>
     suspend fun isLoggedIn(): Flow<Boolean>
     suspend fun getUserInfo(): Flow<UserPreference>

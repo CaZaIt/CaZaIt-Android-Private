@@ -2,10 +2,7 @@ package org.cazait.network.model.dto.request
 
 import com.google.gson.annotations.SerializedName
 
-data class SignUpReq(
+data class IsUserIdDupReq(
     @SerializedName("accountNumber")
-    val userId: String,
-    val password: String,
-    val phoneNumber: String,
-    val nickname: String,
+    val userId: String
 )

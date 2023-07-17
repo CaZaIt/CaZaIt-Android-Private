@@ -9,7 +9,7 @@ import org.bmsk.data.model.toIdNumberDup
 import org.bmsk.data.model.toNicknameDup
 import org.bmsk.data.model.toSignUpInfo
 import org.cazait.datastore.data.repository.UserPreferenceRepository
-import org.cazait.network.model.dto.request.IsIdNumberDupReq
+import org.cazait.network.model.dto.request.IsUserIdDupReq
 import org.cazait.network.model.dto.request.IsNicknameDupReq
 import org.cazait.network.model.dto.request.SignUpReq
 import org.cazait.model.IdDup
@@ -29,13 +29,13 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     override suspend fun signUp(
-        idNumber: String,
+        userId: String,
         password: String,
         phoneNumber: String,
         nickname: String
     ): Flow<Resource<SignUpInfo>> {
         return flow {
-            val body = SignUpReq(idNumber, password, phoneNumber, nickname)
+            val body = SignUpReq(userId, password, phoneNumber, nickname)
 
             when (val response = remoteData.postSignUp(body)) {
                 is DataResponse.Success -> {
@@ -51,11 +51,11 @@ class UserRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun isIdNumberDup(idNumber: String): Flow<Resource<IdDup>> {
+    override suspend fun isUserIdDup(userId: String): Flow<Resource<IdDup>> {
         return flow {
-            val body = IsIdNumberDupReq(idNumber)
+            val body = IsUserIdDupReq(userId)
 
-            when (val response = remoteData.postIsIdNumberDup(body)) {
+            when (val response = remoteData.postIsUserIdDup(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
                         emit(Resource.Success(it.toIdNumberDup()))
@@ -89,7 +89,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun isLoggedIn(): Flow<Boolean> {
         val userPreference = userPreferenceRepository.getUserPreference().first()
-        Log.e("UserRepository", "id = ${userPreference.id}")
+        Log.e("UserRepository", "id = ${userPreference.uuid}")
         return flow { emit(userPreference.isLoggedIn) }
     }
 

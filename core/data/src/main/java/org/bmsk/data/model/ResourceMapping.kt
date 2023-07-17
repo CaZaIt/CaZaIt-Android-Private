@@ -16,7 +16,7 @@ import org.cazait.model.VerifyCode
 import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
-import org.cazait.network.model.dto.response.IsIdNumberDupRes
+import org.cazait.network.model.dto.response.IsUserIdDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
 import org.cazait.network.model.dto.response.MessageRes
 import org.cazait.network.model.dto.response.ReviewDTO
@@ -114,16 +114,16 @@ fun ReviewDTO.toCafeReviews() = CafeReviews(
 )
 
 fun SignInInfoDTO.toSignInInfo() = SignInInfo(
-    email = email,
-    id = id,
+    userId = userId,
+    uuid,
     accessToken = accessToken,
     refreshToken = refreshToken,
     role = role,
 )
 
 fun SignUpInfoDTO.toSignUpInfo() = SignUpInfo(
-    id = id,
-    idNumber = idNumber,
+    uuid = uuid,
+    userId = userId,
     password = password,
     phoneNumber,
     nickname = nickname,
@@ -134,7 +134,7 @@ fun IsNicknameDupRes.toNicknameDup() = NicknameDup(
     isDup = data == null,
 )
 
-fun IsIdNumberDupRes.toIdNumberDup() = IdDup(
+fun IsUserIdDupRes.toIdNumberDup() = IdDup(
     message = message,
     isDup = data == null,
 )

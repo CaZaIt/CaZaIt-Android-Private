@@ -59,7 +59,7 @@ class SignUpViewModel @Inject constructor(
     fun isIdDup(id: String) {
         viewModelScope.launch {
             _idDupProcess.value = Resource.Loading()
-            userRepository.isIdNumberDup(id)
+            userRepository.isUserIdDup(id)
                 .collect {
                     _idDupProcess.value = it
                 }
