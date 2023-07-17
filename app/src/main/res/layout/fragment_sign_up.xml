@@ -52,7 +52,7 @@
             app:layout_constraintTop_toTopOf="@+id/iv_sign_up_arrow_back" />
 
         <TextView
-            android:id="@+id/tv_sign_up_email"
+            android:id="@+id/tv_sign_up_id"
             style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view_sign_up_divide" />
 
         <EditText
-            android:id="@+id/et_sign_up_email_example"
+            android:id="@+id/et_sign_up_id_example"
             style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -79,13 +79,13 @@
             android:inputType="textEmailAddress"
             android:paddingStart="17dp"
             android:textColorHint="@color/edit_text_hint"
-            app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_email_double_check"
+            app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_id_double_check"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_id"
             tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_sign_up_email_double_check"
+            android:id="@+id/btn_sign_up_id_double_check"
             style="@style/TextValue_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
             android:textColor="@color/main_white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_id"
             tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         <TextView
@@ -111,7 +111,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_sign_up_email_example" />
+            app:layout_constraintTop_toBottomOf="@+id/et_sign_up_id_example" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_sign_up_password_insert"

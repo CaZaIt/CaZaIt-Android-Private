@@ -9,7 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentSignUpBinding
-import org.cazait.model.EmailDup
+import org.cazait.model.IdDup
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
@@ -27,15 +27,15 @@ class SignUpFragment :
         R.layout.fragment_sign_up,
     ) {
 
-    private var nickNameFlag = false
+    private var idFlag = false
     private var passwordFlag = false
     private var passwordCheckFlag = false
-    private var emailFlag = false
+    private var nickNameFlag = false
 
     private val nickNameListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && emailFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag
         }
 
         override fun checkText(text: String) = checkNickName(text)
@@ -44,7 +44,7 @@ class SignUpFragment :
     private val passwordListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && emailFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag
         }
 
         override fun checkText(text: String) = checkPassword(text)
@@ -53,19 +53,19 @@ class SignUpFragment :
     private val passwordAgainListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && emailFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag
         }
 
         override fun checkText(text: String) = checkPasswordAgain(text)
     }
 
-    private val emailListener = object : CheckTextWatcher() {
+    private val idListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && emailFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && idFlag
         }
 
-        override fun checkText(text: String) = checkEmail(text)
+        override fun checkText(text: String) = checkid(text)
     }
 
     override fun initAfterBinding() {
@@ -75,7 +75,7 @@ class SignUpFragment :
 
     override fun initView() {
         viewModel.initViewModel()
-        initEmailBtn()
+        initIdBtn()
         initNicknameBtn()
         initSignUpBtn()
         initBackBtn()
@@ -84,7 +84,7 @@ class SignUpFragment :
 
     private fun observeViewModel() {
         observe(viewModel.signUpProcess, ::handleSignUpResult)
-        observe(viewModel.emailDupProcess, ::handleEmailDupResult)
+        observe(viewModel.idDupProcess, ::handleidDupResult)
         observe(viewModel.nickDupProcess, ::handleNickDupResult)
         observeToast(viewModel.showToast)
     }
@@ -112,7 +112,7 @@ class SignUpFragment :
         }
     }
 
-    private fun handleEmailDupResult(status: Resource<EmailDup>?) {
+    private fun handleidDupResult(status: Resource<IdDup>?) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignup.toVisible()
@@ -163,7 +163,7 @@ class SignUpFragment :
     }
 
     private fun initEditTextListener() {
-        binding.etSignUpEmailExample.addTextChangedListener(emailListener)
+        binding.etSignUpIdExample.addTextChangedListener(idListener)
         binding.etSignUpPasswordInsert.addTextChangedListener(passwordListener)
         binding.etSignUpPasswordInsertMore.addTextChangedListener(passwordAgainListener)
         binding.etSignUpNickNameExample.addTextChangedListener(nickNameListener)
@@ -171,25 +171,26 @@ class SignUpFragment :
 
     private fun initSignUpBtn() {
         binding.btnSignUpJoin.setOnClickListener {
-            val email = binding.etSignUpEmailExample.text.toString()
+            val id = binding.etSignUpIdExample.text.toString()
             val pw = binding.etSignUpPasswordInsert.text.toString()
             val repw = binding.etSignUpPasswordInsertMore.text.toString()
             val nickname = binding.etSignUpNickNameExample.text.toString()
+            val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
 
-            if (email == "" || pw == "" || repw == "" || nickname == "")
+            if (id == "" || pw == "" || repw == "" || nickname == "")
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_all))
             else if (pw == repw) {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_suc))
-                viewModel.signUp(email, pw, nickname)
+                viewModel.signUp(id, pw, phoneNumber, nickname)
             } else
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_nopw))
         }
     }
 
-    private fun initEmailBtn() {
-        binding.btnSignUpEmailDoubleCheck.setOnClickListener {
-            val email = binding.etSignUpEmailExample.text.toString()
-            viewModel.isEmailDup(email)
+    private fun initIdBtn() {
+        binding.btnSignUpIdDoubleCheck.setOnClickListener {
+            val id = binding.etSignUpIdExample.text.toString()
+            viewModel.isIdDup(id)
         }
     }
 
@@ -208,9 +209,10 @@ class SignUpFragment :
         }
     }
 
-    private fun nicknameRegex(id: String): Boolean =
-        id.matches("^[가-힣a-zA-Z|d]{3,15}$".toRegex())
-
+    private fun idRegex(id: String): Boolean {
+        val idRegex = """^[0-9a-z]{5,20}$""".toRegex()
+        return idRegex.matches(id)
+    }
 
     private fun passwordRegex(password: String): Boolean =
         password.matches("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&.])[A-Za-z[0-9]\$@\$!%*#?&.]{8,16}\$".toRegex())
@@ -218,12 +220,8 @@ class SignUpFragment :
     private fun passwordCheckRegex(passwordCheck: String): Boolean =
         passwordCheck.matches("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&.])[A-Za-z[0-9]\$@\$!%*#?&.]{8,16}\$".toRegex())
 
-
-    private fun emailRegex(email: String): Boolean {
-        val regexEmail =
-            """^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})${'$'}""".toRegex()
-        return regexEmail.matches(email)
-    }
+    private fun nicknameRegex(id: String): Boolean =
+        id.matches("^[가-힣a-zA-Z|d]{3,15}$".toRegex())
 
     private fun isInvalidEditTextPassword(): Boolean {
         val etInsert = binding.etSignUpPasswordInsert.text.toString()
@@ -234,23 +232,23 @@ class SignUpFragment :
         return true
     }
 
-    private fun checkEmail(email: String) {
+    private fun checkid(id: String) {
         when {
-            email.isEmpty() -> {
-                binding.etSignUpEmailExample.error =
-                    resources.getString(R.string.sign_up_check_email)
-                emailFlag = false
+            id.isEmpty() -> {
+                binding.etSignUpIdExample.error =
+                    resources.getString(R.string.sign_up_check_id)
+                idFlag = false
             }
 
-            !emailRegex(email) -> {
-                binding.etSignUpEmailExample.error =
-                    resources.getString(R.string.sign_up_check_email_regex)
-                emailFlag = false
+            !idRegex(id) -> {
+                binding.etSignUpIdExample.error =
+                    resources.getString(R.string.sign_up_check_id_regex)
+                idFlag = false
             }
 
             else -> {
-                binding.etSignUpEmailExample.error = null
-                emailFlag = true
+                binding.etSignUpIdExample.error = null
+                idFlag = true
             }
         }
     }

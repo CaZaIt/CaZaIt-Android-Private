@@ -33,8 +33,8 @@
     <string name="sign_up_req_suc">가입되었습니다.</string>
     <string name="sign_up_req_nopw">비밀번호가 일치하지 않습니다.</string>
 
-    <string name="sign_up_check_email">이메일을 입력해주세요.</string>
-    <string name="sign_up_check_email_regex">이메일 양식이 맞지 않습니다.</string>
+    <string name="sign_up_check_id">아이디를 입력해주세요.</string>
+    <string name="sign_up_check_id_regex">아이디 양식이 맞지 않습니다.</string>
 
     <string name="sign_up_check_nick">닉네임을 입력해주세요.</string>
     <string name="sign_up_check_nick_regex">한글 또는 영어로 3~15자로 조합해주세요.</string>

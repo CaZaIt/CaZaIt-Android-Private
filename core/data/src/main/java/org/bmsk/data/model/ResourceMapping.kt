@@ -5,7 +5,7 @@ import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import org.cazait.model.Cafe
 import org.cazait.model.CafeMenu
 import org.cazait.model.CafeReviews
-import org.cazait.model.EmailDup
+import org.cazait.model.IdDup
 import org.cazait.model.FavoriteCafe
 import org.cazait.model.NicknameDup
 import org.cazait.model.RecentlyViewedCafe
@@ -119,7 +119,7 @@ fun SignInInfoDTO.toSignInInfo() = SignInInfo(
 
 fun SignUpInfoDTO.toSignUpInfo() = SignUpInfo(
     id = id,
-    email = email,
+    idNumber = idNumber,
     password = password,
     nickname = nickname,
 )
@@ -129,7 +129,7 @@ fun IsNicknameDupRes.toNicknameDup() = NicknameDup(
     isDup = data == null,
 )
 
-fun IsIdNumberDupRes.toEmailDup() = EmailDup(
+fun IsIdNumberDupRes.toIdNumberDup() = IdDup(
     message = message,
     isDup = data == null,
 )

@@ -2,12 +2,12 @@ package org.cazait.model
 
 data class SignUpInfo(
     val id: String,
-    val email: String,
+    val idNumber: String,
     val password: String,
     val nickname: String,
 )
 
-data class EmailDup(
+data class IdDup(
     val isDup: Boolean = false,
     val message: String,
 )
