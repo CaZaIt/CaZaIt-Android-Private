@@ -12,6 +12,7 @@ import org.cazait.model.Cafe
 
 open class CafeInfoDialogFragment(
     private val cafe: Cafe,
+    private val navEvent: (() -> (Unit))? = null,
     private val cancelEvent: (() -> (Unit))? = null
 ) : DialogFragment() {
     private var _binding: DialogFragmentCafeMapBinding? = null
@@ -33,6 +34,10 @@ open class CafeInfoDialogFragment(
 
         binding.ivCancel.setOnClickListener {
             dialog.cancel()
+        }
+        binding.tvState.setOnClickListener {
+            dialog.cancel()
+            navEvent?.invoke()
         }
 
         dialog.setCancelable(true)

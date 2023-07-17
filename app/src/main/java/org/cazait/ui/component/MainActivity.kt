@@ -18,6 +18,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     MainViewModel::class.java,
     R.layout.activity_main,
 ) {
+    private val hiddenBottomNavFragments = listOf(
+        R.id.signInFragment,
+        R.id.signupFragment,
+        R.id.searchFragment
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -35,16 +40,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     private fun initBottomNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
         binding.bnvMenu.setupWithNavController(navHostFragment.navController)
+
         navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.signInFragment || destination.id == R.id.signupFragment) {
+            if (destination.id in hiddenBottomNavFragments) {
                 binding.bnvMenu.visibility = View.GONE
             } else {
                 binding.bnvMenu.visibility = View.VISIBLE
             }
         }
         binding.bnvMenu.itemIconTintList = null
-
     }
-
 }

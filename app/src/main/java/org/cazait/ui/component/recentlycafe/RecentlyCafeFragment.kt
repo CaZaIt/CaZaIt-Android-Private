@@ -1,6 +1,5 @@
 package org.cazait.ui.component.recentlycafe
 
-import android.util.Log
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
@@ -8,7 +7,6 @@ import org.cazait.databinding.FragmentRecentlyCafeBinding
 import org.cazait.model.Cafe
 import org.cazait.ui.adapter.RecentlyViewedVerticalAdapter
 import org.cazait.ui.base.BaseFragment
-import org.cazait.ui.component.cafeinfo.CafeInfoActivity
 import org.cazait.utils.observe
 
 @AndroidEntryPoint
@@ -50,7 +48,10 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
     }
 
     private fun navigateToCafeInfo(cafe: Cafe) {
-        val intent = CafeInfoActivity.cafeInfoIntent(requireContext(), cafe)
-        startActivity(intent)
+        findNavController().navigate(
+            RecentlyCafeFragmentDirections.actionRecentlyCafeFragmentToCafeInfoFragment(
+                cafe
+            )
+        )
     }
 }

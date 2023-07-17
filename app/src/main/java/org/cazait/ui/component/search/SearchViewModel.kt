@@ -31,10 +31,6 @@ class SearchViewModel @Inject constructor(
     val cafeSearchData: LiveData<Resource<Cafes>>
         get() = _cafeSearchData
 
-    private val _cafeSearchResultData = MutableLiveData<Resource<Cafes>>()
-    val cafeSearchResultData: LiveData<Resource<Cafes>>
-        get() = _cafeSearchResultData
-
     @SuppressLint("MissingPermission")
     fun initLocation() {
         if (permissionUtil.hasLocationPermissions()) {
@@ -57,18 +53,6 @@ class SearchViewModel @Inject constructor(
                 latitude = _locationLiveData.value?.latitude.toString()
             ).collect {
                 _cafeSearchData.value = it
-            }
-        }
-    }
-
-    fun getCafeSearchResult(text: String) {
-        viewModelScope.launch {
-            cafeRepository.getCafeSearch(
-                cafeName = text,
-                longitude = _locationLiveData.value?.longitude.toString(),
-                latitude = _locationLiveData.value?.latitude.toString()
-            ).collect {
-                _cafeSearchResultData.value = it
             }
         }
     }

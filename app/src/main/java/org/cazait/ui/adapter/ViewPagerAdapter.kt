@@ -4,11 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import org.cazait.model.Cafe
-import org.cazait.ui.component.cafeinfo.CafeInfoActivity
-import org.cazait.ui.component.cafeinfo.CafeInfoViewModel
-import org.cazait.ui.component.cafeinfo.detail.CafeInfoMenuFragment
-import org.cazait.ui.component.cafeinfo.detail.CafeInfoReviewFragment
 
 class ViewPagerAdapter(
     fragmentManager: FragmentManager,

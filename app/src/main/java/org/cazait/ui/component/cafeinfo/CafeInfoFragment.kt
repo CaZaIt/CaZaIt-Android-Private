@@ -1,60 +1,85 @@
 package org.cazait.ui.component.cafeinfo
 
-import android.content.Context
-import android.content.Intent
-import android.os.Build
+import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.ActivityCafeInfoBinding
+import org.cazait.databinding.FragmentCafeInfoBinding
 import org.cazait.model.Cafe
 import org.cazait.ui.adapter.CafeImgAdapter
 import org.cazait.ui.adapter.ViewPagerAdapter
-import org.cazait.ui.base.BaseActivity
 import org.cazait.ui.component.cafeinfo.detail.CafeInfoMenuFragment
 import org.cazait.ui.component.cafeinfo.detail.CafeInfoReviewFragment
 
 @AndroidEntryPoint
-class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel>(
-    CafeInfoViewModel::class.java,
-    R.layout.activity_cafe_info
-) {
+class CafeInfoFragment : Fragment() {
+    private val navArgs: CafeInfoFragmentArgs by navArgs()
     private lateinit var cafe: Cafe
+    private var _binding: FragmentCafeInfoBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: CafeInfoViewModel by viewModels()
     private lateinit var viewPagerImageAdapter: CafeImgAdapter
     private lateinit var fragmentList: List<Fragment>
 
-    override fun initView() {
-        cafe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra(CAFE, Cafe::class.java)
-        } else {
-            intent.getSerializableExtra(CAFE) as Cafe
-        } ?: return
-        val isFavoriteCafe = intent.getBooleanExtra(IS_FAVORITE_CAFE, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        cafe = navArgs.cafe
+        _binding = DataBindingUtil.inflate<FragmentCafeInfoBinding?>(
+            inflater,
+            R.layout.fragment_cafe_info,
+            container,
+            false
+        ).apply {
+            cafe = this@CafeInfoFragment.cafe
+            viewModel = this@CafeInfoFragment.viewModel
+        }
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initView() {
         setupCafe()
         setupViewPager()
         setupButtons()
-        initViewModel(cafe, isFavoriteCafe)
+        initViewModel(cafe, cafe.isFavorite)
     }
-
-    override fun initAfterBinding() {}
 
     private fun setupCafe() {
         with(binding) {
-            cafe = this@CafeInfoActivity.cafe
-            viewModel = this@CafeInfoActivity.viewModel
+            cafe = this.cafe
+            viewModel = this.viewModel
             fragmentList =
                 listOf(
                     CafeInfoMenuFragment(
-                        this@CafeInfoActivity.cafe,
-                        this@CafeInfoActivity.viewModel
+                        this@CafeInfoFragment.cafe,
+                        this@CafeInfoFragment.viewModel
                     ),
                     CafeInfoReviewFragment(
-                        this@CafeInfoActivity.cafe,
-                        this@CafeInfoActivity.viewModel
+                        this@CafeInfoFragment.cafe,
+                        this@CafeInfoFragment.viewModel
                     )
                 )
         }
@@ -74,7 +99,7 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     private fun initBackPressButton() {
         binding.imgBack.apply {
             bringToFront()
-            setOnClickListener { finish() }
+            setOnClickListener { findNavController().popBackStack() }
         }
     }
 
@@ -83,12 +108,12 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
     }
 
     private fun initViewPagerImageAdapter(images: List<String>) {
-        viewPagerImageAdapter = CafeImgAdapter(this, images)
+        viewPagerImageAdapter = CafeImgAdapter(requireContext(), images)
         binding.vpImg.adapter = viewPagerImageAdapter
     }
 
     private fun initFragmentViewPager() {
-        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
+        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, fragmentList)
 
         binding.vpFragment.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.vpFragment) { tab, position ->
@@ -117,21 +142,5 @@ class CafeInfoActivity : BaseActivity<ActivityCafeInfoBinding, CafeInfoViewModel
 
     private fun initViewModel(cafe: Cafe, isFavoriteCafe: Boolean) {
         viewModel.initViewModel(cafe, isFavoriteCafe)
-    }
-
-    companion object {
-        private const val CAFE = "cafe"
-        private const val IS_FAVORITE_CAFE = "isFavoriteCafe"
-
-        fun cafeInfoIntent(
-            context: Context,
-            cafe: Cafe,
-            isFavoriteCafe: Boolean = false,
-        ): Intent {
-            return Intent(context, CafeInfoActivity::class.java).apply {
-                putExtra(CAFE, cafe)
-                putExtra(IS_FAVORITE_CAFE, isFavoriteCafe)
-            }
-        }
     }
 }
