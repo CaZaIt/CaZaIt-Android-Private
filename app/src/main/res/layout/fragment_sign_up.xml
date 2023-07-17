@@ -248,7 +248,7 @@
             android:background="@drawable/rectangle_white_r50"
             android:hint="@string/sign_up_hint_phone_number"
             android:importantForAutofill="no"
-            android:inputType="text"
+            android:inputType="number"
             android:paddingStart="17dp"
             android:textColorHint="@color/edit_text_hint"
             app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_send_varification_code"
