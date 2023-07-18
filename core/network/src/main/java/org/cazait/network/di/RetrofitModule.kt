@@ -1,17 +1,21 @@
 package org.cazait.network.di
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.cazait.datastore.data.repository.UserPreferenceRepository
+import org.cazait.model.local.UserPreference
 import org.cazait.network.Network
 import org.cazait.network.NetworkConnectivity
 import retrofit2.Retrofit
@@ -100,20 +104,19 @@ object RetrofitModule {
     @Singleton
     @Authenticated
     fun providesHeaderInterceptorAuth(userPreferenceRepository: UserPreferenceRepository): Interceptor {
-        return Interceptor { chain ->
-            var accessToken: String
-            var refreshToken: String
+        val user = runBlocking(Dispatchers.IO) {
+            kotlin.runCatching {
+                userPreferenceRepository.getUserPreference().first()
+            }.getOrDefault(UserPreference.getDefaultInstance())
+        }
 
-            runBlocking {
-                accessToken = userPreferenceRepository.getAccessToken()
-                refreshToken = userPreferenceRepository.getRefreshToken()
-            }
+        return Interceptor { chain ->
+            var accessToken = user.accessToken
 
             val original = chain.request()
             val request = original.newBuilder()
                 .header(CONTENT_TYPE, CONTENT_TYPE_VALUE)
                 .header("Authorization", "Bearer $accessToken")
-                .header("refreshToken", refreshToken)
                 .method(original.method, original.body)
                 .build()
 
@@ -126,7 +129,7 @@ object RetrofitModule {
     @Authenticated
     fun providesOkHttpClientAuth(
         logger: HttpLoggingInterceptor,
-        headerInterceptor: Interceptor,
+        @Authenticated headerInterceptor: Interceptor,
     ): OkHttpClient.Builder {
         return OkHttpClient.Builder().apply {
             addInterceptor(headerInterceptor)
@@ -141,7 +144,7 @@ object RetrofitModule {
     @Singleton
     @Authenticated
     fun providesRetrofitAuth(
-        client: OkHttpClient.Builder,
+        @Authenticated client: OkHttpClient.Builder,
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
