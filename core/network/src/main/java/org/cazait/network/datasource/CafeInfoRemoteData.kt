@@ -2,7 +2,7 @@ package org.cazait.network.datasource
 
 import org.cazait.network.NetworkConnectivity
 import org.cazait.network.api.unauth.CafeService
-import org.cazait.network.api.auth.AuthedService
+import org.cazait.network.api.auth.ReviewService
 import org.cazait.network.di.Authenticated
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class CafeInfoRemoteData @Inject constructor(
     private val cafeService: CafeService,
-    @Authenticated private val cafeServiceAuth: AuthedService,
+    @Authenticated private val cafeServiceAuth: ReviewService,
     private val networkConnectivity: NetworkConnectivity,
 ) : CafeInfoRemoteDataSource {
     override suspend fun getCafe(cafeId: Long): DataResponse<CafeResTemp> {

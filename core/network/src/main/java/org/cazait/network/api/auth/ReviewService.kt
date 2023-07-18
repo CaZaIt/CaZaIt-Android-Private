@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface AuthedService {
+interface ReviewService {
     @POST("/api/reviews/user/{userId}/cafe/{cafeId}")
     suspend fun postReviewAuth(
         @Path("userId") userId: String,
