@@ -15,15 +15,6 @@ interface CafeService {
         @Path("cafeId") cafeId: Long,
     ): Response<CafeResTemp>
 
-    @GET("/api/cafes/all/user/{userId}")
-    suspend fun getListCafes(
-        @Path("userId") userId: String,
-        @Query("longitude") longitude: String,
-        @Query("latitude") latitude: String,
-        @Query("sort") sort: String,
-        @Query("limit") limit: String,
-    ): Response<ListCafesRes>
-
     @GET("api/cafes/all")
     suspend fun getListCafesWithGuest(
         @Query("longitude") longitude: String,

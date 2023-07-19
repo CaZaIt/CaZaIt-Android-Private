@@ -73,7 +73,7 @@ class CafeListViewModel @Inject constructor(
         updateSignInState()
         if (_signInStateFlow.value) {
             val uuid = userRepository.getUserInfo().first().uuid
-            Log.d("유저 uuid", uuid)
+            Log.d("CafeListViewModel 유저 uuid", uuid)
             return uuid
         } else {
             return null

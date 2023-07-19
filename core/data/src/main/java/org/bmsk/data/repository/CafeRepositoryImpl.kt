@@ -65,6 +65,7 @@ class CafeRepositoryImpl @Inject constructor(
     ): Flow<Resource<Cafes>> {
         val query =
             ListCafesReq(latitude = latitude, longitude = longitude, sort = sort, limit = limit)
+        Log.d("CafeRepository 유저 ID", userId.toString())
 
         return flow {
             val response = if (userId == null) {
