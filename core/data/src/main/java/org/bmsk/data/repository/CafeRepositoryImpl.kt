@@ -87,9 +87,9 @@ class CafeRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun getListFavorites(userId: String): Flow<Resource<FavoriteCafes>> {
+    override suspend fun getListFavoritesAuth(userId: String): Flow<Resource<FavoriteCafes>> {
         return flow {
-            when (val response = cafeListRemoteData.getListFavorites(userId)) {
+            when (val response = cafeListRemoteData.getListFavoritesAuth(userId)) {
                 is DataResponse.Success -> {
                     val fc = FavoriteCafes(
                         response.data?.favorites?.map {
@@ -153,7 +153,8 @@ class CafeRepositoryImpl @Inject constructor(
         content: String
     ): Flow<Resource<String>> {
         return flow {
-            when (val response = cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
+            when (val response =
+                cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
                 is DataResponse.Success -> {
                     val message: String =
                         response.data?.message ?: ""
@@ -200,26 +201,46 @@ class CafeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun postFavoriteCafe(
+    override suspend fun postFavoriteCafeAuth(
         userId: String,
         cafe: FavoriteCafe
     ): Boolean {
-        return cafeInfoRemoteData.postFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
+        return try {
+            cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId) is DataResponse.Success
+            true
+        } catch (e: IOException) {
+            false
+        }
     }
 
-    override suspend fun postFavoriteCafe(
+    override suspend fun postFavoriteCafeAuth(
         userId: String,
         cafe: Cafe
     ): Boolean {
-        return cafeInfoRemoteData.postFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
+        return try {
+            cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId) is DataResponse.Success
+            true
+        } catch (e: IOException) {
+            false
+        }
     }
 
-    override suspend fun remoteDeleteFavoriteCafe(userId: String, cafe: Cafe): Boolean {
-        return cafeInfoRemoteData.deleteFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
+    override suspend fun deleteFavoriteCafeAuth(userId: String, cafe: Cafe): Boolean {
+        return try {
+            cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId) is DataResponse.Success
+            true
+        } catch (e: IOException) {
+            false
+        }
     }
 
-    override suspend fun remoteDeleteFavoriteCafe(userId: String, cafe: FavoriteCafe): Boolean {
-        return cafeInfoRemoteData.deleteFavoriteCafe(userId, cafe.cafeId) is DataResponse.Success
+    override suspend fun deleteFavoriteCafeAuth(userId: String, cafe: FavoriteCafe): Boolean {
+        return try {
+            cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId) is DataResponse.Success
+            true
+        } catch (e: IOException) {
+            false
+        }
     }
 
     override suspend fun localDeleteFavoriteCafe(cafe: Cafe): Boolean {

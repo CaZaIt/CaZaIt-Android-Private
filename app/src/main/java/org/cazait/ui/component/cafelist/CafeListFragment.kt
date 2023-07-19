@@ -146,7 +146,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         findNavController().navigate(CafeListFragmentDirections.actionCafeListFragmentToSearchFragment())
     }
 
-    private fun handleHorizontalCafeList(status: Resource<FavoriteCafes>) {
+    private fun handleHorizontalCafeList(status: Resource<FavoriteCafes>?) {
         when (status) {
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
@@ -154,6 +154,8 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
                 horizontalAdapter::submitList,
                 status.data?.list ?: emptyList()
             )
+
+            else -> {}
         }
     }
 

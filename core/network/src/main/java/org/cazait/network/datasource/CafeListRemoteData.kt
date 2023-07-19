@@ -1,7 +1,9 @@
 package org.cazait.network.datasource
 
 import org.cazait.network.NetworkConnectivity
+import org.cazait.network.api.auth.FavoriteService
 import org.cazait.network.api.unauth.CafeService
+import org.cazait.network.di.Authenticated
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.ListCafesReq
@@ -14,6 +16,7 @@ import javax.inject.Inject
 
 class CafeListRemoteData @Inject constructor(
     private val cafeService: CafeService,
+    @Authenticated private val favoriteCafeService: FavoriteService,
     private val networkConnectivity: NetworkConnectivity,
 ) : CafeListRemoteDataSource {
     override suspend fun getListCafes(
@@ -65,9 +68,9 @@ class CafeListRemoteData @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getListFavorites(userId: String): DataResponse<ListFavoritesRes> {
+    override suspend fun getListFavoritesAuth(userId: String): DataResponse<ListFavoritesRes> {
         return when (val response = processCall {
-            cafeService.getListFavorites(userId)
+            favoriteCafeService.getListFavoritesAuth(userId)
         }) {
             is ListFavoritesRes -> {
                 DataResponse.Success(response)

@@ -1,7 +1,6 @@
 package org.bmsk.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import org.cazait.database.dao.RecentlyViewedCafeDAO
 import org.cazait.model.Cafe
 import org.cazait.model.CafeMenus
 import org.cazait.model.CafeReviews
@@ -13,7 +12,7 @@ import org.cazait.model.Resource
 
 interface CafeRepository {
     suspend fun getCafeById(cafeId: Long): Flow<Resource<Cafe>>
-    suspend fun getListFavorites(userId: String): Flow<Resource<FavoriteCafes>>
+    suspend fun getListFavoritesAuth(userId: String): Flow<Resource<FavoriteCafes>>
     suspend fun getListCafes(
         userId: String?,
         latitude: String,
@@ -42,10 +41,10 @@ interface CafeRepository {
 
     suspend fun updateFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun loadFavoriteCafes(): Flow<Resource<FavoriteCafes>>
-    suspend fun postFavoriteCafe(userId: String, cafe: FavoriteCafe): Boolean
-    suspend fun postFavoriteCafe(userId: String, cafe: Cafe): Boolean
-    suspend fun remoteDeleteFavoriteCafe(userId: String, cafe: Cafe): Boolean
-    suspend fun remoteDeleteFavoriteCafe(userId: String, cafe: FavoriteCafe): Boolean
+    suspend fun postFavoriteCafeAuth(userId: String, cafe: FavoriteCafe): Boolean
+    suspend fun postFavoriteCafeAuth(userId: String, cafe: Cafe): Boolean
+    suspend fun deleteFavoriteCafeAuth(userId: String, cafe: Cafe): Boolean
+    suspend fun deleteFavoriteCafeAuth(userId: String, cafe: FavoriteCafe): Boolean
     suspend fun localDeleteFavoriteCafe(cafe: Cafe): Boolean
     suspend fun localDeleteFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun insertRecentlyViewedCafe(cafe: Cafe): Boolean

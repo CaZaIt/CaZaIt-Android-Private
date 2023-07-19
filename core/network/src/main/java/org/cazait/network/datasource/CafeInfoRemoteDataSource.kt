@@ -25,7 +25,6 @@ interface CafeInfoRemoteDataSource {
         score: Int,
         content: String,
     ): DataResponse<CafeReviewPostRes>
-
-    suspend fun postFavoriteCafe(userId: String, cafeId: Long): DataResponse<PostFavoriteCafeRes>
-    suspend fun deleteFavoriteCafe(userId: String, cafeId: Long): DataResponse<DeleteFavoriteCafeRes>
+    suspend fun postFavoriteCafeAuth(userId: String, cafeId: Long): DataResponse<PostFavoriteCafeRes>
+    suspend fun deleteFavoriteCafeAuth(userId: String, cafeId: Long): DataResponse<DeleteFavoriteCafeRes>
 }

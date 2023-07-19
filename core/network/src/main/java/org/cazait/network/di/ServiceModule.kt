@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.cazait.network.api.auth.FavoriteService
 import org.cazait.network.api.unauth.AuthService
 import org.cazait.network.api.auth.ReviewService
 import org.cazait.network.api.unauth.CafeService
@@ -42,20 +43,20 @@ object ServiceModule {
     @Provides
     @Singleton
     @Authenticated
-    fun providesCafeServiceAuth(
+    fun providesReviewServiceAuth(
         @Authenticated retrofit: Retrofit
     ): ReviewService {
         return retrofit.create(ReviewService::class.java)
     }
 
-//    @Provides
-//    @Singleton
-//    @Authenticated
-//    fun providesUserServiceAuth(
-//        @Authenticated retrofit: Retrofit
-//    ): UserService {
-//        return retrofit.create(UserService::class.java)
-//    }
+    @Provides
+    @Singleton
+    @Authenticated
+    fun providesFavoriteServiceAuth(
+        @Authenticated retrofit: Retrofit
+    ): FavoriteService {
+        return retrofit.create(FavoriteService::class.java)
+    }
 //
 //    @Provides
 //    @Singleton

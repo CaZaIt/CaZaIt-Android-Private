@@ -7,7 +7,7 @@ import org.cazait.network.model.dto.response.ListFavoritesRes
 import org.cazait.network.model.dto.response.PostFavoriteCafeRes
 
 interface CafeListRemoteDataSource {
-    suspend fun getListFavorites(userId: String): DataResponse<ListFavoritesRes>
+    suspend fun getListFavoritesAuth(userId: String): DataResponse<ListFavoritesRes>
     suspend fun getListCafes(userId: String, query: ListCafesReq): DataResponse<ListCafesRes>
     suspend fun getListCafesWithGuest(query: ListCafesReq): DataResponse<ListCafesRes>
     suspend fun postFavoriteCafe(userId: String, cafeId: Long): DataResponse<PostFavoriteCafeRes>
