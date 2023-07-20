@@ -7,7 +7,7 @@ data class CafeMenus(
 data class CafeMenu(
     val menuId: Long,
     val menuName: String,
-    val menuDesc: String,
+    val menuDesc: String?,
     val menuPrice: Int,
     val image: String
 ) {

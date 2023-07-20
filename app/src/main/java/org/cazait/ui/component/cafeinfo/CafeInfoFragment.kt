@@ -1,5 +1,6 @@
 package org.cazait.ui.component.cafeinfo
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,6 +31,11 @@ class CafeInfoFragment : Fragment() {
     private val viewModel: CafeInfoViewModel by viewModels()
     private lateinit var viewPagerImageAdapter: CafeImgAdapter
     private lateinit var fragmentList: List<Fragment>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.updateSignInState()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -131,10 +137,20 @@ class CafeInfoFragment : Fragment() {
             bringToFront()
             setOnClickListener {
                 Log.e("ivFavor", "onclick")
-                if (viewModel.isFavoriteCafe.value) {
-                    viewModel.deleteFavoriteCafe()
+                val isLoggedIn = viewModel.signInStateFlow.value
+                if (isLoggedIn) {
+                    if (viewModel.isFavoriteCafe.value) {
+                        viewModel.deleteFavoriteCafeAuth()
+                    } else {
+                        viewModel.postFavoriteCafeAuth()
+                    }
                 } else {
-                    viewModel.saveFavoriteCafe()
+                    AlertDialog.Builder(requireContext())
+                        .setMessage(resources.getString(R.string.need_login))
+                        .setPositiveButton("확인") { dialog, which ->
+                            dialog.dismiss()
+                        }
+                        .show()
                 }
             }
         }

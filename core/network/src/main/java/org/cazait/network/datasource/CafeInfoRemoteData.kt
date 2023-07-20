@@ -1,8 +1,9 @@
 package org.cazait.network.datasource
 
 import org.cazait.network.NetworkConnectivity
+import org.cazait.network.api.auth.FavoriteService
 import org.cazait.network.api.unauth.CafeService
-import org.cazait.network.api.auth.AuthedService
+import org.cazait.network.api.auth.ReviewService
 import org.cazait.network.di.Authenticated
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 class CafeInfoRemoteData @Inject constructor(
     private val cafeService: CafeService,
-    @Authenticated private val cafeServiceAuth: AuthedService,
+    @Authenticated private val cafeServiceAuth: ReviewService,
+    @Authenticated private val favoriteServiceAuth: FavoriteService,
     private val networkConnectivity: NetworkConnectivity,
 ) : CafeInfoRemoteDataSource {
     override suspend fun getCafe(cafeId: Long): DataResponse<CafeResTemp> {
@@ -93,12 +95,12 @@ class CafeInfoRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postFavoriteCafe(
+    override suspend fun postFavoriteCafeAuth(
         userId: String,
         cafeId: Long
     ): DataResponse<PostFavoriteCafeRes> {
         return when (val response = processCall {
-            cafeService.postFavoriteCafe(
+            favoriteServiceAuth.postFavoriteCafeAuth(
                 userId,
                 cafeId,
             )
@@ -113,12 +115,12 @@ class CafeInfoRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun deleteFavoriteCafe(
+    override suspend fun deleteFavoriteCafeAuth(
         userId: String,
         cafeId: Long,
     ): DataResponse<DeleteFavoriteCafeRes> {
         return when (val response = processCall {
-            cafeService.deleteFavoriteCafe(
+            favoriteServiceAuth.deleteFavoriteCafeAuth(
                 userId,
                 cafeId,
             )

@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
@@ -27,8 +29,8 @@ class CafeListViewModel @Inject constructor(
     private val permissionUtil: PermissionUtil,
 ) : BaseViewModel() {
 
-    private val _listFavoritesData = MutableLiveData<Resource<FavoriteCafes>>()
-    val listFavoritesData: LiveData<Resource<FavoriteCafes>>
+    private val _listFavoritesData = MutableLiveData<Resource<FavoriteCafes>?>()
+    val listFavoritesData: LiveData<Resource<FavoriteCafes>?>
         get() = _listFavoritesData
 
     private val _listCafesData = MutableLiveData<Resource<Cafes>>()
@@ -38,6 +40,9 @@ class CafeListViewModel @Inject constructor(
     private val _lastLocationLiveData = MutableLiveData<Location>()
     val lastLocationLiveData: LiveData<Location>
         get() = _lastLocationLiveData
+
+    private val _signInStateFlow = MutableStateFlow(false)
+    val signInStateFlow = _signInStateFlow.asStateFlow()
 
     fun updateCheckCafes() {
         if (_lastLocationLiveData.value != null) {
@@ -63,8 +68,16 @@ class CafeListViewModel @Inject constructor(
     }
 
     private suspend fun fetchUserIdIfLoggedIn(): String? {
-        val isLoggedIn = false /* userRepository.isLoggedIn().first() */
-        return if (isLoggedIn) userRepository.getUserInfo().first().uuid else null
+//        val isLoggedIn = false /* userRepository.isLoggedIn().first() */
+//        return if (isLoggedIn) userRepository.getUserInfo().first().uuid else null
+        updateSignInState()
+        if (_signInStateFlow.value) {
+            val uuid = userRepository.getUserInfo().first().uuid
+            Log.d("CafeListViewModel 유저 uuid", uuid)
+            return uuid
+        } else {
+            return null
+        }
     }
 
     private suspend fun updateCafeListByLocation(userId: String?) {
@@ -78,9 +91,9 @@ class CafeListViewModel @Inject constructor(
 
     private suspend fun updateFavoritesList(userId: String?) {
         if (userId != null) {
-            _listFavoritesData.value = cafeRepository.getListFavorites(userId).first()
+            _listFavoritesData.value = cafeRepository.getListFavoritesAuth(userId).first()
         } else {
-            _listFavoritesData.value = cafeRepository.loadFavoriteCafes().first()
+            _listFavoritesData.value = null
         }
     }
 
@@ -96,6 +109,12 @@ class CafeListViewModel @Inject constructor(
             }
         } else {
             Log.e("Location", "권한이 없습니다.")
+        }
+    }
+
+    fun updateSignInState() {
+        viewModelScope.launch {
+            _signInStateFlow.value = userRepository.isLoggedIn().first()
         }
     }
 }

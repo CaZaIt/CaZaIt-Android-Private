@@ -62,32 +62,20 @@ class CafeInfoViewModel @Inject constructor(
         }
     }
 
-    fun saveFavoriteCafe() {
+    fun postFavoriteCafeAuth() {
         viewModelScope.launch {
-            val isLoggedIn = userRepository.isLoggedIn().first()
             val currentCafe = cafe ?: return@launch
-
-            if (isLoggedIn) {
-                val userPreference = userRepository.getUserInfo().first()
-                cafeRepository.postFavoriteCafe(userPreference.uuid, currentCafe)
-            } else {
-                cafeRepository.insertFavoriteCafe(currentCafe)
-            }
+            val userPreference = userRepository.getUserInfo().first()
+            cafeRepository.postFavoriteCafeAuth(userPreference.uuid, currentCafe)
             _isFavoriteCafe.value = true
         }
     }
 
-    fun deleteFavoriteCafe() {
+    fun deleteFavoriteCafeAuth() {
         viewModelScope.launch {
-            val isLoggedIn = userRepository.isLoggedIn().first()
             val currentCafe = cafe ?: return@launch
-
-            if (isLoggedIn) {
-                val userPreference = userRepository.getUserInfo().first()
-                cafeRepository.remoteDeleteFavoriteCafe(userPreference.uuid, currentCafe)
-            } else {
-                cafeRepository.localDeleteFavoriteCafe(currentCafe)
-            }
+            val userPreference = userRepository.getUserInfo().first()
+            cafeRepository.deleteFavoriteCafeAuth(userPreference.uuid, currentCafe)
             _isFavoriteCafe.value = false
         }
     }

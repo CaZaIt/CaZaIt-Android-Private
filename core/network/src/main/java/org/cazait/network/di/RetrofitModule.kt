@@ -1,7 +1,6 @@
 package org.cazait.network.di
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
