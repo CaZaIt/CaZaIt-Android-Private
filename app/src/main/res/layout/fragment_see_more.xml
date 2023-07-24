@@ -5,6 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="fragment"
+            type="org.cazait.ui.component.seemore.SeeMoreFragment" />
+
+        <variable
+            name="viewmodel"
+            type="org.cazait.ui.component.seemore.SeeMoreViewModel" />
 
     </data>
 
@@ -119,6 +126,7 @@
                 android:text="@string/see_more_headset"
                 android:textColor="@color/cafe_list_orange"
                 android:textSize="16sp"
+                android:onClick="@{() -> fragment.navigateToCustomerServiceFragment()}"
                 app:drawableStartCompat="@drawable/ic_headset_mic_final"
                 app:layout_constraintBottom_toBottomOf="@+id/view_4"
                 app:layout_constraintStart_toStartOf="parent"
@@ -146,6 +154,7 @@
                 android:text="@string/see_more_badge"
                 android:textColor="@color/cafe_list_orange"
                 android:textSize="16sp"
+                android:onClick="@{() -> fragment.navigateToTermsPoliciesFragment()}"
                 app:drawableStartCompat="@drawable/ic_badge_final"
                 app:layout_constraintBottom_toBottomOf="@+id/view_5"
                 app:layout_constraintStart_toStartOf="parent"
