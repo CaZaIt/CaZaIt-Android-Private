@@ -20,7 +20,18 @@
         <activity
             android:name=".ui.component.review.ReviewEditActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".ui.component.customerservice.CustomerServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.component.termspolicies.TermsPoliciesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.component.termspolicies.LocationTermsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.component.termspolicies.PrivacyTermsActivity"
+            android:exported="false" />
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="@string/naver_client_id" />
