@@ -20,7 +20,6 @@
         <activity
             android:name=".ui.component.review.ReviewEditActivity"
             android:exported="false" />
-
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="@string/naver_client_id" />

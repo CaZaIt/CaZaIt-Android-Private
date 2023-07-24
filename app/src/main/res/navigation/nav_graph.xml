@@ -44,7 +44,56 @@
         android:id="@+id/seeMoreFragment"
         android:name="org.cazait.ui.component.seemore.SeeMoreFragment"
         android:label="SeeMoreFragment"
-        tools:layout="@layout/fragment_see_more" />
+        tools:layout="@layout/fragment_see_more">
+        <action
+            android:id="@+id/action_seeMoreFragment_to_customerServiceFragment"
+            app:destination="@id/customerServiceFragment" />
+        <action
+            android:id="@+id/action_seeMoreFragment_to_termsPoliciesFragment"
+            app:destination="@id/termsPoliciesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerServiceFragment"
+        android:name="org.cazait.ui.component.customerservice.CustomerServiceFragment"
+        android:label="CustomerServiceFragment"
+        tools:layout="@layout/fragment_customer_service">
+        <action
+            android:id="@+id/action_customerServiceFragment_to_seeMoreFragment"
+            app:destination="@id/seeMoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/termsPoliciesFragment"
+        android:name="org.cazait.ui.component.termspolicies.TermsPoliciesFragment"
+        android:label="TermsPoliciesFragment"
+        tools:layout="@layout/fragment_terms_policies">
+        <action
+            android:id="@+id/action_termsPoliciesFragment_to_privacyTermsFragment"
+            app:destination="@id/privacyTermsFragment" />
+        <action
+            android:id="@+id/action_termsPoliciesFragment_to_locationTermsFragment"
+            app:destination="@id/locationTermsFragment" />
+        <action
+            android:id="@+id/action_termsPoliciesFragment_to_seeMoreFragment"
+            app:destination="@id/seeMoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationTermsFragment"
+        android:name="org.cazait.ui.component.termspolicies.LocationTermsFragment"
+        android:label="LocationTermsFragment"
+        tools:layout="@layout/fragment_location_terms">
+        <action
+            android:id="@+id/action_locationTermsFragment_to_termsPoliciesFragment"
+            app:destination="@id/termsPoliciesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/privacyTermsFragment"
+        android:name="org.cazait.ui.component.termspolicies.PrivacyTermsFragment"
+        android:label="PrivacyTermsFragment"
+        tools:layout="@layout/fragment_privacy_terms">
+        <action
+            android:id="@+id/action_privacyTermsFragment_to_termsPoliciesFragment"
+            app:destination="@id/termsPoliciesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recentlyCafeFragment"
         android:name="org.cazait.ui.component.recentlycafe.RecentlyCafeFragment"

@@ -21,7 +21,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     private val hiddenBottomNavFragments = listOf(
         R.id.signInFragment,
         R.id.signupFragment,
-        R.id.searchFragment
+        R.id.searchFragment,
+        R.id.customerServiceFragment,
+        R.id.termsPoliciesFragment,
+        R.id.locationTermsFragment,
+        R.id.privacyTermsFragment
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,13 +3,22 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+        <variable
+            name="fragment"
+            type="org.cazait.ui.component.seemore.SeeMoreFragment" />
+
+        <variable
+            name="viewmodel"
+            type="org.cazait.ui.component.seemore.SeeMoreViewModel" />
 
     </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,137 +63,110 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <ImageView
-                android:id="@+id/img_verified"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/ic_verified_user_final"
-                app:layout_constraintTop_toTopOf="@id/view_1"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="10dp"/>
-
             <TextView
                 android:id="@+id/txt_verified"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
+                android:drawablePadding="20dp"
+                android:gravity="center"
                 android:text="@string/see_more_verified"
-                android:textSize="16sp"
                 android:textColor="@color/cafe_list_orange"
-                app:layout_constraintBottom_toBottomOf="@+id/img_verified"
-                app:layout_constraintStart_toEndOf="@+id/img_verified"
-                app:layout_constraintTop_toTopOf="@+id/img_verified" />
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_verified_user_final"
+                app:layout_constraintBottom_toBottomOf="@+id/view_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view_1" />
 
             <View
                 android:id="@+id/view_2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"
-                android:background="@color/cafe_list_orange"
                 android:layout_marginTop="10dp"
+                android:background="@color/cafe_list_orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_verified" />
 
 
-            <ImageView
-                android:id="@+id/img_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/ic_settings_final"
-                app:layout_constraintTop_toTopOf="@id/view_2"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="10dp"/>
-
             <TextView
                 android:id="@+id/txt_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
+                android:drawablePadding="20dp"
+                android:gravity="center"
                 android:text="@string/see_more_setting"
-                android:textSize="16sp"
                 android:textColor="@color/cafe_list_orange"
-                app:layout_constraintBottom_toBottomOf="@+id/img_setting"
-                app:layout_constraintStart_toEndOf="@+id/img_setting"
-                app:layout_constraintTop_toTopOf="@+id/img_setting" />
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_settings_final"
+                app:layout_constraintBottom_toBottomOf="@+id/view_3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view_2" />
 
             <View
                 android:id="@+id/view_3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"
-                android:background="@color/cafe_list_orange"
                 android:layout_marginTop="10dp"
+                android:background="@color/cafe_list_orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_setting" />
-
-
-            <ImageView
-                android:id="@+id/img_headset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/ic_headset_mic_final"
-                app:layout_constraintTop_toTopOf="@id/view_3"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="10dp"/>
 
             <TextView
                 android:id="@+id/txt_headset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
+                android:drawablePadding="20dp"
+                android:gravity="center"
                 android:text="@string/see_more_headset"
-                android:textSize="16sp"
                 android:textColor="@color/cafe_list_orange"
-                app:layout_constraintBottom_toBottomOf="@+id/img_headset"
-                app:layout_constraintStart_toEndOf="@+id/img_headset"
-                app:layout_constraintTop_toTopOf="@+id/img_headset" />
+                android:textSize="16sp"
+                android:onClick="@{() -> fragment.navigateToCustomerServiceFragment()}"
+                app:drawableStartCompat="@drawable/ic_headset_mic_final"
+                app:layout_constraintBottom_toBottomOf="@+id/view_4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view_3" />
 
             <View
                 android:id="@+id/view_4"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"
-                android:background="@color/cafe_list_orange"
                 android:layout_marginTop="10dp"
+                android:background="@color/cafe_list_orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_headset" />
 
 
-            <ImageView
-                android:id="@+id/img_badge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/ic_badge_final"
-                app:layout_constraintTop_toTopOf="@id/view_4"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="10dp"/>
-
             <TextView
                 android:id="@+id/txt_badge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
+                android:drawablePadding="20dp"
+                android:gravity="center"
                 android:text="@string/see_more_badge"
-                android:textSize="16sp"
                 android:textColor="@color/cafe_list_orange"
-                app:layout_constraintBottom_toBottomOf="@+id/img_badge"
-                app:layout_constraintStart_toEndOf="@+id/img_badge"
-                app:layout_constraintTop_toTopOf="@+id/img_badge" />
+                android:textSize="16sp"
+                android:onClick="@{() -> fragment.navigateToTermsPoliciesFragment()}"
+                app:drawableStartCompat="@drawable/ic_badge_final"
+                app:layout_constraintBottom_toBottomOf="@+id/view_5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view_4" />
 
             <View
                 android:id="@+id/view_5"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"
-                android:background="@color/cafe_list_orange"
                 android:layout_marginTop="10dp"
+                android:background="@color/cafe_list_orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_badge" />
