@@ -2,7 +2,9 @@ package org.cazait.network.datasource
 
 import android.util.Log
 import org.cazait.network.NetworkConnectivity
+import org.cazait.network.api.auth.TokenService
 import org.cazait.network.api.unauth.AuthService
+import org.cazait.network.di.Authenticated
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.MessageReq
@@ -18,14 +20,15 @@ import javax.inject.Inject
 
 class AuthRemoteData @Inject constructor(
     private val networkConnectivity: NetworkConnectivity,
-    private val authService: AuthService
+    private val authService: AuthService,
+    @Authenticated private val tokenService: TokenService
 ) : AuthRemoteDataSource {
     override suspend fun getRefreshToken(
         role: String,
         refreshToken: String
     ): DataResponse<RefreshTokenRes> {
         return when (val response = processCall {
-            authService.getRefreshToken(role, refreshToken)
+            tokenService.getRefreshTokenAuth(role, refreshToken)
         }) {
             is RefreshTokenRes -> {
                 DataResponse.Success(response)

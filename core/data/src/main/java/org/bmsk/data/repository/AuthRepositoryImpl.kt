@@ -9,7 +9,6 @@ import org.bmsk.data.model.toMessage
 import org.bmsk.data.model.toSignInInfo
 import org.bmsk.data.model.toVerify
 import org.cazait.datastore.data.repository.UserPreferenceRepository
-import org.cazait.datastore.data.repository.UserPreferenceRepository.TokenType.UPDATE_REFRESH_TOKEN
 import org.cazait.model.Message
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
@@ -34,11 +33,13 @@ class AuthRepositoryImpl @Inject constructor(
                 role = role,
                 refreshToken = refreshToken
             ).data
+            val accessToken = updatedRefreshToken?.data?.accessToken ?: accessToken
+            val refreshToken = updatedRefreshToken?.data?.refreshToken ?: refreshToken
 
 //            userPreferenceRepository.updateUserToken(updatedRefreshToken, UPDATE_REFRESH_TOKEN)
             userPreferenceRepository.updateUserToken(
-                updatedRefreshToken?.data?.accessToken ?: accessToken,
-                updatedRefreshToken?.data?.refreshToken ?: refreshToken
+                accessToken,
+                refreshToken
             )
         }
     }

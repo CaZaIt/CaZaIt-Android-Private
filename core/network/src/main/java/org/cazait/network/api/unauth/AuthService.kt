@@ -24,14 +24,6 @@ interface AuthService {
         signInReq: SignInReq,
     ): Response<SignInRes>
 
-    @GET("/api/auths/refresh")
-    suspend fun getRefreshToken(
-        @Query("role")
-        role: String = "user",
-        @Header("REFRESH-TOKEN")
-        refreshToken: String,
-    ): Response<RefreshTokenRes>
-
     @POST("/api/auths/messages/codes/send/test")
     suspend fun postMessage(
         @Body messageReq: MessageReq
