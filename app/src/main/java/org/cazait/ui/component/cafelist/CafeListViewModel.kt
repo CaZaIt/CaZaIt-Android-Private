@@ -56,7 +56,7 @@ class CafeListViewModel @Inject constructor(
         viewModelScope.launch {
             // TODO: 로그인 상태에 따라 ACCESS_TOKEN 과 REFRESH_TOKEN 발급, 헤더요청, 현재 false 조정
             val userId = fetchUserIdIfLoggedIn()
-            updateCafeListByLocation(userId)
+            updateCafeListByLocation()
         }
     }
 
@@ -80,11 +80,11 @@ class CafeListViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateCafeListByLocation(userId: String?) {
+    private suspend fun updateCafeListByLocation() {
         val latitude = _lastLocationLiveData.value?.latitude.toString()
         val longitude = _lastLocationLiveData.value?.longitude.toString()
 
-        cafeRepository.getListCafes(userId, latitude, longitude).collect {
+        cafeRepository.getListCafes(latitude, longitude).collect {
             _listCafesData.value = it
         }
     }

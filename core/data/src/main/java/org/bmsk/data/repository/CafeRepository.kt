@@ -14,7 +14,6 @@ interface CafeRepository {
     suspend fun getCafeById(cafeId: Long): Flow<Resource<Cafe>>
     suspend fun getListFavoritesAuth(userId: String): Flow<Resource<FavoriteCafes>>
     suspend fun getListCafes(
-        userId: String?,
         latitude: String,
         longitude: String,
         sort: String = "distance",

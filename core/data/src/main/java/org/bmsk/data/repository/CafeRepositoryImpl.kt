@@ -57,7 +57,6 @@ class CafeRepositoryImpl @Inject constructor(
 
 
     override suspend fun getListCafes(
-        userId: String?,
         latitude: String,
         longitude: String,
         sort: String,
@@ -65,14 +64,9 @@ class CafeRepositoryImpl @Inject constructor(
     ): Flow<Resource<Cafes>> {
         val query =
             ListCafesReq(latitude = latitude, longitude = longitude, sort = sort, limit = limit)
-        Log.d("CafeRepository 유저 ID", userId.toString())
 
         return flow {
-            val response = if (userId == null) {
-                cafeListRemoteData.getListCafesWithGuest(query)
-            } else {
-                cafeListRemoteData.getListCafes(userId, query)
-            }
+            val response = cafeListRemoteData.getListCafes(query)
             when (response) {
                 is DataResponse.Success -> {
                     response.data?.cafes?.forEach { list ->

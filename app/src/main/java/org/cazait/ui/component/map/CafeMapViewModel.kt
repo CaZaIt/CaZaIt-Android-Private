@@ -23,7 +23,7 @@ class CafeMapViewModel @Inject constructor(
 
     fun searchCafes(latitude: String, longitude: String) {
         viewModelScope.launch {
-            cafeRepository.getListCafes(null, latitude = latitude, longitude = longitude)
+            cafeRepository.getListCafes(latitude = latitude, longitude = longitude)
                 .collect {
                     _cafeListLiveData.value = it
                 }
