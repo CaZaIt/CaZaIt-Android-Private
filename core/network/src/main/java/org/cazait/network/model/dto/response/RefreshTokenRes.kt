@@ -1,7 +1,6 @@
 package org.cazait.network.model.dto.response
 
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
 
 data class RefreshTokenRes(
     @SerializedName("code")
@@ -19,8 +18,8 @@ data class RefreshTokenDTO(
     val uuid: String,
     @SerializedName("accountNumber")
     val userId: String,
-    @SerializedName("jwtToken")
-    val jwtToken: String,
+    @SerializedName("accessToken")
+    val accessToken: String,
     @SerializedName("refreshToken")
     val refreshToken: String,
     @SerializedName("role")

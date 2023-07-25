@@ -31,13 +31,15 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun refreshToken() {
         with(userPreferenceRepository.getUserPreference().first()) {
             val updatedRefreshToken = authRemoteData.getRefreshToken(
-                userId = uuid,
                 role = role,
-                accessToken = accessToken,
                 refreshToken = refreshToken
-            ).data?.result ?: refreshToken
+            ).data
 
-            userPreferenceRepository.updateUserToken(updatedRefreshToken, UPDATE_REFRESH_TOKEN)
+//            userPreferenceRepository.updateUserToken(updatedRefreshToken, UPDATE_REFRESH_TOKEN)
+            userPreferenceRepository.updateUserToken(
+                updatedRefreshToken?.data?.accessToken ?: accessToken,
+                updatedRefreshToken?.data?.refreshToken ?: refreshToken
+            )
         }
     }
 

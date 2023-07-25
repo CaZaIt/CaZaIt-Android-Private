@@ -21,13 +21,11 @@ class AuthRemoteData @Inject constructor(
     private val authService: AuthService
 ) : AuthRemoteDataSource {
     override suspend fun getRefreshToken(
-        userId: String,
         role: String,
-        accessToken: String,
         refreshToken: String
     ): DataResponse<RefreshTokenRes> {
         return when (val response = processCall {
-            authService.getRefreshToken(userId, role, accessToken, refreshToken)
+            authService.getRefreshToken(role, refreshToken)
         }) {
             is RefreshTokenRes -> {
                 DataResponse.Success(response)
