@@ -51,6 +51,18 @@
         <action
             android:id="@+id/action_seeMoreFragment_to_termsPoliciesFragment"
             app:destination="@id/termsPoliciesFragment" />
+        <action
+            android:id="@+id/action_seeMoreFragment_to_announcementFragment"
+            app:destination="@id/announcementFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/announcementFragment"
+        android:name="org.cazait.ui.component.announcement.AnnouncementFragment"
+        android:label="AnnouncementFragment"
+        tools:layout="@layout/fragment_announcement">
+        <action
+            android:id="@+id/action_announcementFragment_to_seeMoreFragment"
+            app:destination="@id/seeMoreFragment" />
     </fragment>
     <fragment
         android:id="@+id/customerServiceFragment"
