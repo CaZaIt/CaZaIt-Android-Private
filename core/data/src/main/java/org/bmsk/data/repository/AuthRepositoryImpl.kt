@@ -35,6 +35,8 @@ class AuthRepositoryImpl @Inject constructor(
             ).data
             val accessToken = updatedRefreshToken?.data?.accessToken ?: accessToken
             val refreshToken = updatedRefreshToken?.data?.refreshToken ?: refreshToken
+            Log.d("재발급된 accessToken", accessToken)
+            Log.d("재발급된 refreshToken", refreshToken)
 
 //            userPreferenceRepository.updateUserToken(updatedRefreshToken, UPDATE_REFRESH_TOKEN)
             userPreferenceRepository.updateUserToken(
