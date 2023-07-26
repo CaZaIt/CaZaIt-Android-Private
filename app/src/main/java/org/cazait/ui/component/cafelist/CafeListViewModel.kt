@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
 import org.bmsk.data.repository.UserRepository
+import org.cazait.model.Cafe
 import org.cazait.model.Cafes
+import org.cazait.model.FavoriteCafe
 import org.cazait.model.FavoriteCafes
 import org.cazait.model.Resource
 import org.cazait.ui.base.BaseViewModel
@@ -94,6 +96,22 @@ class CafeListViewModel @Inject constructor(
             _listFavoritesData.value = cafeRepository.getListFavoritesAuth(userId).first()
         } else {
             _listFavoritesData.value = null
+        }
+    }
+
+    fun updateVerticalCafeList() {
+        _listCafesData.value = _listCafesData.value
+    }
+
+    fun updateFavoriteStatus(favorites: List<FavoriteCafe>, cafes: List<Cafe>) {
+        // favorites의 cafeId를 세트로 변환
+        val favoriteCafeIds = favorites.map { it.cafeId }.toSet()
+        Log.d("FavoriteCafeList", favoriteCafeIds.toString())
+
+        // cafes의 각 Cafe 객체의 isFavorite 값을 갱신
+        for (cafe in cafes) {
+            cafe.isFavorite = cafe.cafeId in favoriteCafeIds
+            Log.d("cafe isFavorite", cafe.isFavorite.toString())
         }
     }
 

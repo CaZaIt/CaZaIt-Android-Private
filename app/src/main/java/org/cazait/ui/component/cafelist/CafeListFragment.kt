@@ -14,6 +14,7 @@ import org.cazait.R
 import org.cazait.databinding.FragmentCafeListBinding
 import org.cazait.model.Cafe
 import org.cazait.model.Cafes
+import org.cazait.model.FavoriteCafe
 import org.cazait.model.FavoriteCafes
 import org.cazait.model.ListTitle
 import org.cazait.model.Resource
@@ -32,6 +33,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     CafeListViewModel::class.java,
     R.layout.fragment_cafe_list,
 ), PermissionCallbacks {
+    private var horizontalCafeList: List<FavoriteCafe> = emptyList()
     private val horizontalAdapter by lazy {
         createCafeListHorizontalAdapter()
     }
@@ -150,10 +152,14 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         when (status) {
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
-            is Resource.Success -> handleSuccess(
-                horizontalAdapter::submitList,
-                status.data?.list ?: emptyList()
-            )
+            is Resource.Success -> {
+                horizontalCafeList = status.data?.list?: emptyList()
+                handleSuccess(
+                    horizontalAdapter::submitList,
+                    status.data?.list ?: emptyList()
+                )
+                viewModel.updateVerticalCafeList()
+            }
 
             else -> {}
         }
@@ -164,6 +170,8 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> {
+                val verticalCafeList = status.data?.list ?: emptyList()
+                viewModel.updateFavoriteStatus(horizontalCafeList, verticalCafeList)
                 handleSuccess(
                     verticalAdapter::submitList,
                     status.data?.list ?: emptyList()

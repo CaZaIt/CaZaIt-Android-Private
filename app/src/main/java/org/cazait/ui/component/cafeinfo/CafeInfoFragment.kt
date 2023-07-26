@@ -43,6 +43,7 @@ class CafeInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         cafe = navArgs.cafe
+        Log.d("isFavorite 상태", cafe.isFavorite.toString())
         _binding = DataBindingUtil.inflate<FragmentCafeInfoBinding?>(
             inflater,
             R.layout.fragment_cafe_info,
@@ -139,6 +140,7 @@ class CafeInfoFragment : Fragment() {
                 Log.e("ivFavor", "onclick")
                 val isLoggedIn = viewModel.signInStateFlow.value
                 if (isLoggedIn) {
+                    Log.d("isFavoriteCafe 상태", viewModel.isFavoriteCafe.value.toString())
                     if (viewModel.isFavoriteCafe.value) {
                         viewModel.deleteFavoriteCafeAuth()
                     } else {
