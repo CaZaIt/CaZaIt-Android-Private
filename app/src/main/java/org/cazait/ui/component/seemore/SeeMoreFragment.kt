@@ -34,5 +34,7 @@ class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
         findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToTermsPoliciesFragment())
     }
 
-
+    fun navigateToAnnouncementFragment() {
+        findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToAnnouncementFragment())
+    }
 }

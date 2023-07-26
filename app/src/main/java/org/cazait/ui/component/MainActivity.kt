@@ -25,7 +25,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         R.id.customerServiceFragment,
         R.id.termsPoliciesFragment,
         R.id.locationTermsFragment,
-        R.id.privacyTermsFragment
+        R.id.privacyTermsFragment,
+        R.id.announcementFragment
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
