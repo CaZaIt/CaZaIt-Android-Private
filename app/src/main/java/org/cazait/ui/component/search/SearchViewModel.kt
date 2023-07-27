@@ -10,7 +10,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
+import org.cazait.model.Cafe
 import org.cazait.model.Cafes
+import org.cazait.model.FavoriteCafe
 import org.cazait.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.PermissionUtil
@@ -22,7 +24,6 @@ class SearchViewModel @Inject constructor(
     private val fusedLocationClient: FusedLocationProviderClient,
     private val permissionUtil: PermissionUtil
 ) : BaseViewModel() {
-
     private val _locationLiveData = MutableLiveData<Location>()
     val locationLiveData: LiveData<Location>
         get() = _locationLiveData
@@ -54,6 +55,18 @@ class SearchViewModel @Inject constructor(
             ).collect {
                 _cafeSearchData.value = it
             }
+        }
+    }
+
+    fun updateFavoriteStatus(favorites: List<FavoriteCafe>, cafes: List<Cafe>) {
+        // favorites의 cafeId를 세트로 변환
+        val favoriteCafeIds = favorites.map { it.cafeId }.toSet()
+        Log.d("FavoriteCafeList", favoriteCafeIds.toString())
+
+        // cafes의 각 Cafe 객체의 isFavorite 값을 갱신
+        for (cafe in cafes) {
+            cafe.isFavorite = cafe.cafeId in favoriteCafeIds
+            Log.d("cafe isFavorite", cafe.isFavorite.toString())
         }
     }
 }

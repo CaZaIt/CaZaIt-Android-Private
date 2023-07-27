@@ -34,6 +34,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     R.layout.fragment_cafe_list,
 ), PermissionCallbacks {
     private var horizontalCafeList: List<FavoriteCafe> = emptyList()
+    private lateinit var favoriteCafes: FavoriteCafes
     private val horizontalAdapter by lazy {
         createCafeListHorizontalAdapter()
     }
@@ -111,8 +112,13 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
 
     private fun setSearch() {
         binding.searchBar.setOnClickListener {
-            navigateToCafeSearch()
+            favoriteCafes = convertListToClass(horizontalCafeList)
+            navigateToCafeSearch(favoriteCafes)
         }
+    }
+
+    private fun convertListToClass(favoriteCafeList: List<FavoriteCafe>): FavoriteCafes {
+        return FavoriteCafes((favoriteCafeList))
     }
 
     private fun createCafeListHorizontalAdapter() = CafeListHorizontalAdapter {
@@ -144,8 +150,12 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         )
     }
 
-    private fun navigateToCafeSearch() {
-        findNavController().navigate(CafeListFragmentDirections.actionCafeListFragmentToSearchFragment())
+    private fun navigateToCafeSearch(favoriteCafes: FavoriteCafes) {
+        findNavController().navigate(
+            CafeListFragmentDirections.actionCafeListFragmentToSearchFragment(
+                favoriteCafes
+            )
+        )
     }
 
     private fun handleHorizontalCafeList(status: Resource<FavoriteCafes>?) {
@@ -153,7 +163,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> {
-                horizontalCafeList = status.data?.list?: emptyList()
+                horizontalCafeList = status.data?.list ?: emptyList()
                 handleSuccess(
                     horizontalAdapter::submitList,
                     status.data?.list ?: emptyList()

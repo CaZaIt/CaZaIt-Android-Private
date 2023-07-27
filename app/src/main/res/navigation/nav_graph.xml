@@ -141,6 +141,9 @@
         android:name="org.cazait.ui.component.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search">
+        <argument
+            android:name="favoriteCafe"
+            app:argType="org.cazait.model.FavoriteCafes" />
         <action
             android:id="@+id/action_searchFragment_to_cafeListFragment"
             app:destination="@+id/cafeListFragment" />
