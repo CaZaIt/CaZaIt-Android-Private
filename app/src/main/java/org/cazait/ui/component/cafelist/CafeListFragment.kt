@@ -166,7 +166,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
                 horizontalCafeList = status.data?.list ?: emptyList()
                 handleSuccess(
                     horizontalAdapter::submitList,
-                    status.data?.list ?: emptyList()
+                    horizontalCafeList
                 )
                 viewModel.updateVerticalCafeList()
             }
@@ -184,7 +184,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
                 viewModel.updateFavoriteStatus(horizontalCafeList, verticalCafeList)
                 handleSuccess(
                     verticalAdapter::submitList,
-                    status.data?.list ?: emptyList()
+                    verticalCafeList
                 )
             }
         }
