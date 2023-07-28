@@ -24,7 +24,7 @@ interface AuthService {
         signInReq: SignInReq,
     ): Response<SignInRes>
 
-    @POST("/api/auths/messages/codes/send/test")
+    @POST("/api/auths/messages/codes/send/test/sign-up")
     suspend fun postMessage(
         @Body messageReq: MessageReq
     ): Response<MessageRes>
