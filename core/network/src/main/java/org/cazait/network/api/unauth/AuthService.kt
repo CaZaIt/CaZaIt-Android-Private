@@ -24,24 +24,12 @@ interface AuthService {
         signInReq: SignInReq,
     ): Response<SignInRes>
 
-    @GET("api/auths/refresh/{userIdx}")
-    suspend fun getRefreshToken(
-        @Path("userId")
-        userId: String,
-        @Query("role")
-        role: String = "user",
-        @Header("Authorization")
-        jwtToken: String,
-        @Header("REFRESH-TOKEN")
-        refreshToken: String,
-    ): Response<RefreshTokenRes>
-
-    @POST("api/auths/messages/codes/send/test")
+    @POST("/api/auths/messages/codes/send/test/sign-up")
     suspend fun postMessage(
         @Body messageReq: MessageReq
     ): Response<MessageRes>
 
-    @POST("api/auths/messages/codes/verify")
+    @POST("/api/auths/messages/codes/verify")
     suspend fun postVerifyCode(
         @Body verifyCode: VerifyCodeReq
     ): Response<VerifyCodeRes>

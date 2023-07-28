@@ -32,6 +32,7 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class CafeRepositoryImpl @Inject constructor(
+    private val authRepository: AuthRepository,
     private val cafeListRemoteData: CafeListRemoteData,
     private val cafeInfoRemoteData: CafeInfoRemoteData,
     private val cafeDAO: CafeDAO,
@@ -57,7 +58,6 @@ class CafeRepositoryImpl @Inject constructor(
 
 
     override suspend fun getListCafes(
-        userId: String?,
         latitude: String,
         longitude: String,
         sort: String,
@@ -65,14 +65,9 @@ class CafeRepositoryImpl @Inject constructor(
     ): Flow<Resource<Cafes>> {
         val query =
             ListCafesReq(latitude = latitude, longitude = longitude, sort = sort, limit = limit)
-        Log.d("CafeRepository 유저 ID", userId.toString())
 
         return flow {
-            val response = if (userId == null) {
-                cafeListRemoteData.getListCafesWithGuest(query)
-            } else {
-                cafeListRemoteData.getListCafes(userId, query)
-            }
+            val response = cafeListRemoteData.getListCafes(query)
             when (response) {
                 is DataResponse.Success -> {
                     response.data?.cafes?.forEach { list ->
@@ -92,6 +87,25 @@ class CafeRepositoryImpl @Inject constructor(
         return flow {
             when (val response = cafeListRemoteData.getListFavoritesAuth(userId)) {
                 is DataResponse.Success -> {
+                    if (response.data!!.code == 401) {
+                        authRepository.refreshToken()
+                        val response = cafeListRemoteData.getListFavoritesAuth(userId)
+                        when(response){
+                            is DataResponse.Success -> {
+                                val fc = FavoriteCafes(
+                                    response.data?.favorites?.map {
+                                        it.toFavoriteCafe()
+                                    }.orEmpty()
+                                )
+                                Log.d("CafeRepository", "토큰 재발급 후 찜한 매장 호출")
+                                Log.d("CafeRepository", response.data.toString())
+                                emit(Resource.Success(fc))
+                            }
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(response.toString()))
+                            }
+                        }
+                    }
                     val fc = FavoriteCafes(
                         response.data?.favorites?.map {
                             it.toFavoriteCafe()
@@ -157,9 +171,25 @@ class CafeRepositoryImpl @Inject constructor(
             when (val response =
                 cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
                 is DataResponse.Success -> {
-                    val message: String =
-                        response.data?.message ?: ""
-                    Log.d("CafeRepository", "등록 성공")
+                    Log.d("CafeRepository", "등록 성공?")
+                    Log.d("CafeRepository", response.data.toString())
+                    if (response.data!!.code == 401) {
+                        authRepository.refreshToken()
+                        val response = cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)
+                        when(response){
+                            is DataResponse.Success -> {
+                                val message: String = response.data?.message ?: ""
+                                Log.d("CafeRepository", "토큰 재발급 후 등록 성공")
+                                Log.d("CafeRepository", response.data.toString())
+                                emit(Resource.Success(message))
+                            }
+                            is DataResponse.DataError -> {
+                                Log.d("CafeRepository", "토큰 재발급 후 등록 실패")
+                                emit(Resource.Error(response.toString()))
+                            }
+                        }
+                    }
+                    val message: String = response.data?.message ?: ""
                     emit(Resource.Success(message))
                 }
 

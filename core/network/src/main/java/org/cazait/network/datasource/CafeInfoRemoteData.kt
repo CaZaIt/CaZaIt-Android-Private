@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class CafeInfoRemoteData @Inject constructor(
     private val cafeService: CafeService,
-    @Authenticated private val cafeServiceAuth: ReviewService,
+    @Authenticated private val reviewServiceAuth: ReviewService,
     @Authenticated private val favoriteServiceAuth: FavoriteService,
     private val networkConnectivity: NetworkConnectivity,
 ) : CafeInfoRemoteDataSource {
@@ -83,7 +83,7 @@ class CafeInfoRemoteData @Inject constructor(
     ): DataResponse<CafeReviewPostRes> {
         return when (val response = processCall {
             val req = CafeReviewPostReq(score, content)
-            cafeServiceAuth.postReviewAuth(userId, cafeId, req)
+            reviewServiceAuth.postReviewAuth(userId, cafeId, req)
         }) {
             is CafeReviewPostRes -> {
                 DataResponse.Success(data = response)

@@ -17,6 +17,8 @@ import org.cazait.R
 import org.cazait.databinding.FragmentCafeMapBinding
 import org.cazait.model.Cafe
 import org.cazait.model.Cafes
+import org.cazait.model.FavoriteCafe
+import org.cazait.model.FavoriteCafes
 import org.cazait.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.component.cafeinfo.CafeInfoDialogFragment
@@ -34,8 +36,10 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
     private var markers = emptyList<Marker>()
     private var lastClickedMarker: Marker? = null
     private var lastCameraPosition: LatLng? = null
+    private var favoriteCafeList: List<FavoriteCafe> = emptyList()
 
     override fun initView() {
+        viewModel.getFavoriteCafeList()
         setupMapFragment()
         initLocationSource()
         observeCafes()
@@ -49,6 +53,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
 
     private fun observeCafes() {
         observe(viewModel.cafeListLiveData, ::updateMarkers)
+        observe(viewModel.favoriteListData, ::handleFavorite)
     }
 
     override fun onResume() {
@@ -57,7 +62,6 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
     }
 
     override fun initAfterBinding() = Unit
-
 
     override fun onMapReady(mapObject: NaverMap) {
         naverMap = mapObject
@@ -97,18 +101,36 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
                 )
     }
 
+    private fun handleFavorite(status: Resource<FavoriteCafes>?) {
+        when (status) {
+            is Resource.Loading -> {}
+            is Resource.Error -> handleError(status)
+            is Resource.Success -> {
+                favoriteCafeList = status.data?.list ?: emptyList()
+                viewModel.updateMarker()
+            }
+
+            else -> {}
+        }
+    }
+
     private fun updateMarkers(status: Resource<Cafes>) {
         if (isMapInit.not()) return
         when (status) {
             is Resource.Loading -> {}
-            is Resource.Success -> handleSuccess()
+            is Resource.Success -> {
+                val markCafeList = status.data?.list ?: emptyList()
+                viewModel.updateFavoriteStatus(favoriteCafeList, markCafeList)
+                handleSuccess(markCafeList)
+            }
+
             is Resource.Error -> handleError(status)
         }
     }
 
-    private fun handleSuccess() {
+    private fun handleSuccess(list: List<Cafe>) {
         markers.forEach { it.map = null }
-        markers = viewModel.getCafes().map(::createMarker)
+        markers = viewModel.getCafes(list).map(::createMarker)
     }
 
     private fun createMarker(cafe: Cafe): Marker {

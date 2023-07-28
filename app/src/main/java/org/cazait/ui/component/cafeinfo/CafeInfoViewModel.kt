@@ -1,5 +1,6 @@
 package org.cazait.ui.component.cafeinfo
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -64,19 +65,23 @@ class CafeInfoViewModel @Inject constructor(
 
     fun postFavoriteCafeAuth() {
         viewModelScope.launch {
+            Log.d("즐겨찾기 등록 전 상태", _isFavoriteCafe.value.toString())
             val currentCafe = cafe ?: return@launch
             val userPreference = userRepository.getUserInfo().first()
             cafeRepository.postFavoriteCafeAuth(userPreference.uuid, currentCafe)
             _isFavoriteCafe.value = true
+            Log.d("즐겨찾기 등록", _isFavoriteCafe.value.toString())
         }
     }
 
     fun deleteFavoriteCafeAuth() {
         viewModelScope.launch {
+            Log.d("즐겨찾기 삭제 전 상태", _isFavoriteCafe.value.toString())
             val currentCafe = cafe ?: return@launch
             val userPreference = userRepository.getUserInfo().first()
             cafeRepository.deleteFavoriteCafeAuth(userPreference.uuid, currentCafe)
             _isFavoriteCafe.value = false
+            Log.d("즐겨찾기 삭제", _isFavoriteCafe.value.toString())
         }
     }
 

@@ -8,11 +8,13 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentSearchBinding
 import org.cazait.model.Cafe
 import org.cazait.model.Cafes
+import org.cazait.model.FavoriteCafes
 import org.cazait.model.Resource
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.adapter.SearchAdapter
@@ -30,9 +32,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
     SearchViewModel::class.java,
     R.layout.fragment_search
 ), OnSearchClick, OnResultClick {
+    private val navArgs: SearchFragmentArgs by navArgs()
+    private lateinit var favoriteCafes: FavoriteCafes
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var resultAdapter: SearchResultAdapter
+
     override fun initView() {
+        favoriteCafes = navArgs.favoriteCafe
         viewModel.initLocation()
         // 키보드 자동으로 올림
         val inputMethodManager =
@@ -147,7 +153,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
             is Resource.Error -> {}
             is Resource.Loading -> {}
             is Resource.Success -> {
-                val cafes = status.data?.list
+                val cafes = status.data?.list ?: emptyList()
+                viewModel.updateFavoriteStatus(favoriteCafes.list, cafes)
                 searchAdapter.submitList(cafes)
                 resultAdapter.submitList(cafes)
             }

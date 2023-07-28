@@ -3,8 +3,8 @@ package org.cazait.model
 import java.io.Serializable
 
 data class FavoriteCafes(
-    val list: List<FavoriteCafe>
-)
+    var list: List<FavoriteCafe>
+) : Serializable
 
 data class FavoriteCafe(
     val favoritesId: Long,
@@ -15,4 +15,4 @@ data class FavoriteCafe(
     val longitude: String,
     val congestionStatus: CafeStatus,
     val imageUrl: List<String>
-): Serializable
+) : Serializable
