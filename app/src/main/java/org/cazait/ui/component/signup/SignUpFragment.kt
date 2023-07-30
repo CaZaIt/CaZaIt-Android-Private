@@ -128,7 +128,7 @@ class SignUpFragment :
             is Resource.Success -> status.data.let {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
-                findNavController().popBackStack()
+                navigateToSignInFragment()
             }
 
             is Resource.Error -> {
@@ -231,6 +231,10 @@ class SignUpFragment :
 
             null -> {}
         }
+    }
+
+    private fun navigateToSignInFragment() {
+        findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment())
     }
 
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {
@@ -434,7 +438,7 @@ class SignUpFragment :
         }
     }
 
-    private fun checkPhoneNumber(phone: String){
+    private fun checkPhoneNumber(phone: String) {
         when {
             phone.isEmpty() -> {
                 binding.etSignUpPhoneNumber.error =
@@ -449,7 +453,7 @@ class SignUpFragment :
         }
     }
 
-    private fun checkVerifyCode(code: String){
+    private fun checkVerifyCode(code: String) {
         when {
             code.isEmpty() -> {
                 binding.etSignUpVarificationCode.error =

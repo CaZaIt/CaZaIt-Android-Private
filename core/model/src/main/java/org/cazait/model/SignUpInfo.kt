@@ -3,7 +3,6 @@ package org.cazait.model
 data class SignUpInfo(
     val uuid: String,
     val userId: String,
-    val password: String,
     val phoneNumber: String,
     val nickname: String,
 )
