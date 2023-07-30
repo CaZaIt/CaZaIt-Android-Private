@@ -26,6 +26,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     override fun initView() {
         viewModel.initViewModel()
+        binding.clTop.includedTvTitle.text = getString(R.string.sign_in_kor)
+        binding.clTop.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         initSignUpBtn()
         initSignInBtn()
     }
