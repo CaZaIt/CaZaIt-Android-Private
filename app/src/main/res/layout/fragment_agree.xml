@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="org.cazait.ui.component.signup.agree.AgreeFragment" />
+
+        <variable
+            name="viewModel"
+            type="org.cazait.ui.component.signup.agree.AgreeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_beige">
+
+        <include
+            android:id="@+id/cl_top"
+            layout="@layout/layout_page_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_agree_all"
+            style="@style/TextValue_B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/agree_all"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_top" />
+
+        <CheckBox
+            android:id="@+id/cb_agree_all"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/main_white"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_agree_all"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_agree_all" />
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/dotted_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_agree_all" />
+
+        <TextView
+            android:id="@+id/tv_location_essential"
+            style="@style/TextValue_B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/agree_essential"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_1" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_agree_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_location_essential"
+            app:layout_constraintEnd_toStartOf="@+id/cb_agree_location"
+            app:layout_constraintStart_toEndOf="@+id/tv_location_essential"
+            app:layout_constraintTop_toTopOf="@+id/tv_location_essential">
+
+            <TextView
+                android:id="@+id/tv_location_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_location"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_location_text_see"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/agree_location_see"
+                android:textColor="@color/cafe_list_orange"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_location_text" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <CheckBox
+            android:id="@+id/cb_agree_location"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/main_white"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_location_essential"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_location_essential" />
+
+        <TextView
+            android:id="@+id/tv_privacy_essential"
+            style="@style/TextValue_B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/agree_essential"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_location_essential" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_agree_privacy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_privacy_essential"
+            app:layout_constraintEnd_toStartOf="@+id/cb_agree_location"
+            app:layout_constraintStart_toEndOf="@+id/tv_privacy_essential"
+            app:layout_constraintTop_toTopOf="@+id/tv_privacy_essential">
+
+            <TextView
+                android:id="@+id/tv_privacy_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_privacy"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_privacy_text_see"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/agree_privacy_see"
+                android:textColor="@color/cafe_list_orange"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_privacy_text" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <CheckBox
+            android:id="@+id/cb_agree_privacy"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/main_white"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_privacy_essential"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_privacy_essential" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_sign_up_join"
+            style="@style/TextValue_B"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="122dp"
+            android:layout_marginEnd="121dp"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/round_orange_rectangle"
+            android:backgroundTint="@color/main_black"
+            android:paddingLeft="25dp"
+            android:paddingTop="11dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="11dp"
+            android:text="@string/bnt_next"
+            android:textAlignment="center"
+            android:textColor="@color/main_white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
