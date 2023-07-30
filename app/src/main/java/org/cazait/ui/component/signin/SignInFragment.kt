@@ -17,9 +17,9 @@ import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
-        SignInViewModel::class.java,
-        R.layout.fragment_sign_in,
-    ) {
+    SignInViewModel::class.java,
+    R.layout.fragment_sign_in,
+) {
     override fun initAfterBinding() {
         observeViewModel()
     }
@@ -64,13 +64,13 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         }
     }
 
-    private fun navigateToSignUpFragment(){
-        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
+    private fun navigateToAgreeFragment() {
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToAgreeFragment())
     }
 
     private fun initSignUpBtn() {
         binding.tvSignup.setOnClickListener {
-            navigateToSignUpFragment()
+            navigateToAgreeFragment()
         }
     }
 

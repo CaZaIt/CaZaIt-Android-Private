@@ -131,15 +131,26 @@
             android:id="@+id/action_signInFragment_to_myPageFragment"
             app:destination="@id/myPageFragment" />
         <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@+id/signupFragment" />
+            android:id="@+id/action_signInFragment_to_agreeFragment"
+            app:destination="@+id/agreeFragment" />
     </fragment>
     <fragment
         android:id="@+id/agreeFragment"
         android:name="org.cazait.ui.component.signup.agree.AgreeFragment"
         android:label="AgreeFragment"
         tools:layout="@layout/fragment_agree">
-
+        <action
+            android:id="@+id/action_agreeFragment_to_signUpFragment"
+            app:destination="@+id/signupFragment" />
+        <action
+            android:id="@+id/action_agreeFragment_to_signInFragment"
+            app:destination="@+id/signInFragment"/>
+        <action
+            android:id="@+id/action_agreeFragment_to_privacyTermsFragment"
+            app:destination="@id/privacyTermsFragment" />
+        <action
+            android:id="@+id/action_agreeFragment_to_locationTermsFragment"
+            app:destination="@id/locationTermsFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"

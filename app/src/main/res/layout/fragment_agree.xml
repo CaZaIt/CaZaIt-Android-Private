@@ -168,7 +168,7 @@
             app:layout_constraintTop_toTopOf="@+id/tv_privacy_essential" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_sign_up_join"
+            android:id="@+id/btn_agree_next"
             style="@style/TextValue_B"
             android:layout_width="150dp"
             android:layout_height="48dp"

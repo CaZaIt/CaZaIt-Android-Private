@@ -55,6 +55,7 @@
     <string name="agree_essential">필수</string>
     <string name="agree_location_see">위치정보 기반 서비스 이용약관 내용 보기  ></string>
     <string name="agree_privacy_see">개인정보 수집 및 이용 동의 내용 보기  ></string>
+    <string name="agree_please">필수 약관 동의를 모두 동의해주세요.</string>
 
     <!-- Cafe List -->
     <string name="search">카페명을 입력해주세요.</string>
