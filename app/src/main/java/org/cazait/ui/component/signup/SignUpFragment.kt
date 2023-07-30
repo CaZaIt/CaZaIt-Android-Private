@@ -97,12 +97,15 @@ class SignUpFragment :
 
     override fun initView() {
         viewModel.initViewModel()
+        binding.clTop.includedTvTitle.text = getString(R.string.sign_up_sign_up)
+        binding.clTop.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         initIdBtn()
         initNicknameBtn()
         initPhoneBtn()
         initVerifyBtn()
         initSignUpBtn()
-        initBackBtn()
         initEditTextListener()
     }
 
@@ -291,12 +294,6 @@ class SignUpFragment :
             val codeString = binding.etSignUpVarificationCode.text.toString()
             val codeInt = codeString.toInt()
             viewModel.postVerifyCode(phoneNumber, codeInt)
-        }
-    }
-
-    private fun initBackBtn() {
-        binding.ivSignUpArrowBack.setOnClickListener {
-            findNavController().popBackStack()
         }
     }
 
