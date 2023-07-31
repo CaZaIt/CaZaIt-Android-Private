@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="org.cazait.ui.component.cafeinfo.CafeInfoViewModel" />
+            type="org.cazait.ui.cafeinfo.CafeInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
