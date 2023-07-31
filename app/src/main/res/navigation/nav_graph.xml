@@ -12,9 +12,7 @@
         tools:layout="@layout/fragment_cafe_list">
         <action
             android:id="@+id/action_cafeListFragment_to_cafeInfoFragment"
-            app:destination="@id/cafeInfoFragment"
-            app:popUpTo="@id/cafeListFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/cafeInfoFragment"/>
         <action
             android:id="@+id/action_cafeListFragment_to_searchFragment"
             app:destination="@+id/searchFragment" />
@@ -26,9 +24,7 @@
         tools:layout="@layout/fragment_cafe_map">
         <action
             android:id="@+id/action_cafeMapFragment_to_cafeInfoFragment"
-            app:destination="@id/cafeInfoFragment"
-            app:popUpTo="@id/cafeMapFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/cafeInfoFragment"/>
     </fragment>
     <fragment
         android:id="@+id/myPageFragment"
@@ -37,9 +33,7 @@
         tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_myPageFragment_to_recentlyCafeFragment"
-            app:destination="@id/recentlyCafeFragment"
-            app:popUpTo="@id/myPageFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/recentlyCafeFragment"/>
         <action
             android:id="@+id/action_myPageFragment_to_signInFragment"
             app:destination="@+id/signInFragment" />
