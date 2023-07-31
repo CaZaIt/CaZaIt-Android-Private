@@ -97,12 +97,15 @@ class SignUpFragment :
 
     override fun initView() {
         viewModel.initViewModel()
+        binding.clTop.includedTvTitle.text = getString(R.string.sign_up_sign_up)
+        binding.clTop.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         initIdBtn()
         initNicknameBtn()
         initPhoneBtn()
         initVerifyBtn()
         initSignUpBtn()
-        initBackBtn()
         initEditTextListener()
     }
 
@@ -125,7 +128,7 @@ class SignUpFragment :
             is Resource.Success -> status.data.let {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
-                findNavController().popBackStack()
+                navigateToSignInFragment()
             }
 
             is Resource.Error -> {
@@ -230,6 +233,10 @@ class SignUpFragment :
         }
     }
 
+    private fun navigateToSignInFragment() {
+        findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment())
+    }
+
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {
         binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
@@ -291,12 +298,6 @@ class SignUpFragment :
             val codeString = binding.etSignUpVarificationCode.text.toString()
             val codeInt = codeString.toInt()
             viewModel.postVerifyCode(phoneNumber, codeInt)
-        }
-    }
-
-    private fun initBackBtn() {
-        binding.ivSignUpArrowBack.setOnClickListener {
-            findNavController().popBackStack()
         }
     }
 
@@ -437,7 +438,7 @@ class SignUpFragment :
         }
     }
 
-    private fun checkPhoneNumber(phone: String){
+    private fun checkPhoneNumber(phone: String) {
         when {
             phone.isEmpty() -> {
                 binding.etSignUpPhoneNumber.error =
@@ -452,7 +453,7 @@ class SignUpFragment :
         }
     }
 
-    private fun checkVerifyCode(code: String){
+    private fun checkVerifyCode(code: String) {
         when {
             code.isEmpty() -> {
                 binding.etSignUpVarificationCode.error =

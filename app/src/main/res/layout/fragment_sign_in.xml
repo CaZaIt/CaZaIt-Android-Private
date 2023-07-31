@@ -9,6 +9,13 @@
         android:background="@color/login_back"
         tools:context=".ui.component.signin.SignInFragment">
 
+        <include
+            android:id="@+id/cl_top"
+            layout="@layout/layout_page_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/iv_login_logo"
             android:layout_width="wrap_content"

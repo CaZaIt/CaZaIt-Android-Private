@@ -22,6 +22,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         R.id.signInFragment,
         R.id.signupFragment,
         R.id.searchFragment,
+        R.id.agreeFragment,
+        R.id.cafeInfoFragment,
         R.id.customerServiceFragment,
         R.id.termsPoliciesFragment,
         R.id.locationTermsFragment,

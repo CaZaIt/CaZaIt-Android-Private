@@ -23,7 +23,7 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
 
         binding.clTop.includedTvTitle.text = getString(R.string.recent_view_store)
         binding.clTop.btnBack.setOnClickListener {
-            findNavController().navigate(RecentlyCafeFragmentDirections.actionRecentlyCafeFragmentToMyPageFragment())
+            findNavController().popBackStack()
         }
         binding.recycleCafe.adapter = verticalAdapter
         observeRecentlyViewedCafes()

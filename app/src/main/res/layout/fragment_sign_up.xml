@@ -16,40 +16,12 @@
         android:background="@color/login_back"
         tools:context=".ui.component.signup.SignUpFragment">
 
-        <View
-            android:id="@+id/view_sign_up_divide"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:background="@color/main_black"
+        <include
+            android:id="@+id/cl_top"
+            layout="@layout/layout_page_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_sign_up_arrow_back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/content_des_back_button"
-            android:padding="12dp"
-            app:layout_constraintStart_toStartOf="@+id/view_sign_up_divide"
-            app:layout_constraintTop_toTopOf="@+id/view_sign_up_divide"
-            app:srcCompat="@drawable/arrow_back" />
-
-        <TextView
-            android:id="@+id/tv_sign_up_enrollment"
-            style="@style/TextValue_B"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up_sign_up"
-            android:textAlignment="center"
-            android:textColor="@color/main_white"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_sign_up_arrow_back"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_sign_up_arrow_back" />
 
         <TextView
             android:id="@+id/tv_sign_up_id"
@@ -63,7 +35,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_sign_up_divide" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_top" />
 
         <EditText
             android:id="@+id/et_sign_up_id_example"
@@ -76,7 +48,7 @@
             android:background="@drawable/rectangle_white_r50"
             android:hint="@string/sign_up_hint_id_example"
             android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingStart="17dp"
             android:textColorHint="@color/edit_text_hint"
             app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_id_double_check"
@@ -248,7 +220,7 @@
             android:background="@drawable/rectangle_white_r50"
             android:hint="@string/sign_up_hint_phone_number"
             android:importantForAutofill="no"
-            android:inputType="number"
+            android:inputType="phone"
             android:maxLength="11"
             android:paddingStart="17dp"
             android:textColorHint="@color/edit_text_hint"

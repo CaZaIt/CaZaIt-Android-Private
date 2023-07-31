@@ -124,9 +124,8 @@ fun SignInInfoDTO.toSignInInfo() = SignInInfo(
 fun SignUpInfoDTO.toSignUpInfo() = SignUpInfo(
     uuid = uuid,
     userId = userId,
-    password = password,
     phoneNumber,
-    nickname = nickname,
+    nickname = nickname
 )
 
 fun IsNicknameDupRes.toNicknameDup() = NicknameDup(

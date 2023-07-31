@@ -12,9 +12,7 @@
         tools:layout="@layout/fragment_cafe_list">
         <action
             android:id="@+id/action_cafeListFragment_to_cafeInfoFragment"
-            app:destination="@id/cafeInfoFragment"
-            app:popUpTo="@id/cafeListFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/cafeInfoFragment"/>
         <action
             android:id="@+id/action_cafeListFragment_to_searchFragment"
             app:destination="@+id/searchFragment" />
@@ -26,9 +24,7 @@
         tools:layout="@layout/fragment_cafe_map">
         <action
             android:id="@+id/action_cafeMapFragment_to_cafeInfoFragment"
-            app:destination="@id/cafeInfoFragment"
-            app:popUpTo="@id/cafeMapFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/cafeInfoFragment"/>
     </fragment>
     <fragment
         android:id="@+id/myPageFragment"
@@ -37,9 +33,7 @@
         tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_myPageFragment_to_recentlyCafeFragment"
-            app:destination="@id/recentlyCafeFragment"
-            app:popUpTo="@id/myPageFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/recentlyCafeFragment"/>
         <action
             android:id="@+id/action_myPageFragment_to_signInFragment"
             app:destination="@+id/signInFragment" />
@@ -131,8 +125,26 @@
             android:id="@+id/action_signInFragment_to_myPageFragment"
             app:destination="@id/myPageFragment" />
         <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
+            android:id="@+id/action_signInFragment_to_agreeFragment"
+            app:destination="@+id/agreeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/agreeFragment"
+        android:name="org.cazait.ui.component.signup.agree.AgreeFragment"
+        android:label="AgreeFragment"
+        tools:layout="@layout/fragment_agree">
+        <action
+            android:id="@+id/action_agreeFragment_to_signUpFragment"
             app:destination="@+id/signupFragment" />
+        <action
+            android:id="@+id/action_agreeFragment_to_signInFragment"
+            app:destination="@+id/signInFragment" />
+        <action
+            android:id="@+id/action_agreeFragment_to_privacyTermsFragment"
+            app:destination="@id/privacyTermsFragment" />
+        <action
+            android:id="@+id/action_agreeFragment_to_locationTermsFragment"
+            app:destination="@id/locationTermsFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -141,7 +153,9 @@
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
-            app:destination="@+id/signInFragment" />
+            app:destination="@+id/signInFragment"
+            app:popUpTo="@+id/signInFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/cafeInfoFragment"
