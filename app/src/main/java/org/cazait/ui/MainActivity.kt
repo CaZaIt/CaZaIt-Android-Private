@@ -1,6 +1,7 @@
 package org.cazait.ui
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment

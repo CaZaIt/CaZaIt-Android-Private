@@ -16,7 +16,6 @@ import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
 import org.cazait.model.VerifyCode
 import org.cazait.ui.base.BaseFragment
-import org.cazait.ui.component.signup.SignUpFragmentDirections
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
 import org.cazait.utils.showToast

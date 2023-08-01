@@ -7,7 +7,6 @@ import org.cazait.databinding.FragmentRecentlyCafeBinding
 import org.cazait.model.Cafe
 import org.cazait.ui.adapter.RecentlyViewedVerticalAdapter
 import org.cazait.ui.base.BaseFragment
-import org.cazait.ui.component.recentlycafe.RecentlyCafeFragmentDirections
 import org.cazait.utils.observe
 
 @AndroidEntryPoint

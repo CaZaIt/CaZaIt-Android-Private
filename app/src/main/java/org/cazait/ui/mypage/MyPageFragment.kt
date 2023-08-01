@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import org.cazait.R
 import org.cazait.databinding.FragmentMyPageBinding
 import org.cazait.ui.base.BaseFragment
-import org.cazait.ui.component.mypage.MyPageFragmentDirections
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(

@@ -22,7 +22,6 @@ import org.cazait.model.FavoriteCafes
 import org.cazait.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.cafeinfo.CafeInfoDialogFragment
-import org.cazait.ui.component.map.CafeMapFragmentDirections
 import org.cazait.utils.observe
 import kotlin.math.abs
 

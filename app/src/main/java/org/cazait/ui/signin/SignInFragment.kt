@@ -9,7 +9,6 @@ import org.cazait.databinding.FragmentSignInBinding
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
 import org.cazait.ui.base.BaseFragment
-import org.cazait.ui.component.signin.SignInFragmentDirections
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
 import org.cazait.utils.showToast

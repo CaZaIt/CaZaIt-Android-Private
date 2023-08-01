@@ -19,7 +19,6 @@ import org.cazait.databinding.FragmentCafeInfoBinding
 import org.cazait.model.Cafe
 import org.cazait.ui.adapter.CafeImgAdapter
 import org.cazait.ui.adapter.ViewPagerAdapter
-import org.cazait.ui.component.cafeinfo.CafeInfoFragmentArgs
 import org.cazait.ui.cafeinfo.detail.CafeInfoMenuFragment
 import org.cazait.ui.cafeinfo.detail.CafeInfoReviewFragment
 
