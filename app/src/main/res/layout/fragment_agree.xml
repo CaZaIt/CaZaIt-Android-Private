@@ -7,11 +7,11 @@
 
         <variable
             name="fragment"
-            type="org.cazait.ui.component.signup.agree.AgreeFragment" />
+            type="org.cazait.ui.signup.agree.AgreeFragment" />
 
         <variable
             name="viewModel"
-            type="org.cazait.ui.component.signup.agree.AgreeViewModel" />
+            type="org.cazait.ui.signup.agree.AgreeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

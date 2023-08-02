@@ -7,11 +7,11 @@
     <data>
         <variable
             name="fragment"
-            type="org.cazait.ui.component.seemore.SeeMoreFragment" />
+            type="org.cazait.ui.seemore.SeeMoreFragment" />
 
         <variable
             name="viewmodel"
-            type="org.cazait.ui.component.seemore.SeeMoreViewModel" />
+            type="org.cazait.ui.seemore.SeeMoreViewModel" />
 
     </data>
 

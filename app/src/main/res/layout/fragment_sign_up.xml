@@ -7,14 +7,14 @@
 
         <variable
             name="back"
-            type="org.cazait.ui.component.signup.SignUpFragment" />
+            type="org.cazait.ui.signup.SignUpFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/login_back"
-        tools:context=".ui.component.signup.SignUpFragment">
+        tools:context=".ui.signup.SignUpFragment">
 
         <include
             android:id="@+id/cl_top"
@@ -292,21 +292,14 @@
             style="@style/TextValue_B"
             android:layout_width="150dp"
             android:layout_height="48dp"
-            android:layout_marginStart="122dp"
-            android:layout_marginTop="64dp"
-            android:layout_marginEnd="121dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/round_orange_rectangle"
             android:backgroundTint="@color/main_black"
-            android:paddingLeft="25dp"
-            android:paddingTop="11dp"
-            android:paddingRight="25dp"
-            android:paddingBottom="11dp"
             android:text="@string/sign_up_join"
             android:textAlignment="center"
             android:textColor="@color/main_white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.444"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_sign_up_varification_code" />
 

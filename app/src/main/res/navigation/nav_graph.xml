@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/cafeListFragment"
-        android:name="org.cazait.ui.component.cafelist.CafeListFragment"
+        android:name="org.cazait.ui.cafelist.CafeListFragment"
         android:label="CafeListFragment"
         tools:layout="@layout/fragment_cafe_list">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/cafeMapFragment"
-        android:name="org.cazait.ui.component.map.CafeMapFragment"
+        android:name="org.cazait.ui.map.CafeMapFragment"
         android:label="CafeMapFragment"
         tools:layout="@layout/fragment_cafe_map">
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/myPageFragment"
-        android:name="org.cazait.ui.component.mypage.MyPageFragment"
+        android:name="org.cazait.ui.mypage.MyPageFragment"
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_my_page">
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/seeMoreFragment"
-        android:name="org.cazait.ui.component.seemore.SeeMoreFragment"
+        android:name="org.cazait.ui.seemore.SeeMoreFragment"
         android:label="SeeMoreFragment"
         tools:layout="@layout/fragment_see_more">
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/announcementFragment"
-        android:name="org.cazait.ui.component.announcement.AnnouncementFragment"
+        android:name="org.cazait.ui.announcement.AnnouncementFragment"
         android:label="AnnouncementFragment"
         tools:layout="@layout/fragment_announcement">
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/customerServiceFragment"
-        android:name="org.cazait.ui.component.customerservice.CustomerServiceFragment"
+        android:name="org.cazait.ui.customerservice.CustomerServiceFragment"
         android:label="CustomerServiceFragment"
         tools:layout="@layout/fragment_customer_service">
         <action
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/termsPoliciesFragment"
-        android:name="org.cazait.ui.component.termspolicies.TermsPoliciesFragment"
+        android:name="org.cazait.ui.termspolicies.TermsPoliciesFragment"
         android:label="TermsPoliciesFragment"
         tools:layout="@layout/fragment_terms_policies">
         <action
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/locationTermsFragment"
-        android:name="org.cazait.ui.component.termspolicies.LocationTermsFragment"
+        android:name="org.cazait.ui.termspolicies.LocationTermsFragment"
         android:label="LocationTermsFragment"
         tools:layout="@layout/fragment_location_terms">
         <action
@@ -97,7 +97,7 @@
     </fragment>
     <fragment
         android:id="@+id/privacyTermsFragment"
-        android:name="org.cazait.ui.component.termspolicies.PrivacyTermsFragment"
+        android:name="org.cazait.ui.termspolicies.PrivacyTermsFragment"
         android:label="PrivacyTermsFragment"
         tools:layout="@layout/fragment_privacy_terms">
         <action
@@ -106,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/recentlyCafeFragment"
-        android:name="org.cazait.ui.component.recentlycafe.RecentlyCafeFragment"
+        android:name="org.cazait.ui.recentlycafe.RecentlyCafeFragment"
         android:label="RecentlyCafeFragment"
         tools:layout="@layout/fragment_recently_cafe">
         <action
@@ -118,7 +118,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="org.cazait.ui.component.signin.SignInFragment"
+        android:name="org.cazait.ui.signin.SignInFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -130,7 +130,7 @@
     </fragment>
     <fragment
         android:id="@+id/agreeFragment"
-        android:name="org.cazait.ui.component.signup.agree.AgreeFragment"
+        android:name="org.cazait.ui.signup.agree.AgreeFragment"
         android:label="AgreeFragment"
         tools:layout="@layout/fragment_agree">
         <action
@@ -148,7 +148,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="org.cazait.ui.component.signup.SignUpFragment"
+        android:name="org.cazait.ui.signup.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -159,7 +159,7 @@
     </fragment>
     <fragment
         android:id="@+id/cafeInfoFragment"
-        android:name="org.cazait.ui.component.cafeinfo.CafeInfoFragment"
+        android:name="org.cazait.ui.cafeinfo.CafeInfoFragment"
         android:label="CafeInfoFragment"
         tools:layout="@layout/fragment_cafe_info">
         <argument
@@ -168,7 +168,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="org.cazait.ui.component.search.SearchFragment"
+        android:name="org.cazait.ui.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search">
         <argument

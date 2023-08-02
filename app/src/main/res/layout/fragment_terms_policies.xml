@@ -7,11 +7,11 @@
     <data>
         <variable
             name="fragment"
-            type="org.cazait.ui.component.termspolicies.TermsPoliciesFragment" />
+            type="org.cazait.ui.termspolicies.TermsPoliciesFragment" />
 
         <variable
             name="viewModel"
-            type="org.cazait.ui.component.termspolicies.TermsPoliciesViewModel" />
+            type="org.cazait.ui.termspolicies.TermsPoliciesViewModel" />
 
     </data>
 

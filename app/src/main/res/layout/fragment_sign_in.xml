@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/login_back"
-        tools:context=".ui.component.signin.SignInFragment">
+        tools:context=".ui.signin.SignInFragment">
 
         <include
             android:id="@+id/cl_top"
