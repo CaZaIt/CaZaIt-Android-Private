@@ -35,9 +35,15 @@ class AgreeFragment : BaseFragment<FragmentAgreeBinding, AgreeViewModel>(
     private fun initAgreeCheck() {
         val checkBoxList = listOf(binding.cbAgreeLocation, binding.cbAgreePrivacy)
 
-        binding.cbAgreeAll.setOnCheckedChangeListener { _, isChecked ->
-            checkBoxList.forEach { checkBox ->
-                checkBox.isChecked = isChecked
+        binding.cbAgreeAll.setOnClickListener {
+            if (binding.cbAgreeAll.isChecked) {
+                checkBoxList.forEach { checkBox ->
+                    checkBox.isChecked = true
+                }
+            } else{
+                checkBoxList.forEach { checkBox ->
+                    checkBox.isChecked = false
+                }
             }
         }
 
