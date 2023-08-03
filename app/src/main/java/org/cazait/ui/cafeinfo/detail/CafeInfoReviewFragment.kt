@@ -11,11 +11,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeInfoReviewBinding
 import org.cazait.model.Cafe
+import org.cazait.model.CafeReview
 import org.cazait.model.CafeReviews
 import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeInfoReviewAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.cafeinfo.CafeInfoViewModel
+import org.cazait.ui.cafeinfo.detail.clicklistener.ReviewItemClick
 import org.cazait.ui.review.ReviewEditActivity
 import org.cazait.utils.observe
 import org.cazait.utils.toGone
@@ -26,7 +28,7 @@ import kotlin.math.roundToInt
 class CafeInfoReviewFragment(
     private val cafe: Cafe,
     private val viewModel: CafeInfoViewModel
-) : Fragment() {
+) : Fragment(), ReviewItemClick {
     private lateinit var binding: FragmentCafeInfoReviewBinding
     private lateinit var reviewAdapter: CafeInfoReviewAdapter
 
@@ -74,7 +76,7 @@ class CafeInfoReviewFragment(
     private fun initAdapter() {
         val userUuid = viewModel.uuid.value
         Log.d("ReviewFrag 유저 uuid", userUuid.toString())
-        reviewAdapter = CafeInfoReviewAdapter(userUuid)
+        reviewAdapter = CafeInfoReviewAdapter(userUuid, this)
         binding.rvCafeInfoReviews.adapter = this.reviewAdapter
         binding.rvCafeInfoReviews.addItemDecoration(
             ItemDecoration(
@@ -116,5 +118,18 @@ class CafeInfoReviewFragment(
                 binding.lottieReview.toGone()
             }
         }
+    }
+
+    override fun onEditClick(item: CafeReview) {
+        val content = item.content
+        val rating = item.score
+    }
+
+    override fun onDeleteClick(item: CafeReview) {
+
+    }
+
+    override fun onReportClick(item: CafeReview) {
+
     }
 }
