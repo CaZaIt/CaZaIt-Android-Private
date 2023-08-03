@@ -44,6 +44,7 @@
             android:layout_height="20dp"
             android:layout_marginEnd="40dp"
             android:background="@color/main_white"
+            android:buttonTint="@color/main_black"
             app:layout_constraintBottom_toBottomOf="@+id/tv_agree_all"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_agree_all" />
@@ -110,6 +111,7 @@
             android:layout_height="20dp"
             android:layout_marginEnd="40dp"
             android:background="@color/main_white"
+            android:buttonTint="@color/main_black"
             app:layout_constraintBottom_toBottomOf="@+id/tv_location_essential"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_location_essential" />
@@ -163,6 +165,7 @@
             android:layout_height="20dp"
             android:layout_marginEnd="40dp"
             android:background="@color/main_white"
+            android:buttonTint="@color/main_black"
             app:layout_constraintBottom_toBottomOf="@+id/tv_privacy_essential"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_privacy_essential" />

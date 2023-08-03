@@ -17,7 +17,7 @@ data class SignInRes(
 data class SignInInfoDTO(
     @SerializedName("id")
     val uuid: String,
-    @SerializedName("accountNumber")
+    @SerializedName("accountName")
     val userId: String,
     @SerializedName("accessToken")
     val accessToken: String,
