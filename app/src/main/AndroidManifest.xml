@@ -25,7 +25,7 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.CaZaIt.Splash"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustUnspecified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,5 +33,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
