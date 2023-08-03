@@ -21,19 +21,9 @@ class ReviewWriteViewModel @Inject constructor(
     val messageLiveData: LiveData<String>
         get() = _messageLiveData
 
-    val reviewScoreLiveData = MutableLiveData<Float>()
-    val reviewContentLiveData = MutableLiveData<String?>()
-
-    fun initReviewData(score: Float, content: String?) {
-        reviewScoreLiveData.value = score
-        reviewContentLiveData.value = content
-    }
-
-    fun sendReviewToServer(cafeId: Long) {
+    fun sendReviewToServer(cafeId: Long, score: Float, content: String) {
         viewModelScope.launch {
             val userId = userRepository.getUserInfo().first().uuid
-            val score = reviewScoreLiveData.value ?: return@launch
-            val content = reviewContentLiveData.value ?: return@launch
 
             Log.d("ReviewEditViewModel", "$userId, $score, $content")
             cafeRepository.postReviewAuth(userId, cafeId, score.toInt(), content).first()

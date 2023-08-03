@@ -122,8 +122,8 @@ class CafeInfoReviewFragment(
         parentFragment?.findNavController()?.navigate(
             CafeInfoFragmentDirections.actionCafeInfoFragmentToReviewWriteFragment(
                 cafe,
-                0f,
-                "asdf"
+                1f,
+                ""
             )
         )
     }

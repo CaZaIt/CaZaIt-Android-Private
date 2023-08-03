@@ -15,8 +15,8 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
     private val navArgs: ReviewWriteFragmentArgs by navArgs()
 
     override fun initView() {
-        viewModel.initReviewData(navArgs.score, navArgs.reviewContent)
         setupCafe()
+        setReviewSendBtn()
         setupBackPressButton()
     }
 
@@ -25,14 +25,18 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
     private fun setupCafe() {
         binding.apply {
             clTab.includedTvTitle.text = getString(R.string.edit_review)
+            rbRating.rating = navArgs.score
+            etReview.setText(navArgs.reviewContent)
         }
-        viewModel.initReviewData(navArgs.score, navArgs.reviewContent)
     }
 
-    fun sendReviewToServer() {
-        binding.etReview.text ?: return
-        viewModel.sendReviewToServer(navArgs.cafe.cafeId)
-        findNavController().popBackStack()
+    private fun setReviewSendBtn() {
+        binding.btnSendReview.setOnClickListener {
+            viewModel.sendReviewToServer(navArgs.cafe.cafeId, binding.rbRating.rating,
+                binding.etReview.text.toString()
+            )
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupBackPressButton() {
