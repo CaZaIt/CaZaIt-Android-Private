@@ -1,5 +1,6 @@
 package org.cazait.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,8 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.cazait.model.CafeReview
 import org.cazait.databinding.ItemCafeInfoReviewBinding
+import org.cazait.utils.toGone
+import org.cazait.utils.toVisible
 
-class CafeInfoReviewAdapter :
+class CafeInfoReviewAdapter(private val uuid: String?) :
     ListAdapter<CafeReview, CafeInfoReviewAdapter.CafeInfoReviewViewHolder>(diffUtil) {
 
     inner class CafeInfoReviewViewHolder(
@@ -16,8 +19,16 @@ class CafeInfoReviewAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CafeReview) {
+            Log.d("Review Adapter 사용자 uuid", uuid.toString())
+            if (item.userId == uuid) {
+                binding.layoutNotLogin.toGone()
+                binding.layoutLogin.toVisible()
+            } else {
+                binding.layoutLogin.toGone()
+                binding.layoutNotLogin.toVisible()
+            }
             binding.rating.progress = item.score
-            binding.tvUser.text = item.userId.toString()
+            binding.tvUser.text = item.userId
             binding.tvContent.text = item.content
         }
     }

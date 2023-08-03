@@ -2,6 +2,7 @@ package org.cazait.ui.cafeinfo.detail
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +72,9 @@ class CafeInfoReviewFragment(
     }
 
     private fun initAdapter() {
-        reviewAdapter = CafeInfoReviewAdapter()
+        val userUuid = viewModel.uuid.value
+        Log.d("ReviewFrag 유저 uuid", userUuid.toString())
+        reviewAdapter = CafeInfoReviewAdapter(userUuid)
         binding.rvCafeInfoReviews.adapter = this.reviewAdapter
         binding.rvCafeInfoReviews.addItemDecoration(
             ItemDecoration(
