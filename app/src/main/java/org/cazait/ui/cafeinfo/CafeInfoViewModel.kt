@@ -15,6 +15,7 @@ import org.cazait.model.Cafe
 import org.cazait.model.CafeMenus
 import org.cazait.model.CafeReviews
 import org.cazait.model.Resource
+import org.cazait.model.local.UserPreference
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
@@ -38,6 +39,9 @@ class CafeInfoViewModel @Inject constructor(
 
     private val _signInStateFlow = MutableStateFlow(false)
     val signInStateFlow = _signInStateFlow.asStateFlow()
+
+    private var _uuid = MutableStateFlow<String?>(null)
+    val uuid = _uuid.asStateFlow()
 
     fun initViewModel(cafe: Cafe, isFavorite: Boolean) {
         this.cafe = cafe
@@ -88,6 +92,7 @@ class CafeInfoViewModel @Inject constructor(
     fun updateSignInState() {
         viewModelScope.launch {
             _signInStateFlow.value = userRepository.isLoggedIn().first()
+            _uuid.value = userRepository.getUserInfo().first().uuid
         }
     }
 
