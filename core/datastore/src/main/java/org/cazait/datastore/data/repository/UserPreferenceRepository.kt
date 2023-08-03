@@ -20,7 +20,7 @@ class UserPreferenceRepository @Inject constructor(
         role: String,
         accessToken: String,
         refreshToken: String
-    ) {
+    ) = runCatching {
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
                 isLoggedIn = isLoggedIn,
@@ -36,7 +36,7 @@ class UserPreferenceRepository @Inject constructor(
     suspend fun updateUserToken(
         accessToken: String,
         refreshToken: String,
-    ) {
+    ) = runCatching {
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
                 accessToken = accessToken,
@@ -48,14 +48,14 @@ class UserPreferenceRepository @Inject constructor(
     suspend fun updateUserToken(
         token: String,
         updateMode: Int,
-    ) {
+    ) = runCatching {
         if (updateMode == UPDATE_JWT_TOKEN) {
             userPreferenceDataSource.updateData { savedUserPreferences ->
                 savedUserPreferences.copy(
                     accessToken = token
                 )
             }
-        } else if (updateMode == UPDATE_REFRESH_TOKEN) {
+        } else {
             userPreferenceDataSource.updateData { savedUserPreferences ->
                 savedUserPreferences.copy(
                     refreshToken = token
@@ -64,7 +64,7 @@ class UserPreferenceRepository @Inject constructor(
         }
     }
 
-    suspend fun clearUserPreference() {
+    suspend fun clearUserPreference() = runCatching {
         userPreferenceDataSource.updateData {
             UserPreference.getDefaultInstance()
         }
