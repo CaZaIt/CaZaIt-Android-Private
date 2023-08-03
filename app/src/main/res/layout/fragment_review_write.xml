@@ -11,18 +11,18 @@
 
         <variable
             name="activity"
-            type="org.cazait.ui.review.ReviewEditActivity" />
+            type="org.cazait.ui.review.ReviewWriteFragment" />
 
         <variable
             name="viewModel"
-            type="org.cazait.ui.review.ReviewEditViewModel" />
+            type="org.cazait.ui.review.ReviewWriteViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_beige"
-        tools:context=".ui.review.ReviewEditActivity">
+        tools:context=".ui.review.ReviewWriteFragment">
 
         <include
             android:id="@+id/cl_tab"
