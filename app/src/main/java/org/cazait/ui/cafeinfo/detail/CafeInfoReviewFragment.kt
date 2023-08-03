@@ -72,7 +72,9 @@ class CafeInfoReviewFragment(
     }
 
     private fun initAdapter() {
-        reviewAdapter = CafeInfoReviewAdapter()
+        val userUuid = viewModel.uuid.value
+        Log.d("ReviewFrag 유저 uuid", userUuid.toString())
+        reviewAdapter = CafeInfoReviewAdapter(userUuid)
         binding.rvCafeInfoReviews.adapter = this.reviewAdapter
         binding.rvCafeInfoReviews.addItemDecoration(
             ItemDecoration(
