@@ -103,14 +103,14 @@ object RetrofitModule {
     @Singleton
     @Authenticated
     fun providesHeaderInterceptorAuth(userPreferenceRepository: UserPreferenceRepository): Interceptor {
-        val user = runBlocking(Dispatchers.IO) {
-            kotlin.runCatching {
-                userPreferenceRepository.getUserPreference().first()
-            }.getOrDefault(UserPreference.getDefaultInstance())
-        }
-
         return Interceptor { chain ->
-            var accessToken = user.accessToken
+            val user = runBlocking(Dispatchers.IO) {
+                kotlin.runCatching {
+                    userPreferenceRepository.getUserPreference().first()
+                }.getOrDefault(UserPreference.getDefaultInstance())
+            }
+
+            val accessToken = user.accessToken
 
             val original = chain.request()
             val request = original.newBuilder()
