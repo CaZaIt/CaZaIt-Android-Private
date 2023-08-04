@@ -84,6 +84,7 @@ class CafeRepositoryImpl @Inject constructor(
 
     override suspend fun getListFavoritesAuth(userId: String): Flow<Resource<FavoriteCafes>> {
         return flow {
+            Log.d("찜한매장 response", cafeListRemoteData.getListFavoritesAuth(userId).toString())
             when (val response = cafeListRemoteData.getListFavoritesAuth(userId)) {
                 is DataResponse.Success -> {
                     val fc = FavoriteCafes(

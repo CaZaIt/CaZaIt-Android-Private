@@ -13,7 +13,7 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ReviewEditViewModel @Inject constructor(
+class ReviewWriteViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val cafeRepository: CafeRepository,
 ) : BaseViewModel() {
@@ -21,14 +21,9 @@ class ReviewEditViewModel @Inject constructor(
     val messageLiveData: LiveData<String>
         get() = _messageLiveData
 
-    val reviewScoreLiveData = MutableLiveData<Float>()
-    val reviewContentLiveData = MutableLiveData<String>()
-
-    fun sendReviewToServer(cafeId: Long) {
+    fun sendReviewToServer(cafeId: Long, score: Float, content: String) {
         viewModelScope.launch {
             val userId = userRepository.getUserInfo().first().uuid
-            val score = reviewScoreLiveData.value ?: return@launch
-            val content = reviewContentLiveData.value ?: return@launch
 
             Log.d("ReviewEditViewModel", "$userId, $score, $content")
             cafeRepository.postReviewAuth(userId, cafeId, score.toInt(), content).first()

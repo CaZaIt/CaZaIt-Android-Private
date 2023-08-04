@@ -2,10 +2,12 @@ package org.cazait.ui.cafeinfo.detail
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeInfoReviewBinding
@@ -14,8 +16,8 @@ import org.cazait.model.CafeReviews
 import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeInfoReviewAdapter
 import org.cazait.ui.adapter.ItemDecoration
+import org.cazait.ui.cafeinfo.CafeInfoFragmentDirections
 import org.cazait.ui.cafeinfo.CafeInfoViewModel
-import org.cazait.ui.review.ReviewEditActivity
 import org.cazait.utils.observe
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -51,8 +53,7 @@ class CafeInfoReviewFragment(
         binding.fabEditReview.setOnClickListener {
             val isLoggedIn = viewModel.signInStateFlow.value
             if (isLoggedIn) {
-                val intent = ReviewEditActivity.reviewIntent(requireContext(), cafe)
-                startActivity(intent)
+                navigateToReviewWriteFragment(cafe)
             } else {
                 AlertDialog.Builder(requireContext())
                     .setMessage(resources.getString(R.string.need_login))
@@ -113,5 +114,17 @@ class CafeInfoReviewFragment(
                 binding.lottieReview.toGone()
             }
         }
+    }
+
+    private fun navigateToReviewWriteFragment(cafe: Cafe) {
+        val parentFragment = parentFragment
+        Log.d("CafeInfoReviewFragment의 부모 Fragment는 누구?", parentFragment.toString())
+        parentFragment?.findNavController()?.navigate(
+            CafeInfoFragmentDirections.actionCafeInfoFragmentToReviewWriteFragment(
+                cafe,
+                1f,
+                ""
+            )
+        )
     }
 }
