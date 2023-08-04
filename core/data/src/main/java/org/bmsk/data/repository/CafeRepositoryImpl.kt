@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.runBlocking
 import org.bmsk.data.model.toCafe
 import org.bmsk.data.model.toCafeMenu
 import org.bmsk.data.model.toCafeReviews
@@ -57,7 +56,6 @@ class CafeRepositoryImpl @Inject constructor(
         }
     }
 
-
     override suspend fun getListCafes(
         latitude: String,
         longitude: String,
@@ -88,8 +86,17 @@ class CafeRepositoryImpl @Inject constructor(
         return flow {
             when (val response = cafeListRemoteData.getListFavoritesAuth(userId)) {
                 is DataResponse.Success -> {
-                    if (response.data!!.code == 401) {
+                    val fc = FavoriteCafes(
+                        response.data?.favorites?.map {
+                            it.toFavoriteCafe()
+                        }.orEmpty()
+                    )
+                    emit(Resource.Success(fc))
+                }
 
+                is DataResponse.DataError -> {
+                    Log.d("response 에러코드", response.errorCode.toString())
+                    if (response.errorCode == 401) {
                         authRepository.refreshToken().first()
 
                         when (val newResponse = cafeListRemoteData.getListFavoritesAuth(userId)) {
@@ -109,15 +116,6 @@ class CafeRepositoryImpl @Inject constructor(
                             }
                         }
                     }
-                    val fc = FavoriteCafes(
-                        response.data?.favorites?.map {
-                            it.toFavoriteCafe()
-                        }.orEmpty()
-                    )
-                    emit(Resource.Success(fc))
-                }
-
-                is DataResponse.DataError -> {
                     emit(Resource.Error(response.toString()))
                 }
             }
