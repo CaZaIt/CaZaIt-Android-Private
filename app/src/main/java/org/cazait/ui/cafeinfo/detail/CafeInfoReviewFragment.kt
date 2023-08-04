@@ -130,6 +130,7 @@ class CafeInfoReviewFragment(
                 ""
             )
         )
+    }
 
     override fun onEditClick(item: CafeReview) {
         val content = item.content
