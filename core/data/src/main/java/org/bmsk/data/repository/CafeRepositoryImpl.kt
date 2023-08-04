@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.runBlocking
 import org.bmsk.data.model.toCafe
 import org.bmsk.data.model.toCafeMenu
 import org.bmsk.data.model.toCafeReviews
@@ -88,21 +89,23 @@ class CafeRepositoryImpl @Inject constructor(
             when (val response = cafeListRemoteData.getListFavoritesAuth(userId)) {
                 is DataResponse.Success -> {
                     if (response.data!!.code == 401) {
-                        authRepository.refreshToken()
-                        val response = cafeListRemoteData.getListFavoritesAuth(userId)
-                        when(response){
+
+                        authRepository.refreshToken().first()
+
+                        when (val newResponse = cafeListRemoteData.getListFavoritesAuth(userId)) {
                             is DataResponse.Success -> {
                                 val fc = FavoriteCafes(
-                                    response.data?.favorites?.map {
+                                    newResponse.data?.favorites?.map {
                                         it.toFavoriteCafe()
                                     }.orEmpty()
                                 )
                                 Log.d("CafeRepository", "토큰 재발급 후 찜한 매장 호출")
-                                Log.d("CafeRepository", response.data.toString())
+                                Log.d("CafeRepository", newResponse.data.toString())
                                 emit(Resource.Success(fc))
                             }
+
                             is DataResponse.DataError -> {
-                                emit(Resource.Error(response.toString()))
+                                emit(Resource.Error(newResponse.toString()))
                             }
                         }
                     }
@@ -175,14 +178,16 @@ class CafeRepositoryImpl @Inject constructor(
                     Log.d("CafeRepository", response.data.toString())
                     if (response.data!!.code == 401) {
                         authRepository.refreshToken()
-                        val response = cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)
-                        when(response){
+                        val response =
+                            cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)
+                        when (response) {
                             is DataResponse.Success -> {
                                 val message: String = response.data?.message ?: ""
                                 Log.d("CafeRepository", "토큰 재발급 후 등록 성공")
                                 Log.d("CafeRepository", response.data.toString())
                                 emit(Resource.Success(message))
                             }
+
                             is DataResponse.DataError -> {
                                 Log.d("CafeRepository", "토큰 재발급 후 등록 실패")
                                 emit(Resource.Error(response.toString()))
