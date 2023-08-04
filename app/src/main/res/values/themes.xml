@@ -3,7 +3,7 @@
     <style name="Base.Theme.CaZaIt" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/main_black</item>
         <item name="android:navigationBarColor">@color/main_black</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="Theme.CaZaIt" parent="Base.Theme.CaZaIt" />
@@ -12,6 +12,7 @@
     <style name="Theme.CaZaIt.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_cazait_splash</item>
         <item name="postSplashScreenTheme">@style/Base.Theme.CaZaIt</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="windowSplashScreenBackground">@color/main_beige</item>
     </style>
 
