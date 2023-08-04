@@ -5,10 +5,11 @@ import org.cazait.model.Message
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
 import org.cazait.model.VerifyCode
+import org.cazait.model.local.UserPreference
 
 interface AuthRepository {
-    suspend fun refreshToken()
-    suspend fun signIn(email: String, password: String): Flow<Resource<SignInInfo>>
+    suspend fun refreshToken(): Flow<Result<UserPreference>>
+    suspend fun signIn(userId: String, password: String): Flow<Resource<SignInInfo>>
     suspend fun postMessage(phoneNumber: String): Flow<Resource<Message>>
     suspend fun postVerifyCode(phoneNumber: String, verifyCode: Int): Flow<Resource<VerifyCode>>
 }

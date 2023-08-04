@@ -98,23 +98,22 @@ class CafeRepositoryImpl @Inject constructor(
                 is DataResponse.DataError -> {
                     Log.d("response 에러코드", response.errorCode.toString())
                     if (response.errorCode == 401) {
-                        authRepository.refreshToken()
-                        val response = cafeListRemoteData.getListFavoritesAuth(userId)
-                        Log.d("CafeRepository 찜한매장 토큰 refresh 후 response", response.toString())
-                        when (response) {
+                        authRepository.refreshToken().first()
+
+                        when (val newResponse = cafeListRemoteData.getListFavoritesAuth(userId)) {
                             is DataResponse.Success -> {
                                 val fc = FavoriteCafes(
-                                    response.data?.favorites?.map {
+                                    newResponse.data?.favorites?.map {
                                         it.toFavoriteCafe()
                                     }.orEmpty()
                                 )
                                 Log.d("CafeRepository", "토큰 재발급 후 찜한 매장 호출")
-                                Log.d("CafeRepository", response.data.toString())
+                                Log.d("CafeRepository", newResponse.data.toString())
                                 emit(Resource.Success(fc))
                             }
 
                             is DataResponse.DataError -> {
-                                emit(Resource.Error(response.toString()))
+                                emit(Resource.Error(newResponse.toString()))
                             }
                         }
                     }
