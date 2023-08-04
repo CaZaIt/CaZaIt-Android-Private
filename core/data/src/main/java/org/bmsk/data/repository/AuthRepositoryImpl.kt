@@ -13,6 +13,7 @@ import org.cazait.model.Message
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
 import org.cazait.model.VerifyCode
+import org.cazait.model.local.UserPreference
 import org.cazait.network.datasource.AuthRemoteData
 import org.cazait.network.error.DEFAULT_ERROR
 import org.cazait.network.model.dto.DataResponse
@@ -27,23 +28,24 @@ class AuthRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineContext,
     private val userPreferenceRepository: UserPreferenceRepository
 ) : AuthRepository {
-    override suspend fun refreshToken() {
-        with(userPreferenceRepository.getUserPreference().first()) {
-            val updatedRefreshToken = authRemoteData.getRefreshToken(
-                role = role,
-                refreshToken = refreshToken
-            ).data
-            val accessToken = updatedRefreshToken?.data?.accessToken ?: accessToken
-            val refreshToken = updatedRefreshToken?.data?.refreshToken ?: refreshToken
-            Log.d("재발급된 accessToken", accessToken)
-            Log.d("재발급된 refreshToken", refreshToken)
+    override suspend fun refreshToken() = flow {
+        val userPreference = userPreferenceRepository.getUserPreference().first()
 
-//            userPreferenceRepository.updateUserToken(updatedRefreshToken, UPDATE_REFRESH_TOKEN)
+        val updatedRefreshToken = authRemoteData.getRefreshToken(
+            role = userPreference.role,
+            refreshToken = userPreference.refreshToken
+        ).data
+        val accessToken = updatedRefreshToken?.data?.accessToken ?: userPreference.accessToken
+        val refreshToken = updatedRefreshToken?.data?.refreshToken ?: userPreference.refreshToken
+        Log.d("재발급된 accessToken", accessToken)
+        Log.d("재발급된 refreshToken", refreshToken)
+
+        emit(
             userPreferenceRepository.updateUserToken(
                 accessToken,
                 refreshToken
             )
-        }
+        )
     }
 
     override suspend fun signIn(userId: String, password: String): Flow<Resource<SignInInfo>> {
