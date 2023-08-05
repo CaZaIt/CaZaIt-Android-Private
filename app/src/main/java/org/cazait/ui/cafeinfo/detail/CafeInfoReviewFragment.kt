@@ -12,12 +12,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeInfoReviewBinding
 import org.cazait.model.Cafe
+import org.cazait.model.CafeReview
 import org.cazait.model.CafeReviews
 import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeInfoReviewAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.cafeinfo.CafeInfoFragmentDirections
 import org.cazait.ui.cafeinfo.CafeInfoViewModel
+import org.cazait.ui.cafeinfo.detail.clicklistener.ReviewItemClick
 import org.cazait.utils.observe
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -27,7 +29,7 @@ import kotlin.math.roundToInt
 class CafeInfoReviewFragment(
     private val cafe: Cafe,
     private val viewModel: CafeInfoViewModel
-) : Fragment() {
+) : Fragment(), ReviewItemClick {
     private lateinit var binding: FragmentCafeInfoReviewBinding
     private lateinit var reviewAdapter: CafeInfoReviewAdapter
 
@@ -53,7 +55,7 @@ class CafeInfoReviewFragment(
         binding.fabEditReview.setOnClickListener {
             val isLoggedIn = viewModel.signInStateFlow.value
             if (isLoggedIn) {
-                navigateToReviewWriteFragment(cafe)
+                navigateToReviewWriteFragment(cafe, 1f, "")
             } else {
                 AlertDialog.Builder(requireContext())
                     .setMessage(resources.getString(R.string.need_login))
@@ -72,7 +74,9 @@ class CafeInfoReviewFragment(
     }
 
     private fun initAdapter() {
-        reviewAdapter = CafeInfoReviewAdapter()
+        val userUuid = viewModel.uuid.value
+        Log.d("ReviewFrag 유저 uuid", userUuid.toString())
+        reviewAdapter = CafeInfoReviewAdapter(userUuid, this)
         binding.rvCafeInfoReviews.adapter = this.reviewAdapter
         binding.rvCafeInfoReviews.addItemDecoration(
             ItemDecoration(
@@ -116,15 +120,29 @@ class CafeInfoReviewFragment(
         }
     }
 
-    private fun navigateToReviewWriteFragment(cafe: Cafe) {
+    private fun navigateToReviewWriteFragment(cafe: Cafe, score: Float, content: String) {
         val parentFragment = parentFragment
         Log.d("CafeInfoReviewFragment의 부모 Fragment는 누구?", parentFragment.toString())
         parentFragment?.findNavController()?.navigate(
             CafeInfoFragmentDirections.actionCafeInfoFragmentToReviewWriteFragment(
                 cafe,
-                1f,
-                ""
+                score,
+                content
             )
         )
+    }
+
+    override fun onEditClick(item: CafeReview) {
+        val content = item.content
+        val rating = item.score
+        navigateToReviewWriteFragment(cafe, rating.toFloat(), content)
+    }
+
+    override fun onDeleteClick(item: CafeReview) {
+
+    }
+
+    override fun onReportClick(item: CafeReview) {
+
     }
 }
