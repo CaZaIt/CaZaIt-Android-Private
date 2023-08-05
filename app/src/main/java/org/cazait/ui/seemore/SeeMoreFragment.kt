@@ -6,7 +6,6 @@ import org.cazait.R
 import org.cazait.databinding.FragmentSeeMoreBinding
 import org.cazait.ui.base.BaseFragment
 
-
 @AndroidEntryPoint
 class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
     SeeMoreViewModel::class.java,
@@ -15,8 +14,6 @@ class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
     override fun initView() {
         binding.fragment = this
         binding.viewmodel = this.viewModel
-
-
     }
 
     override fun initAfterBinding() {
@@ -32,5 +29,9 @@ class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
 
     fun navigateToAnnouncementFragment() {
         findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToAnnouncementFragment())
+    }
+
+    fun navigateToPasswordCheckFragment(){
+        findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToPasswordCheckFragment())
     }
 }

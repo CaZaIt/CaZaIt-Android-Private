@@ -10,10 +10,6 @@
             type="org.cazait.model.Cafe" />
 
         <variable
-            name="activity"
-            type="org.cazait.ui.review.ReviewWriteFragment" />
-
-        <variable
             name="viewModel"
             type="org.cazait.ui.review.ReviewWriteViewModel" />
     </data>
