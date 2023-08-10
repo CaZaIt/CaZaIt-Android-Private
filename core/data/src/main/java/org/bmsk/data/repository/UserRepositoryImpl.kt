@@ -18,6 +18,8 @@ import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
 import org.cazait.model.local.UserPreference
 import org.cazait.network.datasource.UserRemoteData
+import org.cazait.network.error.EXIST_ACCOUNTNAME
+import org.cazait.network.error.EXIST_NICKNAME
 import org.cazait.network.model.dto.DataResponse
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -63,7 +65,12 @@ class UserRepositoryImpl @Inject constructor(
                 }
 
                 is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
+                    Log.d("UserRepository Errorcode", response.errorCode.toString())
+                    if (response.errorCode == EXIST_ACCOUNTNAME) {
+                        emit(Resource.Error(message = "이미 존재하는 아이디입니다."))
+                    } else {
+                        emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
+                    }
                 }
             }
         }.flowOn(ioDispatcher)
@@ -81,7 +88,12 @@ class UserRepositoryImpl @Inject constructor(
                 }
 
                 is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
+                    Log.d("UserRepository Errorcode", response.errorCode.toString())
+                    if (response.errorCode == EXIST_NICKNAME) {
+                        emit(Resource.Error(message = "이미 존재하는 닉네임입니다."))
+                    } else {
+                        emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
+                    }
                 }
             }
         }.flowOn(ioDispatcher)
