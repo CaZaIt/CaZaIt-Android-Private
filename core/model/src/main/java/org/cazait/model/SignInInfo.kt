@@ -1,7 +1,5 @@
 package org.cazait.model
 
-import java.util.UUID
-
 data class SignInInfo(
     val userId: String,
     val uuid: String,
