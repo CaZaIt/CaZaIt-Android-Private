@@ -12,13 +12,17 @@ import org.cazait.model.NicknameDup
 import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.SignInInfo
 import org.cazait.model.SignUpInfo
+import org.cazait.model.UserAccount
+import org.cazait.model.UserPassword
 import org.cazait.model.VerifyCode
 import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
+import org.cazait.network.model.dto.response.FindUserIdDTO
 import org.cazait.network.model.dto.response.IsUserIdDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
 import org.cazait.network.model.dto.response.MessageRes
+import org.cazait.network.model.dto.response.ResetPasswordDTO
 import org.cazait.network.model.dto.response.ReviewDTO
 import org.cazait.network.model.dto.response.SignInInfoDTO
 import org.cazait.network.model.dto.response.SignUpInfoDTO
@@ -146,4 +150,16 @@ fun MessageRes.toMessage() = Message(
 fun VerifyCodeRes.toVerify() = VerifyCode(
     verify = false,
     message = message
+)
+
+fun FindUserIdDTO.toFindUserId() = UserAccount(
+    userId = userId
+)
+
+fun ResetPasswordDTO.toResetPassword() = UserPassword(
+    uuid = uuid,
+    userId = userId,
+    password = password,
+    phoneNumber = phoneNumber,
+    nickname = nickname
 )
