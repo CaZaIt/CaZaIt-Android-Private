@@ -13,9 +13,10 @@ import org.cazait.model.Message
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
 import org.cazait.model.VerifyCode
-import org.cazait.model.local.UserPreference
 import org.cazait.network.datasource.AuthRemoteData
 import org.cazait.network.error.DEFAULT_ERROR
+import org.cazait.network.error.EXPIRED_VERIFICATION_CODE
+import org.cazait.network.error.FAILED_TO_LOGIN
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.MessageReq
 import org.cazait.network.model.dto.request.SignInReq
@@ -75,6 +76,8 @@ class AuthRepositoryImpl @Inject constructor(
                 is DataResponse.DataError -> {
                     if (response.errorCode == DEFAULT_ERROR) {
                         emit(Resource.Error(message = "네트워크 상태를 확인해주세요."))
+                    } else if (response.errorCode == FAILED_TO_LOGIN) {
+                        emit(Resource.Error(message = "아이디 또는 비밀번호를 잘못 입력했습니다."))
                     } else {
                         Log.e("AuthRepository", response.toString())
                         emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
@@ -115,7 +118,12 @@ class AuthRepositoryImpl @Inject constructor(
                 }
 
                 is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
+                    if (response.errorCode == EXPIRED_VERIFICATION_CODE) {
+                        emit(Resource.Error(message = "만료된 인증번호입니다."))
+                    } else {
+                        Log.e("AuthRepository", response.toString())
+                        emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
+                    }
                 }
             }
         }.flowOn(ioDispatcher)

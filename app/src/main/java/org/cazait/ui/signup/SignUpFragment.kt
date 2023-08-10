@@ -2,7 +2,6 @@ package org.cazait.ui.signup
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -111,7 +110,7 @@ class SignUpFragment :
 
     private fun observeViewModel() {
         observe(viewModel.signUpProcess, ::handleSignUpResult)
-        observe(viewModel.idDupProcess, ::handleidDupResult)
+        observe(viewModel.idDupProcess, ::handleIdDupResult)
         observe(viewModel.nickDupProcess, ::handleNickDupResult)
         observe(viewModel.phoneNumberProcess, ::handlePhone)
         observe(viewModel.verifyProcess, ::handleVerify)
@@ -141,7 +140,7 @@ class SignUpFragment :
         }
     }
 
-    private fun handleidDupResult(status: Resource<IdDup>?) {
+    private fun handleIdDupResult(status: Resource<IdDup>?) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignup.toVisible()
@@ -157,7 +156,7 @@ class SignUpFragment :
             is Resource.Error -> {
                 binding.lottieSignup.pauseAnimation()
                 binding.lottieSignup.toGone()
-                Log.e("SignUpActivity", "${status.message}")
+                viewModel.showToastMessage(status.message)
             }
 
             null -> {}
