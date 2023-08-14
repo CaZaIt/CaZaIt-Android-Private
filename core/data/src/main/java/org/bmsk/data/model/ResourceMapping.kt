@@ -7,7 +7,7 @@ import org.cazait.model.CafeMenu
 import org.cazait.model.CafeReviews
 import org.cazait.model.IdDup
 import org.cazait.model.FavoriteCafe
-import org.cazait.model.Message
+import org.cazait.model.SignUpCode
 import org.cazait.model.NicknameDup
 import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.SignInInfo
@@ -21,7 +21,7 @@ import org.cazait.network.model.dto.response.FavoriteCafeDTO
 import org.cazait.network.model.dto.response.FindUserIdDTO
 import org.cazait.network.model.dto.response.IsUserIdDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
-import org.cazait.network.model.dto.response.VerficationCodeRes
+import org.cazait.network.model.dto.response.VerificationCodeRes
 import org.cazait.network.model.dto.response.ResetPasswordDTO
 import org.cazait.network.model.dto.response.ReviewDTO
 import org.cazait.network.model.dto.response.SignInInfoDTO
@@ -142,7 +142,7 @@ fun IsUserIdDupRes.toIdNumberDup() = IdDup(
     isDup = data == null,
 )
 
-fun VerficationCodeRes.toMessage() = Message(
+fun VerificationCodeRes.toMessage() = SignUpCode(
     verify = false,
     message = message
 )
