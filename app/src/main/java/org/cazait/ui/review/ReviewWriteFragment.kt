@@ -1,11 +1,19 @@
 package org.cazait.ui.review
 
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentReviewWriteBinding
+import org.cazait.model.Resource
 import org.cazait.ui.base.BaseFragment
+import org.cazait.utils.SingleEvent
+import org.cazait.utils.observe
+import org.cazait.utils.showToast
+import org.cazait.utils.toGone
+import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
 class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWriteViewModel>(
@@ -18,6 +26,7 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
         setupCafe()
         setReviewSendBtn()
         setupBackPressButton()
+        oberveViewModel()
     }
 
     override fun initAfterBinding() {}
@@ -30,12 +39,43 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
         }
     }
 
+    private fun oberveViewModel() {
+        observe(viewModel.messageLiveData, ::handleReviewSend)
+        observeToast(viewModel.showToast)
+    }
+
+    private fun observeToast(event: LiveData<SingleEvent<Any>>) {
+        binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
+    }
+
+    private fun handleReviewSend(status: Resource<String>) {
+        when (status) {
+            is Resource.Loading -> {
+                binding.lottieReviewWrite.toVisible()
+                binding.lottieReviewWrite.playAnimation()
+            }
+
+            is Resource.Success -> status.data.let {
+                binding.lottieReviewWrite.pauseAnimation()
+                binding.lottieReviewWrite.toGone()
+                viewModel.showToastMessage(it)
+                findNavController().popBackStack()
+            }
+
+            is Resource.Error -> {
+                binding.lottieReviewWrite.pauseAnimation()
+                binding.lottieReviewWrite.toGone()
+                viewModel.showToastMessage(status.message)
+            }
+        }
+    }
+
     private fun setReviewSendBtn() {
         binding.btnSendReview.setOnClickListener {
-            viewModel.sendReviewToServer(navArgs.cafe.cafeId, binding.rbRating.rating,
+            viewModel.sendReviewToServer(
+                navArgs.cafe.cafeId, binding.rbRating.rating,
                 binding.etReview.text.toString()
             )
-            findNavController().popBackStack()
         }
     }
 
