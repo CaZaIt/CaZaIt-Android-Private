@@ -30,7 +30,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         binding.clTop.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
-        initSignUpBtn()
+        initBtn()
         initSignInBtn()
     }
 
@@ -68,13 +68,15 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         }
     }
 
-    private fun navigateToAgreeFragment() {
-        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToAgreeFragment())
-    }
-
-    private fun initSignUpBtn() {
+    private fun initBtn() {
         binding.tvSignup.setOnClickListener {
             navigateToAgreeFragment()
+        }
+        binding.tvFindid.setOnClickListener {
+            navigateToFindUserIdFragment()
+        }
+        binding.tvFindpassword.setOnClickListener {
+            navigateToFindUserPasswordFragment()
         }
     }
 
@@ -86,5 +88,17 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun postSignIn() {
         viewModel.doSignIn(binding.etId.text.toString(), binding.etPassword.text.toString())
+    }
+
+    private fun navigateToAgreeFragment() {
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToAgreeFragment())
+    }
+
+    private fun navigateToFindUserIdFragment() {
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToFindUserIdFragment())
+    }
+
+    private fun navigateToFindUserPasswordFragment() {
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToFindUserPaswwordFragment())
     }
 }

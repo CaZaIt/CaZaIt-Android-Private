@@ -137,7 +137,23 @@
         <action
             android:id="@+id/action_signInFragment_to_agreeFragment"
             app:destination="@+id/agreeFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_findUserIdFragment"
+            app:destination="@+id/findUserIdFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_findUserPaswwordFragment"
+            app:destination="@+id/findUserPasswordFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/findUserIdFragment"
+        android:name="org.cazait.ui.findaccount.FindUserIdFragment"
+        android:label="FindUserIdFragment"
+        tools:layout="@layout/fragment_find_user_id" />
+    <fragment
+        android:id="@+id/findUserPasswordFragment"
+        android:name="org.cazait.ui.findaccount.FindUserPasswordFragment"
+        android:label="FindUserPasswordFragment"
+        tools:layout="@layout/fragment_find_user_password" />
     <fragment
         android:id="@+id/agreeFragment"
         android:name="org.cazait.ui.signup.agree.AgreeFragment"
