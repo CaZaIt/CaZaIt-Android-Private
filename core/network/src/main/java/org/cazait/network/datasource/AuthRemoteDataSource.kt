@@ -12,6 +12,6 @@ import org.cazait.network.model.dto.response.VerifyCodeRes
 interface AuthRemoteDataSource {
     suspend fun postSignIn(body: SignInReq): DataResponse<SignInRes>
     suspend fun getRefreshToken(role: String, refreshToken: String): DataResponse<RefreshTokenRes>
-    suspend fun postMessage(body: MessageReq): DataResponse<MessageRes>
+    suspend fun postSignUpCode(body: MessageReq): DataResponse<MessageRes>
     suspend fun postVerifyCode(body: VerifyCodeReq): DataResponse<VerifyCodeRes>
 }

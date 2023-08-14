@@ -287,7 +287,7 @@ class SignUpFragment :
     private fun initPhoneBtn() {
         binding.btnSignUpSendVarificationCode.setOnClickListener {
             val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
-            viewModel.postPhoneNumber(phoneNumber)
+            viewModel.postSignUpCode(phoneNumber)
         }
     }
 

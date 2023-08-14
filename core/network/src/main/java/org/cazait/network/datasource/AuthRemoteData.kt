@@ -55,9 +55,9 @@ class AuthRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postMessage(body: MessageReq): DataResponse<MessageRes> {
+    override suspend fun postSignUpCode(body: MessageReq): DataResponse<MessageRes> {
         return when (val response = processCall {
-            authService.postMessage(body)
+            authService.postSignUpCode(body)
         }) {
             is MessageRes -> {
                 DataResponse.Success(response)

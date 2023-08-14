@@ -10,6 +10,6 @@ import org.cazait.model.local.UserPreference
 interface AuthRepository {
     suspend fun refreshToken(): Flow<Result<UserPreference>>
     suspend fun signIn(userId: String, password: String): Flow<Resource<SignInInfo>>
-    suspend fun postMessage(phoneNumber: String): Flow<Resource<Message>>
+    suspend fun postSignUpCode(phoneNumber: String): Flow<Resource<Message>>
     suspend fun postVerifyCode(phoneNumber: String, verifyCode: Int): Flow<Resource<VerifyCode>>
 }

@@ -87,10 +87,10 @@ class AuthRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun postMessage(phoneNumber: String): Flow<Resource<Message>> {
+    override suspend fun postSignUpCode(phoneNumber: String): Flow<Resource<Message>> {
         return flow {
             val body = MessageReq(phoneNumber)
-            when (val response = authRemoteData.postMessage(body)) {
+            when (val response = authRemoteData.postSignUpCode(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
                         emit(Resource.Success(it.toMessage()))

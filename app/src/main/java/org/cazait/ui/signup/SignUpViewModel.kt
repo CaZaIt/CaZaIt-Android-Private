@@ -75,10 +75,10 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun postPhoneNumber(phoneNumber: String) {
+    fun postSignUpCode(phoneNumber: String) {
         viewModelScope.launch {
             _phoneNumberProcess.value = Resource.Loading()
-            authRepository.postMessage(phoneNumber).collect {
+            authRepository.postSignUpCode(phoneNumber).collect {
                 _phoneNumberProcess.value = it
             }
         }
