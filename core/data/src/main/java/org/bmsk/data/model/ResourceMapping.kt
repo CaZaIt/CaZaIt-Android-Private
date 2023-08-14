@@ -21,7 +21,7 @@ import org.cazait.network.model.dto.response.FavoriteCafeDTO
 import org.cazait.network.model.dto.response.FindUserIdDTO
 import org.cazait.network.model.dto.response.IsUserIdDupRes
 import org.cazait.network.model.dto.response.IsNicknameDupRes
-import org.cazait.network.model.dto.response.MessageRes
+import org.cazait.network.model.dto.response.VerficationCodeRes
 import org.cazait.network.model.dto.response.ResetPasswordDTO
 import org.cazait.network.model.dto.response.ReviewDTO
 import org.cazait.network.model.dto.response.SignInInfoDTO
@@ -142,7 +142,7 @@ fun IsUserIdDupRes.toIdNumberDup() = IdDup(
     isDup = data == null,
 )
 
-fun MessageRes.toMessage() = Message(
+fun VerficationCodeRes.toMessage() = Message(
     verify = false,
     message = message
 )

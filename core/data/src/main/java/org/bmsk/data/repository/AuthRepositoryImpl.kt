@@ -18,7 +18,7 @@ import org.cazait.network.error.DEFAULT_ERROR
 import org.cazait.network.error.EXPIRED_VERIFICATION_CODE
 import org.cazait.network.error.FAILED_TO_LOGIN
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.request.MessageReq
+import org.cazait.network.model.dto.request.VerificationCodeReq
 import org.cazait.network.model.dto.request.SignInReq
 import org.cazait.network.model.dto.request.VerifyCodeReq
 import javax.inject.Inject
@@ -89,7 +89,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun postSignUpCode(phoneNumber: String): Flow<Resource<Message>> {
         return flow {
-            val body = MessageReq(phoneNumber)
+            val body = VerificationCodeReq(phoneNumber)
             when (val response = authRemoteData.postSignUpCode(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {

@@ -2,7 +2,7 @@ package org.cazait.network.model.dto.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MessageRes(
+data class VerficationCodeRes(
     @SerializedName("code")
     val code: Int,
     @SerializedName("result")
@@ -10,10 +10,10 @@ data class MessageRes(
     @SerializedName("message")
     val message: String,
     @SerializedName("data")
-    val data: RequestData
+    val data: CodeDTO
 )
 
-data class RequestData(
+data class CodeDTO(
     @SerializedName("recipientPhoneNumber")
     val recipientPhoneNumber: String,
     @SerializedName("requestTime")

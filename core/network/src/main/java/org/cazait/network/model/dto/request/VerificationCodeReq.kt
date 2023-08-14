@@ -1,5 +1,5 @@
 package org.cazait.network.model.dto.request
 
-data class MessageReq(
+data class VerificationCodeReq(
     val recipientPhoneNumber: String
 )

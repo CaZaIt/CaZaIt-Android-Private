@@ -7,10 +7,10 @@ import org.cazait.network.api.unauth.AuthService
 import org.cazait.network.di.Authenticated
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.request.MessageReq
+import org.cazait.network.model.dto.request.VerificationCodeReq
 import org.cazait.network.model.dto.request.SignInReq
 import org.cazait.network.model.dto.request.VerifyCodeReq
-import org.cazait.network.model.dto.response.MessageRes
+import org.cazait.network.model.dto.response.VerficationCodeRes
 import org.cazait.network.model.dto.response.RefreshTokenRes
 import org.cazait.network.model.dto.response.SignInRes
 import org.cazait.network.model.dto.response.VerifyCodeRes
@@ -55,11 +55,11 @@ class AuthRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postSignUpCode(body: MessageReq): DataResponse<MessageRes> {
+    override suspend fun postSignUpCode(body: VerificationCodeReq): DataResponse<VerficationCodeRes> {
         return when (val response = processCall {
             authService.postSignUpCode(body)
         }) {
-            is MessageRes -> {
+            is VerficationCodeRes -> {
                 DataResponse.Success(response)
             }
 
