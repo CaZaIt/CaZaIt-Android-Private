@@ -5,6 +5,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentRecentlyCafeBinding
 import org.cazait.model.Cafe
+import org.cazait.model.FavoriteCafe
+import org.cazait.model.FavoriteCafes
+import org.cazait.model.Resource
 import org.cazait.ui.adapter.RecentlyViewedVerticalAdapter
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.observe
@@ -14,12 +17,13 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
     RecentlyCafeViewModel::class.java,
     R.layout.fragment_recently_cafe,
 ) {
+    private var favoriteCafeList: List<FavoriteCafe> = emptyList()
     private val verticalAdapter by lazy {
         createCafeListVerticalAdapter()
     }
 
     override fun initView() {
-
+        viewModel.getFavoriteCafeList()
 
         binding.clTop.includedTvTitle.text = getString(R.string.recent_view_store)
         binding.clTop.btnBack.setOnClickListener {
@@ -36,10 +40,25 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
 
     private fun observeRecentlyViewedCafes() {
         observe(viewModel.recentlyViewedCafes, ::handleRecentlyViewedCafes)
+        observe(viewModel.favoriteListData, ::handleFavorite)
+    }
+
+    private fun handleFavorite(status: Resource<FavoriteCafes>?) {
+        when (status) {
+            is Resource.Loading -> {}
+            is Resource.Error -> {}
+            is Resource.Success -> {
+                favoriteCafeList = status.data?.list ?: emptyList()
+                viewModel.update()
+            }
+
+            else -> {}
+        }
     }
 
     private fun handleRecentlyViewedCafes(cafes: List<Cafe>) {
         val sortedCafes = cafes.sortedByDescending { it.timestamp }
+        viewModel.updateFavoriteStatus(favoriteCafeList, sortedCafes)
         verticalAdapter.submitList(sortedCafes)
     }
 

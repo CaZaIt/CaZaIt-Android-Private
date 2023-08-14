@@ -1,5 +1,6 @@
 package org.cazait.ui.mypage
 
+import android.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -20,6 +21,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
         binding.viewModel = this.viewModel
 
         setUpSignInButton()
+        setCouponBtn()
+        setCreditBtn()
     }
 
     override fun onResume() {
@@ -53,6 +56,28 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.signInStateFlow.collect {}
             }
+        }
+    }
+
+    private fun setCouponBtn() {
+        binding.txtCoupon.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setMessage(resources.getString(R.string.service_not_provide))
+                .setPositiveButton("확인") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+    }
+
+    private fun setCreditBtn() {
+        binding.txtCredit.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setMessage(resources.getString(R.string.service_not_provide))
+                .setPositiveButton("확인") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
     }
 }

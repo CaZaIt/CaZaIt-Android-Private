@@ -40,10 +40,10 @@ interface CafeRepository {
 
     suspend fun updateFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun loadFavoriteCafes(): Flow<Resource<FavoriteCafes>>
-    suspend fun postFavoriteCafeAuth(userId: String, cafe: FavoriteCafe): Boolean
-    suspend fun postFavoriteCafeAuth(userId: String, cafe: Cafe): Boolean
-    suspend fun deleteFavoriteCafeAuth(userId: String, cafe: Cafe): Boolean
-    suspend fun deleteFavoriteCafeAuth(userId: String, cafe: FavoriteCafe): Boolean
+    suspend fun postFavoriteCafeAuth(userId: String, cafe: FavoriteCafe): Flow<Resource<String>>
+    suspend fun postFavoriteCafeAuth(userId: String, cafe: Cafe): Flow<Resource<String>>
+    suspend fun deleteFavoriteCafeAuth(userId: String, cafe: Cafe): Flow<Resource<String>>
+    suspend fun deleteFavoriteCafeAuth(userId: String, cafe: FavoriteCafe): Flow<Resource<String>>
     suspend fun localDeleteFavoriteCafe(cafe: Cafe): Boolean
     suspend fun localDeleteFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun insertRecentlyViewedCafe(cafe: Cafe): Boolean
