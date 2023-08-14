@@ -170,16 +170,19 @@ class CafeRepositoryImpl @Inject constructor(
         content: String
     ): Flow<Resource<String>> {
         return flow {
-            when (val response =
-                cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
+            when (val response = cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
                 is DataResponse.Success -> {
                     Log.d("CafeRepository", "등록 성공?")
                     Log.d("CafeRepository", response.data.toString())
-                    if (response.data!!.code == 401) {
+                    val message: String = response.data?.message ?: ""
+                    emit(Resource.Success(message))
+                }
+
+                is DataResponse.DataError -> {
+                    Log.d("CafeRepository", "등록 실패")
+                    if (response.errorCode == 400) {
                         authRepository.refreshToken()
-                        val response =
-                            cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)
-                        when (response) {
+                        when (val response = cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
                             is DataResponse.Success -> {
                                 val message: String = response.data?.message ?: ""
                                 Log.d("CafeRepository", "토큰 재발급 후 등록 성공")
@@ -193,13 +196,6 @@ class CafeRepositoryImpl @Inject constructor(
                             }
                         }
                     }
-                    val message: String = response.data?.message ?: ""
-                    emit(Resource.Success(message))
-                }
-
-                is DataResponse.DataError -> {
-                    Log.d("CafeRepository", "등록 실패")
-                    emit(Resource.Error(response.toString()))
                 }
             }
         }.flowOn(ioDispatcher)
