@@ -9,18 +9,24 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeInfoBinding
 import org.cazait.model.Cafe
+import org.cazait.model.Resource
 import org.cazait.ui.adapter.CafeImgAdapter
 import org.cazait.ui.adapter.ViewPagerAdapter
 import org.cazait.ui.cafeinfo.detail.CafeInfoMenuFragment
 import org.cazait.ui.cafeinfo.detail.CafeInfoReviewFragment
+import org.cazait.utils.SingleEvent
+import org.cazait.utils.observe
+import org.cazait.utils.showToast
 
 @AndroidEntryPoint
 class CafeInfoFragment : Fragment() {
@@ -60,6 +66,7 @@ class CafeInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        observeViewModel()
     }
 
     override fun onDestroyView() {
@@ -160,5 +167,24 @@ class CafeInfoFragment : Fragment() {
 
     private fun initViewModel(cafe: Cafe, isFavoriteCafe: Boolean) {
         viewModel.initViewModel(cafe, isFavoriteCafe)
+    }
+
+    private fun observeViewModel() {
+        observe(viewModel.favoriteData, ::handleFavorite)
+        observeToast(viewModel.showToast)
+    }
+
+    private fun observeToast(event: LiveData<SingleEvent<Any>>) {
+        binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
+    }
+    private fun handleFavorite(status: Resource<String>) {
+        when (status) {
+            is Resource.Loading -> {}
+            is Resource.Success -> status.data.let {
+                viewModel.showToastMessage(it)
+            }
+
+            is Resource.Error -> {}
+        }
     }
 }

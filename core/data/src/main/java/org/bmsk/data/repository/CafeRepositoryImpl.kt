@@ -170,7 +170,8 @@ class CafeRepositoryImpl @Inject constructor(
         content: String
     ): Flow<Resource<String>> {
         return flow {
-            when (val response = cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
+            when (val response =
+                cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
                 is DataResponse.Success -> {
                     Log.d("CafeRepository", "등록 성공?")
                     Log.d("CafeRepository", response.data.toString())
@@ -182,7 +183,8 @@ class CafeRepositoryImpl @Inject constructor(
                     Log.d("CafeRepository", "등록 실패")
                     if (response.errorCode == 400) {
                         authRepository.refreshToken()
-                        when (val response = cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
+                        when (val response =
+                            cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
                             is DataResponse.Success -> {
                                 val message: String = response.data?.message ?: ""
                                 Log.d("CafeRepository", "토큰 재발급 후 등록 성공")
@@ -235,42 +237,124 @@ class CafeRepositoryImpl @Inject constructor(
     override suspend fun postFavoriteCafeAuth(
         userId: String,
         cafe: FavoriteCafe
-    ): Boolean {
-        return try {
-            cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId) is DataResponse.Success
-            true
-        } catch (e: IOException) {
-            false
+    ): Flow<Resource<String>> {
+        return flow {
+            when (val response = cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
+                is DataResponse.Success -> {
+                    val message: String = response.data?.message ?: ""
+                    emit(Resource.Success(message))
+                }
+
+                is DataResponse.DataError -> {
+                    if (response.errorCode == 400) {
+                        authRepository.refreshToken()
+                        when (val response =
+                            cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
+                            is DataResponse.Success -> {
+                                val message: String = response.data?.message ?: ""
+                                emit(Resource.Success(message))
+                            }
+
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(response.toString()))
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
     override suspend fun postFavoriteCafeAuth(
         userId: String,
         cafe: Cafe
-    ): Boolean {
-        return try {
-            cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId) is DataResponse.Success
-            true
-        } catch (e: IOException) {
-            false
+    ): Flow<Resource<String>> {
+        return flow {
+            when (val response = cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
+                is DataResponse.Success -> {
+                    val message: String = response.data?.message ?: ""
+                    emit(Resource.Success(message))
+                }
+
+                is DataResponse.DataError -> {
+                    if (response.errorCode == 400) {
+                        authRepository.refreshToken()
+                        when (val response =
+                            cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
+                            is DataResponse.Success -> {
+                                val message: String = response.data?.message ?: ""
+                                emit(Resource.Success(message))
+                            }
+
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(response.toString()))
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    override suspend fun deleteFavoriteCafeAuth(userId: String, cafe: Cafe): Boolean {
-        return try {
-            cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId) is DataResponse.Success
-            true
-        } catch (e: IOException) {
-            false
+    override suspend fun deleteFavoriteCafeAuth(
+        userId: String,
+        cafe: Cafe
+    ): Flow<Resource<String>> {
+        return flow {
+            when (val response = cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
+                is DataResponse.Success -> {
+                    val message: String = response.data?.data ?: ""
+                    emit(Resource.Success(message))
+                }
+
+                is DataResponse.DataError -> {
+                    if (response.errorCode == 400) {
+                        authRepository.refreshToken()
+                        when (val response =
+                            cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
+                            is DataResponse.Success -> {
+                                val message: String = response.data?.data ?: ""
+                                emit(Resource.Success(message))
+                            }
+
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(response.toString()))
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    override suspend fun deleteFavoriteCafeAuth(userId: String, cafe: FavoriteCafe): Boolean {
-        return try {
-            cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId) is DataResponse.Success
-            true
-        } catch (e: IOException) {
-            false
+    override suspend fun deleteFavoriteCafeAuth(
+        userId: String,
+        cafe: FavoriteCafe
+    ): Flow<Resource<String>> {
+        return flow {
+            when (val response = cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
+                is DataResponse.Success -> {
+                    val message: String = response.data?.data ?: ""
+                    emit(Resource.Success(message))
+                }
+
+                is DataResponse.DataError -> {
+                    if (response.errorCode == 400) {
+                        authRepository.refreshToken()
+                        when (val response =
+                            cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
+                            is DataResponse.Success -> {
+                                val message: String = response.data?.data ?: ""
+                                emit(Resource.Success(message))
+                            }
+
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(response.toString()))
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

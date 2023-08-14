@@ -15,8 +15,8 @@ import org.cazait.model.Cafe
 import org.cazait.model.CafeMenus
 import org.cazait.model.CafeReviews
 import org.cazait.model.Resource
-import org.cazait.model.local.UserPreference
 import org.cazait.ui.base.BaseViewModel
+import org.cazait.utils.SingleEvent
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,6 +36,14 @@ class CafeInfoViewModel @Inject constructor(
     private val _listReviewData = MutableLiveData<Resource<CafeReviews>>()
     val listReviewData: LiveData<Resource<CafeReviews>>
         get() = _listReviewData
+
+    private val _favoriteData = MutableLiveData<Resource<String>>()
+    val favoriteData: LiveData<Resource<String>>
+        get() = _favoriteData
+
+    private val _showToast = MutableLiveData<SingleEvent<Any>>()
+    val showToast: LiveData<SingleEvent<Any>>
+        get() = _showToast
 
     private val _signInStateFlow = MutableStateFlow(false)
     val signInStateFlow = _signInStateFlow.asStateFlow()
@@ -72,7 +80,9 @@ class CafeInfoViewModel @Inject constructor(
             Log.d("즐겨찾기 등록 전 상태", _isFavoriteCafe.value.toString())
             val currentCafe = cafe ?: return@launch
             val userPreference = userRepository.getUserInfo().first()
-            cafeRepository.postFavoriteCafeAuth(userPreference.uuid, currentCafe)
+            cafeRepository.postFavoriteCafeAuth(userPreference.uuid, currentCafe).collect {
+                _favoriteData.value = it
+            }
             _isFavoriteCafe.value = true
             Log.d("즐겨찾기 등록", _isFavoriteCafe.value.toString())
         }
@@ -83,7 +93,9 @@ class CafeInfoViewModel @Inject constructor(
             Log.d("즐겨찾기 삭제 전 상태", _isFavoriteCafe.value.toString())
             val currentCafe = cafe ?: return@launch
             val userPreference = userRepository.getUserInfo().first()
-            cafeRepository.deleteFavoriteCafeAuth(userPreference.uuid, currentCafe)
+            cafeRepository.deleteFavoriteCafeAuth(userPreference.uuid, currentCafe).collect {
+                _favoriteData.value = it
+            }
             _isFavoriteCafe.value = false
             Log.d("즐겨찾기 삭제", _isFavoriteCafe.value.toString())
         }
@@ -101,5 +113,10 @@ class CafeInfoViewModel @Inject constructor(
             val cafeWithTimestamp = cafe.copy(timestamp = System.currentTimeMillis())
             cafeRepository.insertRecentlyViewedCafe(cafeWithTimestamp)
         }
+    }
+
+    fun showToastMessage(errorMessage: String?) {
+        if (errorMessage == null) return
+        _showToast.value = SingleEvent(errorMessage)
     }
 }
