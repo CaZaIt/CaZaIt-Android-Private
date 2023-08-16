@@ -33,6 +33,7 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         getVerficationCodeBtn()
         sendVerifyCode()
         findUserId()
+        btnGoToSignIn()
         observeViewModel()
     }
 
@@ -72,6 +73,12 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         binding.btnFindUserId.setOnClickListener {
             val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
             viewModel.findUserId(phoneNumber)
+        }
+    }
+
+    private fun btnGoToSignIn(){
+        binding.btnGoLogin.setOnClickListener {
+            navigateToSignInFragment()
         }
     }
 
@@ -157,6 +164,10 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
 
             null -> {}
         }
+    }
+
+    private fun navigateToSignInFragment(){
+        findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToSignInFragment())
     }
 
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {

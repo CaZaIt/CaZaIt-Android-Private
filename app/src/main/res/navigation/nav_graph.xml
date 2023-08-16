@@ -148,7 +148,13 @@
         android:id="@+id/findUserIdFragment"
         android:name="org.cazait.ui.findaccount.FindUserIdFragment"
         android:label="FindUserIdFragment"
-        tools:layout="@layout/fragment_find_user_id" />
+        tools:layout="@layout/fragment_find_user_id">
+        <action
+            android:id="@+id/action_findUserIdFragment_to_signInFragment"
+            app:destination="@+id/signInFragment"
+            app:popUpTo="@+id/signInFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/findUserPasswordFragment"
         android:name="org.cazait.ui.findaccount.FindUserPasswordFragment"
