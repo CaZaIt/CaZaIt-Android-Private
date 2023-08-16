@@ -1,5 +1,6 @@
 package org.cazait.ui.findaccount
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -64,8 +65,9 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
 
     private fun sendVerifyCode() {
         binding.btnFindUserIdCheckVarificationCode.setOnClickListener {
+            val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
             val codeStr = binding.etFindUserIdVarificationCode.text.toString()
-            viewModel.checkVerifyCode(binding.etFindUserIdPhoneNumber.toString(), codeStr.toInt())
+            viewModel.checkVerifyCode(phoneNumber, codeStr.toInt())
         }
     }
 
@@ -92,6 +94,7 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
                 hideLoading()
                 viewModel.showToastMessage(it)
                 val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
+                Log.d("FindUserIdFrag 폰번호", phoneNumber)
                 viewModel.sendVerificationCode(phoneNumber)
             }
 
