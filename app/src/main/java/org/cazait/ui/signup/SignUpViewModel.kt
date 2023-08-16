@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import org.bmsk.data.repository.AuthRepository
 import org.bmsk.data.repository.UserRepository
 import org.cazait.model.IdDup
-import org.cazait.model.Message
+import org.cazait.model.SignUpCode
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
@@ -35,8 +35,8 @@ class SignUpViewModel @Inject constructor(
     val nickDupProcess: LiveData<Resource<NicknameDup>?>
         get() = _nickDupProcess
 
-    private val _phoneNumberProcess = MutableLiveData<Resource<Message>?>()
-    val phoneNumberProcess: LiveData<Resource<Message>?>
+    private val _phoneNumberProcess = MutableLiveData<Resource<SignUpCode>?>()
+    val phoneNumberProcess: LiveData<Resource<SignUpCode>?>
         get() = _phoneNumberProcess
 
     private val _verifyProcess = MutableLiveData<Resource<VerifyCode>?>()
@@ -75,10 +75,10 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun postPhoneNumber(phoneNumber: String) {
+    fun postSignUpCode(phoneNumber: String) {
         viewModelScope.launch {
             _phoneNumberProcess.value = Resource.Loading()
-            authRepository.postMessage(phoneNumber).collect {
+            authRepository.postSignUpCode(phoneNumber).collect {
                 _phoneNumberProcess.value = it
             }
         }

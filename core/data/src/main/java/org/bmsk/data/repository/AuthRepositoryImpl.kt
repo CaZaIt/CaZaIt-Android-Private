@@ -9,7 +9,7 @@ import org.bmsk.data.model.toMessage
 import org.bmsk.data.model.toSignInInfo
 import org.bmsk.data.model.toVerify
 import org.cazait.datastore.data.repository.UserPreferenceRepository
-import org.cazait.model.Message
+import org.cazait.model.SignUpCode
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
 import org.cazait.model.VerifyCode
@@ -18,8 +18,9 @@ import org.cazait.network.error.DEFAULT_ERROR
 import org.cazait.network.error.EXPIRED_VERIFICATION_CODE
 import org.cazait.network.error.FAILED_TO_LOGIN
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.request.MessageReq
+import org.cazait.network.model.dto.request.VerificationCodeReq
 import org.cazait.network.model.dto.request.SignInReq
+import org.cazait.network.model.dto.request.VerificationCodeWithUserIdReq
 import org.cazait.network.model.dto.request.VerifyCodeReq
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -87,10 +88,10 @@ class AuthRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun postMessage(phoneNumber: String): Flow<Resource<Message>> {
+    override suspend fun postSignUpCode(phoneNumber: String): Flow<Resource<SignUpCode>> {
         return flow {
-            val body = MessageReq(phoneNumber)
-            when (val response = authRemoteData.postMessage(body)) {
+            val body = VerificationCodeReq(phoneNumber)
+            when (val response = authRemoteData.postSignUpCode(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
                         emit(Resource.Success(it.toMessage()))
@@ -127,6 +128,43 @@ class AuthRepositoryImpl @Inject constructor(
                 }
             }
         }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun postResetPasswordCode(
+        userId: String,
+        phoneNumber: String
+    ): Flow<Resource<SignUpCode>> {
+        return flow {
+            val body = VerificationCodeWithUserIdReq(userId, phoneNumber)
+            when (val response = authRemoteData.postResetPasswordCode(body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.toMessage()))
+                    } ?: emit(Resource.Error("잘못된 결과입니다."))
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }
+    }
+
+    override suspend fun postFindIdCode(phoneNumber: String): Flow<Resource<SignUpCode>> {
+        return flow {
+            val body = VerificationCodeReq(phoneNumber)
+            when (val response = authRemoteData.postFindIdCode(body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.toMessage()))
+                    } ?: emit(Resource.Error("잘못된 결과입니다."))
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }
     }
 
     private fun emptyInfo() = SignInInfo(

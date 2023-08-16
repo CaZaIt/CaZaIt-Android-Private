@@ -5,8 +5,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import org.bmsk.data.model.toFindUserId
 import org.bmsk.data.model.toIdNumberDup
 import org.bmsk.data.model.toNicknameDup
+import org.bmsk.data.model.toResetPassword
 import org.bmsk.data.model.toSignUpInfo
 import org.cazait.datastore.data.repository.UserPreferenceRepository
 import org.cazait.network.model.dto.request.IsUserIdDupReq
@@ -16,11 +18,15 @@ import org.cazait.model.IdDup
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
+import org.cazait.model.UserAccount
+import org.cazait.model.UserPassword
 import org.cazait.model.local.UserPreference
 import org.cazait.network.datasource.UserRemoteData
 import org.cazait.network.error.EXIST_ACCOUNTNAME
 import org.cazait.network.error.EXIST_NICKNAME
 import org.cazait.network.model.dto.DataResponse
+import org.cazait.network.model.dto.request.FindUserIdReq
+import org.cazait.network.model.dto.request.ResetPasswordReq
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -97,6 +103,43 @@ class UserRepositoryImpl @Inject constructor(
                 }
             }
         }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun findUserId(phoneNumber: String): Flow<Resource<UserAccount>> {
+        return flow {
+            val body = FindUserIdReq(phoneNumber)
+            when (val response = remoteData.postFindUserId(body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.data.toFindUserId()))
+                    }
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }
+    }
+
+    override suspend fun resetPassword(
+        phoneNumber: String,
+        rePassword: String
+    ): Flow<Resource<UserPassword>> {
+        return flow {
+            val body = ResetPasswordReq(phoneNumber, rePassword)
+            when (val response = remoteData.patchPassword(body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.data.toResetPassword()))
+                    }
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }
     }
 
     override suspend fun isLoggedIn(): Flow<Boolean> {

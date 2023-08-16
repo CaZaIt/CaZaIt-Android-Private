@@ -97,20 +97,68 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
-        <TextView
-            android:id="@+id/tv_signup"
-            style="@style/TextValue_B"
-            android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_marginStart="164dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="9dp"
-            android:layout_marginEnd="164dp"
-            android:text="@string/btn_sign_up"
-            android:textColor="@color/main_black"
-            android:textSize="19sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_do_login" />
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="@id/btn_do_login"
+            app:layout_constraintStart_toStartOf="@id/btn_do_login"
+            app:layout_constraintTop_toBottomOf="@+id/btn_do_login">
+
+            <TextView
+                android:id="@+id/tv_signup"
+                style="@style/TextValue_B"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:text="@string/btn_sign_up"
+                android:textColor="@color/main_black"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="@color/main_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_findid"
+                app:layout_constraintStart_toEndOf="@+id/tv_signup"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_findid"
+                style="@style/TextValue_B"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:text="@string/btn_find_id"
+                android:textColor="@color/main_black"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toStartOf="@+id/tv_findpassword"
+                app:layout_constraintStart_toEndOf="@+id/tv_signup"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="@color/main_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_findpassword"
+                app:layout_constraintStart_toEndOf="@+id/tv_findid"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_findpassword"
+                style="@style/TextValue_B"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:text="@string/btn_find_password"
+                android:textColor="@color/main_black"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_signin"

@@ -44,14 +44,17 @@
         android:label="SeeMoreFragment"
         tools:layout="@layout/fragment_see_more">
         <action
+            android:id="@+id/action_seeMoreFragment_to_announcementFragment"
+            app:destination="@id/announcementFragment" />
+        <action
+            android:id="@+id/action_seeMoreFragment_to_passwordCheckFragment"
+            app:destination="@+id/passwordCheckFragment" />
+        <action
             android:id="@+id/action_seeMoreFragment_to_customerServiceFragment"
             app:destination="@id/customerServiceFragment" />
         <action
             android:id="@+id/action_seeMoreFragment_to_termsPoliciesFragment"
             app:destination="@id/termsPoliciesFragment" />
-        <action
-            android:id="@+id/action_seeMoreFragment_to_announcementFragment"
-            app:destination="@id/announcementFragment" />
     </fragment>
     <fragment
         android:id="@+id/announcementFragment"
@@ -61,6 +64,13 @@
         <action
             android:id="@+id/action_announcementFragment_to_seeMoreFragment"
             app:destination="@id/seeMoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordCheckFragment"
+        android:name="org.cazait.ui.useraccount.PasswordCheckFragment"
+        android:label="PasswordCheckFragment"
+        tools:layout="@layout/fragment_password_check">
+
     </fragment>
     <fragment
         android:id="@+id/customerServiceFragment"
@@ -127,7 +137,23 @@
         <action
             android:id="@+id/action_signInFragment_to_agreeFragment"
             app:destination="@+id/agreeFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_findUserIdFragment"
+            app:destination="@+id/findUserIdFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_findUserPaswwordFragment"
+            app:destination="@+id/findUserPasswordFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/findUserIdFragment"
+        android:name="org.cazait.ui.findaccount.FindUserIdFragment"
+        android:label="FindUserIdFragment"
+        tools:layout="@layout/fragment_find_user_id" />
+    <fragment
+        android:id="@+id/findUserPasswordFragment"
+        android:name="org.cazait.ui.findaccount.FindUserPasswordFragment"
+        android:label="FindUserPasswordFragment"
+        tools:layout="@layout/fragment_find_user_password" />
     <fragment
         android:id="@+id/agreeFragment"
         android:name="org.cazait.ui.signup.agree.AgreeFragment"

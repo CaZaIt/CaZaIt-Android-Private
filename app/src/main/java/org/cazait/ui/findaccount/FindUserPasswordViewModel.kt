@@ -1,10 +1,9 @@
-package org.cazait.ui.seemore
+package org.cazait.ui.findaccount
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SeeMoreViewModel @Inject constructor(): BaseViewModel(){
-
+class FindUserPasswordViewModel @Inject constructor() : BaseViewModel() {
 }

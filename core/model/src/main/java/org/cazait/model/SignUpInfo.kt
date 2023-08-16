@@ -17,7 +17,7 @@ data class NicknameDup(
     val message: String,
 )
 
-data class Message(
+data class SignUpCode(
     val verify: Boolean = false,
     val message: String
 )

@@ -9,7 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentSignUpBinding
 import org.cazait.model.IdDup
-import org.cazait.model.Message
+import org.cazait.model.SignUpCode
 import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
@@ -186,7 +186,7 @@ class SignUpFragment :
         }
     }
 
-    private fun handlePhone(status: Resource<Message>?) {
+    private fun handlePhone(status: Resource<SignUpCode>?) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieSignup.toVisible()
@@ -287,7 +287,7 @@ class SignUpFragment :
     private fun initPhoneBtn() {
         binding.btnSignUpSendVarificationCode.setOnClickListener {
             val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
-            viewModel.postPhoneNumber(phoneNumber)
+            viewModel.postSignUpCode(phoneNumber)
         }
     }
 

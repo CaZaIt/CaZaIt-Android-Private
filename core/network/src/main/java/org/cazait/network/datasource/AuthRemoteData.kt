@@ -7,10 +7,11 @@ import org.cazait.network.api.unauth.AuthService
 import org.cazait.network.di.Authenticated
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.request.MessageReq
+import org.cazait.network.model.dto.request.VerificationCodeReq
 import org.cazait.network.model.dto.request.SignInReq
+import org.cazait.network.model.dto.request.VerificationCodeWithUserIdReq
 import org.cazait.network.model.dto.request.VerifyCodeReq
-import org.cazait.network.model.dto.response.MessageRes
+import org.cazait.network.model.dto.response.VerificationCodeRes
 import org.cazait.network.model.dto.response.RefreshTokenRes
 import org.cazait.network.model.dto.response.SignInRes
 import org.cazait.network.model.dto.response.VerifyCodeRes
@@ -27,9 +28,8 @@ class AuthRemoteData @Inject constructor(
         role: String,
         refreshToken: String
     ): DataResponse<RefreshTokenRes> {
-        return when (val response = processCall {
-            tokenService.getRefreshTokenAuth(role, refreshToken)
-        }) {
+        return when (val response =
+            processCall { tokenService.getRefreshTokenAuth(role, refreshToken) }) {
             is RefreshTokenRes -> {
                 DataResponse.Success(response)
             }
@@ -42,9 +42,8 @@ class AuthRemoteData @Inject constructor(
 
     override suspend fun postSignIn(body: SignInReq): DataResponse<SignInRes> {
         Log.e("AuthRemoteData", body.toString())
-        return when (val response = processCall {
-            authService.postSignIn(role = "user", signInReq = body)
-        }) {
+        return when (val response =
+            processCall { authService.postSignIn(role = "user", signInReq = body) }) {
             is SignInRes -> {
                 DataResponse.Success(response)
             }
@@ -55,11 +54,9 @@ class AuthRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postMessage(body: MessageReq): DataResponse<MessageRes> {
-        return when (val response = processCall {
-            authService.postMessage(body)
-        }) {
-            is MessageRes -> {
+    override suspend fun postSignUpCode(body: VerificationCodeReq): DataResponse<VerificationCodeRes> {
+        return when (val response = processCall { authService.postSignUpCode(body) }) {
+            is VerificationCodeRes -> {
                 DataResponse.Success(response)
             }
 
@@ -70,10 +67,32 @@ class AuthRemoteData @Inject constructor(
     }
 
     override suspend fun postVerifyCode(body: VerifyCodeReq): DataResponse<VerifyCodeRes> {
-        return when (val response = processCall {
-            authService.postVerifyCode(body)
-        }) {
+        return when (val response = processCall { authService.postVerifyCode(body) }) {
             is VerifyCodeRes -> {
+                DataResponse.Success(response)
+            }
+
+            else -> {
+                DataResponse.DataError(response as Int)
+            }
+        }
+    }
+
+    override suspend fun postResetPasswordCode(body: VerificationCodeWithUserIdReq): DataResponse<VerificationCodeRes> {
+        return when (val response = processCall { authService.postResetPasswordCode(body) }) {
+            is VerificationCodeRes -> {
+                DataResponse.Success(response)
+            }
+
+            else -> {
+                DataResponse.DataError(response as Int)
+            }
+        }
+    }
+
+    override suspend fun postFindIdCode(body: VerificationCodeReq): DataResponse<VerificationCodeRes> {
+        return when (val response = processCall { authService.postFindIdCode(body) }) {
+            is VerificationCodeRes -> {
                 DataResponse.Success(response)
             }
 
