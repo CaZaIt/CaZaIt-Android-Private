@@ -20,6 +20,6 @@ data class CafeDTO(
     val cafesImages: List<String>,
     @SerializedName("distance")
     val distance: Int,
-    @SerializedName("favorite")
+    @SerializedName("favoriteStatus")
     val favorite: String,
 )
