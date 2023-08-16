@@ -2,7 +2,6 @@ package org.cazait.network.api.unauth
 
 import org.cazait.network.model.dto.request.VerificationCodeReq
 import org.cazait.network.model.dto.request.SignInReq
-import org.cazait.network.model.dto.request.VerificationCodeWithUserIdReq
 import org.cazait.network.model.dto.request.VerifyCodeReq
 import org.cazait.network.model.dto.response.VerificationCodeRes
 import org.cazait.network.model.dto.response.SignInRes
@@ -21,23 +20,13 @@ interface AuthService {
         signInReq: SignInReq,
     ): Response<SignInRes>
 
-    @POST("/api/auths/messages/codes/verify")
+    @POST("/api/auths/verify-authnumber")
     suspend fun postVerifyCode(
         @Body verifyCode: VerifyCodeReq
     ): Response<VerifyCodeRes>
 
-    @POST("/api/auths/messages/codes/send/sign-up")
-    suspend fun postSignUpCode(
-        @Body verificationCode: VerificationCodeReq
-    ): Response<VerificationCodeRes>
-    
-    @POST("/api/auths/messages/codes/send/reset-password")
-    suspend fun postResetPasswordCode(
-        @Body passwordVerificationCode: VerificationCodeWithUserIdReq
-    ): Response<VerificationCodeRes>
-
-    @POST("/api/auths/messages/codes/send/find_accountname")
-    suspend fun postFindIdCode(
+    @POST("/api/auths/send-authnumber/test")
+    suspend fun postVerificationCode(
         @Body verificationCode: VerificationCodeReq
     ): Response<VerificationCodeRes>
 }

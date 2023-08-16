@@ -2,7 +2,7 @@ package org.cazait.network.model.dto.response
 
 import com.google.gson.annotations.SerializedName
 
-data class IsUserIdDupRes(
+data class CheckRes(
     @SerializedName("code")
     val code: Int,
     @SerializedName("result")
@@ -10,5 +10,5 @@ data class IsUserIdDupRes(
     @SerializedName("message")
     val message: String,
     @SerializedName("data")
-    val data: String?,
+    val data: String
 )

@@ -1,16 +1,12 @@
 package org.cazait.ui.signup
 
-import android.content.Context
-import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentSignUpBinding
-import org.cazait.model.IdDup
-import org.cazait.model.SignUpCode
-import org.cazait.model.NicknameDup
+import org.cazait.model.VerificationCode
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
 import org.cazait.model.VerifyCode
@@ -112,6 +108,7 @@ class SignUpFragment :
         observe(viewModel.signUpProcess, ::handleSignUpResult)
         observe(viewModel.idDupProcess, ::handleIdDupResult)
         observe(viewModel.nickDupProcess, ::handleNickDupResult)
+        observe(viewModel.phoneDupProcess, ::handlePhoneDupResult)
         observe(viewModel.phoneNumberProcess, ::handlePhone)
         observe(viewModel.verifyProcess, ::handleVerify)
         observeToast(viewModel.showToast)
@@ -120,19 +117,16 @@ class SignUpFragment :
     private fun handleSignUpResult(status: Resource<SignUpInfo>?) {
         when (status) {
             is Resource.Loading -> {
-                binding.lottieSignup.toVisible()
-                binding.lottieSignup.playAnimation()
+                showLoading()
             }
 
             is Resource.Success -> status.data.let {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
+                hideLoading()
                 navigateToSignInFragment()
             }
 
             is Resource.Error -> {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
+                hideLoading()
                 viewModel.showToastMessage(status.message)
             }
 
@@ -140,22 +134,19 @@ class SignUpFragment :
         }
     }
 
-    private fun handleIdDupResult(status: Resource<IdDup>?) {
+    private fun handleIdDupResult(status: Resource<String>?) {
         when (status) {
             is Resource.Loading -> {
-                binding.lottieSignup.toVisible()
-                binding.lottieSignup.playAnimation()
+                showLoading()
             }
 
             is Resource.Success -> status.data?.let {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
-                viewModel.showToastMessage(it.message)
+                hideLoading()
+                viewModel.showToastMessage(it)
             }
 
             is Resource.Error -> {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
+                hideLoading()
                 viewModel.showToastMessage(status.message)
             }
 
@@ -163,22 +154,19 @@ class SignUpFragment :
         }
     }
 
-    private fun handleNickDupResult(status: Resource<NicknameDup>?) {
+    private fun handleNickDupResult(status: Resource<String>?) {
         when (status) {
             is Resource.Loading -> {
-                binding.lottieSignup.toVisible()
-                binding.lottieSignup.playAnimation()
+                showLoading()
             }
 
             is Resource.Success -> status.data?.let {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
-                viewModel.showToastMessage(it.message)
+                hideLoading()
+                viewModel.showToastMessage(it)
             }
 
             is Resource.Error -> {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
+                hideLoading()
                 viewModel.showToastMessage(status.message)
             }
 
@@ -186,22 +174,41 @@ class SignUpFragment :
         }
     }
 
-    private fun handlePhone(status: Resource<SignUpCode>?) {
+    private fun handlePhoneDupResult(status: Resource<String>?) {
         when (status) {
             is Resource.Loading -> {
-                binding.lottieSignup.toVisible()
-                binding.lottieSignup.playAnimation()
+                showLoading()
             }
 
             is Resource.Success -> status.data?.let {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
+                hideLoading()
+                viewModel.showToastMessage(it)
+                val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
+                viewModel.sendVerificationCode(phoneNumber)
+            }
+
+            is Resource.Error -> {
+                hideLoading()
+                viewModel.showToastMessage(status.message)
+            }
+
+            null -> {}
+        }
+    }
+
+    private fun handlePhone(status: Resource<VerificationCode>?) {
+        when (status) {
+            is Resource.Loading -> {
+                showLoading()
+            }
+
+            is Resource.Success -> status.data?.let {
+                hideLoading()
                 viewModel.showToastMessage(it.message)
             }
 
             is Resource.Error -> {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
+                hideLoading()
                 viewModel.showToastMessage(status.message)
             }
 
@@ -212,19 +219,16 @@ class SignUpFragment :
     private fun handleVerify(status: Resource<VerifyCode>?) {
         when (status) {
             is Resource.Loading -> {
-                binding.lottieSignup.toVisible()
-                binding.lottieSignup.playAnimation()
+                showLoading()
             }
 
             is Resource.Success -> status.data?.let {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
+                hideLoading()
                 viewModel.showToastMessage(it.message)
             }
 
             is Resource.Error -> {
-                binding.lottieSignup.pauseAnimation()
-                binding.lottieSignup.toGone()
+                hideLoading()
                 viewModel.showToastMessage(status.message)
             }
 
@@ -287,7 +291,7 @@ class SignUpFragment :
     private fun initPhoneBtn() {
         binding.btnSignUpSendVarificationCode.setOnClickListener {
             val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
-            viewModel.postSignUpCode(phoneNumber)
+            viewModel.isPhoneDup(phoneNumber)
         }
     }
 
@@ -295,8 +299,7 @@ class SignUpFragment :
         binding.btnSignUpCheckVarificationCode.setOnClickListener {
             val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
             val codeString = binding.etSignUpVarificationCode.text.toString()
-            val codeInt = codeString.toInt()
-            viewModel.postVerifyCode(phoneNumber, codeInt)
+            viewModel.checkVerifyCode(phoneNumber, codeString.toInt())
         }
     }
 
@@ -467,11 +470,13 @@ class SignUpFragment :
         }
     }
 
-    companion object {
-        fun signUpIntent(
-            context: Context,
-        ): Intent {
-            return Intent(context, SignUpFragment::class.java)
-        }
+    private fun showLoading() {
+        binding.lottieSignup.toVisible()
+        binding.lottieSignup.playAnimation()
+    }
+
+    private fun hideLoading() {
+        binding.lottieSignup.pauseAnimation()
+        binding.lottieSignup.toGone()
     }
 }

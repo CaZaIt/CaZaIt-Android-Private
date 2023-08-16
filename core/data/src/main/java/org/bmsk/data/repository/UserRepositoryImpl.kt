@@ -6,16 +6,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.bmsk.data.model.toFindUserId
-import org.bmsk.data.model.toIdNumberDup
-import org.bmsk.data.model.toNicknameDup
 import org.bmsk.data.model.toResetPassword
 import org.bmsk.data.model.toSignUpInfo
 import org.cazait.datastore.data.repository.UserPreferenceRepository
-import org.cazait.network.model.dto.request.IsUserIdDupReq
-import org.cazait.network.model.dto.request.IsNicknameDupReq
 import org.cazait.network.model.dto.request.SignUpReq
-import org.cazait.model.IdDup
-import org.cazait.model.NicknameDup
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
 import org.cazait.model.UserAccount
@@ -23,8 +17,10 @@ import org.cazait.model.UserPassword
 import org.cazait.model.local.UserPreference
 import org.cazait.network.datasource.UserRemoteData
 import org.cazait.network.error.EXIST_ACCOUNTNAME
-import org.cazait.network.error.EXIST_NICKNAME
 import org.cazait.network.model.dto.DataResponse
+import org.cazait.network.model.dto.request.CheckNicknameReq
+import org.cazait.network.model.dto.request.CheckPhoneNumReq
+import org.cazait.network.model.dto.request.CheckUserIdReq
 import org.cazait.network.model.dto.request.FindUserIdReq
 import org.cazait.network.model.dto.request.ResetPasswordReq
 import javax.inject.Inject
@@ -59,19 +55,20 @@ class UserRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun isUserIdDup(userId: String): Flow<Resource<IdDup>> {
+    override suspend fun checkPhoneNumDB(
+        phoneNumber: String,
+        isExist: String
+    ): Flow<Resource<String>> {
         return flow {
-            val body = IsUserIdDupReq(userId)
-
-            when (val response = remoteData.postIsUserIdDup(body)) {
+            val body = CheckPhoneNumReq(phoneNumber, isExist)
+            when(val response = remoteData.postCheckPhoneNum(body)){
                 is DataResponse.Success -> {
                     response.data?.let {
-                        emit(Resource.Success(it.toIdNumberDup()))
-                    } ?: emit(Resource.Error("잘못된 결과입니다."))
+                        emit(Resource.Success(it.message))
+                    }
                 }
-
                 is DataResponse.DataError -> {
-                    Log.d("UserRepository Errorcode", response.errorCode.toString())
+                    Log.d("UserRepository 폰 Errorcode", response.errorCode.toString())
                     if (response.errorCode == EXIST_ACCOUNTNAME) {
                         emit(Resource.Error(message = "이미 존재하는 아이디입니다."))
                     } else {
@@ -79,30 +76,52 @@ class UserRepositoryImpl @Inject constructor(
                     }
                 }
             }
-        }.flowOn(ioDispatcher)
+        }
     }
 
-    override suspend fun isNicknameDup(nickname: String): Flow<Resource<NicknameDup>> {
+    override suspend fun checkUserIdDB(userId: String, isExist: String): Flow<Resource<String>> {
         return flow {
-            val body = IsNicknameDupReq(nickname)
-
-            when (val response = remoteData.postIsNicknameDup(body)) {
+            val body = CheckUserIdReq(userId, isExist)
+            when(val response = remoteData.postCheckUserId(body)){
                 is DataResponse.Success -> {
                     response.data?.let {
-                        emit(Resource.Success(it.toNicknameDup()))
-                    } ?: emit(Resource.Error("잘못된 결과입니다."))
+                        emit(Resource.Success(it.message))
+                    }
                 }
-
                 is DataResponse.DataError -> {
-                    Log.d("UserRepository Errorcode", response.errorCode.toString())
-                    if (response.errorCode == EXIST_NICKNAME) {
-                        emit(Resource.Error(message = "이미 존재하는 닉네임입니다."))
+                    Log.d("UserRepository 아이디 Errorcode", response.errorCode.toString())
+                    if (response.errorCode == EXIST_ACCOUNTNAME) {
+                        emit(Resource.Error(message = "이미 존재하는 아이디입니다."))
                     } else {
                         emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
                     }
                 }
             }
-        }.flowOn(ioDispatcher)
+        }
+    }
+
+    override suspend fun checkNicknameDB(
+        nickname: String,
+        isExist: String
+    ): Flow<Resource<String>> {
+        return flow {
+            val body = CheckNicknameReq(nickname, isExist)
+            when(val response = remoteData.postCheckNickname(body)){
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.message))
+                    }
+                }
+                is DataResponse.DataError -> {
+                    Log.d("UserRepository 닉네임 Errorcode", response.errorCode.toString())
+                    if (response.errorCode == EXIST_ACCOUNTNAME) {
+                        emit(Resource.Error(message = "이미 존재하는 아이디입니다."))
+                    } else {
+                        emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
+                    }
+                }
+            }
+        }
     }
 
     override suspend fun findUserId(phoneNumber: String): Flow<Resource<UserAccount>> {

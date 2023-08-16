@@ -1,17 +1,17 @@
 package org.cazait.network.datasource
 
-import org.cazait.network.model.dto.request.IsUserIdDupReq
-import org.cazait.network.model.dto.request.IsNicknameDupReq
 import org.cazait.network.model.dto.request.SignUpReq
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.response.IsUserIdDupRes
-import org.cazait.network.model.dto.response.IsNicknameDupRes
 import org.cazait.network.model.dto.response.SignUpRes
 import org.cazait.network.NetworkConnectivity
 import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.api.unauth.UserService
+import org.cazait.network.model.dto.request.CheckNicknameReq
+import org.cazait.network.model.dto.request.CheckPhoneNumReq
+import org.cazait.network.model.dto.request.CheckUserIdReq
 import org.cazait.network.model.dto.request.FindUserIdReq
 import org.cazait.network.model.dto.request.ResetPasswordReq
+import org.cazait.network.model.dto.response.CheckRes
 import org.cazait.network.model.dto.response.FindUserIdRes
 import org.cazait.network.model.dto.response.ResetPasswordRes
 import retrofit2.Response
@@ -36,13 +36,11 @@ class UserRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postIsUserIdDup(
-        body: IsUserIdDupReq
-    ): DataResponse<IsUserIdDupRes> {
+    override suspend fun postCheckPhoneNum(body: CheckPhoneNumReq): DataResponse<CheckRes> {
         return when (val response = processCall {
-            userService.postIsUserIdDup(body)
+            userService.postPhoneDB(body)
         }) {
-            is IsUserIdDupRes -> {
+            is CheckRes -> {
                 DataResponse.Success(data = response)
             }
 
@@ -52,11 +50,25 @@ class UserRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postIsNicknameDup(body: IsNicknameDupReq): DataResponse<IsNicknameDupRes> {
+    override suspend fun postCheckUserId(body: CheckUserIdReq): DataResponse<CheckRes> {
         return when (val response = processCall {
-            userService.postIsNicknameDup(body)
+            userService.postUserIdDB(body)
         }) {
-            is IsNicknameDupRes -> {
+            is CheckRes -> {
+                DataResponse.Success(data = response)
+            }
+
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+    override suspend fun postCheckNickname(body: CheckNicknameReq): DataResponse<CheckRes> {
+        return when (val response = processCall {
+            userService.postNicknameDB(body)
+        }) {
+            is CheckRes -> {
                 DataResponse.Success(data = response)
             }
 

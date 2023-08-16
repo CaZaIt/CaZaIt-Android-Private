@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.AuthRepository
 import org.bmsk.data.repository.UserRepository
 import org.cazait.model.Resource
-import org.cazait.model.SignUpCode
+import org.cazait.model.VerificationCode
 import org.cazait.model.UserAccount
 import org.cazait.model.VerifyCode
 import org.cazait.ui.base.BaseViewModel
@@ -25,8 +24,8 @@ class FindUserIdViewModel @Inject constructor(
     val userIdProcess: LiveData<Resource<UserAccount>>
         get() = _userIdProcess
 
-    private val _phoneNumberProcess = MutableLiveData<Resource<SignUpCode>?>()
-    val phoneNumberProcess: LiveData<Resource<SignUpCode>?>
+    private val _phoneNumberProcess = MutableLiveData<Resource<VerificationCode>?>()
+    val phoneNumberProcess: LiveData<Resource<VerificationCode>?>
         get() = _phoneNumberProcess
 
     private val _verifyProcess = MutableLiveData<Resource<VerifyCode>?>()
@@ -49,9 +48,9 @@ class FindUserIdViewModel @Inject constructor(
     fun postUserIdCode(phoneNumber: String) {
         viewModelScope.launch {
             _phoneNumberProcess.value = Resource.Loading()
-            authRepository.postFindIdCode(phoneNumber).collect {
-                _phoneNumberProcess.value = it
-            }
+//            authRepository.postFindIdCode(phoneNumber).collect {
+//                _phoneNumberProcess.value = it
+//            }
         }
     }
 

@@ -9,7 +9,6 @@ import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.VerificationCodeReq
 import org.cazait.network.model.dto.request.SignInReq
-import org.cazait.network.model.dto.request.VerificationCodeWithUserIdReq
 import org.cazait.network.model.dto.request.VerifyCodeReq
 import org.cazait.network.model.dto.response.VerificationCodeRes
 import org.cazait.network.model.dto.response.RefreshTokenRes
@@ -54,18 +53,6 @@ class AuthRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postSignUpCode(body: VerificationCodeReq): DataResponse<VerificationCodeRes> {
-        return when (val response = processCall { authService.postSignUpCode(body) }) {
-            is VerificationCodeRes -> {
-                DataResponse.Success(response)
-            }
-
-            else -> {
-                DataResponse.DataError(response as Int)
-            }
-        }
-    }
-
     override suspend fun postVerifyCode(body: VerifyCodeReq): DataResponse<VerifyCodeRes> {
         return when (val response = processCall { authService.postVerifyCode(body) }) {
             is VerifyCodeRes -> {
@@ -78,20 +65,8 @@ class AuthRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun postResetPasswordCode(body: VerificationCodeWithUserIdReq): DataResponse<VerificationCodeRes> {
-        return when (val response = processCall { authService.postResetPasswordCode(body) }) {
-            is VerificationCodeRes -> {
-                DataResponse.Success(response)
-            }
-
-            else -> {
-                DataResponse.DataError(response as Int)
-            }
-        }
-    }
-
-    override suspend fun postFindIdCode(body: VerificationCodeReq): DataResponse<VerificationCodeRes> {
-        return when (val response = processCall { authService.postFindIdCode(body) }) {
+    override suspend fun postVerificationCode(body: VerificationCodeReq): DataResponse<VerificationCodeRes> {
+        return when (val response = processCall { authService.postVerificationCode(body) }) {
             is VerificationCodeRes -> {
                 DataResponse.Success(response)
             }

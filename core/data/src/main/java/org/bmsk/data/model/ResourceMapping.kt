@@ -5,10 +5,8 @@ import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import org.cazait.model.Cafe
 import org.cazait.model.CafeMenu
 import org.cazait.model.CafeReviews
-import org.cazait.model.IdDup
 import org.cazait.model.FavoriteCafe
-import org.cazait.model.SignUpCode
-import org.cazait.model.NicknameDup
+import org.cazait.model.VerificationCode
 import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.SignInInfo
 import org.cazait.model.SignUpInfo
@@ -19,8 +17,6 @@ import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
 import org.cazait.network.model.dto.response.FindUserIdDTO
-import org.cazait.network.model.dto.response.IsUserIdDupRes
-import org.cazait.network.model.dto.response.IsNicknameDupRes
 import org.cazait.network.model.dto.response.VerificationCodeRes
 import org.cazait.network.model.dto.response.ResetPasswordDTO
 import org.cazait.network.model.dto.response.ReviewDTO
@@ -132,17 +128,7 @@ fun SignUpInfoDTO.toSignUpInfo() = SignUpInfo(
     nickname = nickname
 )
 
-fun IsNicknameDupRes.toNicknameDup() = NicknameDup(
-    message = message,
-    isDup = data == null,
-)
-
-fun IsUserIdDupRes.toIdNumberDup() = IdDup(
-    message = message,
-    isDup = data == null,
-)
-
-fun VerificationCodeRes.toMessage() = SignUpCode(
+fun VerificationCodeRes.toMessage() = VerificationCode(
     verify = false,
     message = message
 )
