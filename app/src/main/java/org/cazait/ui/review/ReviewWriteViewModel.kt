@@ -27,7 +27,7 @@ class ReviewWriteViewModel @Inject constructor(
     val showToast: LiveData<SingleEvent<Any>>
         get() = _showToast
 
-    fun sendReviewToServer(cafeId: Long, score: Float, content: String) {
+    fun sendReviewToServer(cafeId: String, score: Float, content: String) {
         viewModelScope.launch {
             val userId = userRepository.getUserInfo().first().uuid
             _messageLiveData.value = Resource.Loading()

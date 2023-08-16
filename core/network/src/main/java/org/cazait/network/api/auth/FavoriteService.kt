@@ -13,13 +13,13 @@ interface FavoriteService {
     @POST("/api/favorites/user/{userId}/cafe/{cafeId}")
     suspend fun postFavoriteCafeAuth(
         @Path("userId") userId: String,
-        @Path("cafeId") cafeId: Long,
+        @Path("cafeId") cafeId: String,
     ): Response<PostFavoriteCafeRes>
 
     @DELETE("/api/favorites/delete/{userId}/{cafeId}")
     suspend fun deleteFavoriteCafeAuth(
         @Path("userId") userId: String,
-        @Path("cafeId") cafeId: Long,
+        @Path("cafeId") cafeId: String,
     ): Response<DeleteFavoriteCafeRes>
 
     @GET("/api/favorites/user/{userId}")

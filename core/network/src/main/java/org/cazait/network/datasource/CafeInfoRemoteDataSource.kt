@@ -9,11 +9,11 @@ import org.cazait.network.model.dto.response.DeleteFavoriteCafeRes
 import org.cazait.network.model.dto.response.PostFavoriteCafeRes
 
 interface CafeInfoRemoteDataSource {
-    suspend fun getCafe(cafeId: Long): DataResponse<CafeResTemp>
+    suspend fun getCafe(cafeId: String): DataResponse<CafeResTemp>
 
-    suspend fun getMenus(cafeId: Long): DataResponse<CafeMenuRes>
+    suspend fun getMenus(cafeId: String): DataResponse<CafeMenuRes>
     suspend fun getReviews(
-        cafeId: Long,
+        cafeId: String,
         sortBy: String?,
         score: Int?,
         lastId: Long?
@@ -21,10 +21,10 @@ interface CafeInfoRemoteDataSource {
 
     suspend fun postReviewAuth(
         userId: String,
-        cafeId: Long,
+        cafeId: String,
         score: Int,
         content: String,
     ): DataResponse<CafeReviewPostRes>
-    suspend fun postFavoriteCafeAuth(userId: String, cafeId: Long): DataResponse<PostFavoriteCafeRes>
-    suspend fun deleteFavoriteCafeAuth(userId: String, cafeId: Long): DataResponse<DeleteFavoriteCafeRes>
+    suspend fun postFavoriteCafeAuth(userId: String, cafeId: String): DataResponse<PostFavoriteCafeRes>
+    suspend fun deleteFavoriteCafeAuth(userId: String, cafeId: String): DataResponse<DeleteFavoriteCafeRes>
 }

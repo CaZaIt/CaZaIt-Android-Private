@@ -9,7 +9,6 @@ import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.ListCafesReq
 import org.cazait.network.model.dto.response.ListCafesRes
 import org.cazait.network.model.dto.response.ListFavoritesRes
-import org.cazait.network.model.dto.response.PostFavoriteCafeRes
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -36,13 +35,6 @@ class CafeListRemoteData @Inject constructor(
                 DataResponse.DataError(errorCode = response as Int)
             }
         }
-    }
-
-    override suspend fun postFavoriteCafe(
-        userId: String,
-        cafeId: Long
-    ): DataResponse<PostFavoriteCafeRes> {
-        TODO("Not yet implemented")
     }
 
     override suspend fun getListFavoritesAuth(userId: String): DataResponse<ListFavoritesRes> {

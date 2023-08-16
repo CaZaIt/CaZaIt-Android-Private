@@ -85,7 +85,7 @@ fun CafeDTO.toCafe() = Cafe(
     latitude = latitude,
     longitude = longitude,
     timestamp = System.currentTimeMillis(),
-    isFavorite = favorite,
+    isFavorite = favorite == "ACTIVE",
 )
 
 fun FavoriteCafeDTO.toFavoriteCafe() = FavoriteCafe(

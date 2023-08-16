@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "dcbccaff621462839d081cf9ac581093",
+    "identityHash": "cd276801032cc040eb2c03441dff5a84",
     "entities": [
       {
         "tableName": "FavoriteCafe",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cafeId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `favoritesId` INTEGER NOT NULL, `name` TEXT NOT NULL, `address` TEXT NOT NULL, `latitude` TEXT NOT NULL, `longitude` TEXT NOT NULL, `congestionStatus` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `createdDate` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cafeId` TEXT NOT NULL, `favoritesId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `address` TEXT NOT NULL, `latitude` TEXT NOT NULL, `longitude` TEXT NOT NULL, `congestionStatus` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `createdDate` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "cafeId",
             "columnName": "cafeId",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -66,7 +66,7 @@
         "primaryKey": {
           "autoGenerate": true,
           "columnNames": [
-            "cafeId"
+            "favoritesId"
           ]
         },
         "indices": [],
@@ -74,12 +74,12 @@
       },
       {
         "tableName": "RecentlyViewedCafe",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cafe_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cafe_id` TEXT NOT NULL, `timestamp` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "cafeId",
             "columnName": "cafe_id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -92,7 +92,7 @@
         "primaryKey": {
           "autoGenerate": true,
           "columnNames": [
-            "cafe_id"
+            "timestamp"
           ]
         },
         "indices": [],
@@ -102,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dcbccaff621462839d081cf9ac581093')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd276801032cc040eb2c03441dff5a84')"
     ]
   }
 }

@@ -12,10 +12,10 @@ import retrofit2.http.Query
 interface CafeService {
     @GET("/api/cafes/id/{cafeId}")
     suspend fun getCafe(
-        @Path("cafeId") cafeId: Long,
+        @Path("cafeId") cafeId: String,
     ): Response<CafeResTemp>
 
-    @GET("api/cafes/all")
+    @GET("/api/cafes/all")
     suspend fun getListCafesWithGuest(
         @Query("longitude") longitude: String,
         @Query("latitude") latitude: String,
@@ -23,7 +23,7 @@ interface CafeService {
         @Query("limit") limit: String,
     ): Response<ListCafesRes>
 
-    @GET("api/cafes/name/{cafeName}")
+    @GET("/api/cafes/name/{cafeName}")
     suspend fun getCafeByNameWithGuest(
         @Path("cafeName") cafeName: String,
         @Query("latitude") latitude: String,
@@ -33,12 +33,12 @@ interface CafeService {
 
     @GET("/api/menus/cafe/{cafeId}")
     suspend fun getMenus(
-        @Path("cafeId") cafeId: Long
+        @Path("cafeId") cafeId: String
     ): Response<CafeMenuRes>
 
     @GET("/api/reviews/{cafeId}/all")
     suspend fun getReviews(
-        @Path("cafeId") cafeId: Long,
+        @Path("cafeId") cafeId: String,
         @Query("sortBy") sortBy: String?,
         @Query("score") score: Int?,
         @Query("lastId") lastId: Long?

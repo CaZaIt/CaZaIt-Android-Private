@@ -11,7 +11,7 @@ import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.Resource
 
 interface CafeRepository {
-    suspend fun getCafeById(cafeId: Long): Flow<Resource<Cafe>>
+    suspend fun getCafeById(cafeId: String): Flow<Resource<Cafe>>
     suspend fun getListFavoritesAuth(userId: String): Flow<Resource<FavoriteCafes>>
     suspend fun getListCafes(
         latitude: String,
@@ -20,9 +20,9 @@ interface CafeRepository {
         limit: String = "0"
     ): Flow<Resource<Cafes>>
 
-    suspend fun getMenus(cafeId: Long): Flow<Resource<CafeMenus>>
+    suspend fun getMenus(cafeId: String): Flow<Resource<CafeMenus>>
     suspend fun getReviews(
-        cafeId: Long,
+        cafeId: String,
         sortBy: String?,
         score: Int?,
         lastId: Long?
@@ -30,7 +30,7 @@ interface CafeRepository {
 
     suspend fun postReviewAuth(
         userId: String,
-        cafeId: Long,
+        cafeId: String,
         score: Int,
         content: String
     ): Flow<Resource<String>>

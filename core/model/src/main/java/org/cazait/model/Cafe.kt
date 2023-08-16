@@ -7,7 +7,7 @@ data class Cafes(
 )
 
 data class Cafe(
-    val cafeId: Long,
+    val cafeId: String,
     val name: String,
     val address: String,
     val distance: Int,

@@ -155,11 +155,11 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
     private fun handleMarkerClick(marker: Marker) {
         lastClickedMarker?.icon = OverlayImage.fromResource(R.drawable.ic_marker)
         marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_clicked)
-        showCafeInfoView(marker.tag as Long)
+        showCafeInfoView(marker.tag as String)
         lastClickedMarker = marker
     }
 
-    private fun showCafeInfoView(cafeId: Long) {
+    private fun showCafeInfoView(cafeId: String) {
         viewModel.getCafeByCafeId(cafeId)?.let { cafe ->
             CafeInfoDialogFragment(
                 cafe,

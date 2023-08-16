@@ -24,7 +24,7 @@ class CafeInfoRemoteData @Inject constructor(
     @Authenticated private val favoriteServiceAuth: FavoriteService,
     private val networkConnectivity: NetworkConnectivity,
 ) : CafeInfoRemoteDataSource {
-    override suspend fun getCafe(cafeId: Long): DataResponse<CafeResTemp> {
+    override suspend fun getCafe(cafeId: String): DataResponse<CafeResTemp> {
         return when (val response = processCall {
             cafeService.getCafe(cafeId)
         }) {
@@ -38,7 +38,7 @@ class CafeInfoRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun getMenus(cafeId: Long): DataResponse<CafeMenuRes> {
+    override suspend fun getMenus(cafeId: String): DataResponse<CafeMenuRes> {
         return when (val response = processCall {
             cafeService.getMenus(
                 cafeId = cafeId
@@ -55,7 +55,7 @@ class CafeInfoRemoteData @Inject constructor(
     }
 
     override suspend fun getReviews(
-        cafeId: Long,
+        cafeId: String,
         sortBy: String?,
         score: Int?,
         lastId: Long?
@@ -77,7 +77,7 @@ class CafeInfoRemoteData @Inject constructor(
 
     override suspend fun postReviewAuth(
         userId: String,
-        cafeId: Long,
+        cafeId: String,
         score: Int,
         content: String
     ): DataResponse<CafeReviewPostRes> {
@@ -97,7 +97,7 @@ class CafeInfoRemoteData @Inject constructor(
 
     override suspend fun postFavoriteCafeAuth(
         userId: String,
-        cafeId: Long
+        cafeId: String
     ): DataResponse<PostFavoriteCafeRes> {
         return when (val response = processCall {
             favoriteServiceAuth.postFavoriteCafeAuth(
@@ -117,7 +117,7 @@ class CafeInfoRemoteData @Inject constructor(
 
     override suspend fun deleteFavoriteCafeAuth(
         userId: String,
-        cafeId: Long,
+        cafeId: String,
     ): DataResponse<DeleteFavoriteCafeRes> {
         return when (val response = processCall {
             favoriteServiceAuth.deleteFavoriteCafeAuth(
