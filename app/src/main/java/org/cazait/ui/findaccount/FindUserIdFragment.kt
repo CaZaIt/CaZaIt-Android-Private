@@ -1,5 +1,6 @@
 package org.cazait.ui.findaccount
 
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
@@ -23,6 +24,8 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
     FindUserIdViewModel::class.java,
     R.layout.fragment_find_user_id
 ) {
+    private lateinit var timer: CountDownTimer
+    private var time: Long = 180000
     override fun initView() {
         viewModel.initViewModel()
         binding.apply {
@@ -42,6 +45,13 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         super.onResume()
         binding.layoutAfterVerificationCodeSent.toGone()
         binding.layoutShowId.toGone()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::timer.isInitialized) {
+            timer.cancel()
+        }
     }
 
     override fun initAfterBinding() {
@@ -78,7 +88,7 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         }
     }
 
-    private fun btnGoToSignIn(){
+    private fun btnGoToSignIn() {
         binding.btnGoLogin.setOnClickListener {
             navigateToSignInFragment()
         }
@@ -117,6 +127,7 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
                 hideLoading()
                 viewModel.showToastMessage(it.message)
                 binding.layoutAfterVerificationCodeSent.toVisible()
+                startTimer()
             }
 
             is Resource.Error -> {
@@ -169,7 +180,27 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         }
     }
 
-    private fun navigateToSignInFragment(){
+    private fun startTimer() {
+        timer = object :CountDownTimer(time, 1000){
+            override fun onTick(p0: Long) {
+                time = p0
+                updateTimer()
+            }
+            override fun onFinish() {
+                time = 0
+                updateTimer()
+            }
+        }.start()
+    }
+
+    private fun updateTimer() {
+        val minutes = (time / 1000) / 60
+        val seconds = (time / 1000) % 60
+
+        binding.tvTimer.text = String.format("%02d:%02d", minutes, seconds)
+    }
+
+    private fun navigateToSignInFragment() {
         findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToSignInFragment())
     }
 
