@@ -5,6 +5,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentFindUserIdBinding
 import org.cazait.ui.base.BaseFragment
+import org.cazait.utils.toGone
+import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
 class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdViewModel>(
@@ -18,9 +20,33 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
                 findNavController().popBackStack()
             }
         }
+        binding.layoutAfterVerificationCodeSent.toGone()
+        getVerficationCodeBtn()
+        sendVerifyCode()
+        postUserId()
     }
 
     override fun initAfterBinding() {
 
+    }
+
+    private fun getVerficationCodeBtn() {
+        binding.btnFindUserIdSendVarificationCode.setOnClickListener {
+            viewModel.postUserIdCode(binding.etFindUserIdPhoneNumber.toString())
+            binding.layoutAfterVerificationCodeSent.toVisible()
+        }
+    }
+
+    private fun sendVerifyCode() {
+        binding.btnFindUserIdCheckVarificationCode.setOnClickListener {
+            val codeStr = binding.etFindUserIdVarificationCode.toString()
+            viewModel.postVerifyCode(binding.etFindUserIdPhoneNumber.toString(), codeStr.toInt())
+        }
+    }
+
+    private fun postUserId(){
+        binding.btnFindUserId.setOnClickListener {
+            viewModel.postUserAccount(binding.etFindUserIdPhoneNumber.toString())
+        }
     }
 }
