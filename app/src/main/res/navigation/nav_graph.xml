@@ -16,6 +16,19 @@
         <action
             android:id="@+id/action_cafeListFragment_to_searchFragment"
             app:destination="@+id/searchFragment" />
+        <action
+            android:id="@+id/action_cafeListFragment_to_alarmFragment"
+            app:destination="@id/alarmFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/alarmFragment"
+        android:name="org.cazait.ui.alarm.AlarmFragment"
+        android:label="AlarmFragment"
+        tools:layout="@layout/fragment_alarm">
+
+        <action
+            android:id="@+id/action_alarmFragment_to_cafeListFragment"
+            app:destination="@id/cafeListFragment" />
     </fragment>
     <fragment
         android:id="@+id/cafeMapFragment"

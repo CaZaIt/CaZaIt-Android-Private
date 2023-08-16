@@ -50,6 +50,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         setUpLayout()
         observeViewModel()
         setSearch()
+        navigateToAlarmFragment()
     }
 
     override fun onResume() {
@@ -58,6 +59,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
     }
 
     override fun initAfterBinding() {}
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -159,6 +161,13 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
                 favoriteCafes
             )
         )
+    }
+
+    private fun navigateToAlarmFragment() {
+        binding.icMenu.setOnClickListener {
+            findNavController().navigate(CafeListFragmentDirections.actionCafeListFragmentToAlarmFragment())
+        }
+        Log.e("alarm","true!!")
     }
 
     private fun handleHorizontalCafeList(status: Resource<FavoriteCafes>?) {

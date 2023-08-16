@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rectangle_alarm"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/img_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_alarm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_alarm_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알림이 떴습니다!"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="@color/cafe_list_orange"
+            android:layout_marginStart="40dp"
+            app:layout_constraintStart_toEndOf="@+id/img_alarm"
+            app:layout_constraintTop_toTopOf="@+id/img_alarm" />
+
+        <TextView
+            android:id="@+id/txt_alarm_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="그런데 정확히 무슨 알림이 뜨는건가요?"
+            android:textSize="12sp"
+            android:layout_marginStart="40dp"
+            android:textColor="@color/cafe_list_orange"
+            app:layout_constraintBottom_toBottomOf="@+id/img_alarm"
+            app:layout_constraintStart_toEndOf="@+id/img_alarm" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
