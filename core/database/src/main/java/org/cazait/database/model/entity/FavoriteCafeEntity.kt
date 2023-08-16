@@ -8,9 +8,9 @@ import java.util.Date
 
 @Entity("FavoriteCafe")
 data class FavoriteCafeEntity(
-    @PrimaryKey(autoGenerate = true)
     @ColumnInfo
-    val cafeId: Long,
+    val cafeId: String,
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo
     val favoritesId: Long,
     @ColumnInfo

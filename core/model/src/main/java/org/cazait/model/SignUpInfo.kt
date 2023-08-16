@@ -7,17 +7,7 @@ data class SignUpInfo(
     val nickname: String,
 )
 
-data class IdDup(
-    val isDup: Boolean = false,
-    val message: String,
-)
-
-data class NicknameDup(
-    val isDup: Boolean = false,
-    val message: String,
-)
-
-data class SignUpCode(
+data class VerificationCode(
     val verify: Boolean = false,
     val message: String
 )

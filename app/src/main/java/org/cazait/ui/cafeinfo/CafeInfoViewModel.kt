@@ -57,7 +57,7 @@ class CafeInfoViewModel @Inject constructor(
         insertRecentlyViewedCafe(cafe)
     }
 
-    fun getMenus(cafeId: Long) {
+    fun getMenus(cafeId: String) {
         viewModelScope.launch {
             _listMenuData.value = Resource.Loading()
             cafeRepository.getMenus(cafeId).collect {
@@ -66,7 +66,7 @@ class CafeInfoViewModel @Inject constructor(
         }
     }
 
-    fun getReviews(cafeId: Long, sortBy: String?, score: Int?, lastId: Long?) {
+    fun getReviews(cafeId: String, sortBy: String?, score: Int?, lastId: Long?) {
         viewModelScope.launch {
             _listReviewData.value = Resource.Loading()
             cafeRepository.getReviews(cafeId, sortBy, score, lastId).collect {

@@ -24,7 +24,7 @@ class CafeMapViewModel @Inject constructor(
     private val cafeRepository: CafeRepository,
     private val userRepository: UserRepository,
 ) : BaseViewModel() {
-    private val cafeHashMap = HashMap<Long, Cafe>()
+    private val cafeHashMap = HashMap<String, Cafe>()
     private val _cafeListLiveData = MutableLiveData<Resource<Cafes>>()
     val cafeListLiveData: LiveData<Resource<Cafes>>
         get() = _cafeListLiveData
@@ -99,7 +99,7 @@ class CafeMapViewModel @Inject constructor(
         return cafeHashMap.values.toList()
     }
 
-    fun getCafeByCafeId(cafeId: Long): Cafe? {
+    fun getCafeByCafeId(cafeId: String): Cafe? {
         return cafeHashMap[cafeId]
     }
 }

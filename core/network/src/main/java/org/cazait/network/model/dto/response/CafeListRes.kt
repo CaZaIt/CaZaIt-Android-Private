@@ -30,7 +30,7 @@ data class FavoriteCafeDTO(
     @SerializedName("favoritesId")
     val favoritesId: Long,
     @SerializedName("cafeId")
-    val cafeId: Long,
+    val cafeId: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("address")

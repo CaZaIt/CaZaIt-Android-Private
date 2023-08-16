@@ -40,7 +40,7 @@ class CafeRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineContext,
 ) : CafeRepository {
 
-    override suspend fun getCafeById(cafeId: Long): Flow<Resource<Cafe>> {
+    override suspend fun getCafeById(cafeId: String): Flow<Resource<Cafe>> {
         return flow {
             when (val response = cafeInfoRemoteData.getCafe(cafeId)) {
                 is DataResponse.Success -> {
@@ -123,7 +123,7 @@ class CafeRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    override suspend fun getMenus(cafeId: Long): Flow<Resource<CafeMenus>> {
+    override suspend fun getMenus(cafeId: String): Flow<Resource<CafeMenus>> {
         return flow {
             when (val response = cafeInfoRemoteData.getMenus(cafeId)) {
                 is DataResponse.Success -> {
@@ -143,7 +143,7 @@ class CafeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getReviews(
-        cafeId: Long,
+        cafeId: String,
         sortBy: String?,
         score: Int?,
         lastId: Long?
@@ -165,7 +165,7 @@ class CafeRepositoryImpl @Inject constructor(
 
     override suspend fun postReviewAuth(
         userId: String,
-        cafeId: Long,
+        cafeId: String,
         score: Int,
         content: String
     ): Flow<Resource<String>> {

@@ -20,7 +20,7 @@ data class CafeResTemp(
 ) {
     data class Data(
         @SerializedName("cafeId")
-        val cafeId: Long,
+        val cafeId: String,
         @SerializedName("congestionStatus")
         val congestionStatus: CafeStatus,
         @SerializedName("name")

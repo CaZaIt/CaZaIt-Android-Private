@@ -7,9 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.AuthRepository
 import org.bmsk.data.repository.UserRepository
-import org.cazait.model.IdDup
-import org.cazait.model.SignUpCode
-import org.cazait.model.NicknameDup
+import org.cazait.model.VerificationCode
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
 import org.cazait.model.VerifyCode
@@ -27,16 +25,20 @@ class SignUpViewModel @Inject constructor(
     val signUpProcess: LiveData<Resource<SignUpInfo>?>
         get() = _signUpProcess
 
-    private val _idDupProcess = MutableLiveData<Resource<IdDup>?>()
-    val idDupProcess: LiveData<Resource<IdDup>?>
+    private val _idDupProcess = MutableLiveData<Resource<String>?>()
+    val idDupProcess: LiveData<Resource<String>?>
         get() = _idDupProcess
 
-    private val _nickDupProcess = MutableLiveData<Resource<NicknameDup>?>()
-    val nickDupProcess: LiveData<Resource<NicknameDup>?>
+    private val _nickDupProcess = MutableLiveData<Resource<String>?>()
+    val nickDupProcess: LiveData<Resource<String>?>
         get() = _nickDupProcess
 
-    private val _phoneNumberProcess = MutableLiveData<Resource<SignUpCode>?>()
-    val phoneNumberProcess: LiveData<Resource<SignUpCode>?>
+    private val _phoneDupProcess = MutableLiveData<Resource<String>?>()
+    val phoneDupProcess: LiveData<Resource<String>?>
+        get() = _phoneDupProcess
+
+    private val _phoneNumberProcess = MutableLiveData<Resource<VerificationCode>?>()
+    val phoneNumberProcess: LiveData<Resource<VerificationCode>?>
         get() = _phoneNumberProcess
 
     private val _verifyProcess = MutableLiveData<Resource<VerifyCode>?>()
@@ -56,38 +58,46 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
+    fun isPhoneDup(phoneNumber: String) {
+        viewModelScope.launch {
+            _phoneDupProcess.value = Resource.Loading()
+            userRepository.checkPhoneNumDB(phoneNumber, "false").collect {
+                _phoneDupProcess.value = it
+            }
+        }
+    }
+
     fun isIdDup(id: String) {
         viewModelScope.launch {
             _idDupProcess.value = Resource.Loading()
-            userRepository.isUserIdDup(id)
-                .collect {
-                    _idDupProcess.value = it
-                }
+            userRepository.checkUserIdDB(id, "false").collect {
+                _idDupProcess.value = it
+            }
         }
     }
 
     fun isNicknameDup(nickname: String) {
         viewModelScope.launch {
             _nickDupProcess.value = Resource.Loading()
-            userRepository.isNicknameDup(nickname).collect {
+            userRepository.checkNicknameDB(nickname, "false").collect {
                 _nickDupProcess.value = it
             }
         }
     }
 
-    fun postSignUpCode(phoneNumber: String) {
+    fun sendVerificationCode(phoneNumber: String) {
         viewModelScope.launch {
             _phoneNumberProcess.value = Resource.Loading()
-            authRepository.postSignUpCode(phoneNumber).collect {
+            authRepository.postVerificationCode(phoneNumber).collect {
                 _phoneNumberProcess.value = it
             }
         }
     }
 
-    fun postVerifyCode(phoneNumber: String, verifyCode: Int) {
+    fun checkVerifyCode(phoneNumber: String, verifyCode: Int) {
         viewModelScope.launch {
             _verifyProcess.value = Resource.Loading()
-            authRepository.postVerifyCode(phoneNumber, verifyCode).collect{
+            authRepository.postVerifyCode(phoneNumber, verifyCode).collect {
                 _verifyProcess.value = it
             }
         }

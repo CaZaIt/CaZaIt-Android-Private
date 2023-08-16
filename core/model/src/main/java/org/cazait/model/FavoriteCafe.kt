@@ -8,7 +8,7 @@ data class FavoriteCafes(
 
 data class FavoriteCafe(
     val favoritesId: Long,
-    val cafeId: Long,
+    val cafeId: String,
     val name: String,
     val address: String,
     val latitude: String,

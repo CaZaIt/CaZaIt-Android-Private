@@ -1,13 +1,11 @@
 package org.cazait.network.model.dto
 
 import com.google.gson.annotations.SerializedName
-import org.cazait.model.CafeImage
 import org.cazait.model.CafeStatus
-
 
 data class CafeDTO(
     @SerializedName("cafeId")
-    val cafeId: Long,
+    val cafeId: String,
     @SerializedName("congestionStatus")
     val congestionStatus: CafeStatus,
     @SerializedName("name")
@@ -22,6 +20,6 @@ data class CafeDTO(
     val cafesImages: List<String>,
     @SerializedName("distance")
     val distance: Int,
-    @SerializedName("favorite")
-    val favorite: Boolean,
+    @SerializedName("favoriteStatus")
+    val favorite: String,
 )

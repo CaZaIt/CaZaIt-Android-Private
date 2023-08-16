@@ -11,7 +11,7 @@ interface ReviewService {
     @POST("/api/reviews/user/{userId}/cafe/{cafeId}")
     suspend fun postReviewAuth(
         @Path("userId") userId: String,
-        @Path("cafeId") cafeId: Long,
+        @Path("cafeId") cafeId: String,
         @Body reviewPostReq: CafeReviewPostReq,
     ): Response<CafeReviewPostRes>
 }
