@@ -30,6 +30,7 @@ interface UserService {
 
     @POST("/api/users/find-accountname")
     suspend fun postFindUserId(@Body userPhoneNumber: FindUserIdReq): Response<FindUserIdRes>
+
     @PATCH("/api/users/reset-password/password")
     suspend fun patchPassword(@Body resetPassword: ResetPasswordReq): Response<ResetPasswordRes>
 }

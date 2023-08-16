@@ -13,6 +13,8 @@
     <string name="btn_find_id">아이디 찾기</string>
     <string name="btn_find_password">비밀번호 찾기</string>
     <string name="sign_in_logo">메인 로고</string>
+    <string name="find_id_text1">당신의 아이디는</string>
+    <string name="find_id_text2">입니다.</string>
 
     <!-- Sign Up -->
     <string name="sign_up_sign_up">회원가입</string>
