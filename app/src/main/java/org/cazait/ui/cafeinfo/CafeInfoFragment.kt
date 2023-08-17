@@ -156,7 +156,7 @@ class CafeInfoFragment : Fragment() {
                 } else {
                     AlertDialog.Builder(requireContext())
                         .setMessage(resources.getString(R.string.need_login))
-                        .setPositiveButton("확인") { dialog, which ->
+                        .setPositiveButton("확인") { dialog, _ ->
                             dialog.dismiss()
                         }
                         .show()
