@@ -10,7 +10,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CafeService {
-    @GET("/api/cafes/id/{cafeId}")
+    @GET("/api/cafes/{cafeId}")
     suspend fun getCafe(
         @Path("cafeId") cafeId: String,
     ): Response<CafeResTemp>

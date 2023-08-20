@@ -1,5 +1,6 @@
 package org.cazait.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +14,10 @@ class RecentlyViewedVerticalAdapter(
 ) :
     ListAdapter<Cafe, RecentlyViewedCafeViewHolder>(diffUtil) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentlyViewedCafeViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): RecentlyViewedCafeViewHolder {
         return RecentlyViewedCafeViewHolder(
             onClick,
             ItemRecentlyCafeBinding.inflate(
@@ -23,24 +27,30 @@ class RecentlyViewedVerticalAdapter(
             )
         )
     }
+
     override fun onBindViewHolder(holder: RecentlyViewedCafeViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 
+
+
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Cafe>() {
-            override fun areItemsTheSame(
-                oldItem: Cafe,
-                newItem: Cafe
-            ): Boolean {
+            override fun areItemsTheSame(oldItem: Cafe, newItem: Cafe): Boolean {
                 return oldItem.cafeId == newItem.cafeId
             }
 
-            override fun areContentsTheSame(
-                oldItem: Cafe,
-                newItem: Cafe
-            ): Boolean {
+            override fun areContentsTheSame(oldItem: Cafe, newItem: Cafe): Boolean {
                 return oldItem == newItem
+            }
+
+            override fun getChangePayload(oldItem: Cafe, newItem: Cafe): Any? {
+
+                return if (oldItem.cafeId == newItem.cafeId && newItem.timestamp > oldItem.timestamp) {
+                    newItem.timestamp
+                } else {
+                    null
+                }
             }
         }
     }
