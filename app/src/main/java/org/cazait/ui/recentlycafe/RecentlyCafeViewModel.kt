@@ -37,17 +37,24 @@ class RecentlyCafeViewModel @Inject constructor(
 
     fun fetchRecentlyViewedCafes() {
         viewModelScope.launch {
-            val cafeList = mutableListOf<Cafe>()
+            val cafeMap = mutableMapOf<String, Cafe>()
+
             cafeRepository.loadRecentlyViewedCafes().collect { recentlyViewedCafe ->
                 val res = cafeRepository.getCafeById(recentlyViewedCafe.cafeId).first()
                 if (res is Resource.Success) {
                     res.data?.let { cafe ->
-                        val cafeWithTimestamp = cafe.copy(timestamp = recentlyViewedCafe.timestamp)
-                        cafeList.add(cafeWithTimestamp)
+                        if (cafeMap.containsKey(cafe.cafeId)) {
+                            val existingCafe = cafeMap[cafe.cafeId]!!
+                            if (recentlyViewedCafe.timestamp > existingCafe.timestamp) {
+                                cafeMap[cafe.cafeId] = cafe.copy(timestamp = recentlyViewedCafe.timestamp)
+                            }
+                        } else {
+                            cafeMap[cafe.cafeId] = cafe.copy(timestamp = recentlyViewedCafe.timestamp)
+                        }
                     }
                 }
             }
-            _recentlyViewedCafes.value = cafeList
+            _recentlyViewedCafes.value = cafeMap.values.toList()
         }
     }
 
