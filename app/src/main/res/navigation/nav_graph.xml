@@ -159,7 +159,7 @@
     </fragment>
     <fragment
         android:id="@+id/findUserIdFragment"
-        android:name="org.cazait.ui.findaccount.FindUserIdFragment"
+        android:name="org.cazait.ui.findaccount.findid.FindUserIdFragment"
         android:label="FindUserIdFragment"
         tools:layout="@layout/fragment_find_user_id">
         <action

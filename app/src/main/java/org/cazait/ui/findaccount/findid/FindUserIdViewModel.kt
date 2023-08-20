@@ -1,4 +1,4 @@
-package org.cazait.ui.findaccount
+package org.cazait.ui.findaccount.findid
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

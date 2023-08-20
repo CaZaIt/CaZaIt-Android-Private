@@ -1,4 +1,4 @@
-package org.cazait.ui.findaccount
+package org.cazait.ui.findaccount.findid
 
 import android.os.CountDownTimer
 import android.util.Log
@@ -13,6 +13,7 @@ import org.cazait.model.UserAccount
 import org.cazait.model.VerificationCode
 import org.cazait.model.VerifyCode
 import org.cazait.ui.base.BaseFragment
+import org.cazait.ui.findaccount.FindUserIdFragmentDirections
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
 import org.cazait.utils.showToast
