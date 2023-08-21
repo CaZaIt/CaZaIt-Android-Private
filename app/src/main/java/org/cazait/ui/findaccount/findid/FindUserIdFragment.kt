@@ -13,7 +13,6 @@ import org.cazait.model.UserAccount
 import org.cazait.model.VerificationCode
 import org.cazait.model.VerifyCode
 import org.cazait.ui.base.BaseFragment
-import org.cazait.ui.findaccount.FindUserIdFragmentDirections
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
 import org.cazait.utils.showToast
@@ -27,6 +26,7 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
 ) {
     private lateinit var timer: CountDownTimer
     private var time: Long = 180000
+
     override fun initView() {
         viewModel.initViewModel()
         binding.apply {
@@ -37,15 +37,12 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         }
         getVerficationCodeBtn()
         sendVerifyCode()
-        findUserId()
-        btnGoToSignIn()
         observeViewModel()
     }
 
     override fun onResume() {
         super.onResume()
         binding.layoutAfterVerificationCodeSent.toGone()
-        binding.layoutShowId.toGone()
     }
 
     override fun onDestroy() {
@@ -70,7 +67,12 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
     private fun getVerficationCodeBtn() {
         binding.btnFindUserIdSendVarificationCode.setOnClickListener {
             val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-            viewModel.isPhoneDup(phoneNumber)
+            Log.d("FindUserIdFrag PhoneNum", phoneNumber)
+            if (phoneNumber == "") {
+                viewModel.showToastMessage(resources.getString(R.string.please_input_phoneNum))
+            } else {
+                viewModel.isPhoneDup(phoneNumber)
+            }
         }
     }
 
@@ -78,20 +80,11 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         binding.btnFindUserIdCheckVarificationCode.setOnClickListener {
             val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
             val codeStr = binding.etFindUserIdVarificationCode.text.toString()
-            viewModel.checkVerifyCode(phoneNumber, codeStr.toInt())
-        }
-    }
-
-    private fun findUserId() {
-        binding.btnFindUserId.setOnClickListener {
-            val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-            viewModel.findUserId(phoneNumber)
-        }
-    }
-
-    private fun btnGoToSignIn() {
-        binding.btnGoLogin.setOnClickListener {
-            navigateToSignInFragment()
+            if (codeStr == "") {
+                viewModel.showToastMessage(resources.getString(R.string.please_input_verifyNum))
+            } else {
+                viewModel.checkVerifyCode(phoneNumber, codeStr.toInt())
+            }
         }
     }
 
@@ -128,6 +121,8 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
                 hideLoading()
                 viewModel.showToastMessage(it.message)
                 binding.layoutAfterVerificationCodeSent.toVisible()
+                binding.btnFindUserIdSendVarificationCode.text =
+                    resources.getString(R.string.sign_up_phone_number_send_code_again)
                 startTimer()
             }
 
@@ -149,11 +144,15 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
             is Resource.Success -> status.data?.let {
                 hideLoading()
                 viewModel.showToastMessage(it.message)
+                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
+                viewModel.findUserId(phoneNumber)
             }
 
             is Resource.Error -> {
                 hideLoading()
                 viewModel.showToastMessage(status.message)
+                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
+                viewModel.findUserId(phoneNumber)
             }
 
             null -> {}
@@ -168,8 +167,9 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
 
             is Resource.Success -> status.data?.let {
                 hideLoading()
-                binding.tvUserid.text = status.data?.userId
-                binding.layoutShowId.toVisible()
+                timer.cancel()
+                val foundUserId = status.data?.userId
+                navigateToFindUserIdResultFragment(foundUserId)
             }
 
             is Resource.Error -> {
@@ -182,11 +182,12 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
     }
 
     private fun startTimer() {
-        timer = object :CountDownTimer(time, 1000){
+        timer = object : CountDownTimer(time, 1000) {
             override fun onTick(p0: Long) {
                 time = p0
                 updateTimer()
             }
+
             override fun onFinish() {
                 time = 0
                 updateTimer()
@@ -201,8 +202,12 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         binding.tvTimer.text = String.format("%02d:%02d", minutes, seconds)
     }
 
-    private fun navigateToSignInFragment() {
-        findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToSignInFragment())
+    private fun navigateToFindUserIdResultFragment(foundUserId: String?) {
+        findNavController().navigate(
+            FindUserIdFragmentDirections.actionFindUserIdFragmentToFindUserIdResultFragment(
+                foundUserId
+            )
+        )
     }
 
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {
