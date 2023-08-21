@@ -156,7 +156,7 @@
     </fragment>
     <fragment
         android:id="@+id/phoneVerifyFragment"
-        android:name="org.cazait.ui.findaccount.findid.PhoneVerifyFragment"
+        android:name="org.cazait.ui.phoneverify.PhoneVerifyFragment"
         android:label="PhoneVerifyFragment"
         tools:layout="@layout/fragment_phone_verify">
         <argument
@@ -164,29 +164,28 @@
             app:argType="string"
             app:nullable="true" />
         <action
-            android:id="@+id/action_phoneVerifyFragment_to_findUserIdResultFragment"
-            app:destination="@+id/findUserIdResultFragment" />
+            android:id="@+id/action_phoneVerifyFragment_to_findUserIdFragment"
+            app:destination="@+id/findUserIdFragment" />
         <action
             android:id="@+id/action_phoneVerifyFragment_to_findUserPasswordFragment"
             app:destination="@+id/findUserPasswordFragment"/>
     </fragment>
     <fragment
-        android:id="@+id/findUserIdResultFragment"
-        android:name="org.cazait.ui.findaccount.findid.FindUserIdResultFragment"
-        android:label="FindUserIdResultFragment"
-        tools:layout="@layout/fragment_find_user_id_result">
+        android:id="@+id/findUserIdFragment"
+        android:name="org.cazait.ui.findaccount.findid.FindUserIdFragment"
+        android:label="FindUserIdFragment"
+        tools:layout="@layout/fragment_find_user_id">
         <argument
             android:name="foundUserId"
             app:argType="string"
             app:nullable="true" />
         <action
-            android:id="@+id/action_findUserIdResultFragment_to_signInFragment"
+            android:id="@+id/action_findUserIdFragment_to_signInFragment"
             app:destination="@+id/signInFragment"
             app:popUpTo="@+id/signInFragment"
             app:popUpToInclusive="true" />
-
         <action
-            android:id="@+id/action_findUserIdResultFragment_to_findUserPasswordFragment"
+            android:id="@+id/action_findUserIdFragment_to_findUserPasswordFragment"
             app:destination="@+id/findUserPasswordFragment" />
     </fragment>
     <fragment

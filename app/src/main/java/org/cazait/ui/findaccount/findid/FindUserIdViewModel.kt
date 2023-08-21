@@ -5,5 +5,5 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FindUserIdResultViewModel @Inject constructor() : BaseViewModel() {
+class FindUserIdViewModel @Inject constructor() : BaseViewModel() {
 }

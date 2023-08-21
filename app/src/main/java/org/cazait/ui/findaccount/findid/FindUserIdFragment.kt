@@ -3,15 +3,15 @@ package org.cazait.ui.findaccount.findid
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.cazait.R
-import org.cazait.databinding.FragmentFindUserIdResultBinding
+import org.cazait.databinding.FragmentFindUserIdBinding
 import org.cazait.ui.base.BaseFragment
 
-class FindUserIdResultFragment :
-    BaseFragment<FragmentFindUserIdResultBinding, FindUserIdResultViewModel>(
-        FindUserIdResultViewModel::class.java,
-        R.layout.fragment_find_user_id_result
+class FindUserIdFragment :
+    BaseFragment<FragmentFindUserIdBinding, FindUserIdViewModel>(
+        FindUserIdViewModel::class.java,
+        R.layout.fragment_find_user_id
     ) {
-    private val navArgs: FindUserIdResultFragmentArgs by navArgs()
+    private val navArgs: FindUserIdFragmentArgs by navArgs()
 
     override fun initView() {
         binding.apply {
@@ -38,10 +38,10 @@ class FindUserIdResultFragment :
     }
 
     private fun navigateToSignInFragment() {
-        findNavController().navigate(FindUserIdResultFragmentDirections.actionFindUserIdResultFragmentToSignInFragment())
+        findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToSignInFragment())
     }
 
     private fun navigateToFindUserPasswordFragment() {
-        findNavController().navigate(FindUserIdResultFragmentDirections.actionFindUserIdResultFragmentToFindUserPasswordFragment())
+        findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToFindUserPasswordFragment())
     }
 }

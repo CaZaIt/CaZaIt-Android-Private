@@ -1,4 +1,4 @@
-package org.cazait.ui.findaccount.findid
+package org.cazait.ui.phoneverify
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
