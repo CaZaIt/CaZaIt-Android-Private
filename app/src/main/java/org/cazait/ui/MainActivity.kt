@@ -18,7 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 ) {
     private val hiddenBottomNavFragments = listOf(
         R.id.signInFragment,
-        R.id.findUserIdFragment,
+        R.id.phoneVerifyFragment,
         R.id.findUserIdResultFragment,
         R.id.findUserPasswordFragment,
         R.id.signupFragment,

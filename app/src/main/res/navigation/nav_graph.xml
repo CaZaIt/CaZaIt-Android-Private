@@ -151,20 +151,24 @@
             android:id="@+id/action_signInFragment_to_agreeFragment"
             app:destination="@+id/agreeFragment" />
         <action
-            android:id="@+id/action_signInFragment_to_findUserIdFragment"
-            app:destination="@+id/findUserIdFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_findUserPaswwordFragment"
-            app:destination="@+id/findUserPasswordFragment" />
+            android:id="@+id/action_signInFragment_to_phoneVerifyFragment"
+            app:destination="@+id/phoneVerifyFragment" />
     </fragment>
     <fragment
-        android:id="@+id/findUserIdFragment"
-        android:name="org.cazait.ui.findaccount.findid.FindUserIdFragment"
-        android:label="FindUserIdFragment"
-        tools:layout="@layout/fragment_find_user_id">
+        android:id="@+id/phoneVerifyFragment"
+        android:name="org.cazait.ui.findaccount.findid.PhoneVerifyFragment"
+        android:label="PhoneVerifyFragment"
+        tools:layout="@layout/fragment_phone_verify">
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="true" />
         <action
-            android:id="@+id/action_findUserIdFragment_to_findUserIdResultFragment"
+            android:id="@+id/action_phoneVerifyFragment_to_findUserIdResultFragment"
             app:destination="@+id/findUserIdResultFragment" />
+        <action
+            android:id="@+id/action_phoneVerifyFragment_to_findUserPasswordFragment"
+            app:destination="@+id/findUserPasswordFragment"/>
     </fragment>
     <fragment
         android:id="@+id/findUserIdResultFragment"

@@ -16,7 +16,7 @@ import org.cazait.utils.SingleEvent
 import javax.inject.Inject
 
 @HiltViewModel
-class FindUserIdViewModel @Inject constructor(
+class PhoneVerifyViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository
 ) : BaseViewModel() {
