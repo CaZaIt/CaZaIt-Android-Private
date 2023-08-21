@@ -49,10 +49,10 @@ class PhoneVerifyViewModel @Inject constructor(
         }
     }
 
-    fun isPhoneDup(phoneNumber: String) {
+    fun isPhoneDup(phoneNumber: String, isExist: String) {
         viewModelScope.launch {
             _phoneDupProcess.value = Resource.Loading()
-            userRepository.checkPhoneNumDB(phoneNumber, "true").collect {
+            userRepository.checkPhoneNumDB(phoneNumber, isExist).collect {
                 _phoneDupProcess.value = it
             }
         }

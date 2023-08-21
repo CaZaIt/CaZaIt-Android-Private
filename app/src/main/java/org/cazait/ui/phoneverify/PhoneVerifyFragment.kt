@@ -69,11 +69,18 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
     private fun getVerficationCodeBtn() {
         binding.btnFindUserIdSendVarificationCode.setOnClickListener {
             val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-            Log.d("FindUserIdFrag PhoneNum", phoneNumber)
             if (phoneNumber == "") {
                 viewModel.showToastMessage(resources.getString(R.string.please_input_phoneNum))
             } else {
-                viewModel.isPhoneDup(phoneNumber)
+                val title = binding.clTop.includedTvTitle.text.toString()
+                if (title == resources.getString(R.string.btn_find_id) || title == resources.getString(
+                        R.string.btn_find_password
+                    )
+                ) {
+                    viewModel.isPhoneDup(phoneNumber, "true")
+                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
+                    viewModel.isPhoneDup(phoneNumber, "false")
+                }
             }
         }
     }
@@ -101,7 +108,6 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 hideLoading()
                 viewModel.showToastMessage(it)
                 val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-                Log.d("FindUserIdFrag 폰번호", phoneNumber)
                 viewModel.sendVerificationCode(phoneNumber)
             }
 
@@ -148,12 +154,15 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 hideLoading()
                 viewModel.showToastMessage(it.message)
                 val title = binding.clTop.includedTvTitle.text.toString()
+                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
                 if (title == resources.getString(R.string.btn_find_id)) {
-                    val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
                     viewModel.findUserId(phoneNumber)
                 } else if (title == resources.getString(R.string.btn_find_password)) {
                     timer.cancel()
                     navigateToFindUserPasswordFragment()
+                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
+                    timer.cancel()
+                    navigateToSignUpFragment(phoneNumber)
                 }
             }
 
@@ -161,12 +170,15 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 hideLoading()
                 viewModel.showToastMessage(status.message)
                 val title = binding.clTop.includedTvTitle.text.toString()
+                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
                 if (title == resources.getString(R.string.btn_find_id)) {
-                    val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
                     viewModel.findUserId(phoneNumber)
                 } else if (title == resources.getString(R.string.btn_find_password)) {
                     timer.cancel()
                     navigateToFindUserPasswordFragment()
+                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
+                    timer.cancel()
+                    navigateToSignUpFragment(phoneNumber)
                 }
             }
 
@@ -215,6 +227,14 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         val seconds = (time / 1000) % 60
 
         binding.tvTimer.text = String.format("%02d:%02d", minutes, seconds)
+    }
+
+    private fun navigateToSignUpFragment(phoneNumber: String) {
+        findNavController().navigate(
+            PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToSignUpFragment(
+                phoneNumber
+            )
+        )
     }
 
     private fun navigateToFindUserIdFragment(foundUserId: String?) {

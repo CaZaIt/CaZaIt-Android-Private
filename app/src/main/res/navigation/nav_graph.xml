@@ -164,11 +164,14 @@
             app:argType="string"
             app:nullable="true" />
         <action
+            android:id="@+id/action_phoneVerifyFragment_to_signUpFragment"
+            app:destination="@+id/signupFragment" />
+        <action
             android:id="@+id/action_phoneVerifyFragment_to_findUserIdFragment"
             app:destination="@+id/findUserIdFragment" />
         <action
             android:id="@+id/action_phoneVerifyFragment_to_findUserPasswordFragment"
-            app:destination="@+id/findUserPasswordFragment"/>
+            app:destination="@+id/findUserPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/findUserIdFragment"
@@ -199,11 +202,8 @@
         android:label="AgreeFragment"
         tools:layout="@layout/fragment_agree">
         <action
-            android:id="@+id/action_agreeFragment_to_signUpFragment"
-            app:destination="@+id/signupFragment" />
-        <action
-            android:id="@+id/action_agreeFragment_to_signInFragment"
-            app:destination="@+id/signInFragment" />
+            android:id="@+id/action_agreeFragment_to_phoneVerifyFragment"
+            app:destination="@+id/phoneVerifyFragment" />
         <action
             android:id="@+id/action_agreeFragment_to_privacyTermsFragment"
             app:destination="@id/privacyTermsFragment" />
@@ -216,10 +216,19 @@
         android:name="org.cazait.ui.signup.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
+        <argument
+            android:name="phoneNum"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@+id/signInFragment"
             app:popUpTo="@+id/signInFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signUpFragment_to_agreeFragment"
+            app:destination="@+id/agreeFragment"
+            app:popUpTo="@id/agreeFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
