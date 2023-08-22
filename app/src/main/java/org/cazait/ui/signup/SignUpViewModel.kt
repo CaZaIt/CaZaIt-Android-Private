@@ -7,20 +7,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.bmsk.data.repository.AuthRepository
 import org.bmsk.data.repository.UserRepository
-import org.cazait.model.VerificationCode
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
-import org.cazait.model.VerifyCode
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val authRepository: AuthRepository
+    private val userRepository: UserRepository
 ) : BaseViewModel() {
 
     private val _signUpProcess = MutableLiveData<Resource<SignUpInfo>?>()
