@@ -101,7 +101,7 @@
                 android:text="@string/see_more_setting"
                 android:textColor="@color/cafe_list_orange"
                 android:textSize="16sp"
-                android:onClick="@{() -> fragment.navigateToPasswordCheckFragment()}"
+                android:onClick="@{() -> fragment.navigateToAccountManageFragment()}"
                 app:drawableStartCompat="@drawable/ic_settings_final"
                 app:layout_constraintBottom_toBottomOf="@+id/view_3"
                 app:layout_constraintStart_toStartOf="parent"

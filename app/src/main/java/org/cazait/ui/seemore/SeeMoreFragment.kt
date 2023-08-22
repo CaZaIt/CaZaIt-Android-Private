@@ -1,5 +1,6 @@
 package org.cazait.ui.seemore
 
+import android.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
@@ -14,6 +15,7 @@ class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
     override fun initView() {
         binding.fragment = this
         binding.viewmodel = this.viewModel
+        viewModel.updateSignInState()
     }
 
     override fun initAfterBinding() {
@@ -31,7 +33,17 @@ class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
         findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToAnnouncementFragment())
     }
 
-    fun navigateToPasswordCheckFragment(){
-        findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToPasswordCheckFragment())
+    fun navigateToAccountManageFragment(){
+        if(viewModel.signInStateFlow.value){
+            findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToAccountManageFragment())
+        }
+        else{
+            AlertDialog.Builder(requireContext())
+                .setMessage(resources.getString(R.string.need_login))
+                .setPositiveButton("확인") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 }
