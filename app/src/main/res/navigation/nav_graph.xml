@@ -193,7 +193,7 @@
     </fragment>
     <fragment
         android:id="@+id/findUserPasswordFragment"
-        android:name="org.cazait.ui.findaccount.FindUserPasswordFragment"
+        android:name="org.cazait.ui.findaccount.findpassword.FindUserPasswordFragment"
         android:label="FindUserPasswordFragment"
         tools:layout="@layout/fragment_find_user_password" />
     <fragment

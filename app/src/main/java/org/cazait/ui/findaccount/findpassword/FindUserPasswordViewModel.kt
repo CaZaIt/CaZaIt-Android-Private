@@ -1,4 +1,4 @@
-package org.cazait.ui.findaccount
+package org.cazait.ui.findaccount.findpassword
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.cazait.ui.base.BaseViewModel

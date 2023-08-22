@@ -1,4 +1,4 @@
-package org.cazait.ui.findaccount
+package org.cazait.ui.findaccount.findpassword
 
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
