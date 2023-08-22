@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SeeMoreViewModel @Inject constructor(private val userRepository: UserRepository) :
     BaseViewModel() {
-    private var _userInfo = MutableStateFlow<UserPreference?>(null)
+    private val _userInfo = MutableStateFlow<UserPreference?>(null)
     val userInfo = _userInfo.asStateFlow()
 
     private val _signInStateFlow = MutableStateFlow(false)
