@@ -73,10 +73,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             navigateToAgreeFragment()
         }
         binding.tvFindid.setOnClickListener {
-            navigateToFindUserIdFragment()
+            navigateToFindId()
         }
         binding.tvFindpassword.setOnClickListener {
-            navigateToFindUserPasswordFragment()
+            navigateToFindPassword()
         }
     }
 
@@ -94,11 +94,13 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToAgreeFragment())
     }
 
-    private fun navigateToFindUserIdFragment() {
-        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToFindUserIdFragment())
+    private fun navigateToFindId() {
+        val title = binding.tvFindid.text.toString()
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToPhoneVerifyFragment(title))
     }
 
-    private fun navigateToFindUserPasswordFragment() {
-        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToFindUserPaswwordFragment())
+    private fun navigateToFindPassword() {
+        val title = binding.tvFindpassword.text.toString()
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToPhoneVerifyFragment(title))
     }
 }

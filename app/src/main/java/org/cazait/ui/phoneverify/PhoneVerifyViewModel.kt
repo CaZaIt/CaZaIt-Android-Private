@@ -1,4 +1,4 @@
-package org.cazait.ui.findaccount
+package org.cazait.ui.phoneverify
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +16,7 @@ import org.cazait.utils.SingleEvent
 import javax.inject.Inject
 
 @HiltViewModel
-class FindUserIdViewModel @Inject constructor(
+class PhoneVerifyViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository
 ) : BaseViewModel() {
@@ -49,10 +49,10 @@ class FindUserIdViewModel @Inject constructor(
         }
     }
 
-    fun isPhoneDup(phoneNumber: String) {
+    fun isPhoneDup(phoneNumber: String, isExist: String) {
         viewModelScope.launch {
             _phoneDupProcess.value = Resource.Loading()
-            userRepository.checkPhoneNumDB(phoneNumber, "true").collect {
+            userRepository.checkPhoneNumDB(phoneNumber, isExist).collect {
                 _phoneDupProcess.value = it
             }
         }

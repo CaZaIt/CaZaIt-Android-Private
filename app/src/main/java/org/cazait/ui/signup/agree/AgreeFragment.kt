@@ -40,7 +40,7 @@ class AgreeFragment : BaseFragment<FragmentAgreeBinding, AgreeViewModel>(
                 checkBoxList.forEach { checkBox ->
                     checkBox.isChecked = true
                 }
-            } else{
+            } else {
                 checkBoxList.forEach { checkBox ->
                     checkBox.isChecked = false
                 }
@@ -90,14 +90,15 @@ class AgreeFragment : BaseFragment<FragmentAgreeBinding, AgreeViewModel>(
     private fun initNextBtn() {
         binding.btnAgreeNext.setOnClickListener {
             if (binding.cbAgreeAll.isChecked) {
-                navigateToSignUpFragment()
+                navigateToPhoneVerifyFragment()
             } else {
                 viewModel.showToastMessage(resources.getString(R.string.agree_please))
             }
         }
     }
 
-    private fun navigateToSignUpFragment() {
-        findNavController().navigate(AgreeFragmentDirections.actionAgreeFragmentToSignUpFragment())
+    private fun navigateToPhoneVerifyFragment() {
+        val title = resources.getString(R.string.sign_up_sign_up)
+        findNavController().navigate(AgreeFragmentDirections.actionAgreeFragmentToPhoneVerifyFragment(title))
     }
 }

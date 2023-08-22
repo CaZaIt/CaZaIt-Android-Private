@@ -11,10 +11,14 @@
     <string name="btn_do_login">로그인 하기</string>
     <string name="btn_sign_up">회원가입</string>
     <string name="btn_find_id">아이디 찾기</string>
+    <string name="btn_find_id_verify">인증하기</string>
     <string name="btn_find_password">비밀번호 찾기</string>
     <string name="sign_in_logo">메인 로고</string>
-    <string name="find_id_text1">당신의 아이디는</string>
+    <string name="find_id_text1">회원님의 아이디는</string>
     <string name="find_id_text2">입니다.</string>
+    <string name="sign_in_slash">/</string>
+    <string name="please_input_phoneNum">휴대폰 번호를 입력해주세요.</string>
+    <string name="please_input_verifyNum">휴대폰 번호를 입력해주세요.</string>
 
     <!-- Sign Up -->
     <string name="sign_up_sign_up">회원가입</string>
@@ -27,9 +31,10 @@
     <string name="sign_up_hint_password_more">비밀번호를 한 번 더 입력해주세요</string>
     <string name="sign_up_nick_name">닉네임</string>
     <string name="sign_up_hint_nick_name">예:카자잇123</string>
-    <string name="sign_up_phone_number">휴대폰 번호</string>
-    <string name="sign_up_hint_phone_number">01012345678</string>
-    <string name="sign_up_phone_number_send_code">인증번호받기</string>
+    <string name="sign_up_phone_number">휴대폰 인증</string>
+    <string name="sign_up_hint_phone_number">예) 01012345678</string>
+    <string name="sign_up_phone_number_send_code">인증번호 전송</string>
+    <string name="sign_up_phone_number_send_code_again">재전송</string>
     <string name="sign_up_verification_code">인증번호</string>
     <string name="sign_up_hint_verification_code">인증번호 입력</string>
     <string name="sign_up_check_verification_code">인증번호확인</string>

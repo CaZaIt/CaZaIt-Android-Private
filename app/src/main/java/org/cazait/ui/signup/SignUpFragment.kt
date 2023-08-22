@@ -2,14 +2,13 @@ package org.cazait.ui.signup
 
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentSignUpBinding
-import org.cazait.model.VerificationCode
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
-import org.cazait.model.VerifyCode
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -23,18 +22,17 @@ class SignUpFragment :
         SignUpViewModel::class.java,
         R.layout.fragment_sign_up,
     ) {
+    private val navArgs: SignUpFragmentArgs by navArgs()
 
     private var userIdFlag = false
     private var passwordFlag = false
     private var passwordCheckFlag = false
     private var nickNameFlag = false
-    private var phoneNumberFlag = false
-    private var verifyCodeFlag = false
 
     private val nickNameListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag
         }
 
         override fun checkText(text: String) = checkNickName(text)
@@ -43,7 +41,7 @@ class SignUpFragment :
     private val passwordListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag
         }
 
         override fun checkText(text: String) = checkPassword(text)
@@ -52,7 +50,7 @@ class SignUpFragment :
     private val passwordAgainListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag
         }
 
         override fun checkText(text: String) = checkPasswordAgain(text)
@@ -61,28 +59,10 @@ class SignUpFragment :
     private val idListener = object : CheckTextWatcher() {
         override fun checkFlag() {
             binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
+                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag
         }
 
         override fun checkText(text: String) = checkUserId(text)
-    }
-
-    private val phoneNumberListener = object : CheckTextWatcher() {
-        override fun checkFlag() {
-            binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
-        }
-
-        override fun checkText(text: String) = checkPhoneNumber(text)
-    }
-
-    private val verifyCodeListener = object : CheckTextWatcher() {
-        override fun checkFlag() {
-            binding.btnSignUpJoin.isEnabled =
-                nickNameFlag && passwordFlag && passwordCheckFlag && userIdFlag && phoneNumberFlag && verifyCodeFlag
-        }
-
-        override fun checkText(text: String) = checkVerifyCode(text)
     }
 
     override fun initAfterBinding() {
@@ -94,12 +74,10 @@ class SignUpFragment :
         viewModel.initViewModel()
         binding.clTop.includedTvTitle.text = getString(R.string.sign_up_sign_up)
         binding.clTop.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            navigateToBackStack()
         }
         initIdBtn()
         initNicknameBtn()
-        initPhoneBtn()
-        initVerifyBtn()
         initSignUpBtn()
         initEditTextListener()
     }
@@ -108,9 +86,6 @@ class SignUpFragment :
         observe(viewModel.signUpProcess, ::handleSignUpResult)
         observe(viewModel.idDupProcess, ::handleIdDupResult)
         observe(viewModel.nickDupProcess, ::handleNickDupResult)
-        observe(viewModel.phoneDupProcess, ::handlePhoneDupResult)
-        observe(viewModel.phoneNumberProcess, ::handlePhone)
-        observe(viewModel.verifyProcess, ::handleVerify)
         observeToast(viewModel.showToast)
     }
 
@@ -174,70 +149,12 @@ class SignUpFragment :
         }
     }
 
-    private fun handlePhoneDupResult(status: Resource<String>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
-            }
-
-            is Resource.Success -> status.data?.let {
-                hideLoading()
-                viewModel.showToastMessage(it)
-                val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
-                viewModel.sendVerificationCode(phoneNumber)
-            }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
-        }
-    }
-
-    private fun handlePhone(status: Resource<VerificationCode>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
-            }
-
-            is Resource.Success -> status.data?.let {
-                hideLoading()
-                viewModel.showToastMessage(it.message)
-            }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
-        }
-    }
-
-    private fun handleVerify(status: Resource<VerifyCode>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
-            }
-
-            is Resource.Success -> status.data?.let {
-                hideLoading()
-                viewModel.showToastMessage(it.message)
-            }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
-        }
-    }
-
     private fun navigateToSignInFragment() {
         findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment())
+    }
+
+    private fun navigateToBackStack() {
+        findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToAgreeFragment())
     }
 
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {
@@ -249,8 +166,6 @@ class SignUpFragment :
         binding.etSignUpPasswordInsert.addTextChangedListener(passwordListener)
         binding.etSignUpPasswordInsertMore.addTextChangedListener(passwordAgainListener)
         binding.etSignUpNickNameExample.addTextChangedListener(nickNameListener)
-        binding.etSignUpPhoneNumber.addTextChangedListener(phoneNumberListener)
-        binding.etSignUpVarificationCode.addTextChangedListener(verifyCodeListener)
     }
 
     private fun initSignUpBtn() {
@@ -259,10 +174,9 @@ class SignUpFragment :
             val pw = binding.etSignUpPasswordInsert.text.toString()
             val repw = binding.etSignUpPasswordInsertMore.text.toString()
             val nickname = binding.etSignUpNickNameExample.text.toString()
-            val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
-            val verifyCode = binding.etSignUpVarificationCode.text.toString()
+            val phoneNumber = navArgs.phoneNum.toString()
 
-            if (userId == "" || pw == "" || repw == "" || nickname == "" || phoneNumber == "" || verifyCode == "")
+            if (userId == "" || pw == "" || repw == "" || nickname == "" || phoneNumber == "")
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_all))
             else if (pw == repw) {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_suc))
@@ -285,21 +199,6 @@ class SignUpFragment :
 
             if (nickname.isEmpty()) return@setOnClickListener
             viewModel.isNicknameDup(nickname)
-        }
-    }
-
-    private fun initPhoneBtn() {
-        binding.btnSignUpSendVarificationCode.setOnClickListener {
-            val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
-            viewModel.isPhoneDup(phoneNumber)
-        }
-    }
-
-    private fun initVerifyBtn() {
-        binding.btnSignUpCheckVarificationCode.setOnClickListener {
-            val phoneNumber = binding.etSignUpPhoneNumber.text.toString()
-            val codeString = binding.etSignUpVarificationCode.text.toString()
-            viewModel.checkVerifyCode(phoneNumber, codeString.toInt())
         }
     }
 
@@ -436,36 +335,6 @@ class SignUpFragment :
                         passwordCheckFlag = true
                     }
                 }
-            }
-        }
-    }
-
-    private fun checkPhoneNumber(phone: String) {
-        when {
-            phone.isEmpty() -> {
-                binding.etSignUpPhoneNumber.error =
-                    resources.getString(R.string.sign_up_check_phone)
-                phoneNumberFlag = false
-            }
-
-            else -> {
-                binding.etSignUpPhoneNumber.error = null
-                phoneNumberFlag = true
-            }
-        }
-    }
-
-    private fun checkVerifyCode(code: String) {
-        when {
-            code.isEmpty() -> {
-                binding.etSignUpVarificationCode.error =
-                    resources.getString(R.string.sign_up_check_verify)
-                verifyCodeFlag = false
-            }
-
-            else -> {
-                binding.etSignUpVarificationCode.error = null
-                verifyCodeFlag = true
             }
         }
     }

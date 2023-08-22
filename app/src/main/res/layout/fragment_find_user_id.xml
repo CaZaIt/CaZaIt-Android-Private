@@ -6,8 +6,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_beige"
-        tools:context=".ui.findaccount.FindUserIdFragment">
+        android:background="@color/login_back"
+        tools:context=".ui.findaccount.findid.FindUserIdFragment">
 
         <include
             android:id="@+id/cl_top"
@@ -16,238 +16,94 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_find_user_id_phone_number"
-            style="@style/TextValue_B"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="39dp"
-            android:layout_marginTop="41dp"
-            android:text="@string/sign_up_phone_number"
-            android:textColor="@color/main_black"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/rectangle_white_r25"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_top" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_top">
 
-        <EditText
-            android:id="@+id/et_find_user_id_phone_number"
+            <TextView
+                android:id="@+id/tv_text1"
+                style="@style/TextValue_B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/find_id_text1"
+                android:textColor="@color/main_black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_userid"
+                style="@style/TextValue_B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/app_name"
+                android:textColor="@color/cafe_list_orange"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tv_text2"
+                app:layout_constraintStart_toStartOf="@+id/tv_text1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_text1" />
+
+            <TextView
+                android:id="@+id/tv_text2"
+                style="@style/TextValue_B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/find_id_text2"
+                android:textColor="@color/main_black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@id/tv_text1"
+                app:layout_constraintStart_toEndOf="@+id/tv_userid"
+                app:layout_constraintTop_toTopOf="@+id/tv_userid" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_go_login"
             style="@style/TextValue_B"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/rectangle_white_r50"
-            android:hint="@string/sign_up_hint_phone_number"
-            android:importantForAutofill="no"
-            android:inputType="phone"
-            android:maxLength="11"
-            android:paddingStart="17dp"
-            android:textColorHint="@color/edit_text_hint"
-            app:layout_constraintEnd_toStartOf="@+id/btn_find_user_id_send_varification_code"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="84dp"
+            android:background="@drawable/round_orange_rectangle"
+            android:text="@string/btn_do_login"
+            android:textAlignment="center"
+            android:textColor="@color/main_white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_find_user_id_phone_number"
-            tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_text" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_find_user_id_send_varification_code"
+            android:id="@+id/btn_go_find_password"
             style="@style/TextValue_B"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="25dp"
-            android:background="@drawable/round_orange_rectangle"
-            android:paddingStart="19dp"
-            android:paddingTop="13dp"
-            android:paddingEnd="18dp"
-            android:paddingBottom="12dp"
-            android:text="@string/sign_up_phone_number_send_code"
-            android:textColor="@color/main_white"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_find_user_id_phone_number"
-            tools:ignore="TextContrastCheck" />
-
-        <FrameLayout
-            android:id="@+id/layout_after_verification_code_sent"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:visibility="visible"
+            android:layout_height="48dp"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="84dp"
+            android:background="@drawable/round_orange_rectangle"
+            android:backgroundTint="@color/main_black"
+            android:text="@string/btn_find_password"
+            android:textAlignment="center"
+            android:textColor="@color/main_white"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_find_user_id_phone_number">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/et_find_user_id_varification_code"
-                    style="@style/TextValue_B"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:background="@drawable/rectangle_white_r50"
-                    android:hint="@string/sign_up_hint_verification_code"
-                    android:importantForAutofill="no"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:paddingStart="17dp"
-                    android:textColorHint="@color/edit_text_hint"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_find_user_id_check_varification_code"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_find_user_id_check_varification_code"
-                    style="@style/TextValue_B"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="25dp"
-                    android:background="@drawable/round_orange_rectangle"
-                    android:paddingStart="19dp"
-                    android:paddingTop="13dp"
-                    android:paddingEnd="18dp"
-                    android:paddingBottom="12dp"
-                    android:text="@string/sign_up_check_verification_code"
-                    android:textColor="@color/main_white"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="TextContrastCheck" />
-
-                <TextView
-                    android:id="@+id/tv_timer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:textColor="@color/cafe_list_orange"
-                    android:textSize="16sp"
-                    android:text="00:00"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/et_find_user_id_varification_code"
-                    app:layout_constraintBottom_toBottomOf="@+id/et_find_user_id_varification_code"/>
-
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_find_user_id"
-                    style="@style/TextValue_B"
-                    android:layout_width="150dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="36dp"
-                    android:background="@drawable/round_orange_rectangle"
-                    android:backgroundTint="@color/main_black"
-                    android:text="@string/btn_find_id"
-                    android:textAlignment="center"
-                    android:textColor="@color/main_white"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_timer" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/layout_show_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_after_verification_code_sent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:background="@drawable/rectangle_white_r25"
-                    android:paddingTop="30dp"
-                    android:paddingBottom="30dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/tv_text1"
-                        style="@style/TextValue_B"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/find_id_text1"
-                        android:textColor="@color/main_black"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_userid"
-                        style="@style/TextValue_B"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:text="@string/app_name"
-                        android:textColor="@color/cafe_list_orange"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_text2"
-                        app:layout_constraintStart_toStartOf="@+id/tv_text1"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_text1" />
-
-                    <TextView
-                        android:id="@+id/tv_text2"
-                        style="@style/TextValue_B"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="@string/find_id_text2"
-                        android:textColor="@color/main_black"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="@id/tv_text1"
-                        app:layout_constraintStart_toEndOf="@+id/tv_userid"
-                        app:layout_constraintTop_toTopOf="@+id/tv_userid" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_go_login"
-                    style="@style/TextValue_B"
-                    android:layout_width="150dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="36dp"
-                    android:background="@drawable/round_orange_rectangle"
-                    android:backgroundTint="@color/main_black"
-                    android:text="@string/btn_do_login"
-                    android:textAlignment="center"
-                    android:textColor="@color/main_white"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_text" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie_find_userid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="lottie_coffee.json"
-            app:lottie_loop="true" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_go_login" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

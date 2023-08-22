@@ -1,13 +1,14 @@
-package org.cazait.ui.findaccount
+package org.cazait.ui.phoneverify
 
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentFindUserIdBinding
+import org.cazait.databinding.FragmentPhoneVerifyBinding
 import org.cazait.model.Resource
 import org.cazait.model.UserAccount
 import org.cazait.model.VerificationCode
@@ -20,31 +21,30 @@ import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
-class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdViewModel>(
-    FindUserIdViewModel::class.java,
-    R.layout.fragment_find_user_id
+class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerifyViewModel>(
+    PhoneVerifyViewModel::class.java,
+    R.layout.fragment_phone_verify
 ) {
+    private val navArgs: PhoneVerifyFragmentArgs by navArgs()
     private lateinit var timer: CountDownTimer
     private var time: Long = 180000
+
     override fun initView() {
         viewModel.initViewModel()
         binding.apply {
-            clTop.includedTvTitle.text = resources.getString(R.string.btn_find_id)
+            clTop.includedTvTitle.text = navArgs.title
             clTop.btnBack.setOnClickListener {
                 findNavController().popBackStack()
             }
         }
         getVerficationCodeBtn()
         sendVerifyCode()
-        findUserId()
-        btnGoToSignIn()
         observeViewModel()
     }
 
     override fun onResume() {
         super.onResume()
         binding.layoutAfterVerificationCodeSent.toGone()
-        binding.layoutShowId.toGone()
     }
 
     override fun onDestroy() {
@@ -69,7 +69,19 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
     private fun getVerficationCodeBtn() {
         binding.btnFindUserIdSendVarificationCode.setOnClickListener {
             val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-            viewModel.isPhoneDup(phoneNumber)
+            if (phoneNumber == "") {
+                viewModel.showToastMessage(resources.getString(R.string.please_input_phoneNum))
+            } else {
+                val title = binding.clTop.includedTvTitle.text.toString()
+                if (title == resources.getString(R.string.btn_find_id) || title == resources.getString(
+                        R.string.btn_find_password
+                    )
+                ) {
+                    viewModel.isPhoneDup(phoneNumber, "true")
+                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
+                    viewModel.isPhoneDup(phoneNumber, "false")
+                }
+            }
         }
     }
 
@@ -77,20 +89,12 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         binding.btnFindUserIdCheckVarificationCode.setOnClickListener {
             val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
             val codeStr = binding.etFindUserIdVarificationCode.text.toString()
-            viewModel.checkVerifyCode(phoneNumber, codeStr.toInt())
-        }
-    }
 
-    private fun findUserId() {
-        binding.btnFindUserId.setOnClickListener {
-            val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-            viewModel.findUserId(phoneNumber)
-        }
-    }
-
-    private fun btnGoToSignIn() {
-        binding.btnGoLogin.setOnClickListener {
-            navigateToSignInFragment()
+            if (codeStr == "") {
+                viewModel.showToastMessage(resources.getString(R.string.please_input_verifyNum))
+            } else {
+                viewModel.checkVerifyCode(phoneNumber, codeStr.toInt())
+            }
         }
     }
 
@@ -104,7 +108,6 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
                 hideLoading()
                 viewModel.showToastMessage(it)
                 val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-                Log.d("FindUserIdFrag 폰번호", phoneNumber)
                 viewModel.sendVerificationCode(phoneNumber)
             }
 
@@ -127,6 +130,8 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
                 hideLoading()
                 viewModel.showToastMessage(it.message)
                 binding.layoutAfterVerificationCodeSent.toVisible()
+                binding.btnFindUserIdSendVarificationCode.text =
+                    resources.getString(R.string.sign_up_phone_number_send_code_again)
                 startTimer()
             }
 
@@ -148,11 +153,33 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
             is Resource.Success -> status.data?.let {
                 hideLoading()
                 viewModel.showToastMessage(it.message)
+                val title = binding.clTop.includedTvTitle.text.toString()
+                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
+                if (title == resources.getString(R.string.btn_find_id)) {
+                    viewModel.findUserId(phoneNumber)
+                } else if (title == resources.getString(R.string.btn_find_password)) {
+                    timer.cancel()
+                    navigateToFindUserPasswordFragment()
+                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
+                    timer.cancel()
+                    navigateToSignUpFragment(phoneNumber)
+                }
             }
 
             is Resource.Error -> {
                 hideLoading()
                 viewModel.showToastMessage(status.message)
+                val title = binding.clTop.includedTvTitle.text.toString()
+                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
+                if (title == resources.getString(R.string.btn_find_id)) {
+                    viewModel.findUserId(phoneNumber)
+                } else if (title == resources.getString(R.string.btn_find_password)) {
+                    timer.cancel()
+                    navigateToFindUserPasswordFragment()
+                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
+                    timer.cancel()
+                    navigateToSignUpFragment(phoneNumber)
+                }
             }
 
             null -> {}
@@ -167,8 +194,9 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
 
             is Resource.Success -> status.data?.let {
                 hideLoading()
-                binding.tvUserid.text = status.data?.userId
-                binding.layoutShowId.toVisible()
+                timer.cancel()
+                val foundUserId = status.data?.userId
+                navigateToFindUserIdFragment(foundUserId)
             }
 
             is Resource.Error -> {
@@ -181,11 +209,12 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
     }
 
     private fun startTimer() {
-        timer = object :CountDownTimer(time, 1000){
+        timer = object : CountDownTimer(time, 1000) {
             override fun onTick(p0: Long) {
                 time = p0
                 updateTimer()
             }
+
             override fun onFinish() {
                 time = 0
                 updateTimer()
@@ -200,8 +229,24 @@ class FindUserIdFragment : BaseFragment<FragmentFindUserIdBinding, FindUserIdVie
         binding.tvTimer.text = String.format("%02d:%02d", minutes, seconds)
     }
 
-    private fun navigateToSignInFragment() {
-        findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToSignInFragment())
+    private fun navigateToSignUpFragment(phoneNumber: String) {
+        findNavController().navigate(
+            PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToSignUpFragment(
+                phoneNumber
+            )
+        )
+    }
+
+    private fun navigateToFindUserIdFragment(foundUserId: String?) {
+        findNavController().navigate(
+            PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToFindUserIdFragment(
+                foundUserId
+            )
+        )
+    }
+
+    private fun navigateToFindUserPasswordFragment() {
+        findNavController().navigate(PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToFindUserPasswordFragment())
     }
 
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {

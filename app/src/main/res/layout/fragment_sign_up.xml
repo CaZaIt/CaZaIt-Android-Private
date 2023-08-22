@@ -201,104 +201,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_nick_name"
                     tools:ignore="TextContrastCheck" />
 
-                <TextView
-                    android:id="@+id/tv_sign_up_phone_number"
-                    style="@style/TextValue_B"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="39dp"
-                    android:layout_marginTop="27dp"
-                    android:text="@string/sign_up_phone_number"
-                    android:textColor="@color/main_black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_sign_up_nick_name_example" />
-
-                <EditText
-                    android:id="@+id/et_sign_up_phone_number"
-                    style="@style/TextValue_B"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/rectangle_white_r50"
-                    android:hint="@string/sign_up_hint_phone_number"
-                    android:importantForAutofill="no"
-                    android:inputType="phone"
-                    android:maxLength="11"
-                    android:paddingStart="17dp"
-                    android:textColorHint="@color/edit_text_hint"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_send_varification_code"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_phone_number"
-                    tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_sign_up_send_varification_code"
-                    style="@style/TextValue_B"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="25dp"
-                    android:background="@drawable/round_orange_rectangle"
-                    android:paddingStart="19dp"
-                    android:paddingTop="13dp"
-                    android:paddingEnd="18dp"
-                    android:paddingBottom="12dp"
-                    android:text="@string/sign_up_phone_number_send_code"
-                    android:textColor="@color/main_white"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_phone_number"
-                    tools:ignore="TextContrastCheck" />
-
-                <EditText
-                    android:id="@+id/et_sign_up_varification_code"
-                    style="@style/TextValue_B"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="30dp"
-                    android:background="@drawable/rectangle_white_r50"
-                    android:hint="@string/sign_up_hint_verification_code"
-                    android:importantForAutofill="no"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:paddingStart="17dp"
-                    android:textColorHint="@color/edit_text_hint"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_check_varification_code"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_sign_up_phone_number"
-                    tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_sign_up_check_varification_code"
-                    style="@style/TextValue_B"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="25dp"
-                    android:background="@drawable/round_orange_rectangle"
-                    android:paddingStart="19dp"
-                    android:paddingTop="13dp"
-                    android:paddingEnd="18dp"
-                    android:paddingBottom="12dp"
-                    android:text="@string/sign_up_check_verification_code"
-                    android:textColor="@color/main_white"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_sign_up_send_varification_code"
-                    tools:ignore="TextContrastCheck" />
-
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_sign_up_join"
                     style="@style/TextValue_B"
                     android:layout_width="150dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="55dp"
                     android:layout_marginBottom="36dp"
                     android:background="@drawable/round_orange_rectangle"
                     android:backgroundTint="@color/main_black"
@@ -309,7 +217,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_sign_up_varification_code" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_sign_up_nick_name_example" />
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/lottie_signup"

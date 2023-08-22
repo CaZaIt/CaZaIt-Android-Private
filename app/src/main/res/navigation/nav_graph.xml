@@ -151,22 +151,45 @@
             android:id="@+id/action_signInFragment_to_agreeFragment"
             app:destination="@+id/agreeFragment" />
         <action
-            android:id="@+id/action_signInFragment_to_findUserIdFragment"
+            android:id="@+id/action_signInFragment_to_phoneVerifyFragment"
+            app:destination="@+id/phoneVerifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phoneVerifyFragment"
+        android:name="org.cazait.ui.phoneverify.PhoneVerifyFragment"
+        android:label="PhoneVerifyFragment"
+        tools:layout="@layout/fragment_phone_verify">
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_phoneVerifyFragment_to_signUpFragment"
+            app:destination="@+id/signupFragment" />
+        <action
+            android:id="@+id/action_phoneVerifyFragment_to_findUserIdFragment"
             app:destination="@+id/findUserIdFragment" />
         <action
-            android:id="@+id/action_signInFragment_to_findUserPaswwordFragment"
+            android:id="@+id/action_phoneVerifyFragment_to_findUserPasswordFragment"
             app:destination="@+id/findUserPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/findUserIdFragment"
-        android:name="org.cazait.ui.findaccount.FindUserIdFragment"
+        android:name="org.cazait.ui.findaccount.findid.FindUserIdFragment"
         android:label="FindUserIdFragment"
         tools:layout="@layout/fragment_find_user_id">
+        <argument
+            android:name="foundUserId"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_findUserIdFragment_to_signInFragment"
             app:destination="@+id/signInFragment"
             app:popUpTo="@+id/signInFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_findUserIdFragment_to_findUserPasswordFragment"
+            app:destination="@+id/findUserPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/findUserPasswordFragment"
@@ -179,11 +202,8 @@
         android:label="AgreeFragment"
         tools:layout="@layout/fragment_agree">
         <action
-            android:id="@+id/action_agreeFragment_to_signUpFragment"
-            app:destination="@+id/signupFragment" />
-        <action
-            android:id="@+id/action_agreeFragment_to_signInFragment"
-            app:destination="@+id/signInFragment" />
+            android:id="@+id/action_agreeFragment_to_phoneVerifyFragment"
+            app:destination="@+id/phoneVerifyFragment" />
         <action
             android:id="@+id/action_agreeFragment_to_privacyTermsFragment"
             app:destination="@id/privacyTermsFragment" />
@@ -196,10 +216,19 @@
         android:name="org.cazait.ui.signup.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
+        <argument
+            android:name="phoneNum"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@+id/signInFragment"
             app:popUpTo="@+id/signInFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signUpFragment_to_agreeFragment"
+            app:destination="@+id/agreeFragment"
+            app:popUpTo="@id/agreeFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
