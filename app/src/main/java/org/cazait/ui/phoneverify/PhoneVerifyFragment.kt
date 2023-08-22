@@ -1,7 +1,6 @@
 package org.cazait.ui.phoneverify
 
 import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -34,7 +33,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         binding.apply {
             clTop.includedTvTitle.text = navArgs.title
             clTop.btnBack.setOnClickListener {
-                findNavController().popBackStack()
+                navigateToBackStack()
             }
         }
         getVerficationCodeBtn()
@@ -227,6 +226,10 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         val seconds = (time / 1000) % 60
 
         binding.tvTimer.text = String.format("%02d:%02d", minutes, seconds)
+    }
+
+    private fun navigateToBackStack() {
+        findNavController().navigate(PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToSignInFragment())
     }
 
     private fun navigateToSignUpFragment(phoneNumber: String) {

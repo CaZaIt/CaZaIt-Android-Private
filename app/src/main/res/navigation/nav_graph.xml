@@ -153,6 +153,22 @@
         <action
             android:id="@+id/action_signInFragment_to_phoneVerifyFragment"
             app:destination="@+id/phoneVerifyFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_checkIdFragment"
+            app:destination="@+id/checkIdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkIdFragment"
+        android:name="org.cazait.ui.findaccount.CheckIdFragment"
+        android:label="CheckIdFragment"
+        tools:layout="@layout/fragment_check_id">
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_checkIdFragment_to_phoneVerifyFragment"
+            app:destination="@+id/phoneVerifyFragment" />
     </fragment>
     <fragment
         android:id="@+id/phoneVerifyFragment"
@@ -163,6 +179,15 @@
             android:name="title"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_phoneVerifyFragment_to_signInFragment"
+            app:destination="@+id/signInFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_phoneVerifyFragment_to_signUpFragment"
             app:destination="@+id/signupFragment" />
