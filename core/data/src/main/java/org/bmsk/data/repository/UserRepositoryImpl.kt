@@ -9,8 +9,10 @@ import org.bmsk.data.model.toCheck
 import org.bmsk.data.model.toFindUserId
 import org.bmsk.data.model.toResetPassword
 import org.bmsk.data.model.toSignUpInfo
+import org.bmsk.data.model.toUser
 import org.cazait.datastore.data.repository.UserPreferenceRepository
 import org.cazait.model.Check
+import org.cazait.model.FindPassUserData
 import org.cazait.network.model.dto.request.SignUpReq
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
@@ -134,13 +136,13 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun checkUserData(
         userUuid: String,
         phoneNumber: String
-    ): Flow<Resource<String>> {
+    ): Flow<Resource<FindPassUserData>> {
         return flow {
             val body = CheckUserDataReq(phoneNumber)
             when (val response = remoteData.postCheckUserData(userUuid, body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
-                        emit(Resource.Success(it.message))
+                        emit(Resource.Success(it.toUser()))
                     }
                 }
 

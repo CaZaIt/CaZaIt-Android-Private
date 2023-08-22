@@ -7,6 +7,7 @@ import org.cazait.model.CafeMenu
 import org.cazait.model.CafeReviews
 import org.cazait.model.Check
 import org.cazait.model.FavoriteCafe
+import org.cazait.model.FindPassUserData
 import org.cazait.model.VerificationCode
 import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.SignInInfo
@@ -17,6 +18,7 @@ import org.cazait.model.VerifyCode
 import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
 import org.cazait.network.model.dto.response.CheckRes
+import org.cazait.network.model.dto.response.CheckUserDataRes
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
 import org.cazait.network.model.dto.response.FindUserIdDTO
 import org.cazait.network.model.dto.response.VerificationCodeRes
@@ -147,6 +149,11 @@ fun FindUserIdDTO.toFindUserId() = UserAccount(
 fun CheckRes.toCheck() = Check(
     message = message,
     data = data
+)
+
+fun CheckUserDataRes.toUser() = FindPassUserData(
+    message = message,
+    userId = data.userId
 )
 
 fun ResetPasswordDTO.toResetPassword() = UserPassword(
