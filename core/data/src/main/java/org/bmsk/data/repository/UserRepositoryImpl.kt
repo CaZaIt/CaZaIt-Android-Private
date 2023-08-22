@@ -23,6 +23,7 @@ import org.cazait.network.error.NOT_EXIST_USER
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.CheckNicknameReq
 import org.cazait.network.model.dto.request.CheckPhoneNumReq
+import org.cazait.network.model.dto.request.CheckUserDataReq
 import org.cazait.network.model.dto.request.CheckUserIdReq
 import org.cazait.network.model.dto.request.FindUserIdReq
 import org.cazait.network.model.dto.request.ResetPasswordReq
@@ -64,12 +65,13 @@ class UserRepositoryImpl @Inject constructor(
     ): Flow<Resource<String>> {
         return flow {
             val body = CheckPhoneNumReq(phoneNumber, isExist)
-            when(val response = remoteData.postCheckPhoneNum(body)){
+            when (val response = remoteData.postCheckPhoneNum(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
                         emit(Resource.Success(it.message))
                     }
                 }
+
                 is DataResponse.DataError -> {
                     Log.d("UserRepository 폰 Errorcode", response.errorCode.toString())
                     if (response.errorCode == NOT_EXIST_USER) {
@@ -85,12 +87,13 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun checkUserIdDB(userId: String, isExist: String): Flow<Resource<Check>> {
         return flow {
             val body = CheckUserIdReq(userId, isExist)
-            when(val response = remoteData.postCheckUserId(body)){
+            when (val response = remoteData.postCheckUserId(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
                         emit(Resource.Success(it.toCheck()))
                     }
                 }
+
                 is DataResponse.DataError -> {
                     Log.d("UserRepository 아이디 Errorcode", response.errorCode.toString())
                     if (response.errorCode == EXIST_ACCOUNTNAME) {
@@ -109,12 +112,13 @@ class UserRepositoryImpl @Inject constructor(
     ): Flow<Resource<String>> {
         return flow {
             val body = CheckNicknameReq(nickname, isExist)
-            when(val response = remoteData.postCheckNickname(body)){
+            when (val response = remoteData.postCheckNickname(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
                         emit(Resource.Success(it.message))
                     }
                 }
+
                 is DataResponse.DataError -> {
                     Log.d("UserRepository 닉네임 Errorcode", response.errorCode.toString())
                     if (response.errorCode == EXIST_ACCOUNTNAME) {
@@ -122,6 +126,26 @@ class UserRepositoryImpl @Inject constructor(
                     } else {
                         emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
                     }
+                }
+            }
+        }
+    }
+
+    override suspend fun checkUserData(
+        userUuid: String,
+        phoneNumber: String
+    ): Flow<Resource<String>> {
+        return flow {
+            val body = CheckUserDataReq(phoneNumber)
+            when (val response = remoteData.postCheckUserData(userUuid, body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.message))
+                    }
+                }
+
+                is DataResponse.DataError -> {
+                    Log.d("UserRepository 닉네임 Errorcode", response.errorCode.toString())
                 }
             }
         }

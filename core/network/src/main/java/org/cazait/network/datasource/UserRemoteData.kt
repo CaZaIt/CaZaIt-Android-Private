@@ -8,10 +8,12 @@ import org.cazait.network.error.NETWORK_ERROR
 import org.cazait.network.api.unauth.UserService
 import org.cazait.network.model.dto.request.CheckNicknameReq
 import org.cazait.network.model.dto.request.CheckPhoneNumReq
+import org.cazait.network.model.dto.request.CheckUserDataReq
 import org.cazait.network.model.dto.request.CheckUserIdReq
 import org.cazait.network.model.dto.request.FindUserIdReq
 import org.cazait.network.model.dto.request.ResetPasswordReq
 import org.cazait.network.model.dto.response.CheckRes
+import org.cazait.network.model.dto.response.CheckUserDataRes
 import org.cazait.network.model.dto.response.FindUserIdRes
 import org.cazait.network.model.dto.response.ResetPasswordRes
 import retrofit2.Response
@@ -69,6 +71,21 @@ class UserRemoteData @Inject constructor(
             userService.postNicknameDB(body)
         }) {
             is CheckRes -> {
+                DataResponse.Success(data = response)
+            }
+
+            else -> {
+                DataResponse.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+    override suspend fun postCheckUserData(
+        userUuid: String,
+        body: CheckUserDataReq
+    ): DataResponse<CheckUserDataRes> {
+        return when (val response = processCall { userService.postCheckUserData(userUuid, body) }) {
+            is CheckUserDataRes -> {
                 DataResponse.Success(data = response)
             }
 

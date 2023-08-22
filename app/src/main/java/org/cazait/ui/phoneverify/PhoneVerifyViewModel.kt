@@ -62,9 +62,12 @@ class PhoneVerifyViewModel @Inject constructor(
         }
     }
 
-    fun checkUserInfo(userUuid: String, phoneNumber: String){
+    fun checkUserData(userUuid: String, phoneNumber: String) {
         viewModelScope.launch {
-
+            _checkIdProcess.value = Resource.Loading()
+            userRepository.checkUserData(userUuid, phoneNumber).collect {
+                _checkIdProcess.value = it
+            }
         }
     }
 

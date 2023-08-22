@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="39dp"
             android:layout_marginTop="41dp"
-            android:text="@string/sign_up_phone_number"
+            android:text="@string/find_password_check_id"
             android:textColor="@color/main_black"
             android:textSize="16sp"
             android:textStyle="bold"

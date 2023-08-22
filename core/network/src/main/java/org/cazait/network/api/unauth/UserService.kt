@@ -2,11 +2,13 @@ package org.cazait.network.api.unauth
 
 import org.cazait.network.model.dto.request.CheckNicknameReq
 import org.cazait.network.model.dto.request.CheckPhoneNumReq
+import org.cazait.network.model.dto.request.CheckUserDataReq
 import org.cazait.network.model.dto.request.CheckUserIdReq
 import org.cazait.network.model.dto.request.FindUserIdReq
 import org.cazait.network.model.dto.request.ResetPasswordReq
 import org.cazait.network.model.dto.request.SignUpReq
 import org.cazait.network.model.dto.response.CheckRes
+import org.cazait.network.model.dto.response.CheckUserDataRes
 import org.cazait.network.model.dto.response.FindUserIdRes
 import org.cazait.network.model.dto.response.ResetPasswordRes
 import org.cazait.network.model.dto.response.SignUpRes
@@ -14,6 +16,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface UserService {
     @POST("/api/users/sign-up")
@@ -30,6 +33,12 @@ interface UserService {
 
     @POST("/api/users/find-accountname")
     suspend fun postFindUserId(@Body userPhoneNumber: FindUserIdReq): Response<FindUserIdRes>
+
+    @POST("/api/users/reset-password/checkuserinfo/{userId}")
+    suspend fun postCheckUserData(
+        @Path("userId") userUuid: String,
+        @Body userPhoneNumber: CheckUserDataReq
+    ): Response<CheckUserDataRes>
 
     @PATCH("/api/users/reset-password/password")
     suspend fun patchPassword(@Body resetPassword: ResetPasswordReq): Response<ResetPasswordRes>

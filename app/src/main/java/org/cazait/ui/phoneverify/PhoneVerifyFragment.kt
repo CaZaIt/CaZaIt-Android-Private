@@ -62,6 +62,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         observe(viewModel.phoneNumberProcess, ::handlePhone)
         observe(viewModel.verifyProcess, ::handleVerify)
         observe(viewModel.userIdProcess, ::handleUserId)
+        observe(viewModel.checkIdProcess, ::handleUserData)
         observeToast(viewModel.showToast)
     }
 
@@ -75,9 +76,11 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                     resources.getString(R.string.btn_find_id) -> {
                         viewModel.isPhoneDup(phoneNumber, "true")
                     }
-                    resources.getString(R.string.btn_find_password) -> {
 
+                    resources.getString(R.string.btn_find_password) -> {
+                        viewModel.checkUserData(navArgs.userUuid.toString(), phoneNumber)
                     }
+
                     resources.getString(R.string.sign_up_sign_up) -> {
                         viewModel.isPhoneDup(phoneNumber, "false")
                     }
@@ -100,6 +103,28 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
     }
 
     private fun handlePhoneDupResult(status: Resource<String>?) {
+        when (status) {
+            is Resource.Loading -> {
+                showLoading()
+            }
+
+            is Resource.Success -> status.data?.let {
+                hideLoading()
+                viewModel.showToastMessage(it)
+                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
+                viewModel.sendVerificationCode(phoneNumber)
+            }
+
+            is Resource.Error -> {
+                hideLoading()
+                viewModel.showToastMessage(status.message)
+            }
+
+            null -> {}
+        }
+    }
+
+    private fun handleUserData(status: Resource<String>?) {
         when (status) {
             is Resource.Loading -> {
                 showLoading()
