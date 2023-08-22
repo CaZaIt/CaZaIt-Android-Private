@@ -6,6 +6,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
 import org.cazait.databinding.FragmentCheckIdBinding
+import org.cazait.model.Check
 import org.cazait.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
@@ -52,7 +53,7 @@ class CheckIdFragment : BaseFragment<FragmentCheckIdBinding, CheckIdViewModel>(
         }
     }
 
-    private fun handleCheckId(status: Resource<String>?){
+    private fun handleCheckId(status: Resource<Check>?){
         when (status) {
             is Resource.Loading -> {
                 showLoading()
@@ -60,9 +61,8 @@ class CheckIdFragment : BaseFragment<FragmentCheckIdBinding, CheckIdViewModel>(
 
             is Resource.Success -> status.data?.let {
                 hideLoading()
-                viewModel.showToastMessage(it)
-                val userId = binding.etCheckId.text.toString()
-                navigateToPhoneVerifyFragment(userId)
+                viewModel.showToastMessage(it.message)
+                navigateToPhoneVerifyFragment(it.data)
             }
 
             is Resource.Error -> {
@@ -74,11 +74,11 @@ class CheckIdFragment : BaseFragment<FragmentCheckIdBinding, CheckIdViewModel>(
         }
     }
 
-    private fun navigateToPhoneVerifyFragment(userId: String) {
+    private fun navigateToPhoneVerifyFragment(userUuid: String) {
         val title = binding.clTop.includedTvTitle.text.toString()
         findNavController().navigate(
             CheckIdFragmentDirections.actionCheckIdFragmentToPhoneVerifyFragment(
-                title, userId
+                title, userUuid
             )
         )
     }

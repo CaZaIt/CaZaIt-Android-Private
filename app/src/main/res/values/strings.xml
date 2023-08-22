@@ -16,7 +16,7 @@
     <string name="sign_in_logo">메인 로고</string>
     <string name="sign_in_slash">/</string>
     <string name="please_input_phoneNum">휴대폰 번호를 입력해주세요.</string>
-    <string name="please_input_verifyNum">인 번호를 입력해주세요.</string>
+    <string name="please_input_verifyNum">인증번호를 입력해주세요.</string>
 
     <!-- find account -->
     <string name="find_id_text1">회원님의 아이디는</string>

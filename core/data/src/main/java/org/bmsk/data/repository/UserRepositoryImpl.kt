@@ -5,10 +5,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import org.bmsk.data.model.toCheck
 import org.bmsk.data.model.toFindUserId
 import org.bmsk.data.model.toResetPassword
 import org.bmsk.data.model.toSignUpInfo
 import org.cazait.datastore.data.repository.UserPreferenceRepository
+import org.cazait.model.Check
 import org.cazait.network.model.dto.request.SignUpReq
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
@@ -80,13 +82,13 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun checkUserIdDB(userId: String, isExist: String): Flow<Resource<String>> {
+    override suspend fun checkUserIdDB(userId: String, isExist: String): Flow<Resource<Check>> {
         return flow {
             val body = CheckUserIdReq(userId, isExist)
             when(val response = remoteData.postCheckUserId(body)){
                 is DataResponse.Success -> {
                     response.data?.let {
-                        emit(Resource.Success(it.message))
+                        emit(Resource.Success(it.toCheck()))
                     }
                 }
                 is DataResponse.DataError -> {

@@ -71,14 +71,16 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
             if (phoneNumber == "") {
                 viewModel.showToastMessage(resources.getString(R.string.please_input_phoneNum))
             } else {
-                val title = binding.clTop.includedTvTitle.text.toString()
-                if (title == resources.getString(R.string.btn_find_id) || title == resources.getString(
-                        R.string.btn_find_password
-                    )
-                ) {
-                    viewModel.isPhoneDup(phoneNumber, "true")
-                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
-                    viewModel.isPhoneDup(phoneNumber, "false")
+                when (binding.clTop.includedTvTitle.text.toString()) {
+                    resources.getString(R.string.btn_find_id) -> {
+                        viewModel.isPhoneDup(phoneNumber, "true")
+                    }
+                    resources.getString(R.string.btn_find_password) -> {
+
+                    }
+                    resources.getString(R.string.sign_up_sign_up) -> {
+                        viewModel.isPhoneDup(phoneNumber, "false")
+                    }
                 }
             }
         }

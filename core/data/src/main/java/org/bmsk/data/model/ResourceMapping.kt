@@ -5,6 +5,7 @@ import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import org.cazait.model.Cafe
 import org.cazait.model.CafeMenu
 import org.cazait.model.CafeReviews
+import org.cazait.model.Check
 import org.cazait.model.FavoriteCafe
 import org.cazait.model.VerificationCode
 import org.cazait.model.RecentlyViewedCafe
@@ -15,6 +16,7 @@ import org.cazait.model.UserPassword
 import org.cazait.model.VerifyCode
 import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
+import org.cazait.network.model.dto.response.CheckRes
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
 import org.cazait.network.model.dto.response.FindUserIdDTO
 import org.cazait.network.model.dto.response.VerificationCodeRes
@@ -140,6 +142,11 @@ fun VerifyCodeRes.toVerify() = VerifyCode(
 
 fun FindUserIdDTO.toFindUserId() = UserAccount(
     userId = userId
+)
+
+fun CheckRes.toCheck() = Check(
+    message = message,
+    data = data
 )
 
 fun ResetPasswordDTO.toResetPassword() = UserPassword(

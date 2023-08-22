@@ -180,7 +180,7 @@
             app:argType="string"
             app:nullable="true" />
         <argument
-            android:name="userId"
+            android:name="userUuid"
             app:argType="string"
             app:nullable="true" />
         <action

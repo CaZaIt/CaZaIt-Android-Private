@@ -36,6 +36,10 @@ class PhoneVerifyViewModel @Inject constructor(
     val verifyProcess: LiveData<Resource<VerifyCode>?>
         get() = _verifyProcess
 
+    private val _checkIdProcess = MutableLiveData<Resource<String>?>()
+    val checkIdProcess: LiveData<Resource<String>?>
+        get() = _checkIdProcess
+
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
     val showToast: LiveData<SingleEvent<Any>>
         get() = _showToast
@@ -55,6 +59,12 @@ class PhoneVerifyViewModel @Inject constructor(
             userRepository.checkPhoneNumDB(phoneNumber, isExist).collect {
                 _phoneDupProcess.value = it
             }
+        }
+    }
+
+    fun checkUserInfo(userUuid: String, phoneNumber: String){
+        viewModelScope.launch {
+
         }
     }
 
