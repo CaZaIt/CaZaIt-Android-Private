@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.AuthRepository
 import org.bmsk.data.repository.UserRepository
@@ -33,17 +35,17 @@ class SignUpViewModel @Inject constructor(
     val nickDupProcess: LiveData<Resource<String>?>
         get() = _nickDupProcess
 
-    private val _phoneDupProcess = MutableLiveData<Resource<String>?>()
-    val phoneDupProcess: LiveData<Resource<String>?>
-        get() = _phoneDupProcess
+    private val _userIdFlag = MutableStateFlow(false)
+    val userIdFlag = _userIdFlag.asStateFlow()
 
-    private val _phoneNumberProcess = MutableLiveData<Resource<VerificationCode>?>()
-    val phoneNumberProcess: LiveData<Resource<VerificationCode>?>
-        get() = _phoneNumberProcess
+    private val _userPasswordFlag = MutableStateFlow(false)
+    val userPasswordFlag = _userPasswordFlag.asStateFlow()
 
-    private val _verifyProcess = MutableLiveData<Resource<VerifyCode>?>()
-    val verifyProcess: LiveData<Resource<VerifyCode>?>
-        get() = _verifyProcess
+    private val _rePasswordFlag = MutableStateFlow(false)
+    val rePasswordFlag = _rePasswordFlag.asStateFlow()
+
+    private val _nicknameFlag = MutableStateFlow(false)
+    val nicknameFlag = _nicknameFlag.asStateFlow()
 
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
     val showToast: LiveData<SingleEvent<Any>>
@@ -54,15 +56,6 @@ class SignUpViewModel @Inject constructor(
             _signUpProcess.value = Resource.Loading()
             userRepository.signUp(id, password, phoneNumber, nickname).collect {
                 _signUpProcess.value = it
-            }
-        }
-    }
-
-    fun isPhoneDup(phoneNumber: String) {
-        viewModelScope.launch {
-            _phoneDupProcess.value = Resource.Loading()
-            userRepository.checkPhoneNumDB(phoneNumber, "false").collect {
-                _phoneDupProcess.value = it
             }
         }
     }
@@ -81,24 +74,6 @@ class SignUpViewModel @Inject constructor(
             _nickDupProcess.value = Resource.Loading()
             userRepository.checkNicknameDB(nickname, "false").collect {
                 _nickDupProcess.value = it
-            }
-        }
-    }
-
-    fun sendVerificationCode(phoneNumber: String) {
-        viewModelScope.launch {
-            _phoneNumberProcess.value = Resource.Loading()
-            authRepository.postVerificationCode(phoneNumber).collect {
-                _phoneNumberProcess.value = it
-            }
-        }
-    }
-
-    fun checkVerifyCode(phoneNumber: String, verifyCode: Int) {
-        viewModelScope.launch {
-            _verifyProcess.value = Resource.Loading()
-            authRepository.postVerifyCode(phoneNumber, verifyCode).collect {
-                _verifyProcess.value = it
             }
         }
     }
