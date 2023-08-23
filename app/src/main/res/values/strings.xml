@@ -24,6 +24,9 @@
     <string name="please_input_phoneNum">휴대폰 번호를 입력해주세요.</string>
     <string name="please_input_verifyNum">인증번호를 입력해주세요.</string>
     <string name="find_password_check_id">아이디 확인</string>
+    <string name="find_password">새 비밀번호</string>
+    <string name="find_password_check">새 비밀번호 확인</string>
+    <string name="find_password_join">변경하기</string>
 
     <!-- Sign Up -->
     <string name="sign_up_sign_up">회원가입</string>
