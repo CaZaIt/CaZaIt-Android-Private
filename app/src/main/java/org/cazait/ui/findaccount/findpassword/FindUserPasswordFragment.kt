@@ -7,11 +7,15 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentFindUserPasswordBinding
+import org.cazait.model.Resource
+import org.cazait.model.UserPassword
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.signup.CheckTextWatcher
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
 import org.cazait.utils.showToast
+import org.cazait.utils.toGone
+import org.cazait.utils.toVisible
 
 @AndroidEntryPoint
 class FindUserPasswordFragment :
@@ -40,7 +44,26 @@ class FindUserPasswordFragment :
     }
 
     private fun observeViewModel() {
+        observe(viewModel.changePasswordProcess, ::handleChangingPassword)
         observeToast(viewModel.showToast)
+    }
+
+    private fun handleChangingPassword(status: Resource<UserPassword>?) {
+        when (status) {
+            is Resource.Error -> showLoading()
+            is Resource.Success -> status.data?.let {
+                hideLoading()
+                viewModel.showToastMessage(it.message)
+                viewModel.showToastMessage(resources.getString(R.string.find_password_done))
+                navigateToSignInFragment()
+            }
+
+            is Resource.Loading -> {
+                hideLoading()
+            }
+
+            null -> {}
+        }
     }
 
     private fun initPatchBtn() {
@@ -51,8 +74,7 @@ class FindUserPasswordFragment :
             if (pw == "" || repw == "") {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_all))
             } else if (pw == repw) {
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_req_suc))
-                // 버튼 클릭시 서버에 비밀번호 변경 요청 보내기
+                viewModel.resetPassword(navArgs.userUuid.toString(), pw)
             } else {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_nopw))
             }
@@ -173,5 +195,15 @@ class FindUserPasswordFragment :
                 }
             }
         }
+    }
+
+    private fun showLoading() {
+        binding.lottieFindPassword.toVisible()
+        binding.lottieFindPassword.playAnimation()
+    }
+
+    private fun hideLoading() {
+        binding.lottieFindPassword.pauseAnimation()
+        binding.lottieFindPassword.toGone()
     }
 }

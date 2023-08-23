@@ -27,6 +27,7 @@
     <string name="find_password">새 비밀번호</string>
     <string name="find_password_check">새 비밀번호 확인</string>
     <string name="find_password_join">변경하기</string>
+    <string name="find_password_done">비밀번호 변경이 완료되었습니다.</string>
 
     <!-- Sign Up -->
     <string name="sign_up_sign_up">회원가입</string>
