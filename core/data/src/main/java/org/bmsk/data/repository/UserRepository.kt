@@ -22,7 +22,7 @@ interface UserRepository {
     suspend fun checkNicknameDB(nickname: String, isExist: String): Flow<Resource<String>>
     suspend fun checkUserData(userUuid: String, phoneNumber: String): Flow<Resource<FindPassUserData>>
     suspend fun findUserId(phoneNumber: String): Flow<Resource<UserAccount>>
-    suspend fun resetPassword(phoneNumber: String, rePassword: String): Flow<Resource<UserPassword>>
+    suspend fun resetPassword(userUuid: String, rePassword: String): Flow<Resource<UserPassword>>
     suspend fun isLoggedIn(): Flow<Boolean>
     suspend fun getUserInfo(): Flow<UserPreference>
     suspend fun signOut()

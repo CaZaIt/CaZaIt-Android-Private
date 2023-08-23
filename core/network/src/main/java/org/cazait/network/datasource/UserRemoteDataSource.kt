@@ -25,5 +25,8 @@ interface UserRemoteDataSource {
     ): DataResponse<CheckUserDataRes>
 
     suspend fun postFindUserId(body: FindUserIdReq): DataResponse<FindUserIdRes>
-    suspend fun patchPassword(body: ResetPasswordReq): DataResponse<ResetPasswordRes>
+    suspend fun patchPassword(
+        userUuid: String,
+        body: ResetPasswordReq
+    ): DataResponse<ResetPasswordRes>
 }

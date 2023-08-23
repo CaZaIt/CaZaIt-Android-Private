@@ -40,6 +40,9 @@ interface UserService {
         @Body userPhoneNumber: CheckUserDataReq
     ): Response<CheckUserDataRes>
 
-    @PATCH("/api/users/reset-password/password")
-    suspend fun patchPassword(@Body resetPassword: ResetPasswordReq): Response<ResetPasswordRes>
+    @PATCH("/api/users/reset-password/password/{userId}")
+    suspend fun patchPassword(
+        @Path("userId") userUuid: String,
+        @Body resetPassword: ResetPasswordReq
+    ): Response<ResetPasswordRes>
 }

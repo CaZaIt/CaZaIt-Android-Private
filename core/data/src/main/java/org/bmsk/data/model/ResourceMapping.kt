@@ -23,6 +23,7 @@ import org.cazait.network.model.dto.response.FavoriteCafeDTO
 import org.cazait.network.model.dto.response.FindUserIdDTO
 import org.cazait.network.model.dto.response.VerificationCodeRes
 import org.cazait.network.model.dto.response.ResetPasswordDTO
+import org.cazait.network.model.dto.response.ResetPasswordRes
 import org.cazait.network.model.dto.response.ReviewDTO
 import org.cazait.network.model.dto.response.SignInInfoDTO
 import org.cazait.network.model.dto.response.SignUpInfoDTO
@@ -156,10 +157,6 @@ fun CheckUserDataRes.toUser() = FindPassUserData(
     userId = data.userId
 )
 
-fun ResetPasswordDTO.toResetPassword() = UserPassword(
-    uuid = uuid,
-    userId = userId,
-    password = password,
-    phoneNumber = phoneNumber,
-    nickname = nickname
+fun ResetPasswordRes.toResetPassword() = UserPassword(
+    message = message
 )

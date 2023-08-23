@@ -171,15 +171,15 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun resetPassword(
-        phoneNumber: String,
+        userUuid: String,
         rePassword: String
     ): Flow<Resource<UserPassword>> {
         return flow {
-            val body = ResetPasswordReq(phoneNumber, rePassword)
-            when (val response = remoteData.patchPassword(body)) {
+            val body = ResetPasswordReq(rePassword)
+            when (val response = remoteData.patchPassword(userUuid, body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
-                        emit(Resource.Success(it.data.toResetPassword()))
+                        emit(Resource.Success(it.toResetPassword()))
                     }
                 }
 

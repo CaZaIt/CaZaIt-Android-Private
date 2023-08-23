@@ -109,9 +109,9 @@ class UserRemoteData @Inject constructor(
         }
     }
 
-    override suspend fun patchPassword(body: ResetPasswordReq): DataResponse<ResetPasswordRes> {
+    override suspend fun patchPassword(userUuid: String, body: ResetPasswordReq): DataResponse<ResetPasswordRes> {
         return when (val response = processCall {
-            userService.patchPassword(body)
+            userService.patchPassword(userUuid, body)
         }) {
             is ResetPasswordRes -> {
                 DataResponse.Success(data = response)
