@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="my_array">
+        <item>거리순</item>
+        <item>혼잡도순</item>
+    </string-array>
+</resources>

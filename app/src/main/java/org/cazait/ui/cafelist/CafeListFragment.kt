@@ -4,6 +4,9 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
@@ -15,6 +18,7 @@ import kotlinx.coroutines.launch
 import org.cazait.Constants
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeListBinding
+import org.cazait.databinding.VerticalTitleFilterLayoutBinding
 import org.cazait.model.Cafe
 import org.cazait.model.Cafes
 import org.cazait.model.FavoriteCafe
@@ -58,7 +62,33 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         viewModel.updateFavoriteCafes()
     }
 
-    override fun initAfterBinding() {}
+    override fun initAfterBinding() {
+        var sData = resources.getStringArray(R.array.my_array)
+        var sadapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, sData)
+        binding.cafeAllLayout.spinnerSort.adapter = sadapter
+
+        binding.cafeAllLayout.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedSort = parent?.getItemAtPosition(position) as String
+                if (selectedSort == "혼잡도순") {
+                    sortCafesByCongestion(verticalAdapter.currentList)
+                } else {
+                    val sortedCafes = verticalAdapter.currentList.sortedBy { it.distance }
+                    verticalAdapter.submitList(sortedCafes)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+    }
+
+    private fun sortCafesByCongestion(cafes: List<Cafe>) {
+        // 혼잡도순으로 정렬
+        val sortedCafes = cafes.sortedBy { it.status }
+        verticalAdapter.submitList(sortedCafes)
+    }
+
 
 
     override fun onRequestPermissionsResult(

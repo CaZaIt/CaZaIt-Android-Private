@@ -29,19 +29,15 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="제목" />
 
-        <TextView
-            android:id="@+id/tv_filter_type"
+        <Spinner
+            android:id="@+id/spinner_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="23dp"
-            android:fontFamily="@font/applesdgothic"
-            android:text="@string/filter_type_distance"
-            android:textColor="@color/main_black"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_filter"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_filter"
-            tools:text="@string/filter_type_distance" />
+            app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
         <ImageView
             android:id="@+id/btn_filter"
@@ -50,7 +46,7 @@
             android:layout_marginEnd="5dp"
             android:src="@drawable/ic_filter"
             app:layout_constraintBottom_toBottomOf="@+id/tv_title"
-            app:layout_constraintEnd_toStartOf="@id/tv_filter_type"
+            app:layout_constraintEnd_toStartOf="@id/spinner_sort"
             app:layout_constraintTop_toTopOf="@+id/tv_title"
             tools:ignore="ContentDescription" />
 
