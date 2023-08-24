@@ -83,6 +83,34 @@
         android:name="org.cazait.ui.useraccount.CheckPasswordFragment"
         android:label="CheckPasswordFragment"
         tools:layout="@layout/fragment_check_password">
+        <action
+            android:id="@+id/action_checkPasswordFragment_to_changeSelectFragment"
+            app:destination="@+id/changeSelectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeSelectFragment"
+        android:name="org.cazait.ui.useraccount.changeselect.ChangeSelectFragment"
+        android:label="ChangeSelectFragment"
+        tools:layout="@layout/fragment_change_select">
+        <action
+            android:id="@+id/action_changeSelectFragment_to_changePasswordFragment"
+            app:destination="@+id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_changeSelectFragment_to_changeNicknameFragment"
+            app:destination="@+id/changeNicknameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="org.cazait.ui.useraccount.changepassword.ChangePasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password">
+
+    </fragment>
+    <fragment
+        android:id="@+id/changeNicknameFragment"
+        android:name="org.cazait.ui.useraccount.changenickname.ChangeNicknameFragment"
+        android:label="ChangeNicknameFragment"
+        tools:layout="@layout/fragment_change_nickname">
 
     </fragment>
     <fragment
