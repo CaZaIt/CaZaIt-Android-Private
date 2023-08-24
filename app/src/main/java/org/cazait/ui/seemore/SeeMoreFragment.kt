@@ -35,7 +35,7 @@ class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
 
     fun navigateToAccountManageFragment(){
         if(viewModel.signInStateFlow.value){
-            findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToAccountManageFragment())
+            findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToCheckPasswordFragment())
         }
         else{
             AlertDialog.Builder(requireContext())

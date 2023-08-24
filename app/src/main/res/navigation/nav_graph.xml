@@ -60,8 +60,8 @@
             android:id="@+id/action_seeMoreFragment_to_announcementFragment"
             app:destination="@id/announcementFragment" />
         <action
-            android:id="@+id/action_seeMoreFragment_to_accountManageFragment"
-            app:destination="@+id/accountManageFragment" />
+            android:id="@+id/action_seeMoreFragment_to_checkPasswordFragment"
+            app:destination="@+id/checkPasswordFragment" />
         <action
             android:id="@+id/action_seeMoreFragment_to_customerServiceFragment"
             app:destination="@id/customerServiceFragment" />
@@ -79,10 +79,10 @@
             app:destination="@id/seeMoreFragment" />
     </fragment>
     <fragment
-        android:id="@+id/accountManageFragment"
-        android:name="org.cazait.ui.useraccount.AccountManageFragment"
-        android:label="AccountManageFragment"
-        tools:layout="@layout/fragment_account_manage">
+        android:id="@+id/checkPasswordFragment"
+        android:name="org.cazait.ui.useraccount.CheckPasswordFragment"
+        android:label="CheckPasswordFragment"
+        tools:layout="@layout/fragment_check_password">
 
     </fragment>
     <fragment

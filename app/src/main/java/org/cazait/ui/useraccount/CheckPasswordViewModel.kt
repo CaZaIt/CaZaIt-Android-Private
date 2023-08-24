@@ -5,6 +5,6 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountManageViewModel @Inject constructor(): BaseViewModel() {
+class CheckPasswordViewModel @Inject constructor(): BaseViewModel() {
 
 }

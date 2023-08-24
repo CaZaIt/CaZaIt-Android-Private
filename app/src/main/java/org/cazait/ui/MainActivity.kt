@@ -32,7 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         R.id.privacyTermsFragment,
         R.id.announcementFragment,
         R.id.recentlyCafeFragment,
-        R.id.accountManageFragment
+        R.id.checkPasswordFragment
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
