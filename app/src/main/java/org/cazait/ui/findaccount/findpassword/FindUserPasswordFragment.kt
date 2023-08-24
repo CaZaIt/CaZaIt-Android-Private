@@ -53,7 +53,6 @@ class FindUserPasswordFragment :
             is Resource.Error -> showLoading()
             is Resource.Success -> status.data?.let {
                 hideLoading()
-                viewModel.showToastMessage(it.message)
                 viewModel.showToastMessage(resources.getString(R.string.find_password_done))
                 navigateToSignInFragment()
             }
