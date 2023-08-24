@@ -2,7 +2,7 @@ package org.cazait.model
 
 data class Check(
     val message: String,
-    val data: String
+    val data: String?
 )
 
 data class FindPassUserData(

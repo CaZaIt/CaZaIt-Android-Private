@@ -100,5 +100,6 @@ class PhoneVerifyViewModel @Inject constructor(
         _phoneDupProcess.value = null
         _verifyProcess.value = null
         _phoneNumberProcess.value = null
+        _checkIdProcess.value = null
     }
 }

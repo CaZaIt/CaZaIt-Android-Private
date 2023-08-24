@@ -62,7 +62,7 @@ class CheckIdFragment : BaseFragment<FragmentCheckIdBinding, CheckIdViewModel>(
             is Resource.Success -> status.data?.let {
                 hideLoading()
                 viewModel.showToastMessage(it.message)
-                navigateToPhoneVerifyFragment(it.data)
+                navigateToPhoneVerifyFragment(it.data.toString())
             }
 
             is Resource.Error -> {
