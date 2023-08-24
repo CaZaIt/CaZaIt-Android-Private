@@ -3,13 +3,13 @@ package org.cazait.ui.useraccount
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentAccountManageBinding
+import org.cazait.databinding.FragmentCheckPasswordBinding
 import org.cazait.ui.base.BaseFragment
 
 @AndroidEntryPoint
-class AccountManageFragment : BaseFragment<FragmentAccountManageBinding, AccountManageViewModel>(
-    AccountManageViewModel::class.java,
-    R.layout.fragment_account_manage
+class CheckPasswordFragment : BaseFragment<FragmentCheckPasswordBinding, CheckPasswordViewModel>(
+    CheckPasswordViewModel::class.java,
+    R.layout.fragment_check_password
 ) {
     override fun initView() {
         binding.apply {
