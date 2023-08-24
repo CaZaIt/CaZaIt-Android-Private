@@ -99,6 +99,6 @@ class AgreeFragment : BaseFragment<FragmentAgreeBinding, AgreeViewModel>(
 
     private fun navigateToPhoneVerifyFragment() {
         val title = resources.getString(R.string.sign_up_sign_up)
-        findNavController().navigate(AgreeFragmentDirections.actionAgreeFragmentToPhoneVerifyFragment(title))
+        findNavController().navigate(AgreeFragmentDirections.actionAgreeFragmentToPhoneVerifyFragment(title, null))
     }
 }

@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentSignUpBinding
+import org.cazait.model.Check
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
 import org.cazait.ui.base.BaseFragment
@@ -109,7 +110,7 @@ class SignUpFragment :
         }
     }
 
-    private fun handleIdDupResult(status: Resource<String>?) {
+    private fun handleIdDupResult(status: Resource<Check>?) {
         when (status) {
             is Resource.Loading -> {
                 showLoading()
@@ -117,7 +118,7 @@ class SignUpFragment :
 
             is Resource.Success -> status.data?.let {
                 hideLoading()
-                viewModel.showToastMessage(it)
+                viewModel.showToastMessage(it.message)
             }
 
             is Resource.Error -> {

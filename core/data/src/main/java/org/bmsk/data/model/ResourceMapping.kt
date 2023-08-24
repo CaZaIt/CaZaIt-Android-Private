@@ -5,7 +5,9 @@ import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import org.cazait.model.Cafe
 import org.cazait.model.CafeMenu
 import org.cazait.model.CafeReviews
+import org.cazait.model.Check
 import org.cazait.model.FavoriteCafe
+import org.cazait.model.FindPassUserData
 import org.cazait.model.VerificationCode
 import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.SignInInfo
@@ -15,10 +17,13 @@ import org.cazait.model.UserPassword
 import org.cazait.model.VerifyCode
 import org.cazait.network.model.dto.CafeDTO
 import org.cazait.network.model.dto.response.CafeMenuDTO
+import org.cazait.network.model.dto.response.CheckRes
+import org.cazait.network.model.dto.response.CheckUserDataRes
 import org.cazait.network.model.dto.response.FavoriteCafeDTO
 import org.cazait.network.model.dto.response.FindUserIdDTO
 import org.cazait.network.model.dto.response.VerificationCodeRes
 import org.cazait.network.model.dto.response.ResetPasswordDTO
+import org.cazait.network.model.dto.response.ResetPasswordRes
 import org.cazait.network.model.dto.response.ReviewDTO
 import org.cazait.network.model.dto.response.SignInInfoDTO
 import org.cazait.network.model.dto.response.SignUpInfoDTO
@@ -142,10 +147,16 @@ fun FindUserIdDTO.toFindUserId() = UserAccount(
     userId = userId
 )
 
-fun ResetPasswordDTO.toResetPassword() = UserPassword(
-    uuid = uuid,
-    userId = userId,
-    password = password,
-    phoneNumber = phoneNumber,
-    nickname = nickname
+fun CheckRes.toCheck() = Check(
+    message = message,
+    data = data
+)
+
+fun CheckUserDataRes.toUser() = FindPassUserData(
+    message = message,
+    userId = data.userId
+)
+
+fun ResetPasswordRes.toResetPassword() = UserPassword(
+    message = message
 )

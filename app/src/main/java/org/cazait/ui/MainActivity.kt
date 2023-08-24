@@ -1,7 +1,6 @@
 package org.cazait.ui
 
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
@@ -20,6 +19,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         R.id.signInFragment,
         R.id.phoneVerifyFragment,
         R.id.findUserIdFragment,
+        R.id.checkIdFragment,
         R.id.findUserPasswordFragment,
         R.id.signupFragment,
         R.id.searchFragment,

@@ -17,3 +17,21 @@ data class FindUserIdDTO(
     @SerializedName("accountName")
     val userId: String
 )
+
+data class CheckUserDataRes(
+    @SerializedName("code")
+    val code: Int,
+    @SerializedName("result")
+    val result: String,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("data")
+    val data: CheckUserDataDTO
+)
+
+data class CheckUserDataDTO(
+    @SerializedName("accountName")
+    val userId: String,
+    @SerializedName("phoneNumber")
+    val phoneNumber: String
+)

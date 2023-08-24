@@ -70,7 +70,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun initBtn() {
         binding.tvSignup.setOnClickListener {
-            navigateToAgreeFragment()
+            navigateToSignUp()
         }
         binding.tvFindid.setOnClickListener {
             navigateToFindId()
@@ -90,17 +90,17 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         viewModel.doSignIn(binding.etId.text.toString(), binding.etPassword.text.toString())
     }
 
-    private fun navigateToAgreeFragment() {
+    private fun navigateToSignUp() {
         findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToAgreeFragment())
     }
 
     private fun navigateToFindId() {
         val title = binding.tvFindid.text.toString()
-        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToPhoneVerifyFragment(title))
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToPhoneVerifyFragment(title, null))
     }
 
     private fun navigateToFindPassword() {
         val title = binding.tvFindpassword.text.toString()
-        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToPhoneVerifyFragment(title))
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToCheckIdFragment(title))
     }
 }

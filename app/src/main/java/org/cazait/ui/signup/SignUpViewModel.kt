@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.UserRepository
+import org.cazait.model.Check
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
 import org.cazait.ui.base.BaseViewModel
@@ -23,8 +24,8 @@ class SignUpViewModel @Inject constructor(
     val signUpProcess: LiveData<Resource<SignUpInfo>?>
         get() = _signUpProcess
 
-    private val _idDupProcess = MutableLiveData<Resource<String>?>()
-    val idDupProcess: LiveData<Resource<String>?>
+    private val _idDupProcess = MutableLiveData<Resource<Check>?>()
+    val idDupProcess: LiveData<Resource<Check>?>
         get() = _idDupProcess
 
     private val _nickDupProcess = MutableLiveData<Resource<String>?>()

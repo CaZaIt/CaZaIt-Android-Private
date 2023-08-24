@@ -42,6 +42,6 @@ class FindUserIdFragment :
     }
 
     private fun navigateToFindUserPasswordFragment() {
-        findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToFindUserPasswordFragment())
+        findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToFindUserPasswordFragment(null, null))
     }
 }

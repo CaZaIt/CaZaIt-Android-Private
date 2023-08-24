@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentPhoneVerifyBinding
+import org.cazait.model.FindPassUserData
 import org.cazait.model.Resource
 import org.cazait.model.UserAccount
 import org.cazait.model.VerificationCode
@@ -26,6 +27,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
     R.layout.fragment_phone_verify
 ) {
     private val navArgs: PhoneVerifyFragmentArgs by navArgs()
+    private lateinit var foundUserData: FindPassUserData
     private lateinit var timer: CountDownTimer
     private var time: Long = 180000
 
@@ -34,7 +36,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         binding.apply {
             clTop.includedTvTitle.text = navArgs.title
             clTop.btnBack.setOnClickListener {
-                findNavController().popBackStack()
+                navigateToBackStack()
             }
         }
         getVerficationCodeBtn()
@@ -63,6 +65,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         observe(viewModel.phoneNumberProcess, ::handlePhone)
         observe(viewModel.verifyProcess, ::handleVerify)
         observe(viewModel.userIdProcess, ::handleUserId)
+        observe(viewModel.checkIdProcess, ::handleUserData)
         observeToast(viewModel.showToast)
     }
 
@@ -72,14 +75,18 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
             if (phoneNumber == "") {
                 viewModel.showToastMessage(resources.getString(R.string.please_input_phoneNum))
             } else {
-                val title = binding.clTop.includedTvTitle.text.toString()
-                if (title == resources.getString(R.string.btn_find_id) || title == resources.getString(
-                        R.string.btn_find_password
-                    )
-                ) {
-                    viewModel.isPhoneDup(phoneNumber, "true")
-                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
-                    viewModel.isPhoneDup(phoneNumber, "false")
+                when (binding.clTop.includedTvTitle.text.toString()) {
+                    resources.getString(R.string.btn_find_id) -> {
+                        viewModel.isPhoneDup(phoneNumber, "true")
+                    }
+
+                    resources.getString(R.string.btn_find_password) -> {
+                        viewModel.checkUserData(navArgs.userUuid.toString(), phoneNumber)
+                    }
+
+                    resources.getString(R.string.sign_up_sign_up) -> {
+                        viewModel.isPhoneDup(phoneNumber, "false")
+                    }
                 }
             }
         }
@@ -107,6 +114,29 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
             is Resource.Success -> status.data?.let {
                 hideLoading()
                 viewModel.showToastMessage(it)
+                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
+                viewModel.sendVerificationCode(phoneNumber)
+            }
+
+            is Resource.Error -> {
+                hideLoading()
+                viewModel.showToastMessage(status.message)
+            }
+
+            null -> {}
+        }
+    }
+
+    private fun handleUserData(status: Resource<FindPassUserData>?) {
+        when (status) {
+            is Resource.Loading -> {
+                showLoading()
+            }
+
+            is Resource.Success -> status.data?.let {
+                hideLoading()
+                viewModel.showToastMessage(it.message)
+                foundUserData = it
                 val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
                 viewModel.sendVerificationCode(phoneNumber)
             }
@@ -159,7 +189,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                     viewModel.findUserId(phoneNumber)
                 } else if (title == resources.getString(R.string.btn_find_password)) {
                     timer.cancel()
-                    navigateToFindUserPasswordFragment()
+                    navigateToFindUserPasswordFragment(navArgs.userUuid.toString(), foundUserData.userId)
                 } else if (title == resources.getString(R.string.sign_up_sign_up)) {
                     timer.cancel()
                     navigateToSignUpFragment(phoneNumber)
@@ -175,7 +205,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                     viewModel.findUserId(phoneNumber)
                 } else if (title == resources.getString(R.string.btn_find_password)) {
                     timer.cancel()
-                    navigateToFindUserPasswordFragment()
+                    navigateToFindUserPasswordFragment(navArgs.userUuid.toString(), foundUserData.userId)
                 } else if (title == resources.getString(R.string.sign_up_sign_up)) {
                     timer.cancel()
                     navigateToSignUpFragment(phoneNumber)
@@ -229,6 +259,10 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         binding.tvTimer.text = String.format("%02d:%02d", minutes, seconds)
     }
 
+    private fun navigateToBackStack() {
+        findNavController().navigate(PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToSignInFragment())
+    }
+
     private fun navigateToSignUpFragment(phoneNumber: String) {
         findNavController().navigate(
             PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToSignUpFragment(
@@ -245,8 +279,8 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         )
     }
 
-    private fun navigateToFindUserPasswordFragment() {
-        findNavController().navigate(PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToFindUserPasswordFragment())
+    private fun navigateToFindUserPasswordFragment(userUuid: String, userId: String) {
+        findNavController().navigate(PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToFindUserPasswordFragment(userUuid, userId))
     }
 
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {

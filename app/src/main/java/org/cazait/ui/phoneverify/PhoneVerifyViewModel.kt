@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.AuthRepository
 import org.bmsk.data.repository.UserRepository
+import org.cazait.model.FindPassUserData
 import org.cazait.model.Resource
 import org.cazait.model.VerificationCode
 import org.cazait.model.UserAccount
@@ -36,6 +37,10 @@ class PhoneVerifyViewModel @Inject constructor(
     val verifyProcess: LiveData<Resource<VerifyCode>?>
         get() = _verifyProcess
 
+    private val _checkIdProcess = MutableLiveData<Resource<FindPassUserData>?>()
+    val checkIdProcess: LiveData<Resource<FindPassUserData>?>
+        get() = _checkIdProcess
+
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
     val showToast: LiveData<SingleEvent<Any>>
         get() = _showToast
@@ -54,6 +59,15 @@ class PhoneVerifyViewModel @Inject constructor(
             _phoneDupProcess.value = Resource.Loading()
             userRepository.checkPhoneNumDB(phoneNumber, isExist).collect {
                 _phoneDupProcess.value = it
+            }
+        }
+    }
+
+    fun checkUserData(userUuid: String, phoneNumber: String) {
+        viewModelScope.launch {
+            _checkIdProcess.value = Resource.Loading()
+            userRepository.checkUserData(userUuid, phoneNumber).collect {
+                _checkIdProcess.value = it
             }
         }
     }
@@ -86,5 +100,6 @@ class PhoneVerifyViewModel @Inject constructor(
         _phoneDupProcess.value = null
         _verifyProcess.value = null
         _phoneNumberProcess.value = null
+        _checkIdProcess.value = null
     }
 }
