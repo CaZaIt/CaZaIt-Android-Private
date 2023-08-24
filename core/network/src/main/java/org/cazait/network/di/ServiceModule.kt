@@ -8,6 +8,7 @@ import org.cazait.network.api.auth.FavoriteService
 import org.cazait.network.api.unauth.AuthService
 import org.cazait.network.api.auth.ReviewService
 import org.cazait.network.api.auth.TokenService
+import org.cazait.network.api.auth.UserAuthService
 import org.cazait.network.api.unauth.CafeService
 import org.cazait.network.api.unauth.UserService
 import retrofit2.Retrofit
@@ -66,5 +67,14 @@ object ServiceModule {
         @Authenticated retrofit: Retrofit
     ): TokenService {
         return retrofit.create(TokenService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    @Authenticated
+    fun providesUserServiceAuth(
+        @Authenticated retrofit: Retrofit
+    ): UserAuthService {
+        return retrofit.create(UserAuthService::class.java)
     }
 }

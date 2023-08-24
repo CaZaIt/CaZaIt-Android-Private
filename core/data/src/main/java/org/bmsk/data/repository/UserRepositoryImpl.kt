@@ -23,7 +23,10 @@ import org.cazait.network.datasource.UserRemoteData
 import org.cazait.network.error.EXIST_ACCOUNTNAME
 import org.cazait.network.error.EXIST_PHONENUMBER
 import org.cazait.network.model.dto.DataResponse
+import org.cazait.network.model.dto.request.ChangeNicknameReq
+import org.cazait.network.model.dto.request.ChangePasswordReq
 import org.cazait.network.model.dto.request.CheckNicknameReq
+import org.cazait.network.model.dto.request.CheckPasswordReq
 import org.cazait.network.model.dto.request.CheckPhoneNumReq
 import org.cazait.network.model.dto.request.CheckUserDataReq
 import org.cazait.network.model.dto.request.CheckUserIdReq
@@ -180,6 +183,66 @@ class UserRepositoryImpl @Inject constructor(
                 is DataResponse.Success -> {
                     response.data?.let {
                         emit(Resource.Success(it.toResetPassword()))
+                    }
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }
+    }
+
+    override suspend fun checkPassword(
+        userUuid: String,
+        rePassword: String
+    ): Flow<Resource<String>> {
+        return flow {
+            val body = CheckPasswordReq(rePassword)
+            when (val response = remoteData.postCheckPassword(userUuid, body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.message))
+                    }
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }
+    }
+
+    override suspend fun changePassword(
+        userUuid: String,
+        rePassword: String
+    ): Flow<Resource<String>> {
+        return flow {
+            val body = ChangePasswordReq(rePassword)
+            when (val response = remoteData.patchChangePassword(userUuid, body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.message))
+                    }
+                }
+
+                is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }
+    }
+
+    override suspend fun changeNickname(
+        userUuid: String,
+        reNickName: String
+    ): Flow<Resource<String>> {
+        return flow {
+            val body = ChangeNicknameReq(reNickName)
+            when (val response = remoteData.patchChangeNickname(userUuid, body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.message))
                     }
                 }
 
