@@ -26,6 +26,7 @@ class RecentlyViewedVerticalAdapter(
                 false,
             )
         )
+
     }
 
     override fun onBindViewHolder(holder: RecentlyViewedCafeViewHolder, position: Int) {
