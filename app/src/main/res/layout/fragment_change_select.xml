@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.useraccount.changeselect.ChangeSelectFragment">
+
+        <include
+            android:id="@+id/cl_top"
+            layout="@layout/layout_page_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_top">
+
+            <View
+                android:id="@+id/view_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/cafe_list_orange" />
+
+            <TextView
+                android:id="@+id/tv_change_password"
+                style="@style/TextValue_B"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginStart="5dp"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/change_password"
+                android:textColor="@color/cafe_list_orange"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_change_password" />
+
+            <View
+                android:id="@+id/view_2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/cafe_list_orange" />
+
+            <TextView
+                android:id="@+id/tv_change_nickname"
+                style="@style/TextValue_B"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginStart="5dp"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/change_nickname"
+                android:textColor="@color/cafe_list_orange"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_change_nickname" />
+
+            <View
+                android:id="@+id/view_3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/cafe_list_orange" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

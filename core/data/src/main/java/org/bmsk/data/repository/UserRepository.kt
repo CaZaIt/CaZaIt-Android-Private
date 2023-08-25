@@ -20,9 +20,16 @@ interface UserRepository {
     suspend fun checkPhoneNumDB(phoneNumber: String, isExist: String): Flow<Resource<String>>
     suspend fun checkUserIdDB(userId: String, isExist: String): Flow<Resource<Check>>
     suspend fun checkNicknameDB(nickname: String, isExist: String): Flow<Resource<String>>
-    suspend fun checkUserData(userUuid: String, phoneNumber: String): Flow<Resource<FindPassUserData>>
+    suspend fun checkUserData(
+        userUuid: String,
+        phoneNumber: String
+    ): Flow<Resource<FindPassUserData>>
+
     suspend fun findUserId(phoneNumber: String): Flow<Resource<UserAccount>>
     suspend fun resetPassword(userUuid: String, rePassword: String): Flow<Resource<UserPassword>>
+    suspend fun checkPassword(userUuid: String, rePassword: String): Flow<Resource<String>>
+    suspend fun changePassword(userUuid: String, rePassword: String): Flow<Resource<String>>
+    suspend fun changeNickname(userUuid: String, reNickName: String): Flow<Resource<String>>
     suspend fun isLoggedIn(): Flow<Boolean>
     suspend fun getUserInfo(): Flow<UserPreference>
     suspend fun signOut()

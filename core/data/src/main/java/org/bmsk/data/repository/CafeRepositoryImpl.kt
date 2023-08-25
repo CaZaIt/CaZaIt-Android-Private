@@ -96,7 +96,6 @@ class CafeRepositoryImpl @Inject constructor(
                 }
 
                 is DataResponse.DataError -> {
-                    Log.d("response 에러코드", response.errorCode.toString())
                     if (response.errorCode == 401) {
                         authRepository.refreshToken().first()
 

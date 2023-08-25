@@ -22,8 +22,12 @@ import org.cazait.model.local.UserPreference
 import org.cazait.network.datasource.UserRemoteData
 import org.cazait.network.error.EXIST_ACCOUNTNAME
 import org.cazait.network.error.EXIST_PHONENUMBER
+import org.cazait.network.error.INVALID_USER_PASSWORD
 import org.cazait.network.model.dto.DataResponse
+import org.cazait.network.model.dto.request.ChangeNicknameReq
+import org.cazait.network.model.dto.request.ChangePasswordReq
 import org.cazait.network.model.dto.request.CheckNicknameReq
+import org.cazait.network.model.dto.request.CheckPasswordReq
 import org.cazait.network.model.dto.request.CheckPhoneNumReq
 import org.cazait.network.model.dto.request.CheckUserDataReq
 import org.cazait.network.model.dto.request.CheckUserIdReq
@@ -33,6 +37,7 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class UserRepositoryImpl @Inject constructor(
+    private val authRepository: AuthRepository,
     private val remoteData: UserRemoteData,
     private val ioDispatcher: CoroutineContext,
     private val userPreferenceRepository: UserPreferenceRepository,
@@ -184,6 +189,119 @@ class UserRepositoryImpl @Inject constructor(
                 }
 
                 is DataResponse.DataError -> {
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }
+    }
+
+    override suspend fun checkPassword(
+        userUuid: String,
+        rePassword: String
+    ): Flow<Resource<String>> {
+        return flow {
+            val body = CheckPasswordReq(rePassword)
+            when (val response = remoteData.postCheckPassword(userUuid, body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.message))
+                    }
+                }
+
+                is DataResponse.DataError -> {
+                    if (response.errorCode == 401) {
+                        authRepository.refreshToken().first()
+
+                        when (val newResponse = remoteData.postCheckPassword(userUuid, body)) {
+                            is DataResponse.Success -> {
+                                newResponse.data?.let {
+                                    emit(Resource.Success(it.message))
+                                }
+                            }
+
+                            is DataResponse.DataError -> {
+                                if (newResponse.errorCode == INVALID_USER_PASSWORD) {
+                                    emit(Resource.Error(message = "비밀번호가 올바르지 않습니다."))
+                                } else {
+                                    emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
+                                }
+                            }
+                        }
+                    }
+                    if (response.errorCode == INVALID_USER_PASSWORD) {
+                        emit(Resource.Error(message = "비밀번호가 올바르지 않습니다."))
+                    } else {
+                        emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
+                    }
+                }
+            }
+        }
+    }
+
+    override suspend fun changePassword(
+        userUuid: String,
+        rePassword: String
+    ): Flow<Resource<String>> {
+        return flow {
+            val body = ChangePasswordReq(rePassword)
+            when (val response = remoteData.patchChangePassword(userUuid, body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.message))
+                    }
+                }
+
+                is DataResponse.DataError -> {
+                    if (response.errorCode == 401) {
+                        authRepository.refreshToken().first()
+
+                        when (val newResponse = remoteData.patchChangePassword(userUuid, body)) {
+                            is DataResponse.Success -> {
+                                newResponse.data?.let {
+                                    emit(Resource.Success(it.message))
+                                }
+                            }
+
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(newResponse.toString()))
+                            }
+                        }
+                    }
+                    emit(Resource.Error(response.toString()))
+                }
+            }
+        }
+    }
+
+    override suspend fun changeNickname(
+        userUuid: String,
+        reNickName: String
+    ): Flow<Resource<String>> {
+        return flow {
+            val body = ChangeNicknameReq(reNickName)
+            when (val response = remoteData.patchChangeNickname(userUuid, body)) {
+                is DataResponse.Success -> {
+                    response.data?.let {
+                        emit(Resource.Success(it.message))
+                    }
+                }
+
+                is DataResponse.DataError -> {
+                    if (response.errorCode == 401) {
+                        authRepository.refreshToken().first()
+
+                        when (val newResponse = remoteData.patchChangeNickname(userUuid, body)) {
+                            is DataResponse.Success -> {
+                                newResponse.data?.let {
+                                    emit(Resource.Success(it.message))
+                                }
+                            }
+
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(newResponse.toString()))
+                            }
+                        }
+                    }
                     emit(Resource.Error(response.toString()))
                 }
             }
