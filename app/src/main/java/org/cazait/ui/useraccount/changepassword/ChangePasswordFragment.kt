@@ -58,7 +58,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
             val repw = binding.etChangePasswordInsertMore.text.toString()
 
             if (pw == "" || repw == "")
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_req_all))
+                viewModel.showToastMessage(resources.getString(R.string.sign_up_check_pw))
             else if (pw == repw) {
                 viewModel.changePassword(pw)
             } else

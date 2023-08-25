@@ -48,6 +48,7 @@ class CheckPasswordFragment : BaseFragment<FragmentCheckPasswordBinding, CheckPa
             }
             is Resource.Error -> {
                 hideLoading()
+                viewModel.showToastMessage(status.message)
             }
             null -> {}
         }

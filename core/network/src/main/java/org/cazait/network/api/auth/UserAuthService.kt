@@ -3,6 +3,7 @@ package org.cazait.network.api.auth
 import org.cazait.network.model.dto.request.ChangeNicknameReq
 import org.cazait.network.model.dto.request.ChangePasswordReq
 import org.cazait.network.model.dto.request.CheckPasswordReq
+import org.cazait.network.model.dto.response.ChangeNicknameRes
 import org.cazait.network.model.dto.response.ChangePasswordRes
 import org.cazait.network.model.dto.response.CheckPasswordRes
 import retrofit2.Response
@@ -28,5 +29,5 @@ interface UserAuthService {
     suspend fun patchNicknameAuth(
         @Path("userId") userId: String,
         @Body changeNickname: ChangeNicknameReq
-    ): Response<ChangePasswordRes>
+    ): Response<ChangeNicknameRes>
 }

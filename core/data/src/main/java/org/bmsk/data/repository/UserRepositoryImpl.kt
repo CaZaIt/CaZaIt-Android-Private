@@ -22,6 +22,7 @@ import org.cazait.model.local.UserPreference
 import org.cazait.network.datasource.UserRemoteData
 import org.cazait.network.error.EXIST_ACCOUNTNAME
 import org.cazait.network.error.EXIST_PHONENUMBER
+import org.cazait.network.error.INVALID_USER_PASSWORD
 import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.ChangeNicknameReq
 import org.cazait.network.model.dto.request.ChangePasswordReq
@@ -219,11 +220,19 @@ class UserRepositoryImpl @Inject constructor(
                             }
 
                             is DataResponse.DataError -> {
-                                emit(Resource.Error(newResponse.toString()))
+                                if (newResponse.errorCode == INVALID_USER_PASSWORD) {
+                                    emit(Resource.Error(message = "비밀번호가 올바르지 않습니다."))
+                                } else {
+                                    emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
+                                }
                             }
                         }
                     }
-                    emit(Resource.Error(response.toString()))
+                    if (response.errorCode == INVALID_USER_PASSWORD) {
+                        emit(Resource.Error(message = "비밀번호가 올바르지 않습니다."))
+                    } else {
+                        emit(Resource.Error(message = "알 수 없는 에러가 발생했습니다."))
+                    }
                 }
             }
         }
