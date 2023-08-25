@@ -12,12 +12,35 @@ class ChangeSelectFragment : BaseFragment<FragmentChangeSelectBinding, ChangeSel
     override fun initView() {
         binding.apply {
             clTop.includedTvTitle.text = resources.getString(R.string.see_more_setting)
-            clTop.btnBack.setOnClickListener { findNavController().popBackStack() }
+            clTop.btnBack.setOnClickListener { navigateToBackStack() }
         }
+        initBtn()
     }
 
     override fun initAfterBinding() {
 
     }
 
+    private fun initBtn() {
+        binding.apply {
+            tvChangePassword.setOnClickListener {
+                navigateToChangePasswordFragment()
+            }
+            tvChangeNickname.setOnClickListener {
+                navigateToChangeNicknameFragment()
+            }
+        }
+    }
+
+    private fun navigateToChangePasswordFragment() {
+        findNavController().navigate(ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangePasswordFragment())
+    }
+
+    private fun navigateToChangeNicknameFragment() {
+        findNavController().navigate(ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangeNicknameFragment())
+    }
+
+    private fun navigateToBackStack(){
+        findNavController().navigate(ChangeSelectFragmentDirections.actionChangeSelectFragmentToSeeMoreFragment())
+    }
 }

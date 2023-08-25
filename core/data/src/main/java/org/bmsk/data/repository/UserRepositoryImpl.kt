@@ -36,6 +36,7 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class UserRepositoryImpl @Inject constructor(
+    private val authRepository: AuthRepository,
     private val remoteData: UserRemoteData,
     private val ioDispatcher: CoroutineContext,
     private val userPreferenceRepository: UserPreferenceRepository,
@@ -207,6 +208,21 @@ class UserRepositoryImpl @Inject constructor(
                 }
 
                 is DataResponse.DataError -> {
+                    if (response.errorCode == 401) {
+                        authRepository.refreshToken().first()
+
+                        when (val newResponse = remoteData.postCheckPassword(userUuid, body)) {
+                            is DataResponse.Success -> {
+                                newResponse.data?.let {
+                                    emit(Resource.Success(it.message))
+                                }
+                            }
+
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(newResponse.toString()))
+                            }
+                        }
+                    }
                     emit(Resource.Error(response.toString()))
                 }
             }
@@ -227,6 +243,21 @@ class UserRepositoryImpl @Inject constructor(
                 }
 
                 is DataResponse.DataError -> {
+                    if (response.errorCode == 401) {
+                        authRepository.refreshToken().first()
+
+                        when (val newResponse = remoteData.patchChangePassword(userUuid, body)) {
+                            is DataResponse.Success -> {
+                                newResponse.data?.let {
+                                    emit(Resource.Success(it.message))
+                                }
+                            }
+
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(newResponse.toString()))
+                            }
+                        }
+                    }
                     emit(Resource.Error(response.toString()))
                 }
             }
@@ -247,6 +278,21 @@ class UserRepositoryImpl @Inject constructor(
                 }
 
                 is DataResponse.DataError -> {
+                    if (response.errorCode == 401) {
+                        authRepository.refreshToken().first()
+
+                        when (val newResponse = remoteData.patchChangeNickname(userUuid, body)) {
+                            is DataResponse.Success -> {
+                                newResponse.data?.let {
+                                    emit(Resource.Success(it.message))
+                                }
+                            }
+
+                            is DataResponse.DataError -> {
+                                emit(Resource.Error(newResponse.toString()))
+                            }
+                        }
+                    }
                     emit(Resource.Error(response.toString()))
                 }
             }

@@ -98,6 +98,11 @@
         <action
             android:id="@+id/action_changeSelectFragment_to_changeNicknameFragment"
             app:destination="@+id/changeNicknameFragment" />
+        <action
+            android:id="@+id/action_changeSelectFragment_to_seeMoreFragment"
+            app:destination="@+id/seeMoreFragment"
+            app:popUpTo="@id/seeMoreFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
