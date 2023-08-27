@@ -1,10 +1,20 @@
 package org.cazait.ui.findaccount.findid
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
 import org.cazait.databinding.FragmentFindUserIdBinding
+import org.cazait.model.Check
+import org.cazait.model.Resource
 import org.cazait.ui.base.BaseFragment
+import org.cazait.utils.SingleEvent
+import org.cazait.utils.observe
+import org.cazait.utils.showToast
+import org.cazait.utils.toGone
+import org.cazait.utils.toVisible
 
 class FindUserIdFragment :
     BaseFragment<FragmentFindUserIdBinding, FindUserIdViewModel>(
@@ -14,6 +24,7 @@ class FindUserIdFragment :
     private val navArgs: FindUserIdFragmentArgs by navArgs()
 
     override fun initView() {
+        viewModel.initViewModel()
         binding.apply {
             clTop.includedTvTitle.text = resources.getString(R.string.btn_find_id)
             clTop.btnBack.setOnClickListener {
@@ -22,10 +33,43 @@ class FindUserIdFragment :
         }
         binding.tvUserid.text = navArgs.foundUserId
         initBtn()
+        observeViewModel()
     }
 
     override fun initAfterBinding() {
 
+    }
+
+    private fun observeViewModel() {
+        observe(viewModel.checkIdProcess, ::handleCheckId)
+        observeToast(viewModel.showToast)
+    }
+
+    private fun handleCheckId(status: Resource<Check>?) {
+        when (status) {
+            is Resource.Loading -> {
+                showLoading()
+            }
+
+            is Resource.Success -> status.data?.let {
+                hideLoading()
+                navigateToFindUserPasswordFragment(
+                    it.data.toString(),
+                    navArgs.foundUserId.toString()
+                )
+            }
+
+            is Resource.Error -> {
+                hideLoading()
+                viewModel.showToastMessage(status.message)
+            }
+
+            null -> {}
+        }
+    }
+
+    private fun observeToast(event: LiveData<SingleEvent<Any>>) {
+        binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
 
     private fun initBtn() {
@@ -33,7 +77,7 @@ class FindUserIdFragment :
             navigateToSignInFragment()
         }
         binding.btnGoFindPassword.setOnClickListener {
-            navigateToFindUserPasswordFragment()
+            viewModel.checkId(navArgs.foundUserId.toString())
         }
     }
 
@@ -41,7 +85,22 @@ class FindUserIdFragment :
         findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToSignInFragment())
     }
 
-    private fun navigateToFindUserPasswordFragment() {
-        findNavController().navigate(FindUserIdFragmentDirections.actionFindUserIdFragmentToFindUserPasswordFragment(null, null))
+    private fun navigateToFindUserPasswordFragment(userUuid: String, userId: String) {
+        findNavController().navigate(
+            FindUserIdFragmentDirections.actionFindUserIdFragmentToFindUserPasswordFragment(
+                userUuid,
+                userId
+            )
+        )
+    }
+
+    private fun showLoading() {
+        binding.lottieFindIdResult.toVisible()
+        binding.lottieFindIdResult.playAnimation()
+    }
+
+    private fun hideLoading() {
+        binding.lottieFindIdResult.pauseAnimation()
+        binding.lottieFindIdResult.toGone()
     }
 }

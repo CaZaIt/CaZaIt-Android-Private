@@ -27,6 +27,7 @@ class FindUserPasswordFragment :
     private var passwordFlag = false
     private var passwordCheckFlag = false
     override fun initView() {
+        viewModel.initViewModel()
         binding.apply {
             clTop.includedTvTitle.text = resources.getString(R.string.btn_find_password)
             clTop.btnBack.setOnClickListener {
@@ -50,16 +51,17 @@ class FindUserPasswordFragment :
 
     private fun handleChangingPassword(status: Resource<UserPassword>?) {
         when (status) {
-            is Resource.Error -> showLoading()
+            is Resource.Loading -> {
+                showLoading()
+            }
+
             is Resource.Success -> status.data?.let {
                 hideLoading()
                 viewModel.showToastMessage(resources.getString(R.string.find_password_done))
                 navigateToSignInFragment()
             }
 
-            is Resource.Loading -> {
-                hideLoading()
-            }
+            is Resource.Error -> hideLoading()
 
             null -> {}
         }

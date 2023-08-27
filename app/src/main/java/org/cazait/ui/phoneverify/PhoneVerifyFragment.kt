@@ -127,29 +127,6 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         }
     }
 
-    private fun handleUserData(status: Resource<FindPassUserData>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
-            }
-
-            is Resource.Success -> status.data?.let {
-                hideLoading()
-                viewModel.showToastMessage(it.message)
-                foundUserData = it
-                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-                viewModel.sendVerificationCode(phoneNumber)
-            }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
-        }
-    }
-
     private fun handlePhone(status: Resource<VerificationCode>?) {
         when (status) {
             is Resource.Loading -> {
@@ -189,7 +166,10 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                     viewModel.findUserId(phoneNumber)
                 } else if (title == resources.getString(R.string.btn_find_password)) {
                     timer.cancel()
-                    navigateToFindUserPasswordFragment(navArgs.userUuid.toString(), foundUserData.userId)
+                    navigateToFindUserPasswordFragment(
+                        navArgs.userUuid.toString(),
+                        foundUserData.userId
+                    )
                 } else if (title == resources.getString(R.string.sign_up_sign_up)) {
                     timer.cancel()
                     navigateToSignUpFragment(phoneNumber)
@@ -205,7 +185,10 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                     viewModel.findUserId(phoneNumber)
                 } else if (title == resources.getString(R.string.btn_find_password)) {
                     timer.cancel()
-                    navigateToFindUserPasswordFragment(navArgs.userUuid.toString(), foundUserData.userId)
+                    navigateToFindUserPasswordFragment(
+                        navArgs.userUuid.toString(),
+                        foundUserData.userId
+                    )
                 } else if (title == resources.getString(R.string.sign_up_sign_up)) {
                     timer.cancel()
                     navigateToSignUpFragment(phoneNumber)
@@ -227,6 +210,30 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 timer.cancel()
                 val foundUserId = status.data?.userId
                 navigateToFindUserIdFragment(foundUserId)
+            }
+
+            is Resource.Error -> {
+                hideLoading()
+                viewModel.showToastMessage(status.message)
+            }
+
+            null -> {}
+        }
+    }
+
+    private fun handleUserData(status: Resource<FindPassUserData>?) {
+        when (status) {
+            is Resource.Loading -> {
+                showLoading()
+            }
+
+            is Resource.Success -> status.data?.let {
+                hideLoading()
+                viewModel.showToastMessage(it.message)
+                foundUserData = it
+                Log.d("휴대폰 인증에서 받은 foundUserData", foundUserData.toString())
+                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
+                viewModel.sendVerificationCode(phoneNumber)
             }
 
             is Resource.Error -> {
@@ -280,7 +287,12 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
     }
 
     private fun navigateToFindUserPasswordFragment(userUuid: String, userId: String) {
-        findNavController().navigate(PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToFindUserPasswordFragment(userUuid, userId))
+        findNavController().navigate(
+            PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToFindUserPasswordFragment(
+                userUuid,
+                userId
+            )
+        )
     }
 
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {

@@ -37,4 +37,8 @@ class FindUserPasswordViewModel @Inject constructor(private val userRepository: 
         if (errorMessage == null) return
         _showToast.value = SingleEvent(errorMessage)
     }
+
+    fun initViewModel() {
+        _changePasswordProcess.value = null
+    }
 }
