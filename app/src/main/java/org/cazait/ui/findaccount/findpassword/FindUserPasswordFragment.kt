@@ -27,6 +27,7 @@ class FindUserPasswordFragment :
     private var passwordFlag = false
     private var passwordCheckFlag = false
     override fun initView() {
+        viewModel.initViewModel()
         binding.apply {
             clTop.includedTvTitle.text = resources.getString(R.string.btn_find_password)
             clTop.btnBack.setOnClickListener {
