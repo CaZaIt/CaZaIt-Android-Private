@@ -50,16 +50,17 @@ class FindUserPasswordFragment :
 
     private fun handleChangingPassword(status: Resource<UserPassword>?) {
         when (status) {
-            is Resource.Error -> showLoading()
+            is Resource.Loading -> {
+                showLoading()
+            }
+
             is Resource.Success -> status.data?.let {
                 hideLoading()
                 viewModel.showToastMessage(resources.getString(R.string.find_password_done))
                 navigateToSignInFragment()
             }
 
-            is Resource.Loading -> {
-                hideLoading()
-            }
+            is Resource.Error -> hideLoading()
 
             null -> {}
         }
