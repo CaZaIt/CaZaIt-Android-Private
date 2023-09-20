@@ -20,8 +20,8 @@ class ReviewWriteViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val cafeRepository: CafeRepository,
 ) : BaseViewModel() {
-    private val _messageLiveData = MutableLiveData<Resource<String>>()
-    val messageLiveData: LiveData<Resource<String>>
+    private val _messageLiveData = MutableLiveData<Resource<String>?>()
+    val messageLiveData: LiveData<Resource<String>?>
         get() = _messageLiveData
 
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
@@ -52,5 +52,9 @@ class ReviewWriteViewModel @Inject constructor(
     fun showToastMessage(errorMessage: String?) {
         if (errorMessage == null) return
         _showToast.value = SingleEvent(errorMessage)
+    }
+
+    fun initViewModel(){
+        _messageLiveData.value = null
     }
 }

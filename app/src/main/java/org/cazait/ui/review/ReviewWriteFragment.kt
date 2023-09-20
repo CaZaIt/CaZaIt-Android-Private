@@ -23,6 +23,7 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
     private val navArgs: ReviewWriteFragmentArgs by navArgs()
 
     override fun initView() {
+        viewModel.initViewModel()
         setupCafe()
         setReviewSendBtn()
         setupBackPressButton()
@@ -49,7 +50,7 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
         binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
 
-    private fun handleReviewSend(status: Resource<String>) {
+    private fun handleReviewSend(status: Resource<String>?) {
         when (status) {
             is Resource.Loading -> {
                 binding.lottieReviewWrite.toVisible()
@@ -68,11 +69,13 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
                 binding.lottieReviewWrite.toGone()
                 viewModel.showToastMessage(status.message)
             }
+
+            else -> {}
         }
     }
 
-    private fun handleReviewPatch(status: Resource<String>){
-        when(status){
+    private fun handleReviewPatch(status: Resource<String>?) {
+        when (status) {
             is Resource.Loading -> {
                 binding.lottieReviewWrite.toVisible()
                 binding.lottieReviewWrite.playAnimation()
@@ -90,6 +93,8 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
                 binding.lottieReviewWrite.toGone()
                 viewModel.showToastMessage(status.message)
             }
+
+            else -> {}
         }
     }
 
