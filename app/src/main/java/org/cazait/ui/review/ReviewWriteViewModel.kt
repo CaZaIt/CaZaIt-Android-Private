@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
@@ -33,6 +34,16 @@ class ReviewWriteViewModel @Inject constructor(
             _messageLiveData.value = Resource.Loading()
             Log.d("ReviewEditViewModel", "$userId, $score, $content")
             cafeRepository.postReviewAuth(userId, cafeId, score.toInt(), content).collect {
+                _messageLiveData.value = it
+            }
+        }
+    }
+
+    fun editReviewToServer(reviewId: String, score: Float, content: String) {
+        viewModelScope.launch {
+            val userId = userRepository.getUserInfo().first().uuid
+            _messageLiveData.value = Resource.Loading()
+            cafeRepository.patchReviewAuth(reviewId, score.toInt(), content).collect {
                 _messageLiveData.value = it
             }
         }

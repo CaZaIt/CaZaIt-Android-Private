@@ -10,10 +10,12 @@ import org.cazait.network.model.dto.DataResponse
 import org.cazait.network.model.dto.request.CafeReviewPostReq
 import org.cazait.network.model.dto.response.CafeMenuRes
 import org.cazait.network.model.dto.response.CafeResTemp
+import org.cazait.network.model.dto.response.CafeReviewPatchRes
 import org.cazait.network.model.dto.response.CafeReviewPostRes
 import org.cazait.network.model.dto.response.CafeReviewRes
 import org.cazait.network.model.dto.response.DeleteFavoriteCafeRes
 import org.cazait.network.model.dto.response.PostFavoriteCafeRes
+import org.cazait.network.model.dto.response.ReviewDeleteRes
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -91,6 +93,34 @@ class CafeInfoRemoteData @Inject constructor(
 
             else -> {
                 DataResponse.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+    override suspend fun patchReviewAuth(
+        reviewId: String,
+        body: CafeReviewPostReq
+    ): DataResponse<CafeReviewPatchRes> {
+        return when (val response =
+            processCall { reviewServiceAuth.patchReviewAuth(reviewId, body) }) {
+            is CafeReviewPatchRes -> {
+                DataResponse.Success(response)
+            }
+
+            else -> {
+                DataResponse.DataError(response as Int)
+            }
+        }
+    }
+
+    override suspend fun deleteReviewAuth(reviewId: String): DataResponse<ReviewDeleteRes> {
+        return when (val response = processCall { reviewServiceAuth.deleteReviewAuth(reviewId) }) {
+            is ReviewDeleteRes -> {
+                DataResponse.Success(response)
+            }
+
+            else -> {
+                DataResponse.DataError(response as Int)
             }
         }
     }

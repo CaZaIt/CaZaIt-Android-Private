@@ -41,3 +41,41 @@ data class ReviewPostDTO(
     @SerializedName("createdAt")
     val createdDate: String,
 )
+
+data class CafeReviewPatchRes(
+    @SerializedName("code")
+    val code: Int,
+    @SerializedName("result")
+    val result: String,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("data")
+    val reviewResult: ReviewPatchDTO
+)
+
+data class ReviewPatchDTO(
+    @SerializedName("reviewId")
+    val reviewId: String,
+    @SerializedName("score")
+    val score: Int,
+    @SerializedName("content")
+    val content: String,
+    @SerializedName("updatedAt")
+    val updateTimeStamp: String
+)
+
+data class ReviewDeleteRes(
+    @SerializedName("code")
+    val code: Int,
+    @SerializedName("result")
+    val result: String,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("data")
+    val data:ReviewDeleteDTO
+)
+
+data class ReviewDeleteDTO(
+    @SerializedName("reviewId")
+    val reviewId: String
+)

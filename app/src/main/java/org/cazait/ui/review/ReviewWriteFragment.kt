@@ -72,10 +72,18 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
 
     private fun setReviewSendBtn() {
         binding.btnSendReview.setOnClickListener {
-            viewModel.sendReviewToServer(
-                navArgs.cafe.cafeId, binding.rbRating.rating,
-                binding.etReview.text.toString()
-            )
+            val reviewId = navArgs.reviewId
+            if (reviewId != null) {
+                viewModel.editReviewToServer(
+                    reviewId, binding.rbRating.rating,
+                    binding.etReview.text.toString()
+                )
+            } else {
+                viewModel.sendReviewToServer(
+                    navArgs.cafe.cafeId, binding.rbRating.rating,
+                    binding.etReview.text.toString()
+                )
+            }
         }
     }
 

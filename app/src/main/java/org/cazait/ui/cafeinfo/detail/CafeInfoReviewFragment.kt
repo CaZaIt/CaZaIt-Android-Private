@@ -55,7 +55,7 @@ class CafeInfoReviewFragment(
         binding.fabEditReview.setOnClickListener {
             val isLoggedIn = viewModel.signInStateFlow.value
             if (isLoggedIn) {
-                navigateToReviewWriteFragment(cafe, 1f, "")
+                navigateToReviewWriteFragment(cafe, 1f, "", null)
             } else {
                 AlertDialog.Builder(requireContext())
                     .setMessage(resources.getString(R.string.need_login))
@@ -120,14 +120,15 @@ class CafeInfoReviewFragment(
         }
     }
 
-    private fun navigateToReviewWriteFragment(cafe: Cafe, score: Float, content: String) {
+    private fun navigateToReviewWriteFragment(cafe: Cafe, score: Float, content: String, reviewId:String?) {
         val parentFragment = parentFragment
         Log.d("CafeInfoReviewFragment의 부모 Fragment는 누구?", parentFragment.toString())
         parentFragment?.findNavController()?.navigate(
             CafeInfoFragmentDirections.actionCafeInfoFragmentToReviewWriteFragment(
                 cafe,
                 score,
-                content
+                content,
+                reviewId
             )
         )
     }
@@ -135,7 +136,8 @@ class CafeInfoReviewFragment(
     override fun onEditClick(item: CafeReview) {
         val content = item.content
         val rating = item.score
-        navigateToReviewWriteFragment(cafe, rating.toFloat(), content)
+        val reviewId = item.reviewId
+        navigateToReviewWriteFragment(cafe, rating.toFloat(), content, reviewId)
     }
 
     override fun onDeleteClick(item: CafeReview) {

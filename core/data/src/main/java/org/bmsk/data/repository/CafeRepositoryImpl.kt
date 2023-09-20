@@ -25,6 +25,7 @@ import org.cazait.model.Resource
 import org.cazait.network.datasource.CafeInfoRemoteData
 import org.cazait.network.datasource.CafeListRemoteData
 import org.cazait.network.model.dto.DataResponse
+import org.cazait.network.model.dto.request.CafeReviewPostReq
 import org.cazait.network.model.dto.request.ListCafesReq
 import org.cazait.network.model.dto.response.toCafe
 import java.io.IOException
@@ -184,6 +185,81 @@ class CafeRepositoryImpl @Inject constructor(
                         authRepository.refreshToken()
                         when (val response =
                             cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
+                            is DataResponse.Success -> {
+                                val message: String = response.data?.message ?: ""
+                                Log.d("CafeRepository", "토큰 재발급 후 등록 성공")
+                                Log.d("CafeRepository", response.data.toString())
+                                emit(Resource.Success(message))
+                            }
+
+                            is DataResponse.DataError -> {
+                                Log.d("CafeRepository", "토큰 재발급 후 등록 실패")
+                                emit(Resource.Error(response.toString()))
+                            }
+                        }
+                    }
+                }
+            }
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun patchReviewAuth(
+        reviewId: String,
+        score: Int,
+        content: String
+    ): Flow<Resource<String>> {
+        return flow {
+            val body = CafeReviewPostReq(score, content)
+            when (val response =
+                cafeInfoRemoteData.patchReviewAuth(reviewId, body)) {
+                is DataResponse.Success -> {
+                    Log.d("CafeRepository", "수정 성공?")
+                    Log.d("CafeRepository", response.data.toString())
+                    val message: String = response.data?.message ?: ""
+                    emit(Resource.Success(message))
+                }
+
+                is DataResponse.DataError -> {
+                    Log.d("CafeRepository", "등록 실패")
+                    if (response.errorCode == 400) {
+                        authRepository.refreshToken()
+                        when (val response =
+                            cafeInfoRemoteData.patchReviewAuth(reviewId, body)) {
+                            is DataResponse.Success -> {
+                                val message: String = response.data?.message ?: ""
+                                Log.d("CafeRepository", "토큰 재발급 후 등록 성공")
+                                Log.d("CafeRepository", response.data.toString())
+                                emit(Resource.Success(message))
+                            }
+
+                            is DataResponse.DataError -> {
+                                Log.d("CafeRepository", "토큰 재발급 후 등록 실패")
+                                emit(Resource.Error(response.toString()))
+                            }
+                        }
+                    }
+                }
+            }
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun deleteReviewAuth(reviewId: String): Flow<Resource<String>> {
+        return flow {
+            when (val response =
+                cafeInfoRemoteData.deleteReviewAuth(reviewId)) {
+                is DataResponse.Success -> {
+                    Log.d("CafeRepository", "삭제 성공?")
+                    Log.d("CafeRepository", response.data.toString())
+                    val message: String = response.data?.message ?: ""
+                    emit(Resource.Success(message))
+                }
+
+                is DataResponse.DataError -> {
+                    Log.d("CafeRepository", "등록 실패")
+                    if (response.errorCode == 400) {
+                        authRepository.refreshToken()
+                        when (val response =
+                            cafeInfoRemoteData.deleteReviewAuth(reviewId)) {
                             is DataResponse.Success -> {
                                 val message: String = response.data?.message ?: ""
                                 Log.d("CafeRepository", "토큰 재발급 후 등록 성공")

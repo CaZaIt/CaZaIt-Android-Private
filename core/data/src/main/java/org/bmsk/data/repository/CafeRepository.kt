@@ -35,6 +35,14 @@ interface CafeRepository {
         content: String
     ): Flow<Resource<String>>
 
+    suspend fun patchReviewAuth(
+        reviewId: String,
+        score: Int,
+        content: String
+    ): Flow<Resource<String>>
+
+    suspend fun deleteReviewAuth(reviewId: String): Flow<Resource<String>>
+
     suspend fun insertFavoriteCafe(cafe: FavoriteCafe): Boolean
     suspend fun insertFavoriteCafe(cafe: Cafe): Boolean
 
