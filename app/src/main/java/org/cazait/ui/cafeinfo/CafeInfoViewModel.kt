@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.bmsk.data.repository.CafeRepository
@@ -41,6 +42,10 @@ class CafeInfoViewModel @Inject constructor(
     val favoriteData: LiveData<Resource<String>>
         get() = _favoriteData
 
+    private val _messageLiveData = MutableLiveData<Resource<String>>()
+    val messageLiveData: LiveData<Resource<String>>
+        get() = _messageLiveData
+
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
     val showToast: LiveData<SingleEvent<Any>>
         get() = _showToast
@@ -66,11 +71,20 @@ class CafeInfoViewModel @Inject constructor(
         }
     }
 
-    fun getReviews(cafeId: String, sortBy: String?, nums:Int, score: Int?) {
+    fun getReviews(cafeId: String, sortBy: String?, nums: Int, score: Int?) {
         viewModelScope.launch {
             _listReviewData.value = Resource.Loading()
             cafeRepository.getReviews(cafeId, sortBy, nums, score).collect {
                 _listReviewData.value = it
+            }
+        }
+    }
+
+    fun deleteReviews(reviewId: String) {
+        viewModelScope.launch {
+            _messageLiveData.value = Resource.Loading()
+            cafeRepository.deleteReviewAuth(reviewId).collect {
+                _messageLiveData.value = it
             }
         }
     }
@@ -112,7 +126,7 @@ class CafeInfoViewModel @Inject constructor(
         viewModelScope.launch {
             val cafeWithTimestamp = cafe.copy(timestamp = System.currentTimeMillis())
             cafeRepository.insertRecentlyViewedCafe(cafeWithTimestamp)
-            Log.e("cafeId1",cafeWithTimestamp.cafeId)
+            Log.e("cafeId1", cafeWithTimestamp.cafeId)
         }
 
     }

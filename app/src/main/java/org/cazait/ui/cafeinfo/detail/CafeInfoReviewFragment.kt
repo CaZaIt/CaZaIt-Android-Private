@@ -89,6 +89,7 @@ class CafeInfoReviewFragment(
 
     private fun observeViewModel() {
         observe(viewModel.listReviewData, ::handleCafeReview)
+        observe(viewModel.messageLiveData, ::handleDeleteReview)
     }
 
     private fun handleCafeReview(status: Resource<CafeReviews>) {
@@ -120,6 +121,27 @@ class CafeInfoReviewFragment(
         }
     }
 
+    private fun handleDeleteReview(status: Resource<String>){
+        when(status){
+            is Resource.Loading -> {
+                binding.lottieReview.toVisible()
+                binding.lottieReview.playAnimation()
+            }
+
+            is Resource.Success -> status.data.let {
+                binding.lottieReview.pauseAnimation()
+                binding.lottieReview.toGone()
+                viewModel.showToastMessage(it)
+            }
+
+            is Resource.Error -> {
+                binding.lottieReview.pauseAnimation()
+                binding.lottieReview.toGone()
+                viewModel.showToastMessage(status.message)
+            }
+        }
+    }
+
     private fun navigateToReviewWriteFragment(cafe: Cafe, score: Float, content: String, reviewId:String?) {
         val parentFragment = parentFragment
         Log.d("CafeInfoReviewFragment의 부모 Fragment는 누구?", parentFragment.toString())
@@ -141,7 +163,13 @@ class CafeInfoReviewFragment(
     }
 
     override fun onDeleteClick(item: CafeReview) {
-
+        AlertDialog.Builder(requireContext())
+            .setMessage(resources.getString(R.string.review_delete_confirm))
+            .setPositiveButton("확인") { dialog, which ->
+                viewModel.deleteReviews(item.reviewId)
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onReportClick(item: CafeReview) {

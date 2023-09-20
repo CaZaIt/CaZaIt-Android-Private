@@ -41,6 +41,7 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
 
     private fun oberveViewModel() {
         observe(viewModel.messageLiveData, ::handleReviewSend)
+        observe(viewModel.messageLiveData, ::handleReviewPatch)
         observeToast(viewModel.showToast)
     }
 
@@ -50,6 +51,28 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
 
     private fun handleReviewSend(status: Resource<String>) {
         when (status) {
+            is Resource.Loading -> {
+                binding.lottieReviewWrite.toVisible()
+                binding.lottieReviewWrite.playAnimation()
+            }
+
+            is Resource.Success -> status.data.let {
+                binding.lottieReviewWrite.pauseAnimation()
+                binding.lottieReviewWrite.toGone()
+                viewModel.showToastMessage(it)
+                findNavController().popBackStack()
+            }
+
+            is Resource.Error -> {
+                binding.lottieReviewWrite.pauseAnimation()
+                binding.lottieReviewWrite.toGone()
+                viewModel.showToastMessage(status.message)
+            }
+        }
+    }
+
+    private fun handleReviewPatch(status: Resource<String>){
+        when(status){
             is Resource.Loading -> {
                 binding.lottieReviewWrite.toVisible()
                 binding.lottieReviewWrite.playAnimation()
