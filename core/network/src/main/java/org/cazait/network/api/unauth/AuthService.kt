@@ -25,7 +25,7 @@ interface AuthService {
         @Body verifyCode: VerifyCodeReq
     ): Response<VerifyCodeRes>
 
-    @POST("/api/auths/send-authnumber/test")
+    @POST("/api/auths/send-authnumber")
     suspend fun postVerificationCode(
         @Body verificationCode: VerificationCodeReq
     ): Response<VerificationCodeRes>
