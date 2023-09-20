@@ -38,6 +38,9 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
             clTop.btnBack.setOnClickListener {
                 navigateToBackStack()
             }
+            etFindUserIdPhoneNumber.apply {
+                isEnabled = true
+            }
         }
         getVerficationCodeBtn()
         sendVerifyCode()
@@ -71,6 +74,9 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
 
     private fun getVerficationCodeBtn() {
         binding.btnFindUserIdSendVarificationCode.setOnClickListener {
+            binding.etFindUserIdPhoneNumber.apply {
+                isEnabled = false
+            }
             val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
             if (phoneNumber == "") {
                 viewModel.showToastMessage(resources.getString(R.string.please_input_phoneNum))
@@ -100,6 +106,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
             if (codeStr == "") {
                 viewModel.showToastMessage(resources.getString(R.string.please_input_verifyNum))
             } else {
+                Log.d("인증번호 형태", "$phoneNumber ${codeStr.toInt()}")
                 viewModel.checkVerifyCode(phoneNumber, codeStr.toInt())
             }
         }
