@@ -13,7 +13,7 @@ data class CafeReviewRes(
 data class ReviewDTO(
     @SerializedName("reviewResponses") val reviews: List<CafeReview>,
     @SerializedName("totalElements") val total: Int,
-    @SerializedName("nextCursor") val nextCursor: Long
+    @SerializedName("isLast") val isLast: Boolean
 )
 
 data class CafeReviewPostRes(

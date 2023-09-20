@@ -66,10 +66,10 @@ class CafeInfoViewModel @Inject constructor(
         }
     }
 
-    fun getReviews(cafeId: String, sortBy: String?, score: Int?, lastId: Long?) {
+    fun getReviews(cafeId: String, sortBy: String?, nums:Int, score: Int?) {
         viewModelScope.launch {
             _listReviewData.value = Resource.Loading()
-            cafeRepository.getReviews(cafeId, sortBy, score, lastId).collect {
+            cafeRepository.getReviews(cafeId, sortBy, nums, score).collect {
                 _listReviewData.value = it
             }
         }

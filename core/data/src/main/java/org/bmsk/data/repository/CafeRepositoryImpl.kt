@@ -144,14 +144,14 @@ class CafeRepositoryImpl @Inject constructor(
     override suspend fun getReviews(
         cafeId: String,
         sortBy: String?,
-        score: Int?,
-        lastId: Long?
+        nums:Int,
+        score: Int?
     ): Flow<Resource<CafeReviews>> {
         return flow {
-            when (val response = cafeInfoRemoteData.getReviews(cafeId, sortBy, score, lastId)) {
+            when (val response = cafeInfoRemoteData.getReviews(cafeId, sortBy, nums, score)) {
                 is DataResponse.Success -> {
                     val reviews =
-                        response.data?.review?.toCafeReviews() ?: CafeReviews(emptyList(), 0, 0L)
+                        response.data?.review?.toCafeReviews() ?: CafeReviews(emptyList(), 0, true)
                     emit(Resource.Success(reviews))
                 }
 

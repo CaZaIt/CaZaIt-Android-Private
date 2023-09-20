@@ -115,7 +115,7 @@ fun CafeMenuDTO.toCafeMenu() = CafeMenu(
 fun ReviewDTO.toCafeReviews() = CafeReviews(
     reviews = reviews,
     total = total,
-    nextCursor = nextCursor,
+    isLast = true
 )
 
 fun SignInInfoDTO.toSignInInfo() = SignInInfo(

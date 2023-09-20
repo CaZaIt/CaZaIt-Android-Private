@@ -69,7 +69,7 @@ class CafeInfoReviewFragment(
 
     override fun onResume() {
         val cafeId = cafe.cafeId
-        viewModel.getReviews(cafeId, null, null, null)
+        viewModel.getReviews(cafeId, null, 20, null)
         super.onResume()
     }
 

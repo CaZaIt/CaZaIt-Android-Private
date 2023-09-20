@@ -24,8 +24,8 @@ interface CafeRepository {
     suspend fun getReviews(
         cafeId: String,
         sortBy: String?,
-        score: Int?,
-        lastId: Long?
+        nums: Int,
+        score: Int?
     ): Flow<Resource<CafeReviews>>
 
     suspend fun postReviewAuth(

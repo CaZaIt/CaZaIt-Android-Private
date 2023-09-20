@@ -15,8 +15,8 @@ interface CafeInfoRemoteDataSource {
     suspend fun getReviews(
         cafeId: String,
         sortBy: String?,
-        score: Int?,
-        lastId: Long?
+        nums: Int,
+        score: Int?
     ): DataResponse<CafeReviewRes>
 
     suspend fun postReviewAuth(

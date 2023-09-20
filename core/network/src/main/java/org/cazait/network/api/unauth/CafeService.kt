@@ -40,8 +40,8 @@ interface CafeService {
     suspend fun getReviews(
         @Path("cafeId") cafeId: String,
         @Query("sortBy") sortBy: String?,
-        @Query("score") score: Int?,
-        @Query("lastId") lastId: Long?
+        @Query("nums") nums: Int,
+        @Query("score") score: Int?
     ): Response<CafeReviewRes>
 
     @GET("/api/cafes/name/{cafeName}")

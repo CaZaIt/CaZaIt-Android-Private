@@ -28,7 +28,7 @@ class CafeInfoReviewAdapter(private val uuid: String?, private val listener: Rev
                 binding.layoutNotLogin.toVisible()
             }
             binding.rating.progress = item.score
-            binding.tvUser.text = item.userId
+            binding.tvUser.text = item.nickname
             binding.tvContent.text = item.content
             binding.tvReviewEdit.setOnClickListener {
                 listener.onEditClick(item)
@@ -59,7 +59,7 @@ class CafeInfoReviewAdapter(private val uuid: String?, private val listener: Rev
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<CafeReview>() {
             override fun areItemsTheSame(oldItem: CafeReview, newItem: CafeReview): Boolean {
-                return oldItem.cafeId == newItem.cafeId
+                return oldItem.reviewId == newItem.reviewId
             }
 
             override fun areContentsTheSame(oldItem: CafeReview, newItem: CafeReview): Boolean {
