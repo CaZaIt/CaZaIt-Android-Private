@@ -108,12 +108,19 @@ class CafeInfoFragment : Fragment() {
     private fun setupButtons() {
         initBackPressButton()
         initFavoriteButton()
+//        initMapButton()
     }
 
     private fun initBackPressButton() {
         binding.imgBack.apply {
             bringToFront()
             setOnClickListener { findNavController().popBackStack() }
+        }
+    }
+
+    private fun initMapButton() {
+        binding.tvMap.setOnClickListener {
+            navigateToCafeMapFragment()
         }
     }
 
@@ -177,6 +184,7 @@ class CafeInfoFragment : Fragment() {
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {
         binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
+
     private fun handleFavorite(status: Resource<String>) {
         when (status) {
             is Resource.Loading -> {}
@@ -186,5 +194,9 @@ class CafeInfoFragment : Fragment() {
 
             is Resource.Error -> {}
         }
+    }
+
+    private fun navigateToCafeMapFragment() {
+        findNavController().navigate(CafeInfoFragmentDirections.actionCafeInfoFragmentToCafeMapFragment())
     }
 }

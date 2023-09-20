@@ -314,6 +314,9 @@
         <action
             android:id="@+id/action_cafeInfoFragment_to_reviewWriteFragment"
             app:destination="@+id/reviewWriteFragment" />
+        <action
+            android:id="@+id/action_cafeInfoFragment_to_cafeMapFragment"
+            app:destination="@+id/cafeMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/reviewWriteFragment"
