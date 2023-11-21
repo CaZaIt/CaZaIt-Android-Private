@@ -20,10 +20,10 @@ class DataStoreModule {
     @Provides
     @Singleton
     fun providesUserPreferencesDataStore(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): DataStore<UserPreference> {
         return DataStoreFactory.create(
-            serializer = UserPreferenceSerializer()
+            serializer = UserPreferenceSerializer(),
         ) {
             File("${context.cacheDir.path}/$PATH_PB_USER")
         }

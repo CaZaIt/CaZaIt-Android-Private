@@ -2,7 +2,7 @@ package org.cazait.network.error.mapper
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import org.bmsk.network.R
+import org.cazait.core.network.R
 import org.cazait.network.error.EMAIL_ERROR
 import org.cazait.network.error.EMAIL_OR_PASSWORD_ERROR
 import org.cazait.network.error.EXPIRED_ACCESS_TOKEN

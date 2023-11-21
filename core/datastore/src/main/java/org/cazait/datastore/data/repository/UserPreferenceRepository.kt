@@ -1,15 +1,13 @@
 package org.cazait.datastore.data.repository
 
 import androidx.datastore.core.DataStore
-import kotlinx.coroutines.flow.first
 import org.cazait.model.local.UserPreference
-import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UserPreferenceRepository @Inject constructor(
-    private val userPreferenceDataSource: DataStore<UserPreference>
+    private val userPreferenceDataSource: DataStore<UserPreference>,
 ) {
     fun getUserPreference() = userPreferenceDataSource.data
 
@@ -19,7 +17,7 @@ class UserPreferenceRepository @Inject constructor(
         userId: String,
         role: String,
         accessToken: String,
-        refreshToken: String
+        refreshToken: String,
     ) = runCatching {
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
@@ -28,7 +26,7 @@ class UserPreferenceRepository @Inject constructor(
                 userId = userId,
                 role = role,
                 accessToken = accessToken,
-                refreshToken = refreshToken
+                refreshToken = refreshToken,
             )
         }
     }
@@ -40,7 +38,7 @@ class UserPreferenceRepository @Inject constructor(
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
                 accessToken = accessToken,
-                refreshToken = refreshToken
+                refreshToken = refreshToken,
             )
         }
     }
@@ -52,13 +50,13 @@ class UserPreferenceRepository @Inject constructor(
         if (updateMode == UPDATE_JWT_TOKEN) {
             userPreferenceDataSource.updateData { savedUserPreferences ->
                 savedUserPreferences.copy(
-                    accessToken = token
+                    accessToken = token,
                 )
             }
         } else {
             userPreferenceDataSource.updateData { savedUserPreferences ->
                 savedUserPreferences.copy(
-                    refreshToken = token
+                    refreshToken = token,
                 )
             }
         }

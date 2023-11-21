@@ -5,8 +5,8 @@ import androidx.datastore.core.Serializer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
-import org.cazait.model.local.UserPreference
 import kotlinx.serialization.json.Json
+import org.cazait.model.local.UserPreference
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -18,7 +18,7 @@ class UserPreferenceSerializer : Serializer<UserPreference> {
         return try {
             Json.decodeFromString(
                 UserPreference.serializer(),
-                input.readBytes().decodeToString()
+                input.readBytes().decodeToString(),
             )
         } catch (serialization: SerializationException) {
             throw CorruptionException("Unable to read UserPreference", serialization)
@@ -29,9 +29,8 @@ class UserPreferenceSerializer : Serializer<UserPreference> {
         withContext(Dispatchers.IO) {
             output.write(
                 Json.encodeToString(UserPreference.serializer(), t)
-                    .encodeToByteArray()
+                    .encodeToByteArray(),
             )
         }
     }
-
 }
