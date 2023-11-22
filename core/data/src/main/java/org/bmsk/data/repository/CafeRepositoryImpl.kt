@@ -90,7 +90,7 @@ class CafeRepositoryImpl @Inject constructor(
                     val fc = FavoriteCafes(
                         response.data?.favorites?.map {
                             it.toFavoriteCafe()
-                        }.orEmpty()
+                        }.orEmpty(),
                     )
                     emit(Resource.Success(fc))
                 }
@@ -104,7 +104,7 @@ class CafeRepositoryImpl @Inject constructor(
                                 val fc = FavoriteCafes(
                                     newResponse.data?.favorites?.map {
                                         it.toFavoriteCafe()
-                                    }.orEmpty()
+                                    }.orEmpty(),
                                 )
                                 Log.d("CafeRepository", "토큰 재발급 후 찜한 매장 호출")
                                 Log.d("CafeRepository", newResponse.data.toString())
@@ -129,7 +129,7 @@ class CafeRepositoryImpl @Inject constructor(
                     val cafeMenus = CafeMenus(
                         menus = response.data?.menus?.map {
                             it.toCafeMenu()
-                        }.orEmpty()
+                        }.orEmpty(),
                     )
                     emit(Resource.Success(cafeMenus))
                 }
@@ -145,7 +145,7 @@ class CafeRepositoryImpl @Inject constructor(
         cafeId: String,
         sortBy: String?,
         score: Int?,
-        lastId: Long?
+        lastId: Long?,
     ): Flow<Resource<CafeReviews>> {
         return flow {
             when (val response = cafeInfoRemoteData.getReviews(cafeId, sortBy, score, lastId)) {
@@ -166,11 +166,13 @@ class CafeRepositoryImpl @Inject constructor(
         userId: String,
         cafeId: String,
         score: Int,
-        content: String
+        content: String,
     ): Flow<Resource<String>> {
         return flow {
-            when (val response =
-                cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
+            when (
+                val response =
+                    cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)
+            ) {
                 is DataResponse.Success -> {
                     Log.d("CafeRepository", "등록 성공?")
                     Log.d("CafeRepository", response.data.toString())
@@ -182,8 +184,10 @@ class CafeRepositoryImpl @Inject constructor(
                     Log.d("CafeRepository", "등록 실패")
                     if (response.errorCode == 400) {
                         authRepository.refreshToken()
-                        when (val response =
-                            cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)) {
+                        when (
+                            val response =
+                                cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)
+                        ) {
                             is DataResponse.Success -> {
                                 val message: String = response.data?.message ?: ""
                                 Log.d("CafeRepository", "토큰 재발급 후 등록 성공")
@@ -235,7 +239,7 @@ class CafeRepositoryImpl @Inject constructor(
 
     override suspend fun postFavoriteCafeAuth(
         userId: String,
-        cafe: FavoriteCafe
+        cafe: FavoriteCafe,
     ): Flow<Resource<String>> {
         return flow {
             when (val response = cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
@@ -247,8 +251,10 @@ class CafeRepositoryImpl @Inject constructor(
                 is DataResponse.DataError -> {
                     if (response.errorCode == 400) {
                         authRepository.refreshToken()
-                        when (val response =
-                            cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
+                        when (
+                            val response =
+                                cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)
+                        ) {
                             is DataResponse.Success -> {
                                 val message: String = response.data?.message ?: ""
                                 emit(Resource.Success(message))
@@ -266,7 +272,7 @@ class CafeRepositoryImpl @Inject constructor(
 
     override suspend fun postFavoriteCafeAuth(
         userId: String,
-        cafe: Cafe
+        cafe: Cafe,
     ): Flow<Resource<String>> {
         return flow {
             when (val response = cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
@@ -278,8 +284,10 @@ class CafeRepositoryImpl @Inject constructor(
                 is DataResponse.DataError -> {
                     if (response.errorCode == 400) {
                         authRepository.refreshToken()
-                        when (val response =
-                            cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
+                        when (
+                            val response =
+                                cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)
+                        ) {
                             is DataResponse.Success -> {
                                 val message: String = response.data?.message ?: ""
                                 emit(Resource.Success(message))
@@ -297,7 +305,7 @@ class CafeRepositoryImpl @Inject constructor(
 
     override suspend fun deleteFavoriteCafeAuth(
         userId: String,
-        cafe: Cafe
+        cafe: Cafe,
     ): Flow<Resource<String>> {
         return flow {
             when (val response = cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
@@ -309,8 +317,10 @@ class CafeRepositoryImpl @Inject constructor(
                 is DataResponse.DataError -> {
                     if (response.errorCode == 400) {
                         authRepository.refreshToken()
-                        when (val response =
-                            cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
+                        when (
+                            val response =
+                                cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)
+                        ) {
                             is DataResponse.Success -> {
                                 val message: String = response.data?.data ?: ""
                                 emit(Resource.Success(message))
@@ -328,7 +338,7 @@ class CafeRepositoryImpl @Inject constructor(
 
     override suspend fun deleteFavoriteCafeAuth(
         userId: String,
-        cafe: FavoriteCafe
+        cafe: FavoriteCafe,
     ): Flow<Resource<String>> {
         return flow {
             when (val response = cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
@@ -340,8 +350,10 @@ class CafeRepositoryImpl @Inject constructor(
                 is DataResponse.DataError -> {
                     if (response.errorCode == 400) {
                         authRepository.refreshToken()
-                        when (val response =
-                            cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
+                        when (
+                            val response =
+                                cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)
+                        ) {
                             is DataResponse.Success -> {
                                 val message: String = response.data?.data ?: ""
                                 emit(Resource.Success(message))
@@ -402,7 +414,7 @@ class CafeRepositoryImpl @Inject constructor(
         longitude: String,
         latitude: String,
         sort: String,
-        limit: String
+        limit: String,
     ): Flow<Resource<Cafes>> {
         val query =
             ListCafesReq(longitude = longitude, latitude = latitude, sort = sort, limit = limit)

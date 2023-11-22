@@ -84,7 +84,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
     }
 
     private fun onSearchDone() {
-        binding.searchBarSearch.setOnEditorActionListener { v, actionId, event ->
+        binding.searchBarSearch.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = v.text.toString()
                 viewModel.getCafeSearch(query)

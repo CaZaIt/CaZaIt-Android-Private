@@ -50,7 +50,7 @@ data class CafeResTemp(
 }
 
 fun CafeResTemp.Data.toCafe(): Cafe {
-    val cafesImages = cafesImages ?: emptyList()
+    val cafesImages = cafesImages
     return Cafe(
         cafeId = cafeId,
         name = name,
