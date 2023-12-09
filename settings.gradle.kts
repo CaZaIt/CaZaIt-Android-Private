@@ -21,5 +21,6 @@ include(
     ":core:network",
     ":core:data",
     ":core:database",
-    ":core:datastore"
+    ":core:datastore",
+    ":core:domain"
 )
