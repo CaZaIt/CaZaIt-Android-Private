@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.bmsk.data.repository.CafeRepository
+import org.cazait.core.data.repository.CafeRepository
 import org.cazait.model.Cafe
 import org.cazait.model.Cafes
 import org.cazait.model.FavoriteCafe

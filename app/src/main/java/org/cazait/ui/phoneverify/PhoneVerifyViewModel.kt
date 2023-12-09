@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.bmsk.data.repository.AuthRepository
-import org.bmsk.data.repository.UserRepository
+import org.cazait.core.data.repository.AuthRepository
+import org.cazait.core.data.repository.UserRepository
 import org.cazait.model.FindPassUserData
 import org.cazait.model.Resource
 import org.cazait.model.VerificationCode

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import org.bmsk.data.repository.UserRepository
+import org.cazait.core.data.repository.UserRepository
 import org.cazait.model.Resource
 import org.cazait.model.UserPassword
 import org.cazait.ui.base.BaseViewModel

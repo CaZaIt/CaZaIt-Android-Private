@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.bmsk.data.repository.UserRepository
+import org.cazait.core.data.repository.UserRepository
 import org.cazait.model.Check
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo

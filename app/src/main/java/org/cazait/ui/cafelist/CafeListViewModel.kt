@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.bmsk.data.repository.CafeRepository
-import org.bmsk.data.repository.UserRepository
+import org.cazait.core.data.repository.CafeRepository
+import org.cazait.core.data.repository.UserRepository
 import org.cazait.model.Cafe
 import org.cazait.model.Cafes
 import org.cazait.model.FavoriteCafe
