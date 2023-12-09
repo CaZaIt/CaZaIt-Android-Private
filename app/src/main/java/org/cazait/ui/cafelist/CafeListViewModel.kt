@@ -71,12 +71,12 @@ class CafeListViewModel @Inject constructor(
 
     private suspend fun fetchUserIdIfLoggedIn(): String? {
         updateSignInState()
-        if (_signInStateFlow.value) {
+        return if (_signInStateFlow.value) {
             val uuid = userRepository.getUserInfo().first().uuid
             Log.d("CafeListViewModel 유저 uuid", uuid)
-            return uuid
+            uuid
         } else {
-            return null
+            null
         }
     }
 

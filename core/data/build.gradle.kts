@@ -13,4 +13,12 @@ dependencies {
     implementation(projects.core.network)
     implementation(projects.core.datastore)
     implementation(projects.core.database)
+
+    // 네트워크
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.converter.moshi)
 }

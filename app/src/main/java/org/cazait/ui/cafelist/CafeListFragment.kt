@@ -7,18 +7,14 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import org.cazait.Constants
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeListBinding
-import org.cazait.databinding.VerticalTitleFilterLayoutBinding
 import org.cazait.model.Cafe
 import org.cazait.model.Cafes
 import org.cazait.model.FavoriteCafe
@@ -36,10 +32,12 @@ import pub.devrel.easypermissions.EasyPermissions.PermissionCallbacks
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel>(
-    CafeListViewModel::class.java,
-    R.layout.fragment_cafe_list,
-), PermissionCallbacks {
+class CafeListFragment :
+    BaseFragment<FragmentCafeListBinding, CafeListViewModel>(
+        CafeListViewModel::class.java,
+        R.layout.fragment_cafe_list,
+    ),
+    PermissionCallbacks {
     private var horizontalCafeList: List<FavoriteCafe> = emptyList()
     private lateinit var favoriteCafes: FavoriteCafes
     private val horizontalAdapter by lazy {
@@ -64,23 +62,32 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
 
     override fun initAfterBinding() {
         var sData = resources.getStringArray(R.array.my_array)
-        var sadapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, sData)
+        var sadapter = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            sData,
+        )
         binding.cafeAllLayout.spinnerSort.adapter = sadapter
 
-        binding.cafeAllLayout.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedSort = parent?.getItemAtPosition(position) as String
-                if (selectedSort == "혼잡도순") {
-                    sortCafesByCongestion(verticalAdapter.currentList)
-                } else {
-                    val sortedCafes = verticalAdapter.currentList.sortedBy { it.distance }
-                    verticalAdapter.submitList(sortedCafes)
+        binding.cafeAllLayout.spinnerSort.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    val selectedSort = parent?.getItemAtPosition(position) as String
+                    if (selectedSort == "혼잡도순") {
+                        sortCafesByCongestion(verticalAdapter.currentList)
+                    } else {
+                        val sortedCafes = verticalAdapter.currentList.sortedBy { it.distance }
+                        verticalAdapter.submitList(sortedCafes)
+                    }
                 }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-
     }
 
     private fun sortCafesByCongestion(cafes: List<Cafe>) {
@@ -89,12 +96,10 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         verticalAdapter.submitList(sortedCafes)
     }
 
-
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         when (requestCode) {
             Constants.REQUEST_CODE_LOCATION_PERMISSION -> {
@@ -128,7 +133,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         binding.favoriteStoreLayout.apply {
             title = ListTitle(
                 title = getString(R.string.favorite_stores),
-                subTitle = getString(R.string.favorite_stores_guide)
+                subTitle = getString(R.string.favorite_stores_guide),
             )
             setUpRecyclerView(recyclerView, horizontalAdapter, R.dimen.cafe_item_space)
         }
@@ -168,28 +173,28 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         recyclerView: RecyclerView,
         adapter: ListAdapter<*, *>,
         spaceDimen: Int,
-        bottomSpaceDimen: Int? = null
+        bottomSpaceDimen: Int? = null,
     ) {
         recyclerView.addItemDecoration(
             ItemDecoration(
                 bottom = bottomSpaceDimen?.let { resources.getDimension(it).roundToInt() } ?: 0,
-                extraMargin = resources.getDimension(spaceDimen).roundToInt()
-            )
+                extraMargin = resources.getDimension(spaceDimen).roundToInt(),
+            ),
         )
         recyclerView.adapter = adapter
     }
 
     private fun navigateToCafeInfo(cafe: Cafe) {
         findNavController().navigate(
-            CafeListFragmentDirections.actionCafeListFragmentToCafeInfoFragment(cafe)
+            CafeListFragmentDirections.actionCafeListFragmentToCafeInfoFragment(cafe),
         )
     }
 
     private fun navigateToCafeSearch(favoriteCafes: FavoriteCafes) {
         findNavController().navigate(
             CafeListFragmentDirections.actionCafeListFragmentToSearchFragment(
-                favoriteCafes
-            )
+                favoriteCafes,
+            ),
         )
     }
 
@@ -197,7 +202,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
         binding.icMenu.setOnClickListener {
             findNavController().navigate(CafeListFragmentDirections.actionCafeListFragmentToAlarmFragment())
         }
-        Log.e("alarm","true!!")
+        Log.e("alarm", "true!!")
     }
 
     private fun handleHorizontalCafeList(status: Resource<FavoriteCafes>?) {
@@ -208,7 +213,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
                 horizontalCafeList = status.data?.list ?: emptyList()
                 handleSuccess(
                     horizontalAdapter::submitList,
-                    horizontalCafeList
+                    horizontalCafeList,
                 )
                 viewModel.updateVerticalCafeList()
             }
@@ -226,7 +231,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
                 viewModel.updateFavoriteStatus(horizontalCafeList, verticalCafeList)
                 handleSuccess(
                     verticalAdapter::submitList,
-                    verticalCafeList
+                    verticalCafeList,
                 )
             }
         }
@@ -255,7 +260,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding, CafeListViewModel
                 getString(R.string.guide_need_location_permission),
                 Constants.REQUEST_CODE_LOCATION_PERMISSION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             )
         } else {
             EasyPermissions.requestPermissions(
