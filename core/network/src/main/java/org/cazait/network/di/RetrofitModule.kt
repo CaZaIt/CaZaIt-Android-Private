@@ -107,7 +107,7 @@ object RetrofitModule {
             val user = runBlocking(Dispatchers.IO) {
                 kotlin.runCatching {
                     userPreferenceRepository.getUserPreference().first()
-                }.getOrDefault(UserPreference.getDefaultInstance())
+                }.getOrDefault(UserPreference.createDefaultInstance())
             }
 
             val accessToken = user.accessToken

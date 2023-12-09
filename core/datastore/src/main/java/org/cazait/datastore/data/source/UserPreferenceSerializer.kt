@@ -12,7 +12,7 @@ import java.io.OutputStream
 
 class UserPreferenceSerializer : Serializer<UserPreference> {
     override val defaultValue: UserPreference
-        get() = UserPreference.getDefaultInstance()
+        get() = UserPreference.createDefaultInstance()
 
     override suspend fun readFrom(input: InputStream): UserPreference {
         return try {

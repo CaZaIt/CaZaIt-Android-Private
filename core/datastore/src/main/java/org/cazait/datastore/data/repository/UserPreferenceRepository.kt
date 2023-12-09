@@ -1,6 +1,7 @@
 package org.cazait.datastore.data.repository
 
 import androidx.datastore.core.DataStore
+import kotlinx.coroutines.flow.Flow
 import org.cazait.model.local.UserPreference
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -9,7 +10,7 @@ import javax.inject.Singleton
 class UserPreferenceRepository @Inject constructor(
     private val userPreferenceDataSource: DataStore<UserPreference>,
 ) {
-    fun getUserPreference() = userPreferenceDataSource.data
+    fun getUserPreference(): Flow<UserPreference> = userPreferenceDataSource.data
 
     suspend fun updateUserPreference(
         isLoggedIn: Boolean,
@@ -64,7 +65,7 @@ class UserPreferenceRepository @Inject constructor(
 
     suspend fun clearUserPreference() = runCatching {
         userPreferenceDataSource.updateData {
-            UserPreference.getDefaultInstance()
+            UserPreference.createDefaultInstance()
         }
     }
 

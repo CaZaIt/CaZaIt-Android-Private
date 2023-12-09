@@ -12,7 +12,7 @@ data class UserPreference(
     val refreshToken: String,
 ) {
     companion object {
-        fun getDefaultInstance() = UserPreference(
+        fun createDefaultInstance() = UserPreference(
             isLoggedIn = false,
             uuid = "",
             userId = "",
