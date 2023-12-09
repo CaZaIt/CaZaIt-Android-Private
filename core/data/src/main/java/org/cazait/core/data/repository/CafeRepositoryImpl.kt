@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import org.cazait.core.data.datasource.request.ListCafesRequest
+import org.cazait.core.data.datasource.response.toCafe
 import org.cazait.core.data.model.toCafe
 import org.cazait.core.data.model.toCafeMenu
 import org.cazait.core.data.model.toCafeReviews
@@ -22,19 +24,13 @@ import org.cazait.model.FavoriteCafe
 import org.cazait.model.FavoriteCafes
 import org.cazait.model.RecentlyViewedCafe
 import org.cazait.model.Resource
-import org.cazait.network.datasource.CafeInfoRemoteData
-import org.cazait.network.datasource.CafeListRemoteData
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.request.ListCafesReq
-import org.cazait.network.model.dto.response.toCafe
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class CafeRepositoryImpl @Inject constructor(
     private val authRepository: AuthRepository,
-    private val cafeListRemoteData: CafeListRemoteData,
-    private val cafeInfoRemoteData: CafeInfoRemoteData,
     private val cafeDAO: CafeDAO,
     private val recentlyViewedCafeDAO: RecentlyViewedCafeDAO,
     private val ioDispatcher: CoroutineContext,
@@ -63,7 +59,12 @@ class CafeRepositoryImpl @Inject constructor(
         limit: String,
     ): Flow<Resource<Cafes>> {
         val query =
-            ListCafesReq(latitude = latitude, longitude = longitude, sort = sort, limit = limit)
+            org.cazait.core.data.datasource.request.ListCafesRequest(
+                latitude = latitude,
+                longitude = longitude,
+                sort = sort,
+                limit = limit
+            )
 
         return flow {
             val response = cafeListRemoteData.getListCafes(query)
@@ -417,7 +418,12 @@ class CafeRepositoryImpl @Inject constructor(
         limit: String,
     ): Flow<Resource<Cafes>> {
         val query =
-            ListCafesReq(longitude = longitude, latitude = latitude, sort = sort, limit = limit)
+            org.cazait.core.data.datasource.request.ListCafesRequest(
+                longitude = longitude,
+                latitude = latitude,
+                sort = sort,
+                limit = limit
+            )
 
         return flow {
             val response = cafeListRemoteData.getCafeSearch(cafeName, query)

@@ -10,7 +10,6 @@ android {
 
 dependencies {
     implementation(projects.core.model)
-    implementation(projects.core.network)
     implementation(projects.core.datastore)
     implementation(projects.core.database)
 

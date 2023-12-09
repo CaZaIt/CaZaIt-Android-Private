@@ -1,9 +1,9 @@
 package org.cazait.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import org.cazait.model.VerificationCode
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
+import org.cazait.model.VerificationCode
 import org.cazait.model.VerifyCode
 import org.cazait.model.local.UserPreference
 

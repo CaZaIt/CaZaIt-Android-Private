@@ -17,7 +17,7 @@ interface CafeRepository {
         latitude: String,
         longitude: String,
         sort: String = "distance",
-        limit: String = "0"
+        limit: String = "0",
     ): Flow<Resource<Cafes>>
 
     suspend fun getMenus(cafeId: String): Flow<Resource<CafeMenus>>
@@ -25,14 +25,14 @@ interface CafeRepository {
         cafeId: String,
         sortBy: String?,
         score: Int?,
-        lastId: Long?
+        lastId: Long?,
     ): Flow<Resource<CafeReviews>>
 
     suspend fun postReviewAuth(
         userId: String,
         cafeId: String,
         score: Int,
-        content: String
+        content: String,
     ): Flow<Resource<String>>
 
     suspend fun insertFavoriteCafe(cafe: FavoriteCafe): Boolean
@@ -56,6 +56,6 @@ interface CafeRepository {
         longitude: String,
         latitude: String,
         sort: String = "distance",
-        limit: String = "0"
+        limit: String = "0",
     ): Flow<Resource<Cafes>>
 }

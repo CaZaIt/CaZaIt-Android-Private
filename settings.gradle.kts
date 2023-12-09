@@ -18,7 +18,6 @@ rootProject.name = "CaZaIt"
 include(
     ":app",
     ":core:model",
-    ":core:network",
     ":core:data",
     ":core:database",
     ":core:datastore",

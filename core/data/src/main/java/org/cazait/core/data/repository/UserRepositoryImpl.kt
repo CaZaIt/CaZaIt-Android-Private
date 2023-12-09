@@ -5,6 +5,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import org.cazait.core.data.datasource.request.ChangeNicknameRequest
+import org.cazait.core.data.datasource.request.ChangePasswordRequest
+import org.cazait.core.data.datasource.request.CheckNicknameRequest
+import org.cazait.core.data.datasource.request.CheckPasswordRequest
+import org.cazait.core.data.datasource.request.CheckPhoneNumRequest
+import org.cazait.core.data.datasource.request.CheckUserDataRequest
+import org.cazait.core.data.datasource.request.CheckUserIdRequest
+import org.cazait.core.data.datasource.request.FindUserIdRequest
+import org.cazait.core.data.datasource.request.ResetPasswordRequest
+import org.cazait.core.data.datasource.request.SignUpRequest
 import org.cazait.core.data.model.toCheck
 import org.cazait.core.data.model.toFindUserId
 import org.cazait.core.data.model.toResetPassword
@@ -13,32 +23,20 @@ import org.cazait.core.data.model.toUser
 import org.cazait.datastore.data.repository.UserPreferenceRepository
 import org.cazait.model.Check
 import org.cazait.model.FindPassUserData
-import org.cazait.network.model.dto.request.SignUpReq
 import org.cazait.model.Resource
 import org.cazait.model.SignUpInfo
 import org.cazait.model.UserAccount
 import org.cazait.model.UserPassword
 import org.cazait.model.local.UserPreference
-import org.cazait.network.datasource.UserRemoteData
 import org.cazait.network.error.EXIST_ACCOUNTNAME
 import org.cazait.network.error.EXIST_PHONENUMBER
 import org.cazait.network.error.INVALID_USER_PASSWORD
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.request.ChangeNicknameReq
-import org.cazait.network.model.dto.request.ChangePasswordReq
-import org.cazait.network.model.dto.request.CheckNicknameReq
-import org.cazait.network.model.dto.request.CheckPasswordReq
-import org.cazait.network.model.dto.request.CheckPhoneNumReq
-import org.cazait.network.model.dto.request.CheckUserDataReq
-import org.cazait.network.model.dto.request.CheckUserIdReq
-import org.cazait.network.model.dto.request.FindUserIdReq
-import org.cazait.network.model.dto.request.ResetPasswordReq
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class UserRepositoryImpl @Inject constructor(
     private val authRepository: AuthRepository,
-    private val remoteData: UserRemoteData,
     private val ioDispatcher: CoroutineContext,
     private val userPreferenceRepository: UserPreferenceRepository,
 ) : UserRepository {
@@ -47,10 +45,15 @@ class UserRepositoryImpl @Inject constructor(
         userId: String,
         password: String,
         phoneNumber: String,
-        nickname: String
+        nickname: String,
     ): Flow<Resource<SignUpInfo>> {
         return flow {
-            val body = SignUpReq(userId, password, phoneNumber, nickname)
+            val body = org.cazait.core.data.datasource.request.SignUpRequest(
+                userId,
+                password,
+                phoneNumber,
+                nickname
+            )
 
             when (val response = remoteData.postSignUp(body)) {
                 is DataResponse.Success -> {
@@ -68,10 +71,11 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun checkPhoneNumDB(
         phoneNumber: String,
-        isExist: String
+        isExist: String,
     ): Flow<Resource<String>> {
         return flow {
-            val body = CheckPhoneNumReq(phoneNumber, isExist)
+            val body =
+                org.cazait.core.data.datasource.request.CheckPhoneNumRequest(phoneNumber, isExist)
             when (val response = remoteData.postCheckPhoneNum(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -93,7 +97,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun checkUserIdDB(userId: String, isExist: String): Flow<Resource<Check>> {
         return flow {
-            val body = CheckUserIdReq(userId, isExist)
+            val body = org.cazait.core.data.datasource.request.CheckUserIdRequest(userId, isExist)
             when (val response = remoteData.postCheckUserId(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -115,10 +119,11 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun checkNicknameDB(
         nickname: String,
-        isExist: String
+        isExist: String,
     ): Flow<Resource<String>> {
         return flow {
-            val body = CheckNicknameReq(nickname, isExist)
+            val body =
+                org.cazait.core.data.datasource.request.CheckNicknameRequest(nickname, isExist)
             when (val response = remoteData.postCheckNickname(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -140,10 +145,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun checkUserData(
         userUuid: String,
-        phoneNumber: String
+        phoneNumber: String,
     ): Flow<Resource<FindPassUserData>> {
         return flow {
-            val body = CheckUserDataReq(phoneNumber)
+            val body = org.cazait.core.data.datasource.request.CheckUserDataRequest(phoneNumber)
             when (val response = remoteData.postCheckUserData(userUuid, body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -160,7 +165,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun findUserId(phoneNumber: String): Flow<Resource<UserAccount>> {
         return flow {
-            val body = FindUserIdReq(phoneNumber)
+            val body = org.cazait.core.data.datasource.request.FindUserIdRequest(phoneNumber)
             when (val response = remoteData.postFindUserId(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -177,10 +182,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun resetPassword(
         userUuid: String,
-        rePassword: String
+        rePassword: String,
     ): Flow<Resource<UserPassword>> {
         return flow {
-            val body = ResetPasswordReq(rePassword)
+            val body = org.cazait.core.data.datasource.request.ResetPasswordRequest(rePassword)
             when (val response = remoteData.patchPassword(userUuid, body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -197,10 +202,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun checkPassword(
         userUuid: String,
-        rePassword: String
+        rePassword: String,
     ): Flow<Resource<String>> {
         return flow {
-            val body = CheckPasswordReq(rePassword)
+            val body = org.cazait.core.data.datasource.request.CheckPasswordRequest(rePassword)
             when (val response = remoteData.postCheckPassword(userUuid, body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -240,10 +245,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun changePassword(
         userUuid: String,
-        rePassword: String
+        rePassword: String,
     ): Flow<Resource<String>> {
         return flow {
-            val body = ChangePasswordReq(rePassword)
+            val body = org.cazait.core.data.datasource.request.ChangePasswordRequest(rePassword)
             when (val response = remoteData.patchChangePassword(userUuid, body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -275,10 +280,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun changeNickname(
         userUuid: String,
-        reNickName: String
+        reNickName: String,
     ): Flow<Resource<String>> {
         return flow {
-            val body = ChangeNicknameReq(reNickName)
+            val body = org.cazait.core.data.datasource.request.ChangeNicknameRequest(reNickName)
             when (val response = remoteData.patchChangeNickname(userUuid, body)) {
                 is DataResponse.Success -> {
                     response.data?.let {

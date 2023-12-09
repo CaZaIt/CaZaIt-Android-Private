@@ -29,7 +29,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(
+    @Authenticated
+    fun provideAuthOkHttpClient(
         interceptor: HttpLoggingInterceptor,
         userPreferenceRepository: UserPreferenceRepository,
     ): OkHttpClient {
@@ -57,6 +58,20 @@ class NetworkModule {
         return okHttpBuilder.build()
     }
 
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(
+        interceptor: HttpLoggingInterceptor,
+    ): OkHttpClient {
+        val okHttpBuilder = OkHttpClient.Builder().apply {
+            addInterceptor(interceptor)
+//            if (BuildConfig.DEBUG) {
+//                addNetworkInterceptor(httpLoggingInterceptor)
+//            }
+        }
+        return okHttpBuilder.build()
+    }
+
     @Provides
     @Singleton
     fun provideMoshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create(
@@ -64,6 +79,18 @@ class NetworkModule {
             .add(KotlinJsonAdapterFactory())
             .build(),
     )
+
+    @Provides
+    @Singleton
+    @Authenticated
+    fun provideAuthRetrofit(
+        @Authenticated client: OkHttpClient,
+        moshiConverterFactory: MoshiConverterFactory,
+    ): Retrofit = Retrofit.Builder().baseUrl(URL)
+        .client(client)
+        .addConverterFactory(moshiConverterFactory)
+        .addCallAdapterFactory(NetworkResultCallAdapterFactory.create())
+        .build()
 
     @Provides
     @Singleton

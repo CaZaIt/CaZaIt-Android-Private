@@ -5,36 +5,31 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import org.cazait.core.data.datasource.request.SignInRequest
+import org.cazait.core.data.datasource.request.VerificationCodeRequest
+import org.cazait.core.data.datasource.request.VerifyCodeRequest
 import org.cazait.core.data.model.toMessage
 import org.cazait.core.data.model.toSignInInfo
 import org.cazait.core.data.model.toVerify
 import org.cazait.datastore.data.repository.UserPreferenceRepository
-import org.cazait.model.VerificationCode
 import org.cazait.model.Resource
 import org.cazait.model.SignInInfo
+import org.cazait.model.VerificationCode
 import org.cazait.model.VerifyCode
-import org.cazait.network.datasource.AuthRemoteData
-import org.cazait.network.error.DEFAULT_ERROR
-import org.cazait.network.error.EXPIRED_VERIFICATION_CODE
-import org.cazait.network.error.FAILED_TO_LOGIN
 import org.cazait.network.model.dto.DataResponse
-import org.cazait.network.model.dto.request.VerificationCodeReq
-import org.cazait.network.model.dto.request.SignInReq
-import org.cazait.network.model.dto.request.VerifyCodeReq
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class AuthRepositoryImpl @Inject constructor(
-    private val authRemoteData: AuthRemoteData,
     private val ioDispatcher: CoroutineContext,
-    private val userPreferenceRepository: UserPreferenceRepository
+    private val userPreferenceRepository: UserPreferenceRepository,
 ) : AuthRepository {
     override suspend fun refreshToken() = flow {
         val userPreference = userPreferenceRepository.getUserPreference().first()
 
         val updatedRefreshToken = authRemoteData.getRefreshToken(
             role = userPreference.role,
-            refreshToken = userPreference.refreshToken
+            refreshToken = userPreference.refreshToken,
         ).data
         val accessToken = updatedRefreshToken?.data?.accessToken ?: userPreference.accessToken
         val refreshToken = updatedRefreshToken?.data?.refreshToken ?: userPreference.refreshToken
@@ -44,14 +39,14 @@ class AuthRepositoryImpl @Inject constructor(
         emit(
             userPreferenceRepository.updateUserToken(
                 accessToken,
-                refreshToken
-            )
+                refreshToken,
+            ),
         )
     }
 
     override suspend fun signIn(userId: String, password: String): Flow<Resource<SignInInfo>> {
         return flow {
-            val body = SignInReq(userId, password)
+            val body = org.cazait.core.data.datasource.request.SignInRequest(userId, password)
 
             when (val response = authRemoteData.postSignIn(body)) {
                 is DataResponse.Success -> {
@@ -89,10 +84,11 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun postVerifyCode(
         phoneNumber: String,
-        verifyCode: Int
+        verifyCode: Int,
     ): Flow<Resource<VerifyCode>> {
         return flow {
-            val body = VerifyCodeReq(phoneNumber, verifyCode)
+            val body =
+                org.cazait.core.data.datasource.request.VerifyCodeRequest(phoneNumber, verifyCode)
             when (val response = authRemoteData.postVerifyCode(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -114,7 +110,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun postVerificationCode(phoneNumber: String): Flow<Resource<VerificationCode>> {
         return flow {
-            val body = VerificationCodeReq(phoneNumber)
+            val body = org.cazait.core.data.datasource.request.VerificationCodeRequest(phoneNumber)
             when (val response = authRemoteData.postVerificationCode(body)) {
                 is DataResponse.Success -> {
                     response.data?.let {
@@ -134,6 +130,6 @@ class AuthRepositoryImpl @Inject constructor(
         uuid = "",
         accessToken = "",
         refreshToken = "",
-        role = ""
+        role = "",
     )
 }
