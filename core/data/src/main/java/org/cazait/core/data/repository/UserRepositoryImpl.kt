@@ -1,15 +1,15 @@
-package org.bmsk.data.repository
+package org.cazait.core.data.repository
 
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.bmsk.data.model.toCheck
-import org.bmsk.data.model.toFindUserId
-import org.bmsk.data.model.toResetPassword
-import org.bmsk.data.model.toSignUpInfo
-import org.bmsk.data.model.toUser
+import org.cazait.core.data.model.toCheck
+import org.cazait.core.data.model.toFindUserId
+import org.cazait.core.data.model.toResetPassword
+import org.cazait.core.data.model.toSignUpInfo
+import org.cazait.core.data.model.toUser
 import org.cazait.datastore.data.repository.UserPreferenceRepository
 import org.cazait.model.Check
 import org.cazait.model.FindPassUserData

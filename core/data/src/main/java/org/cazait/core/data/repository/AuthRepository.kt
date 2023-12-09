@@ -1,4 +1,4 @@
-package org.bmsk.data.repository
+package org.cazait.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.cazait.model.VerificationCode

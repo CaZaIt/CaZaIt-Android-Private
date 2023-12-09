@@ -1,4 +1,4 @@
-package org.bmsk.data.di
+package org.cazait.core.data.di
 
 import dagger.Module
 import dagger.Provides

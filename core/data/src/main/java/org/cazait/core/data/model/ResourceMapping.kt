@@ -1,4 +1,4 @@
-package org.bmsk.data.model
+package org.cazait.core.data.model
 
 import org.cazait.database.model.entity.FavoriteCafeEntity
 import org.cazait.database.model.entity.RecentlyViewedCafeEntity

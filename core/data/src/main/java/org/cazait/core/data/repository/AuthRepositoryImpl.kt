@@ -1,13 +1,13 @@
-package org.bmsk.data.repository
+package org.cazait.core.data.repository
 
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.bmsk.data.model.toMessage
-import org.bmsk.data.model.toSignInInfo
-import org.bmsk.data.model.toVerify
+import org.cazait.core.data.model.toMessage
+import org.cazait.core.data.model.toSignInInfo
+import org.cazait.core.data.model.toVerify
 import org.cazait.datastore.data.repository.UserPreferenceRepository
 import org.cazait.model.VerificationCode
 import org.cazait.model.Resource

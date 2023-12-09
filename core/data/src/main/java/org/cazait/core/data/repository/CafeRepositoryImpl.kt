@@ -1,17 +1,17 @@
-package org.bmsk.data.repository
+package org.cazait.core.data.repository
 
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.bmsk.data.model.toCafe
-import org.bmsk.data.model.toCafeMenu
-import org.bmsk.data.model.toCafeReviews
-import org.bmsk.data.model.toFavoriteCafe
-import org.bmsk.data.model.toFavoriteCafeEntity
-import org.bmsk.data.model.toRecently
-import org.bmsk.data.model.toRecentlyViewedCafeEntity
+import org.cazait.core.data.model.toCafe
+import org.cazait.core.data.model.toCafeMenu
+import org.cazait.core.data.model.toCafeReviews
+import org.cazait.core.data.model.toFavoriteCafe
+import org.cazait.core.data.model.toFavoriteCafeEntity
+import org.cazait.core.data.model.toRecently
+import org.cazait.core.data.model.toRecentlyViewedCafeEntity
 import org.cazait.database.dao.CafeDAO
 import org.cazait.database.dao.RecentlyViewedCafeDAO
 import org.cazait.model.Cafe
