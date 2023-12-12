@@ -5,4 +5,4 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LocationTermsViewModel @Inject constructor():BaseViewModel()
+class LocationTermsViewModel @Inject constructor() : BaseViewModel()

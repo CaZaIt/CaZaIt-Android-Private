@@ -8,7 +8,7 @@ import org.cazait.databinding.FragmentSeeMoreBinding
 import org.cazait.ui.base.BaseFragment
 
 @AndroidEntryPoint
-class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
+class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel>(
     SeeMoreViewModel::class.java,
     R.layout.fragment_see_more,
 ) {
@@ -19,8 +19,8 @@ class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
     }
 
     override fun initAfterBinding() {
-
     }
+
     fun navigateToCustomerServiceFragment() {
         findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToCustomerServiceFragment())
     }
@@ -33,11 +33,10 @@ class SeeMoreFragment : BaseFragment<FragmentSeeMoreBinding, SeeMoreViewModel> (
         findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToAnnouncementFragment())
     }
 
-    fun navigateToAccountManageFragment(){
-        if(viewModel.signInStateFlow.value){
+    fun navigateToAccountManageFragment() {
+        if (viewModel.signInStateFlow.value) {
             findNavController().navigate(SeeMoreFragmentDirections.actionSeeMoreFragmentToCheckPasswordFragment())
-        }
-        else{
+        } else {
             AlertDialog.Builder(requireContext())
                 .setMessage(resources.getString(R.string.need_login))
                 .setPositiveButton("확인") { dialog, _ ->

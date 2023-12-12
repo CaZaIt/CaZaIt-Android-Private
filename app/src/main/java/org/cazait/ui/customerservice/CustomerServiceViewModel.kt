@@ -5,4 +5,4 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CustomerServiceViewModel @Inject constructor(): BaseViewModel()
+class CustomerServiceViewModel @Inject constructor() : BaseViewModel()

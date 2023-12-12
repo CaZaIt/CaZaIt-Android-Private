@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.UserRepository
-import org.cazait.model.Resource
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class CheckPasswordViewModel @Inject constructor(private val userRepository: Use
         viewModelScope.launch {
             _checkPasswordProcess.value = Resource.Loading()
             val userUuid = userRepository.getUserInfo().first().uuid
-            userRepository.checkPassword(userUuid, password).collect{
+            userRepository.checkPassword(userUuid, password).collect {
                 _checkPasswordProcess.value = it
             }
         }
@@ -38,7 +38,7 @@ class CheckPasswordViewModel @Inject constructor(private val userRepository: Use
         _showToast.value = SingleEvent(errorMessage)
     }
 
-    fun initViewModel(){
+    fun initViewModel() {
         _checkPasswordProcess.value = null
     }
 }

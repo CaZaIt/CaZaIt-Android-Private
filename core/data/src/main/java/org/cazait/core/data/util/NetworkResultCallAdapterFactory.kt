@@ -2,7 +2,7 @@ package org.cazait.core.data.util
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import org.cazait.core.data.model.network.NetworkResult
+import org.cazait.core.domain.model.network.NetworkResult
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit

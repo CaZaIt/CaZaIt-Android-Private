@@ -6,7 +6,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentCheckPasswordBinding
-import org.cazait.model.Resource
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -17,7 +17,7 @@ import org.cazait.utils.toVisible
 @AndroidEntryPoint
 class CheckPasswordFragment : BaseFragment<FragmentCheckPasswordBinding, CheckPasswordViewModel>(
     CheckPasswordViewModel::class.java,
-    R.layout.fragment_check_password
+    R.layout.fragment_check_password,
 ) {
     override fun initView() {
         viewModel.initViewModel()
@@ -30,7 +30,6 @@ class CheckPasswordFragment : BaseFragment<FragmentCheckPasswordBinding, CheckPa
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun observeViewModel() {
@@ -38,18 +37,20 @@ class CheckPasswordFragment : BaseFragment<FragmentCheckPasswordBinding, CheckPa
         observeToast(viewModel.showToast)
     }
 
-    private fun handlePassword(status: Resource<String>?){
-        when(status){
+    private fun handlePassword(status: Resource<String>?) {
+        when (status) {
             is Resource.Loading -> showLoading()
             is Resource.Success -> status.data.let {
                 hideLoading()
                 viewModel.showToastMessage(it)
                 navigateToSelectFragment()
             }
+
             is Resource.Error -> {
                 hideLoading()
                 viewModel.showToastMessage(status.message)
             }
+
             null -> {}
         }
     }
@@ -69,7 +70,7 @@ class CheckPasswordFragment : BaseFragment<FragmentCheckPasswordBinding, CheckPa
         binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
 
-    private fun navigateToSelectFragment(){
+    private fun navigateToSelectFragment() {
         findNavController().navigate(CheckPasswordFragmentDirections.actionCheckPasswordFragmentToChangeSelectFragment())
     }
 

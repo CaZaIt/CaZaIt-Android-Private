@@ -1,13 +1,5 @@
 package org.cazait.ui.adapter
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import org.cazait.databinding.ItemRecentlyCafeBinding
-import org.cazait.model.Cafe
-
 /*
 class RecentlyCafeAdapter : ListAdapter<Cafe, RecentlyCafeAdapter.ViewHolder>() {
 

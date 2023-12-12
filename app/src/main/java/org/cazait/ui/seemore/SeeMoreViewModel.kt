@@ -1,6 +1,5 @@
 package org.cazait.ui.seemore
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -8,7 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.UserRepository
-import org.cazait.model.local.UserPreference
+import org.cazait.core.model.local.UserPreference
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 

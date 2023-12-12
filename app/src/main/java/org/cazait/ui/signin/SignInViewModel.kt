@@ -1,46 +1,55 @@
 package org.cazait.ui.signin
 
-import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.cazait.core.data.repository.AuthRepository
-import org.cazait.model.Resource
-import org.cazait.model.SignInInfo
+import org.cazait.core.domain.model.network.onError
+import org.cazait.core.domain.model.network.onException
+import org.cazait.core.domain.model.network.onSuccess
+import org.cazait.core.domain.usecase.post.PostSignInUseCase
+import org.cazait.core.model.Resource
+import org.cazait.core.model.sign.SignInInfo
 import org.cazait.ui.base.BaseViewModel
-import org.cazait.utils.SingleEvent
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val postSignInUseCase: PostSignInUseCase,
 ) : BaseViewModel() {
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _signInProcess = MutableLiveData<Resource<SignInInfo>?>()
-    val signInProcess: LiveData<Resource<SignInInfo>?>
-        get() = _signInProcess
+    private val _signInProcess: MutableStateFlow<Resource<SignInInfo>> =
+        MutableStateFlow(Resource.Loading())
+    val signInProcess: StateFlow<Resource<SignInInfo>> = _signInProcess.asStateFlow()
 
-    private val _showToast = MutableLiveData<SingleEvent<Any>>()
-    val showToast: LiveData<SingleEvent<Any>>
-        get() = _showToast
+    private val _toastMessage: MutableSharedFlow<String> = MutableSharedFlow()
+    val toastMessage: SharedFlow<String> = _toastMessage.asSharedFlow()
 
-    fun doSignIn(userId: String, password: String) {
+    fun signIn(userId: String, password: String) {
         viewModelScope.launch {
-            _signInProcess.value = Resource.Loading()
-            _signInProcess.value = authRepository.signIn(userId, password).first()
+            _signInProcess.update { Resource.Loading() }
+            postSignInUseCase(userId, password).onSuccess { signInInfo ->
+                _signInProcess.update { Resource.Success(signInInfo) }
+            }.onError { code, message ->
+                Log.e("SignInViewModel", "OnError code=$code, message=$message")
+                _signInProcess.update { Resource.Error(message) }
+                _toastMessage.emit(message.toString())
+            }.onException {
+                it.printStackTrace()
+            }
         }
     }
 
-    fun showToastMessage(errorMessage: String?) {
-        if (errorMessage == null) return
-        _showToast.value = SingleEvent(errorMessage)
-    }
-
-    fun initViewModel() {
-        _signInProcess.value = null
+    fun showToastMessage(errorMessage: String) {
+        viewModelScope.launch {
+            _toastMessage.emit(errorMessage)
+        }
     }
 }

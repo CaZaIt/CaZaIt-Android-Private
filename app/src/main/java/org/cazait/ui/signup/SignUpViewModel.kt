@@ -1,88 +1,128 @@
 package org.cazait.ui.signup
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.cazait.core.data.repository.UserRepository
-import org.cazait.model.Check
-import org.cazait.model.Resource
-import org.cazait.model.SignUpInfo
+import org.cazait.core.domain.model.network.onError
+import org.cazait.core.domain.model.network.onException
+import org.cazait.core.domain.model.network.onSuccess
+import org.cazait.core.domain.model.user.AccountName
+import org.cazait.core.domain.model.user.Password
+import org.cazait.core.domain.usecase.post.PostCheckAccountNameExistenceUseCase
+import org.cazait.core.domain.usecase.post.PostCheckNicknameExistenceUseCase
+import org.cazait.core.domain.usecase.post.SignUpUseCase
+import org.cazait.core.model.ExistenceStatus
+import org.cazait.core.model.Resource
+import org.cazait.core.model.SignUpInfo
 import org.cazait.ui.base.BaseViewModel
-import org.cazait.utils.SingleEvent
+import org.cazait.validate.signup.SignUpIsBlankValidationState
+import org.cazait.validate.signup.SignUpLogicValidator
+import org.cazait.validate.signup.SignUpPasswordMatchState
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val signUpUseCase: SignUpUseCase,
+    private val postCheckAccountNameExistenceUseCase: PostCheckAccountNameExistenceUseCase,
+    private val postCheckNicknameExistenceUseCase: PostCheckNicknameExistenceUseCase,
 ) : BaseViewModel() {
 
-    private val _signUpProcess = MutableLiveData<Resource<SignUpInfo>?>()
-    val signUpProcess: LiveData<Resource<SignUpInfo>?>
-        get() = _signUpProcess
+    private val _signUpProcess: MutableStateFlow<Resource<SignUpInfo>> =
+        MutableStateFlow(Resource.None())
+    val signUpProcess: StateFlow<Resource<SignUpInfo>> = _signUpProcess.asStateFlow()
 
-    private val _idDupProcess = MutableLiveData<Resource<Check>?>()
-    val idDupProcess: LiveData<Resource<Check>?>
-        get() = _idDupProcess
+    private val _accountNameExistence: MutableStateFlow<Resource<ExistenceStatus>> =
+        MutableStateFlow(Resource.None())
+    val accountNameExistence: StateFlow<Resource<ExistenceStatus>> =
+        _accountNameExistence.asStateFlow()
 
-    private val _nickDupProcess = MutableLiveData<Resource<String>?>()
-    val nickDupProcess: LiveData<Resource<String>?>
-        get() = _nickDupProcess
+    private val _nicknameExistence: MutableStateFlow<Resource<ExistenceStatus>> =
+        MutableStateFlow(Resource.None())
+    val nicknameExistence: StateFlow<Resource<ExistenceStatus>> = _nicknameExistence.asStateFlow()
 
-    private val _userIdFlag = MutableStateFlow(false)
-    val userIdFlag = _userIdFlag.asStateFlow()
+    private val _serverMessage: MutableSharedFlow<String> = MutableSharedFlow()
+    val serverMessage: SharedFlow<String> = _serverMessage.asSharedFlow()
+    private val _signUpProcessIsBlank: MutableSharedFlow<SignUpIsBlankValidationState> =
+        MutableSharedFlow()
+    val signUpProcessIsBlank: SharedFlow<SignUpIsBlankValidationState> =
+        _signUpProcessIsBlank.asSharedFlow()
+    private val _passwordNotMatched: MutableSharedFlow<SignUpPasswordMatchState> =
+        MutableSharedFlow()
+    val passwordNotMatched: SharedFlow<SignUpPasswordMatchState> =
+        _passwordNotMatched.asSharedFlow()
 
-    private val _userPasswordFlag = MutableStateFlow(false)
-    val userPasswordFlag = _userPasswordFlag.asStateFlow()
-
-    private val _rePasswordFlag = MutableStateFlow(false)
-    val rePasswordFlag = _rePasswordFlag.asStateFlow()
-
-    private val _nicknameFlag = MutableStateFlow(false)
-    val nicknameFlag = _nicknameFlag.asStateFlow()
-
-    private val _showToast = MutableLiveData<SingleEvent<Any>>()
-    val showToast: LiveData<SingleEvent<Any>>
-        get() = _showToast
-
-    fun signUp(id: String, password: String, phoneNumber: String, nickname: String) {
+    fun signUp(
+        accountName: String,
+        password: String,
+        confirmPassword: String,
+        phoneNumber: String,
+        nickname: String,
+    ) {
+        _signUpProcess.update { Resource.Loading() }
         viewModelScope.launch {
-            _signUpProcess.value = Resource.Loading()
-            userRepository.signUp(id, password, phoneNumber, nickname).collect {
-                _signUpProcess.value = it
+            // TODO
+            SignUpLogicValidator(accountName, password, confirmPassword, phoneNumber, nickname).run {
+                validateIsNotBlank().let {
+                    _signUpProcessIsBlank.emit(it)
+                    if (it != SignUpIsBlankValidationState.SUCCESS_ALL) return@launch
+                }
+
+                _passwordNotMatched.emit(validatePasswordMatches())
+            }
+            signUpUseCase(
+                accountName = AccountName(accountName),
+                password = Password(password),
+                phoneNumber = phoneNumber,
+                nickname = nickname,
+            ).onSuccess { signUpInfo ->
+                _signUpProcess.update { Resource.Success(signUpInfo) }
+            }.onError { code, message ->
+                Log.e("SignUpViewModel", "OnError code=$code, message=$message")
+                _signUpProcess.update { Resource.Error(message = message) }
+                _serverMessage.emit(message.toString())
+            }.onException {
+                it.printStackTrace()
             }
         }
     }
 
-    fun isIdDup(id: String) {
+    fun checkAccountNameExistence(accountName: String) {
+        _accountNameExistence.update { Resource.Loading() }
         viewModelScope.launch {
-            _idDupProcess.value = Resource.Loading()
-            userRepository.checkUserIdDB(id, "false").collect {
-                _idDupProcess.value = it
+            postCheckAccountNameExistenceUseCase(
+                accountName = accountName,
+            ).onSuccess { existence ->
+                _accountNameExistence.update { Resource.Success(existence) }
+            }.onError { code, message ->
+                if (code == 404) {
+                    _accountNameExistence.update { Resource.Error(message = message) }
+                    _serverMessage.emit(message.toString())
+                }
+            }.onException {
+                it.printStackTrace()
             }
         }
     }
 
-    fun isNicknameDup(nickname: String) {
+    fun checkNicknameExistence(nickname: String) {
+        _nicknameExistence.update { Resource.Loading() }
         viewModelScope.launch {
-            _nickDupProcess.value = Resource.Loading()
-            userRepository.checkNicknameDB(nickname, "false").collect {
-                _nickDupProcess.value = it
-            }
+            postCheckNicknameExistenceUseCase(nickname = nickname).onSuccess { existence ->
+                _nicknameExistence.update { Resource.Success(existence) }
+            }.onError { code, message ->
+                if (code == 400) {
+                    _nicknameExistence.update { Resource.Error(message = message) }
+                    _serverMessage.emit(message.toString())
+                }
+            }.onException { it.printStackTrace() }
         }
-    }
-
-    fun initViewModel() {
-        _signUpProcess.value = null
-        _idDupProcess.value = null
-        _nickDupProcess.value = null
-    }
-
-    fun showToastMessage(errorMessage: String?) {
-        if (errorMessage == null) return
-        _showToast.value = SingleEvent(errorMessage)
     }
 }

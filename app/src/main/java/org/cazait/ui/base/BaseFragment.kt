@@ -16,6 +16,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(
 ) : Fragment() {
 
     private var _binding: T? = null
+
     // This property is only valid between onCreateView and onDestroyView.
     protected val binding get() = _binding!!
 

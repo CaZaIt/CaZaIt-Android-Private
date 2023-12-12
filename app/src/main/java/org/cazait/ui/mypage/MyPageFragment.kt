@@ -31,7 +31,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>(
     }
 
     override fun initAfterBinding() {
-
     }
 
     fun navigateToRecentlyCafeFragment() {

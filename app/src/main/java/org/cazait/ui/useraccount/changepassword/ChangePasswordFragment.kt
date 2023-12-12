@@ -5,7 +5,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
 import org.cazait.databinding.FragmentChangePasswordBinding
-import org.cazait.model.Resource
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.signup.CheckTextWatcher
 import org.cazait.utils.SingleEvent
@@ -16,7 +16,7 @@ import org.cazait.utils.toVisible
 
 class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, ChangePasswordViewModel>(
     ChangePasswordViewModel::class.java,
-    R.layout.fragment_change_password
+    R.layout.fragment_change_password,
 ) {
     private var passwordFlag = false
     private var passwordCheckFlag = false
@@ -49,7 +49,6 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun btnChangePassword() {
@@ -57,12 +56,13 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
             val pw = binding.etChangePasswordInsert.text.toString()
             val repw = binding.etChangePasswordInsertMore.text.toString()
 
-            if (pw == "" || repw == "")
+            if (pw == "" || repw == "") {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_check_pw))
-            else if (pw == repw) {
+            } else if (pw == repw) {
                 viewModel.changePassword(pw)
-            } else
+            } else {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_nopw))
+            }
         }
     }
 
@@ -126,8 +126,8 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
                 binding.etChangePasswordInsertMore.error = null
                 passwordFlag = true
                 when {
-                    binding.etChangePasswordInsertMore.text.toString() != ""
-                            && binding.etChangePasswordInsertMore.text.toString() != binding.etChangePasswordInsertMore.text.toString() -> {
+                    binding.etChangePasswordInsertMore.text.toString() != "" &&
+                        binding.etChangePasswordInsertMore.text.toString() != binding.etChangePasswordInsertMore.text.toString() -> {
                         binding.etChangePasswordInsertMore.error =
                             resources.getString(R.string.sign_up_check_pw_not)
                         passwordCheckFlag = false

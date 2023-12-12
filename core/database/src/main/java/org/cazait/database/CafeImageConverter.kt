@@ -3,7 +3,7 @@ package org.cazait.database
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.cazait.model.CafeImage
+import org.cazait.core.model.CafeImage
 
 class CafeImageConverter {
     @TypeConverter

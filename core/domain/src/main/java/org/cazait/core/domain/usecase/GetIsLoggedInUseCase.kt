@@ -1,8 +1,7 @@
 package org.cazait.core.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
-import org.cazait.core.data.repository.AuthRepository
-import org.cazait.core.data.repository.UserRepository
+import org.cazait.core.domain.repository.UserRepository
 
 class GetIsLoggedInUseCase(
     private val userRepository: UserRepository,

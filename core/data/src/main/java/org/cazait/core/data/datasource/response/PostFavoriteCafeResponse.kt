@@ -12,11 +12,11 @@ data class PostFavoriteCafeResponse(
     @Json(name = "message")
     val message: String,
     @Json(name = "data")
-    val data: CafeId,
+    val data: CafeIdDTO,
 )
 
 @JsonClass(generateAdapter = true)
-data class CafeId(
+data class CafeIdDTO(
     @Json(name = "id")
     val id: Long,
 )

@@ -1,14 +1,13 @@
 package org.cazait.ui.findaccount.findid
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
 import org.cazait.databinding.FragmentFindUserIdBinding
-import org.cazait.model.Check
-import org.cazait.model.Resource
+import org.cazait.core.model.ExistenceStatus
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -19,7 +18,7 @@ import org.cazait.utils.toVisible
 class FindUserIdFragment :
     BaseFragment<FragmentFindUserIdBinding, FindUserIdViewModel>(
         FindUserIdViewModel::class.java,
-        R.layout.fragment_find_user_id
+        R.layout.fragment_find_user_id,
     ) {
     private val navArgs: FindUserIdFragmentArgs by navArgs()
 
@@ -37,7 +36,6 @@ class FindUserIdFragment :
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun observeViewModel() {
@@ -45,7 +43,7 @@ class FindUserIdFragment :
         observeToast(viewModel.showToast)
     }
 
-    private fun handleCheckId(status: Resource<Check>?) {
+    private fun handleCheckId(status: Resource<ExistenceStatus>?) {
         when (status) {
             is Resource.Loading -> {
                 showLoading()
@@ -55,7 +53,7 @@ class FindUserIdFragment :
                 hideLoading()
                 navigateToFindUserPasswordFragment(
                     it.data.toString(),
-                    navArgs.foundUserId.toString()
+                    navArgs.foundUserId.toString(),
                 )
             }
 
@@ -89,8 +87,8 @@ class FindUserIdFragment :
         findNavController().navigate(
             FindUserIdFragmentDirections.actionFindUserIdFragmentToFindUserPasswordFragment(
                 userUuid,
-                userId
-            )
+                userId,
+            ),
         )
     }
 

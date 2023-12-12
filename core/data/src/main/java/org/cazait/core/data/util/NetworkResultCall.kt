@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.Request
 import okio.Timeout
-import org.cazait.core.data.model.network.NetworkResult
+import org.cazait.core.domain.model.network.NetworkResult
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,7 +36,9 @@ class NetworkResultCall<T : Any>(
         })
     }
 
-    override fun clone(): Call<NetworkResult<T>> = NetworkResultCall(proxy.clone(), coroutineScope)
+    override fun clone(): Call<NetworkResult<T>> =
+        NetworkResultCall(proxy.clone(), coroutineScope)
+
     override fun isExecuted(): Boolean = proxy.isExecuted
     override fun isCanceled(): Boolean = proxy.isCanceled
     override fun request(): Request = proxy.request()

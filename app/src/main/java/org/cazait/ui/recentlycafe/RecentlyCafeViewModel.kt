@@ -11,17 +11,17 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.CafeRepository
 import org.cazait.core.data.repository.UserRepository
-import org.cazait.model.Cafe
-import org.cazait.model.FavoriteCafe
-import org.cazait.model.FavoriteCafes
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.FavoriteCafe
+import org.cazait.core.model.cafe.FavoriteCafes
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class RecentlyCafeViewModel @Inject constructor(
     private val cafeRepository: CafeRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : BaseViewModel() {
 
     private val _recentlyViewedCafes = MutableLiveData<List<Cafe>>()
@@ -46,10 +46,12 @@ class RecentlyCafeViewModel @Inject constructor(
                         if (cafeMap.containsKey(cafe.cafeId)) {
                             val existingCafe = cafeMap[cafe.cafeId]!!
                             if (recentlyViewedCafe.timestamp > existingCafe.timestamp) {
-                                cafeMap[cafe.cafeId] = cafe.copy(timestamp = recentlyViewedCafe.timestamp)
+                                cafeMap[cafe.cafeId] =
+                                    cafe.copy(timestamp = recentlyViewedCafe.timestamp)
                             }
                         } else {
-                            cafeMap[cafe.cafeId] = cafe.copy(timestamp = recentlyViewedCafe.timestamp)
+                            cafeMap[cafe.cafeId] =
+                                cafe.copy(timestamp = recentlyViewedCafe.timestamp)
                         }
                     }
                 }

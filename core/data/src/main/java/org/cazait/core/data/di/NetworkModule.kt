@@ -12,8 +12,8 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.cazait.core.data.util.NetworkResultCallAdapterFactory
+import org.cazait.core.model.local.UserPreference
 import org.cazait.datastore.data.repository.UserPreferenceRepository
-import org.cazait.model.local.UserPreference
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton

@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.UserRepository
-import org.cazait.model.Resource
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject

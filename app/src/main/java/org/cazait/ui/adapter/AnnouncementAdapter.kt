@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.cazait.R
-import org.cazait.model.Announcement
+import org.cazait.core.model.Announcement
 
-class AnnouncementAdapter(private val items: List<Announcement>) : RecyclerView.Adapter<AnnouncementAdapter.ViewHolder>() {
+class AnnouncementAdapter(private val items: List<Announcement>) :
+    RecyclerView.Adapter<AnnouncementAdapter.ViewHolder>() {
 
     // 뷰홀더 클래스 생성
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,7 +20,8 @@ class AnnouncementAdapter(private val items: List<Announcement>) : RecyclerView.
 
     // 아이템 뷰를 위한 레이아웃을 생성하고 뷰홀더 객체를 반환
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_announcement, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_announcement, parent, false)
         return ViewHolder(view)
     }
 
@@ -36,4 +38,3 @@ class AnnouncementAdapter(private val items: List<Announcement>) : RecyclerView.
         return items.size
     }
 }
-

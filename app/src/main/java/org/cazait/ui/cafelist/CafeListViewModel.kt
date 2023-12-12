@@ -14,11 +14,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.CafeRepository
 import org.cazait.core.data.repository.UserRepository
-import org.cazait.model.Cafe
-import org.cazait.model.Cafes
-import org.cazait.model.FavoriteCafe
-import org.cazait.model.FavoriteCafes
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.Cafes
+import org.cazait.core.model.cafe.FavoriteCafe
+import org.cazait.core.model.cafe.FavoriteCafes
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.PermissionUtil
 import javax.inject.Inject

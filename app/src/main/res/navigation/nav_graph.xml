@@ -310,7 +310,7 @@
         tools:layout="@layout/fragment_cafe_info">
         <argument
             android:name="cafe"
-            app:argType="org.cazait.model.Cafe" />
+            app:argType="org.cazait.core.model.cafe.Cafe" />
         <action
             android:id="@+id/action_cafeInfoFragment_to_reviewWriteFragment"
             app:destination="@+id/reviewWriteFragment" />
@@ -322,7 +322,7 @@
         tools:layout="@layout/fragment_review_write">
         <argument
             android:name="cafe"
-            app:argType="org.cazait.model.Cafe" />
+            app:argType="org.cazait.core.model.cafe.Cafe" />
         <argument
             android:name="score"
             app:argType="float" />
@@ -338,7 +338,7 @@
         tools:layout="@layout/fragment_search">
         <argument
             android:name="favoriteCafe"
-            app:argType="org.cazait.model.FavoriteCafes" />
+            app:argType="org.cazait.core.model.cafe.FavoriteCafes" />
         <action
             android:id="@+id/action_searchFragment_to_cafeListFragment"
             app:destination="@+id/cafeListFragment" />

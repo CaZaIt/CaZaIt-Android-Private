@@ -1,12 +1,7 @@
 package org.cazait.ui.adapter
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
-import androidx.core.view.marginBottom
-import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 
 class ItemDecoration(
@@ -14,14 +9,14 @@ class ItemDecoration(
     private val right: Int = 0,
     private val top: Int = 0,
     private val bottom: Int = 0,
-    private val extraMargin: Int = 0
+    private val extraMargin: Int = 0,
 ) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State
+        state: RecyclerView.State,
     ) {
         if (left != 0) outRect.left += left
         if (right != 0) outRect.right += right

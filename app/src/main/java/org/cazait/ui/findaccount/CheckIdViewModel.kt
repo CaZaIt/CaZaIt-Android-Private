@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.UserRepository
-import org.cazait.model.Check
-import org.cazait.model.Resource
+import org.cazait.core.model.ExistenceStatus
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject
@@ -15,8 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CheckIdViewModel @Inject constructor(private val userRepository: UserRepository) :
     BaseViewModel() {
-    private val _checkIdProcess = MutableLiveData<Resource<Check>?>()
-    val checkIdProcess: LiveData<Resource<Check>?>
+    private val _checkIdProcess = MutableLiveData<Resource<ExistenceStatus>?>()
+    val checkIdProcess: LiveData<Resource<ExistenceStatus>?>
         get() = _checkIdProcess
 
     private val _showToast = MutableLiveData<SingleEvent<Any>>()

@@ -3,8 +3,7 @@ package org.cazait.core.data.datasource.response
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import org.cazait.core.data.datasource.CafeDTO
-import org.cazait.model.Cafe
-import org.cazait.model.CafeStatus
+import org.cazait.core.model.congestion.CafeStatus
 
 @JsonClass(generateAdapter = true)
 data class CafeResponse(
@@ -23,7 +22,7 @@ data class CafeResTemp(
     @Json(name = "code") val code: Int,
     @Json(name = "result") val result: String,
     @Json(name = "message") val message: String,
-    @Json(name = "data") val cafe: org.cazait.core.data.datasource.response.CafeResTemp.Data,
+    @Json(name = "data") val cafe: Data,
 ) {
     @JsonClass(generateAdapter = true)
     data class Data(
@@ -40,7 +39,7 @@ data class CafeResTemp(
         @Json(name = "latitude")
         val latitude: String,
         @Json(name = "cafeImageRes")
-        val cafesImages: List<org.cazait.core.data.datasource.response.CafeResTemp.CafeImage>,
+        val cafesImages: List<CafeImage>,
         @Json(name = "distance")
         val distance: Int,
         @Json(name = "favorite")
@@ -55,20 +54,5 @@ data class CafeResTemp(
         val cafeImageId: Long,
         @Json(name = "imageUrl")
         val imageUrl: String,
-    )
-}
-
-fun org.cazait.core.data.datasource.response.CafeResTemp.Data.toCafe(): Cafe {
-    val cafesImages = cafesImages
-    return Cafe(
-        cafeId = cafeId,
-        name = name,
-        address = address,
-        distance = distance,
-        status = congestionStatus,
-        images = cafesImages.map { it.imageUrl },
-        latitude = latitude,
-        longitude = longitude,
-        timestamp = timestamp,
     )
 }

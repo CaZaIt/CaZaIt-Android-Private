@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.model.CafeReview
 import org.cazait.databinding.ItemCafeInfoReviewBinding
+import org.cazait.core.model.CafeReview
 import org.cazait.ui.cafeinfo.detail.clicklistener.ReviewItemClick
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -16,7 +16,7 @@ class CafeInfoReviewAdapter(private val uuid: String?, private val listener: Rev
     ListAdapter<CafeReview, CafeInfoReviewAdapter.CafeInfoReviewViewHolder>(diffUtil) {
 
     inner class CafeInfoReviewViewHolder(
-        private val binding: ItemCafeInfoReviewBinding
+        private val binding: ItemCafeInfoReviewBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CafeReview) {
             Log.d("Review Adapter 사용자 uuid", uuid.toString())
@@ -47,8 +47,8 @@ class CafeInfoReviewAdapter(private val uuid: String?, private val listener: Rev
             ItemCafeInfoReviewBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 

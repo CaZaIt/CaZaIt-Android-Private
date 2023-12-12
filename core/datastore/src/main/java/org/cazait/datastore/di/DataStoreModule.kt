@@ -9,7 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.cazait.datastore.data.source.UserPreferenceSerializer
-import org.cazait.model.local.UserPreference
+import org.cazait.core.model.local.UserPreference
 import java.io.File
 import javax.inject.Singleton
 

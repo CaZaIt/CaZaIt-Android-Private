@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
-import org.cazait.model.local.UserPreference
+import org.cazait.core.model.local.UserPreference
 import java.io.InputStream
 import java.io.OutputStream
 

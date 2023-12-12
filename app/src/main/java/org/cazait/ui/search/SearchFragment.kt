@@ -12,10 +12,10 @@ import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentSearchBinding
-import org.cazait.model.Cafe
-import org.cazait.model.Cafes
-import org.cazait.model.FavoriteCafes
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.Cafes
+import org.cazait.core.model.cafe.FavoriteCafes
+import org.cazait.core.model.Resource
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.adapter.SearchAdapter
 import org.cazait.ui.adapter.SearchResultAdapter
@@ -28,10 +28,13 @@ import org.cazait.utils.toVisible
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
-    SearchViewModel::class.java,
-    R.layout.fragment_search
-), OnSearchClick, OnResultClick {
+class SearchFragment :
+    BaseFragment<FragmentSearchBinding, SearchViewModel>(
+        SearchViewModel::class.java,
+        R.layout.fragment_search,
+    ),
+    OnSearchClick,
+    OnResultClick {
     private val navArgs: SearchFragmentArgs by navArgs()
     private lateinit var favoriteCafes: FavoriteCafes
     private lateinit var searchAdapter: SearchAdapter
@@ -54,7 +57,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun setBackBtn() {
@@ -100,8 +102,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
                 binding.appBarLayoutSearch.setBackgroundColor(
                     ContextCompat.getColor(
                         requireContext(),
-                        R.color.main_white
-                    )
+                        R.color.main_white,
+                    ),
                 )
                 true
             } else {
@@ -115,8 +117,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
             binding.appBarLayoutSearch.setBackgroundColor(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.main_black
-                )
+                    R.color.main_black,
+                ),
             )
             convertToSearchCur()
         }
@@ -127,8 +129,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
         binding.rvSearch.adapter = searchAdapter
         binding.rvSearch.addItemDecoration(
             ItemDecoration(
-                extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
-            )
+                extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt(),
+            ),
         )
         searchAdapter.submitList(null)
     }
@@ -138,8 +140,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
         binding.rvSearchResult.adapter = resultAdapter
         binding.rvSearchResult.addItemDecoration(
             ItemDecoration(
-                extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt()
-            )
+                extraMargin = resources.getDimension(R.dimen.cafe_item_space).roundToInt(),
+            ),
         )
         resultAdapter.submitList(null)
     }
@@ -153,8 +155,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
             is Resource.Error -> {}
             is Resource.Loading -> {}
             is Resource.Success -> {
-                val cafes = status.data?.list ?: emptyList()
-                viewModel.updateFavoriteStatus(favoriteCafes.list, cafes)
+                val cafes = status.data?.cafes ?: emptyList()
+                viewModel.updateFavoriteStatus(favoriteCafes.cafes, cafes)
                 searchAdapter.submitList(cafes)
                 resultAdapter.submitList(cafes)
             }
@@ -178,8 +180,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
     private fun navigateToCafeInfoFragment(cafe: Cafe) {
         findNavController().navigate(
             SearchFragmentDirections.actionSearchFragmentToCafeInfoFragment(
-                cafe
-            )
+                cafe,
+            ),
         )
     }
 

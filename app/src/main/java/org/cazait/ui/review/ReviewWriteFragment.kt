@@ -7,7 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentReviewWriteBinding
-import org.cazait.model.Resource
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -73,8 +73,9 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding, ReviewWrite
     private fun setReviewSendBtn() {
         binding.btnSendReview.setOnClickListener {
             viewModel.sendReviewToServer(
-                navArgs.cafe.cafeId, binding.rbRating.rating,
-                binding.etReview.text.toString()
+                navArgs.cafe.cafeId,
+                binding.rbRating.rating,
+                binding.etReview.text.toString(),
             )
         }
     }

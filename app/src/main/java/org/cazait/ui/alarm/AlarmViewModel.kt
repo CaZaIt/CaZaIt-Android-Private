@@ -5,4 +5,4 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AlarmViewModel @Inject constructor(): BaseViewModel()
+class AlarmViewModel @Inject constructor() : BaseViewModel()

@@ -1,55 +1,39 @@
 package org.cazait.core.data.repository
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import org.cazait.core.data.datasource.request.ListCafesRequest
-import org.cazait.core.data.datasource.response.toCafe
-import org.cazait.core.data.model.toCafe
-import org.cazait.core.data.model.toCafeMenu
-import org.cazait.core.data.model.toCafeReviews
-import org.cazait.core.data.model.toFavoriteCafe
-import org.cazait.core.data.model.toFavoriteCafeEntity
-import org.cazait.core.data.model.toRecently
-import org.cazait.core.data.model.toRecentlyViewedCafeEntity
-import org.cazait.database.dao.CafeDAO
+import kotlinx.coroutines.flow.map
+import org.cazait.core.data.datasource.CafeInfoRemoteDataSource
+import org.cazait.core.data.datasource.CafeListRemoteDataSource
+import org.cazait.core.data.datasource.request.CafeReviewPostRequest
+import org.cazait.core.data.datasource.response.CafeMenuResponse
+import org.cazait.core.data.datasource.response.CafeResponse
+import org.cazait.core.data.datasource.response.CafeReviewPostResponse
+import org.cazait.core.data.datasource.response.CafeReviewResponse
+import org.cazait.core.data.datasource.response.ListCafesResponse
+import org.cazait.core.data.datasource.response.ListFavoritesResponse
+import org.cazait.core.data.mapper.toData
+import org.cazait.core.data.mapper.toEntity
+import org.cazait.core.domain.model.network.NetworkResult
+import org.cazait.core.domain.repository.CafeRepository
+import org.cazait.core.model.CafeReviews
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.CafeMenus
+import org.cazait.core.model.cafe.Cafes
+import org.cazait.core.model.cafe.FavoriteCafes
+import org.cazait.core.model.cafe.RecentlyViewedCafeInfo
 import org.cazait.database.dao.RecentlyViewedCafeDAO
-import org.cazait.model.Cafe
-import org.cazait.model.CafeMenus
-import org.cazait.model.CafeReviews
-import org.cazait.model.Cafes
-import org.cazait.model.FavoriteCafe
-import org.cazait.model.FavoriteCafes
-import org.cazait.model.RecentlyViewedCafe
-import org.cazait.model.Resource
-import org.cazait.network.model.dto.DataResponse
+import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import java.io.IOException
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class CafeRepositoryImpl @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val cafeDAO: CafeDAO,
+    private val cafeInfoRemoteDataSource: CafeInfoRemoteDataSource,
+    private val cafeListRemoteDataSource: CafeListRemoteDataSource,
     private val recentlyViewedCafeDAO: RecentlyViewedCafeDAO,
-    private val ioDispatcher: CoroutineContext,
 ) : CafeRepository {
 
-    override suspend fun getCafeById(cafeId: String): Flow<Resource<Cafe>> {
-        return flow {
-            when (val response = cafeInfoRemoteData.getCafe(cafeId)) {
-                is DataResponse.Success -> {
-                    response.data?.cafe?.let {
-                        emit(Resource.Success(it.toCafe()))
-                    }
-                }
-
-                is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
-                }
-            }
-        }
+    override suspend fun getCafeById(cafeId: String): NetworkResult<Cafe> {
+        return cafeInfoRemoteDataSource.getCafe(cafeId = cafeId).map(CafeResponse::toData)
     }
 
     override suspend fun getListCafes(
@@ -57,89 +41,22 @@ class CafeRepositoryImpl @Inject constructor(
         longitude: String,
         sort: String,
         limit: String,
-    ): Flow<Resource<Cafes>> {
-        val query =
-            org.cazait.core.data.datasource.request.ListCafesRequest(
-                latitude = latitude,
-                longitude = longitude,
-                sort = sort,
-                limit = limit
-            )
-
-        return flow {
-            val response = cafeListRemoteData.getListCafes(query)
-            when (response) {
-                is DataResponse.Success -> {
-                    response.data?.cafes?.forEach { list ->
-                        val cafes = list.map { it.toCafe() }
-                        emit(Resource.Success(Cafes(cafes)))
-                    } ?: emit(Resource.Success(Cafes(emptyList())))
-                }
-
-                is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
-                }
-            }
-        }.flowOn(ioDispatcher)
+    ): NetworkResult<Cafes> {
+        return cafeListRemoteDataSource.getListCafes(
+            latitude = latitude,
+            longitude = longitude,
+            sort = sort,
+            limit = limit,
+        ).map(ListCafesResponse::toData)
     }
 
-    override suspend fun getListFavoritesAuth(userId: String): Flow<Resource<FavoriteCafes>> {
-        return flow {
-            Log.d("찜한매장 response", cafeListRemoteData.getListFavoritesAuth(userId).toString())
-            when (val response = cafeListRemoteData.getListFavoritesAuth(userId)) {
-                is DataResponse.Success -> {
-                    val fc = FavoriteCafes(
-                        response.data?.favorites?.map {
-                            it.toFavoriteCafe()
-                        }.orEmpty(),
-                    )
-                    emit(Resource.Success(fc))
-                }
-
-                is DataResponse.DataError -> {
-                    if (response.errorCode == 401) {
-                        authRepository.refreshToken().first()
-
-                        when (val newResponse = cafeListRemoteData.getListFavoritesAuth(userId)) {
-                            is DataResponse.Success -> {
-                                val fc = FavoriteCafes(
-                                    newResponse.data?.favorites?.map {
-                                        it.toFavoriteCafe()
-                                    }.orEmpty(),
-                                )
-                                Log.d("CafeRepository", "토큰 재발급 후 찜한 매장 호출")
-                                Log.d("CafeRepository", newResponse.data.toString())
-                                emit(Resource.Success(fc))
-                            }
-
-                            is DataResponse.DataError -> {
-                                emit(Resource.Error(newResponse.toString()))
-                            }
-                        }
-                    }
-                    emit(Resource.Error(response.toString()))
-                }
-            }
-        }.flowOn(ioDispatcher)
+    override suspend fun getListFavoritesAuth(userId: String): NetworkResult<FavoriteCafes> {
+        return cafeListRemoteDataSource.getListFavoritesAuth(userId = userId)
+            .map(ListFavoritesResponse::toData)
     }
 
-    override suspend fun getMenus(cafeId: String): Flow<Resource<CafeMenus>> {
-        return flow {
-            when (val response = cafeInfoRemoteData.getMenus(cafeId)) {
-                is DataResponse.Success -> {
-                    val cafeMenus = CafeMenus(
-                        menus = response.data?.menus?.map {
-                            it.toCafeMenu()
-                        }.orEmpty(),
-                    )
-                    emit(Resource.Success(cafeMenus))
-                }
-
-                is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
-                }
-            }
-        }.flowOn(ioDispatcher)
+    override suspend fun getMenus(cafeId: String): NetworkResult<CafeMenus> {
+        return cafeInfoRemoteDataSource.getMenus(cafeId = cafeId).map(CafeMenuResponse::toData)
     }
 
     override suspend fun getReviews(
@@ -147,20 +64,13 @@ class CafeRepositoryImpl @Inject constructor(
         sortBy: String?,
         score: Int?,
         lastId: Long?,
-    ): Flow<Resource<CafeReviews>> {
-        return flow {
-            when (val response = cafeInfoRemoteData.getReviews(cafeId, sortBy, score, lastId)) {
-                is DataResponse.Success -> {
-                    val reviews =
-                        response.data?.review?.toCafeReviews() ?: CafeReviews(emptyList(), 0, 0L)
-                    emit(Resource.Success(reviews))
-                }
-
-                is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
-                }
-            }
-        }.flowOn(ioDispatcher)
+    ): NetworkResult<CafeReviews> {
+        return cafeInfoRemoteDataSource.getReviews(
+            cafeId = cafeId,
+            sortBy = sortBy,
+            score = score,
+            lastId = lastId,
+        ).map(CafeReviewResponse::toData)
     }
 
     override suspend fun postReviewAuth(
@@ -168,242 +78,45 @@ class CafeRepositoryImpl @Inject constructor(
         cafeId: String,
         score: Int,
         content: String,
-    ): Flow<Resource<String>> {
-        return flow {
-            when (
-                val response =
-                    cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)
-            ) {
-                is DataResponse.Success -> {
-                    Log.d("CafeRepository", "등록 성공?")
-                    Log.d("CafeRepository", response.data.toString())
-                    val message: String = response.data?.message ?: ""
-                    emit(Resource.Success(message))
-                }
-
-                is DataResponse.DataError -> {
-                    Log.d("CafeRepository", "등록 실패")
-                    if (response.errorCode == 400) {
-                        authRepository.refreshToken()
-                        when (
-                            val response =
-                                cafeInfoRemoteData.postReviewAuth(userId, cafeId, score, content)
-                        ) {
-                            is DataResponse.Success -> {
-                                val message: String = response.data?.message ?: ""
-                                Log.d("CafeRepository", "토큰 재발급 후 등록 성공")
-                                Log.d("CafeRepository", response.data.toString())
-                                emit(Resource.Success(message))
-                            }
-
-                            is DataResponse.DataError -> {
-                                Log.d("CafeRepository", "토큰 재발급 후 등록 실패")
-                                emit(Resource.Error(response.toString()))
-                            }
-                        }
-                    }
-                }
-            }
-        }.flowOn(ioDispatcher)
-    }
-
-    override suspend fun insertFavoriteCafe(cafe: FavoriteCafe): Boolean {
-        return try {
-            cafeDAO.insertFavoriteCafe(cafe.toFavoriteCafeEntity())
-            true
-        } catch (e: IOException) {
-            false
-        }
-    }
-
-    override suspend fun insertFavoriteCafe(cafe: Cafe): Boolean {
-        return try {
-            cafeDAO.insertFavoriteCafe(cafe.toFavoriteCafeEntity())
-            true
-        } catch (e: IOException) {
-            false
-        }
-    }
-
-    override suspend fun updateFavoriteCafe(cafe: FavoriteCafe): Boolean {
-        // TODO 좋아요 표시한 매장의 정보가 변경될 필요가 있을 경우 이 함수를 구현함
-        return true
-    }
-
-    override suspend fun loadFavoriteCafes(): Flow<Resource<FavoriteCafes>> {
-        return flow {
-            cafeDAO.selectAllFavoriteCafe().collect { list ->
-                emit(Resource.Success(FavoriteCafes(list.map { it.toFavoriteCafe() })))
-            }
-        }
+    ): NetworkResult<String> {
+        val cafeReviewPostRequest = CafeReviewPostRequest(score, content)
+        return cafeInfoRemoteDataSource.postReview(
+            userId = userId,
+            cafeId = cafeId,
+            cafeReviewPostRequest = cafeReviewPostRequest,
+        ).map(CafeReviewPostResponse::toData)
     }
 
     override suspend fun postFavoriteCafeAuth(
         userId: String,
-        cafe: FavoriteCafe,
-    ): Flow<Resource<String>> {
-        return flow {
-            when (val response = cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
-                is DataResponse.Success -> {
-                    val message: String = response.data?.message ?: ""
-                    emit(Resource.Success(message))
-                }
-
-                is DataResponse.DataError -> {
-                    if (response.errorCode == 400) {
-                        authRepository.refreshToken()
-                        when (
-                            val response =
-                                cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)
-                        ) {
-                            is DataResponse.Success -> {
-                                val message: String = response.data?.message ?: ""
-                                emit(Resource.Success(message))
-                            }
-
-                            is DataResponse.DataError -> {
-                                emit(Resource.Error(response.toString()))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    override suspend fun postFavoriteCafeAuth(
-        userId: String,
-        cafe: Cafe,
-    ): Flow<Resource<String>> {
-        return flow {
-            when (val response = cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)) {
-                is DataResponse.Success -> {
-                    val message: String = response.data?.message ?: ""
-                    emit(Resource.Success(message))
-                }
-
-                is DataResponse.DataError -> {
-                    if (response.errorCode == 400) {
-                        authRepository.refreshToken()
-                        when (
-                            val response =
-                                cafeInfoRemoteData.postFavoriteCafeAuth(userId, cafe.cafeId)
-                        ) {
-                            is DataResponse.Success -> {
-                                val message: String = response.data?.message ?: ""
-                                emit(Resource.Success(message))
-                            }
-
-                            is DataResponse.DataError -> {
-                                emit(Resource.Error(response.toString()))
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        cafeId: String,
+    ): NetworkResult<String> {
+        return cafeInfoRemoteDataSource.postFavoriteCafe(
+            userId = userId,
+            cafeId = cafeId,
+        ).map { it.message }
     }
 
     override suspend fun deleteFavoriteCafeAuth(
         userId: String,
-        cafe: Cafe,
-    ): Flow<Resource<String>> {
-        return flow {
-            when (val response = cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
-                is DataResponse.Success -> {
-                    val message: String = response.data?.data ?: ""
-                    emit(Resource.Success(message))
-                }
-
-                is DataResponse.DataError -> {
-                    if (response.errorCode == 400) {
-                        authRepository.refreshToken()
-                        when (
-                            val response =
-                                cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)
-                        ) {
-                            is DataResponse.Success -> {
-                                val message: String = response.data?.data ?: ""
-                                emit(Resource.Success(message))
-                            }
-
-                            is DataResponse.DataError -> {
-                                emit(Resource.Error(response.toString()))
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        cafeId: String,
+    ): NetworkResult<String> {
+        return cafeInfoRemoteDataSource.deleteFavoriteCafe(
+            userId = userId,
+            cafeId = cafeId,
+        ).map { it.message }
     }
 
-    override suspend fun deleteFavoriteCafeAuth(
-        userId: String,
-        cafe: FavoriteCafe,
-    ): Flow<Resource<String>> {
-        return flow {
-            when (val response = cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)) {
-                is DataResponse.Success -> {
-                    val message: String = response.data?.data ?: ""
-                    emit(Resource.Success(message))
-                }
-
-                is DataResponse.DataError -> {
-                    if (response.errorCode == 400) {
-                        authRepository.refreshToken()
-                        when (
-                            val response =
-                                cafeInfoRemoteData.deleteFavoriteCafeAuth(userId, cafe.cafeId)
-                        ) {
-                            is DataResponse.Success -> {
-                                val message: String = response.data?.data ?: ""
-                                emit(Resource.Success(message))
-                            }
-
-                            is DataResponse.DataError -> {
-                                emit(Resource.Error(response.toString()))
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    override suspend fun loadRecentlyViewedCafes(): Flow<List<RecentlyViewedCafeInfo>> {
+        return recentlyViewedCafeDAO.selectAllRecentlyViewedCafes()
+            .map { it.map(RecentlyViewedCafeEntity::toData) }
     }
 
-    override suspend fun localDeleteFavoriteCafe(cafe: Cafe): Boolean {
+    override suspend fun insertRecentlyViewedCafe(
+        recentlyViewedCafeInfo: RecentlyViewedCafeInfo,
+    ): Boolean {
         return try {
-            cafeDAO.deleteFavoriteCafe(cafe.toFavoriteCafeEntity())
-            true
-        } catch (e: IOException) {
-            false
-        }
-    }
-
-    override suspend fun localDeleteFavoriteCafe(cafe: FavoriteCafe): Boolean {
-        return try {
-            cafeDAO.deleteFavoriteCafe(cafe.toFavoriteCafeEntity())
-            true
-        } catch (e: IOException) {
-            false
-        }
-    }
-
-    override suspend fun updateRecentlyViewedCafe(cafe: Cafe): Boolean {
-        // TODO 최근 본 매장의 정보가 변경될 상황이 있을 경우 이 함수를 구현함
-        return true
-    }
-
-    override suspend fun loadRecentlyViewedCafes(): Flow<RecentlyViewedCafe> {
-        return flow {
-            recentlyViewedCafeDAO.selectAllRecentlyViewedCafes().first().forEach {
-                emit(it.toRecently())
-            }
-        }
-    }
-
-    override suspend fun insertRecentlyViewedCafe(cafe: Cafe): Boolean {
-        return try {
-            recentlyViewedCafeDAO.insert(cafe.toRecentlyViewedCafeEntity())
+            recentlyViewedCafeDAO.insert(recentlyViewedCafeInfo.toEntity())
             true
         } catch (e: IOException) {
             false
@@ -416,29 +129,13 @@ class CafeRepositoryImpl @Inject constructor(
         latitude: String,
         sort: String,
         limit: String,
-    ): Flow<Resource<Cafes>> {
-        val query =
-            org.cazait.core.data.datasource.request.ListCafesRequest(
-                longitude = longitude,
-                latitude = latitude,
-                sort = sort,
-                limit = limit
-            )
-
-        return flow {
-            val response = cafeListRemoteData.getCafeSearch(cafeName, query)
-            when (response) {
-                is DataResponse.Success -> {
-                    response.data?.cafes?.forEach { list ->
-                        val cafes = list.map { it.toCafe() }
-                        emit(Resource.Success(Cafes(cafes)))
-                    } ?: emit(Resource.Success(Cafes(emptyList())))
-                }
-
-                is DataResponse.DataError -> {
-                    emit(Resource.Error(response.toString()))
-                }
-            }
-        }.flowOn(ioDispatcher)
+    ): NetworkResult<Cafes> {
+        return cafeListRemoteDataSource.getCafeSearch(
+            cafeName = cafeName,
+            longitude = longitude,
+            latitude = latitude,
+            sort = sort,
+            limit = limit,
+        ).map(ListCafesResponse::toData)
     }
 }

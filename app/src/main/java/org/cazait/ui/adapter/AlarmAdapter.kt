@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.cazait.R
-import org.cazait.model.Alarm
+import org.cazait.core.model.Alarm
 
-class AlarmAdapter(private val items:List<Alarm>) : RecyclerView.Adapter<AlarmAdapter.ViewHolder>(){
+class AlarmAdapter(private val items: List<Alarm>) :
+    RecyclerView.Adapter<AlarmAdapter.ViewHolder>() {
     // 뷰홀더 클래스 생성
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.txt_alarm_1)

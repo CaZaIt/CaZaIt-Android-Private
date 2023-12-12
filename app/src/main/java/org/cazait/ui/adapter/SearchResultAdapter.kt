@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.cazait.databinding.ItemSearchResultBinding
-import org.cazait.model.Cafe
+import org.cazait.core.model.cafe.Cafe
 import org.cazait.ui.search.clicklistener.OnResultClick
 
 class SearchResultAdapter(private val listener: OnResultClick) :
     ListAdapter<Cafe, SearchResultAdapter.SearchResultViewHolder>(diffUtil) {
 
     inner class SearchResultViewHolder(
-        private val binding: ItemSearchResultBinding
+        private val binding: ItemSearchResultBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Cafe) {
             binding.txtCafeNameSearch.text = item.name
@@ -30,18 +30,21 @@ class SearchResultAdapter(private val listener: OnResultClick) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): SearchResultViewHolder {
         return SearchResultViewHolder(
             ItemSearchResultBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 
-    override fun onBindViewHolder(holder: SearchResultAdapter.SearchResultViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: SearchResultAdapter.SearchResultViewHolder,
+        position: Int,
+    ) {
         holder.bind(currentList[position])
     }
 

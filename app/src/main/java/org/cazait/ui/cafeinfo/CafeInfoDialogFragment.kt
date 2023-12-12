@@ -8,12 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import org.cazait.R
 import org.cazait.databinding.DialogFragmentCafeMapBinding
-import org.cazait.model.Cafe
+import org.cazait.core.model.cafe.Cafe
 
 open class CafeInfoDialogFragment(
     private val cafe: Cafe,
     private val navEvent: (() -> (Unit))? = null,
-    private val cancelEvent: (() -> (Unit))? = null
+    private val cancelEvent: (() -> (Unit))? = null,
 ) : DialogFragment() {
     private var _binding: DialogFragmentCafeMapBinding? = null
     private val binding get() = _binding!!
@@ -24,7 +24,7 @@ open class CafeInfoDialogFragment(
             inflater,
             R.layout.dialog_fragment_cafe_map,
             null,
-            false
+            false,
         )
         binding.item = cafe
 

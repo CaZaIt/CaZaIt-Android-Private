@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : BaseViewModel() {
     private val _signInStateFlow = MutableStateFlow(false)
     val signInStateFlow = _signInStateFlow.asStateFlow()
@@ -30,4 +30,3 @@ class MyPageViewModel @Inject constructor(
         }
     }
 }
-

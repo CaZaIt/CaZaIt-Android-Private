@@ -1,7 +1,7 @@
 package org.cazait.core.data.api.auth
 
 import org.cazait.core.data.datasource.response.RefreshTokenResponse
-import org.cazait.core.data.model.network.NetworkResult
+import org.cazait.core.domain.model.network.NetworkResult
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query

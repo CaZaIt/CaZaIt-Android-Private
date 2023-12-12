@@ -3,7 +3,7 @@ package org.cazait.database.model.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.cazait.model.CafeStatus
+import org.cazait.core.model.congestion.CafeStatus
 import java.util.Date
 
 @Entity("FavoriteCafe")

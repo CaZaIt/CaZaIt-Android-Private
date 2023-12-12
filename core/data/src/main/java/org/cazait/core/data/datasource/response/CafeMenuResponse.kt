@@ -8,7 +8,7 @@ data class CafeMenuResponse(
     @Json(name = "code") val code: Int,
     @Json(name = "result") val result: String,
     @Json(name = "message") val message: String,
-    @Json(name = "data") val menus: List<org.cazait.core.data.datasource.response.CafeMenuDTO>,
+    @Json(name = "data") val menus: List<CafeMenuDTO>,
 )
 
 @JsonClass(generateAdapter = true)

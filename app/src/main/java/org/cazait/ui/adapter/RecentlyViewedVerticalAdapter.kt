@@ -1,22 +1,21 @@
 package org.cazait.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import org.cazait.databinding.ItemRecentlyCafeBinding
-import org.cazait.model.Cafe
+import org.cazait.core.model.cafe.Cafe
 import org.cazait.ui.holder.RecentlyViewedCafeViewHolder
 
 class RecentlyViewedVerticalAdapter(
-    private val onClick: (Cafe) -> Unit
+    private val onClick: (Cafe) -> Unit,
 ) :
     ListAdapter<Cafe, RecentlyViewedCafeViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): RecentlyViewedCafeViewHolder {
         return RecentlyViewedCafeViewHolder(
             onClick,
@@ -24,16 +23,13 @@ class RecentlyViewedVerticalAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false,
-            )
+            ),
         )
-
     }
 
     override fun onBindViewHolder(holder: RecentlyViewedCafeViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
-
-
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Cafe>() {
@@ -46,7 +42,6 @@ class RecentlyViewedVerticalAdapter(
             }
 
             override fun getChangePayload(oldItem: Cafe, newItem: Cafe): Any? {
-
                 return if (oldItem.cafeId == newItem.cafeId && newItem.timestamp > oldItem.timestamp) {
                     newItem.timestamp
                 } else {

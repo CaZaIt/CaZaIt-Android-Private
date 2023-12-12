@@ -7,7 +7,7 @@ import org.cazait.ui.base.BaseFragment
 
 class ChangeSelectFragment : BaseFragment<FragmentChangeSelectBinding, ChangeSelectViewModel>(
     ChangeSelectViewModel::class.java,
-    R.layout.fragment_change_select
+    R.layout.fragment_change_select,
 ) {
     override fun initView() {
         binding.apply {
@@ -18,7 +18,6 @@ class ChangeSelectFragment : BaseFragment<FragmentChangeSelectBinding, ChangeSel
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun initBtn() {
@@ -40,7 +39,7 @@ class ChangeSelectFragment : BaseFragment<FragmentChangeSelectBinding, ChangeSel
         findNavController().navigate(ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangeNicknameFragment())
     }
 
-    private fun navigateToBackStack(){
+    private fun navigateToBackStack() {
         findNavController().navigate(ChangeSelectFragmentDirections.actionChangeSelectFragmentToSeeMoreFragment())
     }
 }

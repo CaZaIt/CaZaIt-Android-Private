@@ -1,18 +1,13 @@
 package org.cazait.ui.signup
 
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
+import org.cazait.core.model.Resource
 import org.cazait.databinding.FragmentSignUpBinding
-import org.cazait.model.Check
-import org.cazait.model.Resource
-import org.cazait.model.SignUpInfo
 import org.cazait.ui.base.BaseFragment
-import org.cazait.utils.SingleEvent
-import org.cazait.utils.observe
+import org.cazait.utils.launch
 import org.cazait.utils.showToast
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -72,11 +67,8 @@ class SignUpFragment :
     }
 
     override fun initView() {
-        viewModel.initViewModel()
         binding.clTop.includedTvTitle.text = getString(R.string.sign_up_sign_up)
-        binding.clTop.btnBack.setOnClickListener {
-            navigateToBackStack()
-        }
+        binding.clTop.btnBack.setOnClickListener { navigateToBackStack() }
         initIdBtn()
         initNicknameBtn()
         initSignUpBtn()
@@ -84,69 +76,61 @@ class SignUpFragment :
     }
 
     private fun observeViewModel() {
-        observe(viewModel.signUpProcess, ::handleSignUpResult)
-        observe(viewModel.idDupProcess, ::handleIdDupResult)
-        observe(viewModel.nickDupProcess, ::handleNickDupResult)
-        observeToast(viewModel.showToast)
+        collectSignUpProcess()
+        collectAccountNameExistence()
+        collectNicknameExistence()
+        collectViewModelMessage()
     }
 
-    private fun handleSignUpResult(status: Resource<SignUpInfo>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
+    private fun collectNicknameExistence() {
+        launch {
+            viewModel.nicknameExistence.collect { existenceStatus ->
+                when (existenceStatus) {
+                    is Resource.Loading -> showLoading()
+                    is Resource.Error -> hideLoading()
+                    is Resource.None -> {}
+                    is Resource.Success -> {
+                        hideLoading()
+                    }
+                }
             }
-
-            is Resource.Success -> status.data.let {
-                hideLoading()
-                navigateToSignInFragment()
-            }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
         }
     }
 
-    private fun handleIdDupResult(status: Resource<Check>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
+    private fun collectViewModelMessage() {
+        launch {
+            viewModel.serverMessage.collect { message ->
+                showToast(message = message)
             }
-
-            is Resource.Success -> status.data?.let {
-                hideLoading()
-                viewModel.showToastMessage(it.message)
-            }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
         }
     }
 
-    private fun handleNickDupResult(status: Resource<String>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
+    private fun collectSignUpProcess() {
+        launch {
+            viewModel.signUpProcess.collect { signUpProcess ->
+                when (signUpProcess) {
+                    is Resource.None -> {}
+                    is Resource.Loading -> showLoading()
+                    is Resource.Error -> hideLoading()
+                    is Resource.Success -> {
+                        hideLoading()
+                        navigateToSignInFragment()
+                    }
+                }
             }
+        }
+    }
 
-            is Resource.Success -> status.data?.let {
-                hideLoading()
-                viewModel.showToastMessage(it)
+    private fun collectAccountNameExistence() {
+        launch {
+            viewModel.accountNameExistence.collect { accountNameState ->
+                when (accountNameState) {
+                    is Resource.None -> {}
+                    is Resource.Loading -> showLoading()
+                    is Resource.Error -> hideLoading()
+                    is Resource.Success -> hideLoading()
+                }
             }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
         }
     }
 
@@ -158,10 +142,6 @@ class SignUpFragment :
         findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToAgreeFragment())
     }
 
-    private fun observeToast(event: LiveData<SingleEvent<Any>>) {
-        binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
-    }
-
     private fun initEditTextListener() {
         binding.etSignUpIdExample.addTextChangedListener(idListener)
         binding.etSignUpPasswordInsert.addTextChangedListener(passwordListener)
@@ -171,26 +151,34 @@ class SignUpFragment :
 
     private fun initSignUpBtn() {
         binding.btnSignUpJoin.setOnClickListener {
-            val userId = binding.etSignUpIdExample.text.toString()
+            val accountName = binding.etSignUpIdExample.text.toString()
             val pw = binding.etSignUpPasswordInsert.text.toString()
             val repw = binding.etSignUpPasswordInsertMore.text.toString()
             val nickname = binding.etSignUpNickNameExample.text.toString()
             val phoneNumber = navArgs.phoneNum.toString()
+            viewModel.signUp(
+                accountName = accountName,
+                password = password,
+                confirmPassword = confirmPassword,
+                phoneNumber = phoneNumber,
+                nickname = nickname
+            )
 
-            if (userId == "" || pw == "" || repw == "" || nickname == "" || phoneNumber == "")
+            if (accountName == "" || pw == "" || repw == "" || nickname == "" || phoneNumber == "") {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_all))
-            else if (pw == repw) {
+            } else if (pw == repw) {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_suc))
-                viewModel.signUp(userId, pw, phoneNumber, nickname)
-            } else
+                viewModel.signUp(accountName, pw, phoneNumber, nickname)
+            } else {
                 viewModel.showToastMessage(resources.getString(R.string.sign_up_req_nopw))
+            }
         }
     }
 
     private fun initIdBtn() {
         binding.btnSignUpIdDoubleCheck.setOnClickListener {
             val id = binding.etSignUpIdExample.text.toString()
-            viewModel.isIdDup(id)
+            viewModel.checkAccountNameExistence(id)
         }
     }
 
@@ -199,7 +187,7 @@ class SignUpFragment :
             val nickname = binding.etSignUpNickNameExample.text.toString()
 
             if (nickname.isEmpty()) return@setOnClickListener
-            viewModel.isNicknameDup(nickname)
+            viewModel.checkNicknameExistence(nickname)
         }
     }
 
@@ -323,8 +311,8 @@ class SignUpFragment :
                 binding.etSignUpPasswordInsertMore.error = null
                 passwordFlag = true
                 when {
-                    binding.etSignUpPasswordInsertMore.text.toString() != ""
-                            && binding.etSignUpPasswordInsertMore.text.toString() != binding.etSignUpPasswordInsert.text.toString() -> {
+                    binding.etSignUpPasswordInsertMore.text.toString() != "" &&
+                        binding.etSignUpPasswordInsertMore.text.toString() != binding.etSignUpPasswordInsert.text.toString() -> {
                         binding.etSignUpPasswordInsertMore.error =
                             resources.getString(R.string.sign_up_check_pw_not)
                         passwordCheckFlag = false

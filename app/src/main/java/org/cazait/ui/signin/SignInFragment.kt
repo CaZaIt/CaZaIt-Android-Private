@@ -1,16 +1,14 @@
 package org.cazait.ui.signin
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.cazait.R
+import org.cazait.core.model.Resource
 import org.cazait.databinding.FragmentSignInBinding
-import org.cazait.model.Resource
-import org.cazait.model.SignInInfo
 import org.cazait.ui.base.BaseFragment
-import org.cazait.utils.SingleEvent
-import org.cazait.utils.observe
 import org.cazait.utils.showToast
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -25,7 +23,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     override fun initView() {
-        viewModel.initViewModel()
         binding.clTop.includedTvTitle.text = getString(R.string.sign_in_kor)
         binding.clTop.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -35,59 +32,58 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun observeViewModel() {
-        observe(viewModel.signInProcess, ::handleSignInResult)
-        observeToast(viewModel.showToast)
+        collectSignInProcess()
+        collectToastMessage()
     }
 
-    private fun observeToast(event: LiveData<SingleEvent<Any>>) {
-        binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
+    private fun collectToastMessage() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.toastMessage.collect {
+                showToast(message = it)
+            }
+        }
     }
 
-    private fun handleSignInResult(status: Resource<SignInInfo>?) {
-        when (status) {
-            is Resource.Loading -> {
-                binding.lottieSignin.toVisible()
-                binding.lottieSignin.playAnimation()
-            }
+    private fun collectSignInProcess() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.signInProcess.collect { uiState ->
+                when (uiState) {
+                    is Resource.None -> {}
+                    is Resource.Loading -> {
+                        binding.lottieSignin.toVisible()
+                        binding.lottieSignin.playAnimation()
+                    }
 
-            is Resource.Success -> status.data?.let {
-                binding.lottieSignin.pauseAnimation()
-                binding.lottieSignin.toGone()
-                findNavController().popBackStack()
-            }
+                    is Resource.Success -> {
+                        binding.lottieSignin.pauseAnimation()
+                        binding.lottieSignin.toGone()
+                        findNavController().popBackStack()
+                    }
 
-            is Resource.Error -> {
-                binding.lottieSignin.pauseAnimation()
-                binding.lottieSignin.toGone()
-                status.let {
-                    viewModel.showToastMessage(it.message)
+                    is Resource.Error -> {
+                        binding.lottieSignin.pauseAnimation()
+                        binding.lottieSignin.toGone()
+                        viewModel.showToastMessage(getString(R.string.sign_in_error))
+                    }
                 }
             }
-
-            null -> {}
         }
     }
 
     private fun initBtn() {
-        binding.tvSignup.setOnClickListener {
-            navigateToSignUp()
-        }
-        binding.tvFindid.setOnClickListener {
-            navigateToFindId()
-        }
-        binding.tvFindpassword.setOnClickListener {
-            navigateToFindPassword()
-        }
+        binding.tvSignup.setOnClickListener { navigateToSignUp() }
+        binding.tvFindid.setOnClickListener { navigateToFindId() }
+        binding.tvFindpassword.setOnClickListener { navigateToFindPassword() }
     }
 
     private fun initSignInBtn() {
-        binding.btnDoLogin.setOnClickListener {
-            postSignIn()
-        }
+        binding.btnDoLogin.setOnClickListener { postSignIn() }
     }
 
     private fun postSignIn() {
-        viewModel.doSignIn(binding.etId.text.toString(), binding.etPassword.text.toString())
+        val id = binding.etId.text.toString()
+        val password = binding.etPassword.text.toString()
+        viewModel.signIn(id, password)
     }
 
     private fun navigateToSignUp() {
@@ -96,11 +92,20 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun navigateToFindId() {
         val title = binding.tvFindid.text.toString()
-        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToPhoneVerifyFragment(title, null))
+        findNavController().navigate(
+            SignInFragmentDirections.actionSignInFragmentToPhoneVerifyFragment(
+                title,
+                null,
+            ),
+        )
     }
 
     private fun navigateToFindPassword() {
         val title = binding.tvFindpassword.text.toString()
-        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToCheckIdFragment(title))
+        findNavController().navigate(
+            SignInFragmentDirections.actionSignInFragmentToCheckIdFragment(
+                title,
+            ),
+        )
     }
 }

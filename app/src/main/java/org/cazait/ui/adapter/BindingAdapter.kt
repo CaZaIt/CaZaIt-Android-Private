@@ -1,6 +1,5 @@
 package org.cazait.ui.adapter
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,7 +7,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import coil.load
 import org.cazait.R
-import org.cazait.model.CafeStatus
+import org.cazait.core.model.congestion.CafeStatus
 
 const val DURATION_CROSS_FADE = 300
 

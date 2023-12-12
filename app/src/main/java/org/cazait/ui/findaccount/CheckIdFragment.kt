@@ -6,8 +6,8 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
 import org.cazait.databinding.FragmentCheckIdBinding
-import org.cazait.model.Check
-import org.cazait.model.Resource
+import org.cazait.core.model.ExistenceStatus
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -17,7 +17,7 @@ import org.cazait.utils.toVisible
 
 class CheckIdFragment : BaseFragment<FragmentCheckIdBinding, CheckIdViewModel>(
     CheckIdViewModel::class.java,
-    R.layout.fragment_check_id
+    R.layout.fragment_check_id,
 ) {
     private val navArgs: CheckIdFragmentArgs by navArgs()
 
@@ -34,7 +34,6 @@ class CheckIdFragment : BaseFragment<FragmentCheckIdBinding, CheckIdViewModel>(
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun observeViewModel() {
@@ -45,15 +44,15 @@ class CheckIdFragment : BaseFragment<FragmentCheckIdBinding, CheckIdViewModel>(
     private fun btnCheckId() {
         binding.btnCheckId.setOnClickListener {
             val userId = binding.etCheckId.text.toString()
-            if (userId == ""){
+            if (userId == "") {
                 viewModel.showToastMessage(resources.getString(R.string.please_input_id))
-            }else{
+            } else {
                 viewModel.checkId(userId)
             }
         }
     }
 
-    private fun handleCheckId(status: Resource<Check>?){
+    private fun handleCheckId(status: Resource<ExistenceStatus>?) {
         when (status) {
             is Resource.Loading -> {
                 showLoading()
@@ -78,8 +77,9 @@ class CheckIdFragment : BaseFragment<FragmentCheckIdBinding, CheckIdViewModel>(
         val title = binding.clTop.includedTvTitle.text.toString()
         findNavController().navigate(
             CheckIdFragmentDirections.actionCheckIdFragmentToPhoneVerifyFragment(
-                title, userUuid
-            )
+                title,
+                userUuid,
+            ),
         )
     }
 

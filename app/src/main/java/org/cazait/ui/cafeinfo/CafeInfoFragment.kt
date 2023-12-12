@@ -18,8 +18,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeInfoBinding
-import org.cazait.model.Cafe
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.Resource
 import org.cazait.ui.adapter.CafeImgAdapter
 import org.cazait.ui.adapter.ViewPagerAdapter
 import org.cazait.ui.cafeinfo.detail.CafeInfoMenuFragment
@@ -46,7 +46,7 @@ class CafeInfoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         cafe = navArgs.cafe
         Log.d("isFavorite 상태", cafe.isFavorite.toString())
@@ -54,7 +54,7 @@ class CafeInfoFragment : Fragment() {
             inflater,
             R.layout.fragment_cafe_info,
             container,
-            false
+            false,
         ).apply {
             cafe = this@CafeInfoFragment.cafe
             viewModel = this@CafeInfoFragment.viewModel
@@ -89,12 +89,12 @@ class CafeInfoFragment : Fragment() {
                 listOf(
                     CafeInfoMenuFragment(
                         this@CafeInfoFragment.cafe,
-                        this@CafeInfoFragment.viewModel
+                        this@CafeInfoFragment.viewModel,
                     ),
                     CafeInfoReviewFragment(
                         this@CafeInfoFragment.cafe,
-                        this@CafeInfoFragment.viewModel
-                    )
+                        this@CafeInfoFragment.viewModel,
+                    ),
                 )
         }
     }
@@ -132,10 +132,11 @@ class CafeInfoFragment : Fragment() {
         binding.vpFragment.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.vpFragment) { tab, position ->
             tab.text = getString(
-                if (fragmentList[position] is CafeInfoMenuFragment)
+                if (fragmentList[position] is CafeInfoMenuFragment) {
                     R.string.info_cafemenu
-                else
+                } else {
                     R.string.info_caferev
+                },
             )
         }.attach()
     }
@@ -177,6 +178,7 @@ class CafeInfoFragment : Fragment() {
     private fun observeToast(event: LiveData<SingleEvent<Any>>) {
         binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
+
     private fun handleFavorite(status: Resource<String>) {
         when (status) {
             is Resource.Loading -> {}

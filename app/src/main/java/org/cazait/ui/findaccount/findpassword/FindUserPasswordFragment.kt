@@ -7,8 +7,8 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentFindUserPasswordBinding
-import org.cazait.model.Resource
-import org.cazait.model.UserPassword
+import org.cazait.core.model.Resource
+import org.cazait.core.model.UserPassword
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.signup.CheckTextWatcher
 import org.cazait.utils.SingleEvent
@@ -21,7 +21,7 @@ import org.cazait.utils.toVisible
 class FindUserPasswordFragment :
     BaseFragment<FragmentFindUserPasswordBinding, FindUserPasswordViewModel>(
         FindUserPasswordViewModel::class.java,
-        R.layout.fragment_find_user_password
+        R.layout.fragment_find_user_password,
     ) {
     private val navArgs: FindUserPasswordFragmentArgs by navArgs()
     private var passwordFlag = false
@@ -41,7 +41,6 @@ class FindUserPasswordFragment :
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun observeViewModel() {
@@ -181,8 +180,8 @@ class FindUserPasswordFragment :
                 binding.etFindPasswordInsertMore.error = null
                 passwordFlag = true
                 when {
-                    binding.etFindPasswordInsertMore.text.toString() != ""
-                            && binding.etFindPasswordInsertMore.text.toString() != binding.etFindPasswordInsert.text.toString() -> {
+                    binding.etFindPasswordInsertMore.text.toString() != "" &&
+                        binding.etFindPasswordInsertMore.text.toString() != binding.etFindPasswordInsert.text.toString() -> {
                         binding.etFindPasswordInsertMore.error =
                             resources.getString(R.string.sign_up_check_pw_not)
                         passwordCheckFlag = false

@@ -10,10 +10,10 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.CafeRepository
-import org.cazait.model.Cafe
-import org.cazait.model.Cafes
-import org.cazait.model.FavoriteCafe
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.Cafes
+import org.cazait.core.model.cafe.FavoriteCafe
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.PermissionUtil
 import javax.inject.Inject
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val cafeRepository: CafeRepository,
     private val fusedLocationClient: FusedLocationProviderClient,
-    private val permissionUtil: PermissionUtil
+    private val permissionUtil: PermissionUtil,
 ) : BaseViewModel() {
     private val _locationLiveData = MutableLiveData<Location>()
     val locationLiveData: LiveData<Location>
@@ -51,7 +51,7 @@ class SearchViewModel @Inject constructor(
             cafeRepository.getCafeSearch(
                 cafeName = cafeName,
                 longitude = _locationLiveData.value?.longitude.toString(),
-                latitude = _locationLiveData.value?.latitude.toString()
+                latitude = _locationLiveData.value?.latitude.toString(),
             ).collect {
                 _cafeSearchData.value = it
             }

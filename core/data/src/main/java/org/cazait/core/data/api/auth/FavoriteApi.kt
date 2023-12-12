@@ -3,7 +3,7 @@ package org.cazait.core.data.api.auth
 import org.cazait.core.data.datasource.response.DeleteFavoriteCafeResponse
 import org.cazait.core.data.datasource.response.ListFavoritesResponse
 import org.cazait.core.data.datasource.response.PostFavoriteCafeResponse
-import retrofit2.Response
+import org.cazait.core.domain.model.network.NetworkResult
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -14,16 +14,16 @@ interface FavoriteApi {
     suspend fun postFavoriteCafeAuth(
         @Path("userId") userId: String,
         @Path("cafeId") cafeId: String,
-    ): Response<PostFavoriteCafeResponse>
+    ): NetworkResult<PostFavoriteCafeResponse>
 
     @DELETE("/api/favorites/delete/{userId}/{cafeId}")
     suspend fun deleteFavoriteCafeAuth(
         @Path("userId") userId: String,
         @Path("cafeId") cafeId: String,
-    ): Response<DeleteFavoriteCafeResponse>
+    ): NetworkResult<DeleteFavoriteCafeResponse>
 
     @GET("/api/favorites/user/{userId}")
     suspend fun getListFavoritesAuth(
         @Path("userId") userId: String,
-    ): Response<ListFavoritesResponse>
+    ): NetworkResult<ListFavoritesResponse>
 }

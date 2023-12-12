@@ -7,7 +7,7 @@
 
         <variable
             name="menu"
-            type="org.cazait.model.CafeMenu" />
+            type="org.cazait.core.model.cafe.CafeMenu" />
     </data>
 
 

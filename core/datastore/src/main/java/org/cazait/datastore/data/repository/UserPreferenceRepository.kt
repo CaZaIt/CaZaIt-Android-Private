@@ -2,7 +2,7 @@ package org.cazait.datastore.data.repository
 
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.Flow
-import org.cazait.model.local.UserPreference
+import org.cazait.core.model.local.UserPreference
 import javax.inject.Inject
 import javax.inject.Singleton
 

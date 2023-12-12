@@ -1,6 +1,6 @@
 package org.cazait.ui.cafeinfo.detail.clicklistener
 
-import org.cazait.model.CafeReview
+import org.cazait.core.model.CafeReview
 
 interface ReviewItemClick {
     fun onEditClick(item: CafeReview)

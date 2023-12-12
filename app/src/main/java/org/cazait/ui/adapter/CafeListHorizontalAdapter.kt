@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.cazait.databinding.ItemCafeJustInfoBinding
-import org.cazait.model.FavoriteCafe
+import org.cazait.core.model.cafe.FavoriteCafe
 
 class CafeListHorizontalAdapter(
-    private val onClick: (FavoriteCafe) -> Unit
+    private val onClick: (FavoriteCafe) -> Unit,
 ) :
     ListAdapter<FavoriteCafe, CafeListHorizontalAdapter.CafeListFavoritesViewHolder>(diffUtil) {
 
@@ -30,8 +30,8 @@ class CafeListHorizontalAdapter(
             ItemCafeJustInfoBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 

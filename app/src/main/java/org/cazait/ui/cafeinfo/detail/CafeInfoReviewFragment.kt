@@ -11,10 +11,10 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeInfoReviewBinding
-import org.cazait.model.Cafe
-import org.cazait.model.CafeReview
-import org.cazait.model.CafeReviews
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.CafeReview
+import org.cazait.core.model.CafeReviews
+import org.cazait.core.model.Resource
 import org.cazait.ui.adapter.CafeInfoReviewAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.cafeinfo.CafeInfoFragmentDirections
@@ -28,7 +28,7 @@ import kotlin.math.roundToInt
 @AndroidEntryPoint
 class CafeInfoReviewFragment(
     private val cafe: Cafe,
-    private val viewModel: CafeInfoViewModel
+    private val viewModel: CafeInfoViewModel,
 ) : Fragment(), ReviewItemClick {
     private lateinit var binding: FragmentCafeInfoReviewBinding
     private lateinit var reviewAdapter: CafeInfoReviewAdapter
@@ -41,7 +41,7 @@ class CafeInfoReviewFragment(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentCafeInfoReviewBinding.inflate(inflater)
         return binding.root
@@ -81,9 +81,9 @@ class CafeInfoReviewFragment(
         binding.rvCafeInfoReviews.addItemDecoration(
             ItemDecoration(
                 extraMargin = resources.getDimension(
-                    R.dimen.cafe_item_space
-                ).roundToInt()
-            )
+                    R.dimen.cafe_item_space,
+                ).roundToInt(),
+            ),
         )
     }
 
@@ -127,8 +127,8 @@ class CafeInfoReviewFragment(
             CafeInfoFragmentDirections.actionCafeInfoFragmentToReviewWriteFragment(
                 cafe,
                 score,
-                content
-            )
+                content,
+            ),
         )
     }
 
@@ -139,10 +139,8 @@ class CafeInfoReviewFragment(
     }
 
     override fun onDeleteClick(item: CafeReview) {
-
     }
 
     override fun onReportClick(item: CafeReview) {
-
     }
 }

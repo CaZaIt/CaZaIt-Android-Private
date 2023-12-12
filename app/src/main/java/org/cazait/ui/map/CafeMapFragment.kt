@@ -15,11 +15,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.Constants
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeMapBinding
-import org.cazait.model.Cafe
-import org.cazait.model.Cafes
-import org.cazait.model.FavoriteCafe
-import org.cazait.model.FavoriteCafes
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.Cafes
+import org.cazait.core.model.cafe.FavoriteCafe
+import org.cazait.core.model.cafe.FavoriteCafes
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.cafeinfo.CafeInfoDialogFragment
 import org.cazait.utils.observe
@@ -27,7 +27,8 @@ import kotlin.math.abs
 
 @AndroidEntryPoint
 class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding, CafeMapViewModel>(
-    CafeMapViewModel::class.java, R.layout.fragment_cafe_map
+    CafeMapViewModel::class.java,
+    R.layout.fragment_cafe_map,
 ) {
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
@@ -47,7 +48,8 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
 
     private fun initLocationSource() {
         locationSource = FusedLocationSource(
-            this, Constants.REQUEST_CODE_LOCATION_PERMISSION,
+            this,
+            Constants.REQUEST_CODE_LOCATION_PERMISSION,
         )
     }
 
@@ -84,21 +86,23 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         val newCameraPosition = naverMap.cameraPosition.target
         if (isCameraPositionChanged(newCameraPosition)) {
             lastCameraPosition = newCameraPosition
-        } else return
+        } else {
+            return
+        }
 
         lastCameraPosition?.let {
             viewModel.searchCafes(
                 it.latitude.toString(),
-                it.longitude.toString()
+                it.longitude.toString(),
             )
         }
     }
 
     private fun isCameraPositionChanged(newCameraPos: LatLng): Boolean {
         return lastCameraPosition == null || (
-                abs(lastCameraPosition!!.latitude - newCameraPos.latitude) > TOLERANCE
-                        && abs(lastCameraPosition!!.longitude - newCameraPos.longitude) > TOLERANCE
-                )
+            abs(lastCameraPosition!!.latitude - newCameraPos.latitude) > TOLERANCE &&
+                abs(lastCameraPosition!!.longitude - newCameraPos.longitude) > TOLERANCE
+            )
     }
 
     private fun handleFavorite(status: Resource<FavoriteCafes>?) {
@@ -106,7 +110,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> {
-                favoriteCafeList = status.data?.list ?: emptyList()
+                favoriteCafeList = status.data?.cafes ?: emptyList()
                 viewModel.updateMarker()
             }
 
@@ -119,7 +123,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         when (status) {
             is Resource.Loading -> {}
             is Resource.Success -> {
-                val markCafeList = status.data?.list ?: emptyList()
+                val markCafeList = status.data?.cafes ?: emptyList()
                 viewModel.updateFavoriteStatus(favoriteCafeList, markCafeList)
                 handleSuccess(markCafeList)
             }
@@ -164,17 +168,17 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
             CafeInfoDialogFragment(
                 cafe,
                 { navigateToCafeInfoFragment(cafe) },
-                { onCancelDialog() }
+                { onCancelDialog() },
             ).show(
                 parentFragmentManager,
-                "cafe_info_dialog_fragment"
+                "cafe_info_dialog_fragment",
             )
         }
     }
 
     private fun navigateToCafeInfoFragment(cafe: Cafe) {
         findNavController().navigate(
-            CafeMapFragmentDirections.actionCafeMapFragmentToCafeInfoFragment(cafe)
+            CafeMapFragmentDirections.actionCafeMapFragmentToCafeInfoFragment(cafe),
         )
     }
 

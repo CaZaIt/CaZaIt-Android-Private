@@ -3,7 +3,7 @@ package org.cazait.core.data.datasource.response
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import org.cazait.core.data.datasource.CafeDTO
-import org.cazait.model.CafeStatus
+import org.cazait.core.model.congestion.CafeStatus
 
 @JsonClass(generateAdapter = true)
 data class ListCafesResponse(
@@ -26,7 +26,7 @@ data class ListFavoritesResponse(
     @Json(name = "message")
     val message: String,
     @Json(name = "data")
-    val favorites: List<org.cazait.core.data.datasource.response.FavoriteCafeDTO>,
+    val favorites: List<FavoriteCafeDTO>,
 )
 
 @JsonClass(generateAdapter = true)

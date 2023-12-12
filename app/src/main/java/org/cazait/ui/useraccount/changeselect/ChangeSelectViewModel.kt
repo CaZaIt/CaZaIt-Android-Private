@@ -5,5 +5,4 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ChangeSelectViewModel @Inject constructor() : BaseViewModel() {
-}
+class ChangeSelectViewModel @Inject constructor() : BaseViewModel()

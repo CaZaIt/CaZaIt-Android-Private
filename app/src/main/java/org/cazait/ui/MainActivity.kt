@@ -35,7 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         R.id.checkPasswordFragment,
         R.id.changeSelectFragment,
         R.id.changePasswordFragment,
-        R.id.changeNicknameFragment
+        R.id.changeNicknameFragment,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 
     override fun initAfterBinding() {
     }
-
 
     private fun initBottomNavigation() {
         val navHostFragment =

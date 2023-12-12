@@ -9,11 +9,11 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentPhoneVerifyBinding
-import org.cazait.model.FindPassUserData
-import org.cazait.model.Resource
-import org.cazait.model.UserAccount
-import org.cazait.model.VerificationCode
-import org.cazait.model.VerifyCode
+import org.cazait.core.model.FindPassUserData
+import org.cazait.core.model.Resource
+import org.cazait.core.model.UserAccount
+import org.cazait.core.model.VerificationCode
+import org.cazait.core.model.VerifyCode
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -24,7 +24,7 @@ import org.cazait.utils.toVisible
 @AndroidEntryPoint
 class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerifyViewModel>(
     PhoneVerifyViewModel::class.java,
-    R.layout.fragment_phone_verify
+    R.layout.fragment_phone_verify,
 ) {
     private val navArgs: PhoneVerifyFragmentArgs by navArgs()
     private lateinit var foundUserData: FindPassUserData
@@ -57,7 +57,6 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun observeViewModel() {
@@ -168,7 +167,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                     timer.cancel()
                     navigateToFindUserPasswordFragment(
                         navArgs.userUuid.toString(),
-                        foundUserData.userId
+                        foundUserData.userId,
                     )
                 } else if (title == resources.getString(R.string.sign_up_sign_up)) {
                     timer.cancel()
@@ -187,7 +186,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                     timer.cancel()
                     navigateToFindUserPasswordFragment(
                         navArgs.userUuid.toString(),
-                        foundUserData.userId
+                        foundUserData.userId,
                     )
                 } else if (title == resources.getString(R.string.sign_up_sign_up)) {
                     timer.cancel()
@@ -273,16 +272,16 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
     private fun navigateToSignUpFragment(phoneNumber: String) {
         findNavController().navigate(
             PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToSignUpFragment(
-                phoneNumber
-            )
+                phoneNumber,
+            ),
         )
     }
 
     private fun navigateToFindUserIdFragment(foundUserId: String?) {
         findNavController().navigate(
             PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToFindUserIdFragment(
-                foundUserId
-            )
+                foundUserId,
+            ),
         )
     }
 
@@ -290,8 +289,8 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
         findNavController().navigate(
             PhoneVerifyFragmentDirections.actionPhoneVerifyFragmentToFindUserPasswordFragment(
                 userUuid,
-                userId
-            )
+                userId,
+            ),
         )
     }
 

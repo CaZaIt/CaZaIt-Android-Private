@@ -1,7 +1,8 @@
 package org.cazait.core.data.api.auth
 
+import org.cazait.core.data.datasource.request.CafeReviewPostRequest
 import org.cazait.core.data.datasource.response.CafeReviewPostResponse
-import retrofit2.Response
+import org.cazait.core.domain.model.network.NetworkResult
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -11,6 +12,6 @@ interface ReviewApi {
     suspend fun postReviewAuth(
         @Path("userId") userId: String,
         @Path("cafeId") cafeId: String,
-        @Body reviewPostReq: org.cazait.core.data.datasource.request.CafeReviewPostRequest,
-    ): Response<CafeReviewPostResponse>
+        @Body cafeReviewPostRequest: CafeReviewPostRequest,
+    ): NetworkResult<CafeReviewPostResponse>
 }

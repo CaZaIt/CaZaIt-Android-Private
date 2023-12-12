@@ -1,10 +1,10 @@
 package org.cazait.core.data.api.unauth
 
 import org.cazait.core.data.datasource.response.CafeMenuResponse
-import org.cazait.core.data.datasource.response.CafeResTemp
+import org.cazait.core.data.datasource.response.CafeResponse
 import org.cazait.core.data.datasource.response.CafeReviewResponse
 import org.cazait.core.data.datasource.response.ListCafesResponse
-import org.cazait.core.data.model.network.NetworkResult
+import org.cazait.core.domain.model.network.NetworkResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -13,7 +13,7 @@ interface CafeApi {
     @GET("/api/cafes/{cafeId}")
     suspend fun getCafe(
         @Path("cafeId") cafeId: String,
-    ): NetworkResult<CafeResTemp>
+    ): NetworkResult<CafeResponse>
 
     @GET("/api/cafes/all")
     suspend fun getListCafesWithGuest(

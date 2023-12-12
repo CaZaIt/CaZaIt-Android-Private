@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.model.Cafe
 import org.cazait.databinding.ItemCafeWithLandscapeBinding
+import org.cazait.core.model.cafe.Cafe
 
 class CafeListVerticalAdapter(
-    private val onClick: (Cafe) -> Unit
+    private val onClick: (Cafe) -> Unit,
 ) :
     ListAdapter<Cafe, CafeListVerticalAdapter.CafeListVerticalViewHolder>(diffUtil) {
 
@@ -34,9 +34,10 @@ class CafeListVerticalAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false,
-            )
+            ),
         )
     }
+
     override fun onBindViewHolder(holder: CafeListVerticalViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
@@ -45,14 +46,14 @@ class CafeListVerticalAdapter(
         val diffUtil = object : DiffUtil.ItemCallback<Cafe>() {
             override fun areItemsTheSame(
                 oldItem: Cafe,
-                newItem: Cafe
+                newItem: Cafe,
             ): Boolean {
                 return oldItem.cafeId == newItem.cafeId
             }
 
             override fun areContentsTheSame(
                 oldItem: Cafe,
-                newItem: Cafe
+                newItem: Cafe,
             ): Boolean {
                 return oldItem == newItem
             }

@@ -9,6 +9,7 @@ class AgreeViewModel : BaseViewModel() {
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
     val showToast: LiveData<SingleEvent<Any>>
         get() = _showToast
+
     fun showToastMessage(errorMessage: String?) {
         if (errorMessage == null) return
         _showToast.value = SingleEvent(errorMessage)

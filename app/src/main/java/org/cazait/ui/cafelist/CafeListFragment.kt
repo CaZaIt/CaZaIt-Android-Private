@@ -15,12 +15,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.Constants
 import org.cazait.R
 import org.cazait.databinding.FragmentCafeListBinding
-import org.cazait.model.Cafe
-import org.cazait.model.Cafes
-import org.cazait.model.FavoriteCafe
-import org.cazait.model.FavoriteCafes
-import org.cazait.model.ListTitle
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.Cafes
+import org.cazait.core.model.cafe.FavoriteCafe
+import org.cazait.core.model.cafe.FavoriteCafes
+import org.cazait.core.model.ListTitle
+import org.cazait.core.model.Resource
 import org.cazait.ui.Mapper.toCafe
 import org.cazait.ui.adapter.CafeListHorizontalAdapter
 import org.cazait.ui.adapter.CafeListVerticalAdapter
@@ -210,7 +210,7 @@ class CafeListFragment :
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> {
-                horizontalCafeList = status.data?.list ?: emptyList()
+                horizontalCafeList = status.data?.cafes ?: emptyList()
                 handleSuccess(
                     horizontalAdapter::submitList,
                     horizontalCafeList,
@@ -227,7 +227,7 @@ class CafeListFragment :
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> {
-                val verticalCafeList = status.data?.list ?: emptyList()
+                val verticalCafeList = status.data?.cafes ?: emptyList()
                 viewModel.updateFavoriteStatus(horizontalCafeList, verticalCafeList)
                 handleSuccess(
                     verticalAdapter::submitList,

@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.cazait.databinding.ItemCafeSearchBinding
-import org.cazait.model.Cafe
+import org.cazait.core.model.cafe.Cafe
 import org.cazait.ui.search.clicklistener.OnSearchClick
 
 class SearchAdapter(private val listener: OnSearchClick) :
     ListAdapter<Cafe, SearchAdapter.SearchViewHolder>(diffUtil) {
 
     inner class SearchViewHolder(
-        private val binding: ItemCafeSearchBinding
+        private val binding: ItemCafeSearchBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Cafe) {
@@ -26,14 +26,14 @@ class SearchAdapter(private val listener: OnSearchClick) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): SearchViewHolder {
         return SearchViewHolder(
             ItemCafeSearchBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 

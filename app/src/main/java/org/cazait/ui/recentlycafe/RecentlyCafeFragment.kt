@@ -4,10 +4,10 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
 import org.cazait.databinding.FragmentRecentlyCafeBinding
-import org.cazait.model.Cafe
-import org.cazait.model.FavoriteCafe
-import org.cazait.model.FavoriteCafes
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.FavoriteCafe
+import org.cazait.core.model.cafe.FavoriteCafes
+import org.cazait.core.model.Resource
 import org.cazait.ui.adapter.RecentlyViewedVerticalAdapter
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.observe
@@ -35,7 +35,6 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun observeRecentlyViewedCafes() {
@@ -48,7 +47,7 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
             is Resource.Loading -> {}
             is Resource.Error -> {}
             is Resource.Success -> {
-                favoriteCafeList = status.data?.list ?: emptyList()
+                favoriteCafeList = status.data?.cafes ?: emptyList()
                 viewModel.update()
             }
 
@@ -69,8 +68,8 @@ class RecentlyCafeFragment : BaseFragment<FragmentRecentlyCafeBinding, RecentlyC
     private fun navigateToCafeInfo(cafe: Cafe) {
         findNavController().navigate(
             RecentlyCafeFragmentDirections.actionRecentlyCafeFragmentToCafeInfoFragment(
-                cafe
-            )
+                cafe,
+            ),
         )
     }
 }

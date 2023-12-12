@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cazait.core.data.repository.AuthRepository
+import org.cazait.core.domain.repository.AuthRepository
 import org.cazait.core.data.repository.UserRepository
-import org.cazait.model.FindPassUserData
-import org.cazait.model.Resource
-import org.cazait.model.VerificationCode
-import org.cazait.model.UserAccount
-import org.cazait.model.VerifyCode
+import org.cazait.core.model.FindPassUserData
+import org.cazait.core.model.Resource
+import org.cazait.core.model.UserAccount
+import org.cazait.core.model.VerificationCode
+import org.cazait.core.model.VerifyCode
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PhoneVerifyViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : BaseViewModel() {
     private val _userIdProcess = MutableLiveData<Resource<UserAccount>?>()
     val userIdProcess: LiveData<Resource<UserAccount>?>

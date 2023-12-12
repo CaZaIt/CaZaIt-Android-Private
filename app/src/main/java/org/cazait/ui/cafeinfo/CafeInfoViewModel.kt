@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.CafeRepository
 import org.cazait.core.data.repository.UserRepository
-import org.cazait.model.Cafe
-import org.cazait.model.CafeMenus
-import org.cazait.model.CafeReviews
-import org.cazait.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.CafeMenus
+import org.cazait.core.model.CafeReviews
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
 import javax.inject.Inject
@@ -112,9 +112,8 @@ class CafeInfoViewModel @Inject constructor(
         viewModelScope.launch {
             val cafeWithTimestamp = cafe.copy(timestamp = System.currentTimeMillis())
             cafeRepository.insertRecentlyViewedCafe(cafeWithTimestamp)
-            Log.e("cafeId1",cafeWithTimestamp.cafeId)
+            Log.e("cafeId1", cafeWithTimestamp.cafeId)
         }
-
     }
 
     fun showToastMessage(errorMessage: String?) {

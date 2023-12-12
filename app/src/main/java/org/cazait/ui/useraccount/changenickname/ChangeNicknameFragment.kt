@@ -5,7 +5,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
 import org.cazait.databinding.FragmentChangeNicknameBinding
-import org.cazait.model.Resource
+import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.signup.CheckTextWatcher
 import org.cazait.utils.SingleEvent
@@ -16,7 +16,7 @@ import org.cazait.utils.toVisible
 
 class ChangeNicknameFragment : BaseFragment<FragmentChangeNicknameBinding, ChangeNicknameViewModel>(
     ChangeNicknameViewModel::class.java,
-    R.layout.fragment_change_nickname
+    R.layout.fragment_change_nickname,
 ) {
     private var nickNameFlag = false
 
@@ -27,6 +27,7 @@ class ChangeNicknameFragment : BaseFragment<FragmentChangeNicknameBinding, Chang
 
         override fun checkText(text: String) = checkNickName(text)
     }
+
     override fun initView() {
         viewModel.initViewModel()
         binding.apply {
@@ -40,7 +41,6 @@ class ChangeNicknameFragment : BaseFragment<FragmentChangeNicknameBinding, Chang
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun btnChangeNickname() {
@@ -92,13 +92,13 @@ class ChangeNicknameFragment : BaseFragment<FragmentChangeNicknameBinding, Chang
         }
     }
 
-    private fun handleNickDup(status: Resource<String>?){
-        when(status){
+    private fun handleNickDup(status: Resource<String>?) {
+        when (status) {
             is Resource.Loading -> {
                 showLoading()
             }
 
-            is Resource.Success -> status.data.let{
+            is Resource.Success -> status.data.let {
                 hideLoading()
                 viewModel.showToastMessage(it)
             }

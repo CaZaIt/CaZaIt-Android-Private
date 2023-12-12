@@ -1,8 +1,7 @@
 package org.cazait.ui
 
-import org.cazait.model.Cafe
-import org.cazait.model.CafeImage
-import org.cazait.model.FavoriteCafe
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.FavoriteCafe
 
 object Mapper {
     fun FavoriteCafe.toCafe() = Cafe(

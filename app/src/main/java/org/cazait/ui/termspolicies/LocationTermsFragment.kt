@@ -12,23 +12,23 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 @AndroidEntryPoint
-class LocationTermsFragment: BaseFragment<FragmentLocationTermsBinding, LocationTermsViewModel>(
+class LocationTermsFragment : BaseFragment<FragmentLocationTermsBinding, LocationTermsViewModel>(
     LocationTermsViewModel::class.java,
     R.layout.fragment_location_terms,
 ) {
     override fun initView() {
         binding.clTop.includedTvTitle.text = getString(R.string.terms_location)
-        binding.clTop.btnBack.setOnClickListener{
+        binding.clTop.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
         // termslocation.txt 파일을 읽어와서 txt_location TextView에 설정
         val termsText = readTextFile(requireContext(), R.raw.termslocation)
-        binding.txtLocation.text = termsText  // txt_location 아이디의 TextView에 설정
+        binding.txtLocation.text = termsText // txt_location 아이디의 TextView에 설정
     }
 
     override fun initAfterBinding() {
-
     }
+
     private fun readTextFile(context: Context, resourceId: Int): String {
         val text = StringBuilder()
 

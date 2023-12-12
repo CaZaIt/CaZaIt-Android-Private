@@ -5,4 +5,4 @@ import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PrivacyTermsViewModel @Inject constructor(): BaseViewModel()
+class PrivacyTermsViewModel @Inject constructor() : BaseViewModel()

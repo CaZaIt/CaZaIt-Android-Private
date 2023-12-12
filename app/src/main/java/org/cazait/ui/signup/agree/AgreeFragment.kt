@@ -13,7 +13,7 @@ import org.cazait.utils.showToast
 @AndroidEntryPoint
 class AgreeFragment : BaseFragment<FragmentAgreeBinding, AgreeViewModel>(
     AgreeViewModel::class.java,
-    R.layout.fragment_agree
+    R.layout.fragment_agree,
 ) {
     override fun initView() {
         binding.fragment = this
@@ -99,6 +99,11 @@ class AgreeFragment : BaseFragment<FragmentAgreeBinding, AgreeViewModel>(
 
     private fun navigateToPhoneVerifyFragment() {
         val title = resources.getString(R.string.sign_up_sign_up)
-        findNavController().navigate(AgreeFragmentDirections.actionAgreeFragmentToPhoneVerifyFragment(title, null))
+        findNavController().navigate(
+            AgreeFragmentDirections.actionAgreeFragmentToPhoneVerifyFragment(
+                title,
+                null,
+            ),
+        )
     }
 }

@@ -12,7 +12,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 @AndroidEntryPoint
-class PrivacyTermsFragment: BaseFragment<FragmentPrivacyTermsBinding, PrivacyTermsViewModel>(
+class PrivacyTermsFragment : BaseFragment<FragmentPrivacyTermsBinding, PrivacyTermsViewModel>(
     PrivacyTermsViewModel::class.java,
     R.layout.fragment_privacy_terms,
 ) {
@@ -23,12 +23,12 @@ class PrivacyTermsFragment: BaseFragment<FragmentPrivacyTermsBinding, PrivacyTer
         }
         // termslocation.txt 파일을 읽어와서 txt_location TextView에 설정
         val termsText = readTextFile(requireContext(), R.raw.termsprivacy)
-        binding.txtPrivacy.text = termsText  // txt_location 아이디의 TextView에 설정
+        binding.txtPrivacy.text = termsText // txt_location 아이디의 TextView에 설정
     }
 
     override fun initAfterBinding() {
-
     }
+
     private fun readTextFile(context: Context, resourceId: Int): String {
         val text = StringBuilder()
 

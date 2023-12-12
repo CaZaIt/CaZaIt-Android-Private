@@ -2,7 +2,7 @@ package org.cazait.ui.holder
 
 import androidx.recyclerview.widget.RecyclerView
 import org.cazait.databinding.ItemCafeWithLandscapeBinding
-import org.cazait.model.Cafe
+import org.cazait.core.model.cafe.Cafe
 import org.cazait.ui.adapter.setImage
 
 class CafeListVerticalViewHolder(
