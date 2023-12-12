@@ -1,5 +1,5 @@
-import org.cazait.configureKotlinAndroid
 import org.cazait.configureHiltAndroid
+import org.cazait.configureKotlinAndroid
 
 plugins {
     id("com.android.application")

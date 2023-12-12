@@ -1,10 +1,6 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("kotlin-parcelize")
-    id("androidx.navigation.safeargs.kotlin")
-    id("dagger.hilt.android.plugin")
+    id("cazait.android.application")
+    id("cazait.android.view")
 }
 
 android {
@@ -13,12 +9,8 @@ android {
 
     defaultConfig {
         applicationId = "org.cazait"
-        minSdk = 28
-        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -30,19 +22,8 @@ android {
             )
         }
     }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     buildFeatures {
         buildConfig = true
-        dataBinding = true
     }
 }
 
@@ -61,11 +42,6 @@ dependencies {
     // retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.moshi)
-
-    // Add Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.play.services)
 
     // okHttp
     implementation(libs.logging.interceptor)

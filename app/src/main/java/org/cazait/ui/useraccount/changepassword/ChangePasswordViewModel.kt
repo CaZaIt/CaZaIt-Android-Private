@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.cazait.core.domain.model.Message
+import org.cazait.core.domain.model.network.Message
 import org.cazait.core.domain.model.network.onError
 import org.cazait.core.domain.model.network.onException
 import org.cazait.core.domain.model.network.onSuccess

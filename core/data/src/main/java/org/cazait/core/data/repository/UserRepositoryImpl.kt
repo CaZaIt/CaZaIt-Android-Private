@@ -21,7 +21,7 @@ import org.cazait.core.data.datasource.response.FindUserIdResponse
 import org.cazait.core.data.datasource.response.ResetPasswordResponse
 import org.cazait.core.data.datasource.response.SignUpResponse
 import org.cazait.core.data.mapper.toData
-import org.cazait.core.domain.model.Message
+import org.cazait.core.domain.model.network.Message
 import org.cazait.core.domain.model.network.NetworkResult
 import org.cazait.core.domain.model.user.AccountName
 import org.cazait.core.domain.model.user.Nickname

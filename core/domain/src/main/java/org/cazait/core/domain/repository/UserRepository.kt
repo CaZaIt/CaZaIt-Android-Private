@@ -1,7 +1,7 @@
 package org.cazait.core.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import org.cazait.core.domain.model.Message
+import org.cazait.core.domain.model.network.Message
 import org.cazait.core.domain.model.network.NetworkResult
 import org.cazait.core.domain.model.user.AccountName
 import org.cazait.core.domain.model.user.Nickname
@@ -14,7 +14,6 @@ import org.cazait.core.model.SignUpInfo
 import org.cazait.core.model.UserAccount
 import org.cazait.core.model.UserPassword
 import org.cazait.core.model.local.UserPreference
-import java.util.UUID
 
 interface UserRepository {
     suspend fun signUp(

@@ -17,22 +17,17 @@ internal fun Project.configureViewAndroid() {
     }
 
     dependencies {
-        implementation(libs, "androidx.core")
+        implementation(libs, "androidx.core.ktx")
         implementation(libs, "androidx.appcompat")
         implementation(libs, "androidx.constraintlayout")
-        implementation(libs, "androidx.navigation.fragment")
-        implementation(libs, "androidx.navigation.ui")
-        implementation(libs, "androidx.recyclerview")
-        implementation(libs, "androidx.fragment")
-        implementation(libs, "androidx.activity")
-        implementation(libs, "androidx.lifecycle.livedata")
-        implementation(libs, "androidx.lifecycle.runtime")
-        implementation(libs, "androidx.lifecycle.viewmodel")
-        implementation(libs, "androidx.work")
-        implementation(libs, "androidx.splash")
+        implementation(libs, "androidx.navigation.fragment.ktx")
+        implementation(libs, "androidx.navigation.ui.ktx")
+        implementation(libs, "androidx.fragment.ktx")
+        implementation(libs, "androidx.lifecycle.viewmodel.ktx")
+        implementation(libs, "androidx.core.splashscreen")
 
-        testImplementation(libs, "junit4")
-        androidTestImplementation(libs, "androidx.test.ext")
+        testImplementation(libs, "junit")
+        androidTestImplementation(libs, "androidx.test.ext.junit")
         androidTestImplementation(libs, "androidx.test.espresso.core")
     }
 }

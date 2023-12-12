@@ -1,4 +1,4 @@
-package org.cazait.core.domain.model
+package org.cazait.core.domain.model.network
 
 @JvmInline
 value class Message(private val message: String) {

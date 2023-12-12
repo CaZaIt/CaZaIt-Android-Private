@@ -1,6 +1,6 @@
 package org.cazait.core.domain.usecase
 
-import org.cazait.core.domain.model.Message
+import org.cazait.core.domain.model.network.Message
 import org.cazait.core.domain.model.network.NetworkResult
 import org.cazait.core.domain.model.user.Password
 import org.cazait.core.domain.model.user.UserId
