@@ -1,15 +1,12 @@
 package org.cazait.ui.useraccount
 
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentCheckPasswordBinding
 import org.cazait.core.model.Resource
+import org.cazait.databinding.FragmentCheckPasswordBinding
 import org.cazait.ui.base.BaseFragment
-import org.cazait.utils.SingleEvent
-import org.cazait.utils.observe
+import org.cazait.utils.launch
 import org.cazait.utils.showToast
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -20,7 +17,6 @@ class CheckPasswordFragment : BaseFragment<FragmentCheckPasswordBinding, CheckPa
     R.layout.fragment_check_password,
 ) {
     override fun initView() {
-        viewModel.initViewModel()
         binding.apply {
             clTop.includedTvTitle.text = resources.getString(R.string.see_more_setting)
             clTop.btnBack.setOnClickListener { findNavController().popBackStack() }
@@ -33,41 +29,34 @@ class CheckPasswordFragment : BaseFragment<FragmentCheckPasswordBinding, CheckPa
     }
 
     private fun observeViewModel() {
-        observe(viewModel.checkPasswordProcess, ::handlePassword)
-        observeToast(viewModel.showToast)
+        collectPasswordCheckingProcess()
+        collectServerMessage()
     }
 
-    private fun handlePassword(status: Resource<String>?) {
-        when (status) {
-            is Resource.Loading -> showLoading()
-            is Resource.Success -> status.data.let {
-                hideLoading()
-                viewModel.showToastMessage(it)
-                navigateToSelectFragment()
+    private fun collectPasswordCheckingProcess() {
+        launch {
+            viewModel.checkPasswordProcess.collect { state ->
+                when (state) {
+                    is Resource.Loading -> showLoading()
+                    is Resource.None -> Unit
+                    is Resource.Error -> hideLoading()
+                    is Resource.Success -> {
+                        hideLoading()
+                        navigateToSelectFragment()
+                    }
+                }
             }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
         }
+    }
+
+    private fun collectServerMessage() {
+        launch { viewModel.serverMessageFlow.collect { showToast(it.toString()) } }
     }
 
     private fun btnCheckPassword() {
         binding.btnCheckPassword.setOnClickListener {
-            val password = binding.etCheckPassword.text.toString()
-            if (password == "") {
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_check_pw))
-            } else {
-                viewModel.checkPassword(password)
-            }
+            binding.etCheckPassword.text.toString().let(viewModel::checkPassword)
         }
-    }
-
-    private fun observeToast(event: LiveData<SingleEvent<Any>>) {
-        binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
 
     private fun navigateToSelectFragment() {

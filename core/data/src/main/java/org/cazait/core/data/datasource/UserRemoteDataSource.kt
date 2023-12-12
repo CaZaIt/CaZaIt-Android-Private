@@ -22,6 +22,7 @@ import org.cazait.core.data.datasource.response.ResetPasswordResponse
 import org.cazait.core.data.datasource.response.SignUpResponse
 import org.cazait.core.data.di.Authenticated
 import org.cazait.core.domain.model.network.NetworkResult
+import java.util.UUID
 import javax.inject.Inject
 
 class UserRemoteDataSource @Inject constructor(
@@ -75,26 +76,26 @@ class UserRemoteDataSource @Inject constructor(
     )
 
     suspend fun postCheckPassword(
-        userUuid: String,
+        userId: UUID,
         checkPasswordRequest: CheckPasswordRequest,
     ): NetworkResult<CheckPasswordResponse> = userAuthApi.postCheckPasswordAuth(
-        userId = userUuid,
+        userId = userId,
         checkPasswordRequest = checkPasswordRequest,
     )
 
     suspend fun patchChangePassword(
-        userUuid: String,
+        userId: UUID,
         changePasswordRequest: ChangePasswordRequest,
     ): NetworkResult<ChangePasswordResponse> = userAuthApi.patchPasswordAuth(
-        userId = userUuid,
+        userId = userId,
         changePasswordRequest = changePasswordRequest,
     )
 
     suspend fun patchChangeNickname(
-        userUuid: String,
+        userId: UUID,
         changeNicknameRequest: ChangeNicknameRequest,
     ): NetworkResult<ChangeNicknameResponse> = userAuthApi.patchNicknameAuth(
-        userId = userUuid,
+        userId = userId,
         changeNicknameRequest = changeNicknameRequest,
     )
 }

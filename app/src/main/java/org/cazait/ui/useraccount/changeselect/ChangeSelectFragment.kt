@@ -13,33 +13,25 @@ class ChangeSelectFragment : BaseFragment<FragmentChangeSelectBinding, ChangeSel
         binding.apply {
             clTop.includedTvTitle.text = resources.getString(R.string.see_more_setting)
             clTop.btnBack.setOnClickListener { navigateToBackStack() }
-        }
-        initBtn()
-    }
-
-    override fun initAfterBinding() {
-    }
-
-    private fun initBtn() {
-        binding.apply {
-            tvChangePassword.setOnClickListener {
-                navigateToChangePasswordFragment()
-            }
-            tvChangeNickname.setOnClickListener {
-                navigateToChangeNicknameFragment()
-            }
+            tvChangePassword.setOnClickListener { navigateToChangePasswordFragment() }
+            tvChangeNickname.setOnClickListener { navigateToChangeNicknameFragment() }
         }
     }
+
+    override fun initAfterBinding() = Unit
 
     private fun navigateToChangePasswordFragment() {
-        findNavController().navigate(ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangePasswordFragment())
+        val direction = ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangePasswordFragment()
+        findNavController().navigate(direction)
     }
 
     private fun navigateToChangeNicknameFragment() {
-        findNavController().navigate(ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangeNicknameFragment())
+        val direction = ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangeNicknameFragment()
+        findNavController().navigate(direction)
     }
 
     private fun navigateToBackStack() {
-        findNavController().navigate(ChangeSelectFragmentDirections.actionChangeSelectFragmentToSeeMoreFragment())
+        val direction = ChangeSelectFragmentDirections.actionChangeSelectFragmentToSeeMoreFragment()
+        findNavController().navigate(direction)
     }
 }

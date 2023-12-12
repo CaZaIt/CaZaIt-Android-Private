@@ -23,8 +23,8 @@ class UserPreferenceRepository @Inject constructor(
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
                 isLoggedIn = isLoggedIn,
-                uuid = uuid,
-                userId = userId,
+                userId = uuid,
+                accountName = userId,
                 role = role,
                 accessToken = accessToken,
                 refreshToken = refreshToken,

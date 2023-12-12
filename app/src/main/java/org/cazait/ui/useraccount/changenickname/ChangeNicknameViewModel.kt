@@ -4,24 +4,40 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.UserRepository
+import org.cazait.core.domain.model.Message
+import org.cazait.core.domain.model.network.onError
+import org.cazait.core.domain.model.network.onException
+import org.cazait.core.domain.model.network.onSuccess
+import org.cazait.core.domain.model.user.Nickname
+import org.cazait.core.domain.model.user.UserId
+import org.cazait.core.domain.usecase.ChangeNicknameUseCase
+import org.cazait.core.domain.usecase.get.GetStoredUserInformationUseCase
 import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseViewModel
 import org.cazait.utils.SingleEvent
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class ChangeNicknameViewModel @Inject constructor(private val userRepository: UserRepository) :
-    BaseViewModel() {
-    private val _changeNicknameProcess = MutableLiveData<Resource<String>?>()
-    val changeNicknameProcess: LiveData<Resource<String>?>
-        get() = _changeNicknameProcess
+class ChangeNicknameViewModel @Inject constructor(
+    private val getStoredUserInformationUseCase: GetStoredUserInformationUseCase,
+    private val changeNicknameUseCase: ChangeNicknameUseCase,
+) : BaseViewModel() {
+    private val _nicknameChangingProcess: MutableStateFlow<Resource<Message>> =
+        MutableStateFlow(Resource.None())
+    val nicknameChangingProcess: StateFlow<Resource<Message>> =
+        _nicknameChangingProcess.asStateFlow()
 
-    private val _nickDupProcess = MutableLiveData<Resource<String>?>()
-    val nickDupProcess: LiveData<Resource<String>?>
-        get() = _nickDupProcess
+    private val _checkingNicknameIsDuplicatedProcess = MutableLiveData<Resource<String>?>()
+    val checkingNicknameIsDuplicatedProcess: LiveData<Resource<String>?>
+        get() = _checkingNicknameIsDuplicatedProcess
 
     private val _showToast = MutableLiveData<SingleEvent<Any>>()
     val showToast: LiveData<SingleEvent<Any>>
@@ -33,25 +49,33 @@ class ChangeNicknameViewModel @Inject constructor(private val userRepository: Us
     }
 
     fun changeNickName(nickname: String) {
-        _changeNicknameProcess.value = Resource.Loading()
+        _nicknameChangingProcess.value = Resource.Loading()
         viewModelScope.launch {
-            val userUuid = userRepository.getUserInfo().first().uuid
-            userRepository.changeNickname(userUuid, nickname).collect {
-                _changeNicknameProcess.value = it
+            getStoredUserInformationUseCase().collect { user ->
+                changeNicknameUseCase(
+                    userId = UserId(UUID.fromString(user.userId)),
+                    nickname = Nickname(nickname),
+                ).onSuccess {
+
+                }.onError { code, message ->
+
+                }.onException {
+
+                }
             }
         }
     }
 
     fun checkNicknameDup(nickname: String) {
         viewModelScope.launch {
-            _nickDupProcess.value = Resource.Loading()
+            _checkingNicknameIsDuplicatedProcess.value = Resource.Loading()
             userRepository.checkNicknameDB(nickname, "false").collect {
-                _nickDupProcess.value = it
+                _checkingNicknameIsDuplicatedProcess.value = it
             }
         }
     }
 
     fun initViewModel() {
-        _changeNicknameProcess.value = null
+        _nicknameChangingProcess.value = null
     }
 }

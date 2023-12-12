@@ -1,44 +1,65 @@
 package org.cazait.ui.useraccount
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.cazait.core.data.repository.UserRepository
+import org.cazait.core.domain.model.Message
+import org.cazait.core.domain.model.network.onError
+import org.cazait.core.domain.model.network.onException
+import org.cazait.core.domain.model.network.onSuccess
+import org.cazait.core.domain.model.user.Password
+import org.cazait.core.domain.model.user.UserId
+import org.cazait.core.domain.usecase.CheckPasswordUseCase
+import org.cazait.core.domain.usecase.get.GetStoredUserInformationUseCase
 import org.cazait.core.model.Resource
-import org.cazait.ui.base.BaseViewModel
-import org.cazait.utils.SingleEvent
+import org.cazait.validate.check.PasswordCheckingValidationState
+import org.cazait.validate.check.PasswordCheckingValidator
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class CheckPasswordViewModel @Inject constructor(private val userRepository: UserRepository) :
-    BaseViewModel() {
-    private val _checkPasswordProcess = MutableLiveData<Resource<String>?>()
-    val checkPasswordProcess: LiveData<Resource<String>?>
-        get() = _checkPasswordProcess
-
-    private val _showToast = MutableLiveData<SingleEvent<Any>>()
-    val showToast: LiveData<SingleEvent<Any>>
-        get() = _showToast
+class CheckPasswordViewModel @Inject constructor(
+    private val getUserInformationUseCase: GetStoredUserInformationUseCase,
+    private val checkPasswordUseCase: CheckPasswordUseCase,
+) : ViewModel() {
+    private val _checkPasswordProcess: MutableStateFlow<Resource<Message>> =
+        MutableStateFlow(Resource.None())
+    val checkPasswordProcess: StateFlow<Resource<Message>> = _checkPasswordProcess.asStateFlow()
+    private val _passwordCheckingValidationState: MutableSharedFlow<PasswordCheckingValidationState> =
+        MutableSharedFlow()
+    val passwordCheckingValidationState: SharedFlow<PasswordCheckingValidationState> =
+        _passwordCheckingValidationState.asSharedFlow()
+    private val _serverMessageFlow: MutableSharedFlow<Message> = MutableSharedFlow()
+    val serverMessageFlow: SharedFlow<Message> = _serverMessageFlow.asSharedFlow()
 
     fun checkPassword(password: String) {
         viewModelScope.launch {
-            _checkPasswordProcess.value = Resource.Loading()
-            val userUuid = userRepository.getUserInfo().first().uuid
-            userRepository.checkPassword(userUuid, password).collect {
-                _checkPasswordProcess.value = it
+            val validationResult = PasswordCheckingValidator(password).validateIsBlank()
+            if (validationResult != PasswordCheckingValidationState.PASS) {
+                _passwordCheckingValidationState.emit(validationResult)
+                return@launch
+            }
+            _checkPasswordProcess.update { Resource.Loading() }
+            getUserInformationUseCase().collect { user ->
+                checkPasswordUseCase(
+                    userId = UserId(UUID.fromString(user.userId)),
+                    password = Password(password),
+                ).onSuccess { message ->
+                    _checkPasswordProcess.update { Resource.Success(message) }
+                    _serverMessageFlow.emit(message)
+                }.onError { _, message ->
+                    _checkPasswordProcess.update { Resource.Error(message) }
+                    message?.let { _serverMessageFlow.emit(Message(it)) }
+                }.onException(Throwable::printStackTrace)
             }
         }
-    }
-
-    fun showToastMessage(errorMessage: String?) {
-        if (errorMessage == null) return
-        _showToast.value = SingleEvent(errorMessage)
-    }
-
-    fun initViewModel() {
-        _checkPasswordProcess.value = null
     }
 }

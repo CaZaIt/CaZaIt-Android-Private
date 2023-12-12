@@ -1,15 +1,12 @@
 package org.cazait.ui.useraccount.changepassword
 
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
-import org.cazait.databinding.FragmentChangePasswordBinding
 import org.cazait.core.model.Resource
+import org.cazait.databinding.FragmentChangePasswordBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.signup.CheckTextWatcher
-import org.cazait.utils.SingleEvent
-import org.cazait.utils.observe
+import org.cazait.utils.launch
 import org.cazait.utils.showToast
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
@@ -21,24 +18,12 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
     private var passwordFlag = false
     private var passwordCheckFlag = false
 
-    private val passwordListener = object : CheckTextWatcher() {
-        override fun checkFlag() {
-            binding.btnChangePasswordJoin.isEnabled = passwordFlag && passwordCheckFlag
-        }
+    private lateinit var passwordListener: CheckTextWatcher
 
-        override fun checkText(text: String) = checkPassword(text)
-    }
-
-    private val passwordAgainListener = object : CheckTextWatcher() {
-        override fun checkFlag() {
-            binding.btnChangePasswordJoin.isEnabled = passwordFlag && passwordCheckFlag
-        }
-
-        override fun checkText(text: String) = checkPasswordAgain(text)
-    }
+    private lateinit var passwordAgainListener: CheckTextWatcher
 
     override fun initView() {
-        viewModel.initViewModel()
+        initPasswordListener()
         binding.apply {
             clTop.includedTvTitle.text = resources.getString(R.string.change_password)
             clTop.btnBack.setOnClickListener { findNavController().popBackStack() }
@@ -48,21 +33,33 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
         observeViewModel()
     }
 
-    override fun initAfterBinding() {
+    override fun initAfterBinding() = Unit
+
+    private fun initPasswordListener() {
+        passwordListener = object : CheckTextWatcher() {
+            override fun checkFlag() {
+                binding.btnChangePasswordJoin.isEnabled = passwordFlag && passwordCheckFlag
+            }
+
+            override fun checkText(text: String) = checkPassword(text)
+        }
+        passwordAgainListener = object : CheckTextWatcher() {
+            override fun checkFlag() {
+                binding.btnChangePasswordJoin.isEnabled = passwordFlag && passwordCheckFlag
+            }
+
+            override fun checkText(text: String) = checkPasswordAgain(text)
+        }
     }
 
     private fun btnChangePassword() {
         binding.btnChangePasswordJoin.setOnClickListener {
-            val pw = binding.etChangePasswordInsert.text.toString()
-            val repw = binding.etChangePasswordInsertMore.text.toString()
-
-            if (pw == "" || repw == "") {
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_check_pw))
-            } else if (pw == repw) {
-                viewModel.changePassword(pw)
-            } else {
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_req_nopw))
-            }
+            val password = binding.etChangePasswordInsert.text.toString()
+            val confirmPassword = binding.etChangePasswordInsertMore.text.toString()
+            viewModel.changePassword(
+                password = password,
+                confirmPassword = confirmPassword,
+            )
         }
     }
 
@@ -159,33 +156,29 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
     }
 
     private fun observeViewModel() {
-        observe(viewModel.changePasswordProcess, ::handleChangePassword)
-        observeToast(viewModel.showToast)
+        collectPasswordChangingProcess()
+        collectServerMessage()
     }
 
-    private fun handleChangePassword(status: Resource<String>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
+    private fun collectPasswordChangingProcess() {
+        launch {
+            viewModel.passwordChangingProcess.collect { state ->
+                when (state) {
+                    is Resource.Loading -> showLoading()
+                    is Resource.None -> Unit
+                    is Resource.Error -> hideLoading()
+                    is Resource.Success -> {
+                        hideLoading()
+                        showToast(resources.getString(R.string.find_password_done))
+                        findNavController().popBackStack()
+                    }
+                }
             }
-
-            is Resource.Success -> status.data?.let {
-                hideLoading()
-                viewModel.showToastMessage(resources.getString(R.string.find_password_done))
-                findNavController().popBackStack()
-            }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
         }
     }
 
-    private fun observeToast(event: LiveData<SingleEvent<Any>>) {
-        binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
+    private fun collectServerMessage() {
+        launch { viewModel.serverMessage.collect { showToast(it.toString()) } }
     }
 
     private fun showLoading() {

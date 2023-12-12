@@ -1,67 +1,72 @@
 package org.cazait.core.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import org.cazait.core.domain.model.Message
 import org.cazait.core.domain.model.network.NetworkResult
 import org.cazait.core.domain.model.user.AccountName
+import org.cazait.core.domain.model.user.Nickname
 import org.cazait.core.domain.model.user.Password
+import org.cazait.core.domain.model.user.PhoneNumber
+import org.cazait.core.domain.model.user.UserId
 import org.cazait.core.model.ExistenceStatus
 import org.cazait.core.model.FindPassUserData
 import org.cazait.core.model.SignUpInfo
 import org.cazait.core.model.UserAccount
 import org.cazait.core.model.UserPassword
 import org.cazait.core.model.local.UserPreference
+import java.util.UUID
 
 interface UserRepository {
     suspend fun signUp(
         accountName: AccountName,
         password: Password,
-        phoneNumber: String,
-        nickname: String,
+        phoneNumber: PhoneNumber,
+        nickname: Nickname,
     ): NetworkResult<SignUpInfo>
 
     suspend fun postCheckPhoneNumberExistence(
-        phoneNumber: String,
+        phoneNumber: PhoneNumber,
         isExist: String,
     ): NetworkResult<ExistenceStatus>
 
     suspend fun postCheckAccountNameExistence(
-        accountName: String,
+        accountName: AccountName,
         isExist: String,
     ): NetworkResult<ExistenceStatus>
 
     suspend fun postCheckNicknameExistence(
-        nickname: String,
+        nickname: Nickname,
         isExist: String,
     ): NetworkResult<ExistenceStatus>
 
     suspend fun checkUserData(
-        userId: String,
-        phoneNumber: String,
+        userId: UserId,
+        phoneNumber: PhoneNumber,
     ): NetworkResult<FindPassUserData>
 
     suspend fun findUserId(
-        userPhoneNumber: String,
+        userPhoneNumber: PhoneNumber,
     ): NetworkResult<UserAccount>
 
     suspend fun resetPassword(
-        userId: String,
-        password: String,
+        userId: UserId,
+        password: Password,
     ): NetworkResult<UserPassword>
 
     suspend fun checkPassword(
-        userId: String,
-        password: String,
-    ): NetworkResult<String>
+        userId: UserId,
+        password: Password,
+    ): NetworkResult<Message>
 
     suspend fun changePassword(
-        userId: String,
-        password: String,
-    ): NetworkResult<String>
+        userId: UserId,
+        password: Password,
+    ): NetworkResult<Message>
 
     suspend fun changeNickname(
-        userId: String,
-        nickname: String,
-    ): NetworkResult<String>
+        userId: UserId,
+        nickname: Nickname,
+    ): NetworkResult<Message>
 
     suspend fun isLoggedIn(): Flow<Boolean>
     suspend fun getUserInfo(): Flow<UserPreference>

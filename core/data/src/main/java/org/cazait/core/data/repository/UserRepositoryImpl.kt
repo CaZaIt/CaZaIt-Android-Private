@@ -21,9 +21,13 @@ import org.cazait.core.data.datasource.response.FindUserIdResponse
 import org.cazait.core.data.datasource.response.ResetPasswordResponse
 import org.cazait.core.data.datasource.response.SignUpResponse
 import org.cazait.core.data.mapper.toData
+import org.cazait.core.domain.model.Message
 import org.cazait.core.domain.model.network.NetworkResult
 import org.cazait.core.domain.model.user.AccountName
+import org.cazait.core.domain.model.user.Nickname
 import org.cazait.core.domain.model.user.Password
+import org.cazait.core.domain.model.user.PhoneNumber
+import org.cazait.core.domain.model.user.UserId
 import org.cazait.core.domain.repository.UserRepository
 import org.cazait.core.model.ExistenceStatus
 import org.cazait.core.model.FindPassUserData
@@ -42,12 +46,12 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun signUp(
         accountName: AccountName,
         password: Password,
-        phoneNumber: String,
-        nickname: String,
+        phoneNumber: PhoneNumber,
+        nickname: Nickname,
     ): NetworkResult<SignUpInfo> {
-        val request = SignUpRequest(
-            accountName = accountName.value,
-            password = password.value,
+        val request = SignUpRequest.of(
+            accountName = accountName,
+            password = password,
             phoneNumber = phoneNumber,
             nickname = nickname,
         )
@@ -56,30 +60,30 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postCheckPhoneNumberExistence(
-        phoneNumber: String,
+        phoneNumber: PhoneNumber,
         isExist: String,
     ): NetworkResult<ExistenceStatus> {
-        val request = CheckPhoneNumberExistenceRequest(phoneNumber, isExist)
+        val request = CheckPhoneNumberExistenceRequest.of(phoneNumber, isExist)
         return userRemoteDataSource.postCheckPhoneNumberExistence(
             checkPhoneNumRequest = request,
         ).map(ExistenceResponse::toData)
     }
 
     override suspend fun postCheckAccountNameExistence(
-        accountName: String,
+        accountName: AccountName,
         isExist: String,
     ): NetworkResult<ExistenceStatus> {
-        val checkUserIdRequest = CheckUserIdRequest(accountName, isExist)
+        val checkUserIdRequest = CheckUserIdRequest.of(accountName, isExist)
         return userRemoteDataSource.postCheckAccountNameExistence(
             checkUserIdRequest = checkUserIdRequest,
         ).map(ExistenceResponse::toData)
     }
 
     override suspend fun postCheckNicknameExistence(
-        nickname: String,
+        nickname: Nickname,
         isExist: String,
     ): NetworkResult<ExistenceStatus> {
-        val checkNicknameRequest = CheckNicknameExistenceRequest(nickname, isExist)
+        val checkNicknameRequest = CheckNicknameExistenceRequest.of(nickname, isExist)
         return userRemoteDataSource.postCheckNicknameExistence(
             checkNicknameRequest,
         ).map(ExistenceResponse::toData)
@@ -116,41 +120,41 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun checkPassword(
-        userId: String,
-        password: String,
-    ): NetworkResult<String> {
-        val checkPasswordRequest = CheckPasswordRequest(password)
+        userId: UserId,
+        password: Password,
+    ): NetworkResult<Message> {
+        val checkPasswordRequest = CheckPasswordRequest.of(password)
         return userRemoteDataSource.postCheckPassword(
-            userUuid = userId,
+            userId = userId.toUUID(),
             checkPasswordRequest = checkPasswordRequest,
-        ).map { it.message }
+        ).map { Message(it.message) }
     }
 
     override suspend fun changePassword(
-        userId: String,
-        password: String,
-    ): NetworkResult<String> {
-        val changePasswordRequest = ChangePasswordRequest(password)
+        userId: UserId,
+        password: Password,
+    ): NetworkResult<Message> {
+        val changePasswordRequest = ChangePasswordRequest.of(password)
         return userRemoteDataSource.patchChangePassword(
-            userUuid = userId,
+            userId = userId.toUUID(),
             changePasswordRequest = changePasswordRequest,
-        ).map { it.message }
+        ).map { Message(it.message) }
     }
 
     override suspend fun changeNickname(
-        userId: String,
-        nickname: String,
-    ): NetworkResult<String> {
-        val changeNicknameRequest = ChangeNicknameRequest(nickname)
+        userId: UserId,
+        nickname: Nickname,
+    ): NetworkResult<Message> {
+        val changeNicknameRequest = ChangeNicknameRequest.of(nickname)
         return userRemoteDataSource.patchChangeNickname(
-            userUuid = userId,
+            userId = userId.toUUID(),
             changeNicknameRequest = changeNicknameRequest,
-        ).map { it.message }
+        ).map { Message(it.message) }
     }
 
     override suspend fun isLoggedIn(): Flow<Boolean> {
         val userPreference = userPreferenceRepository.getUserPreference().first()
-        Log.e("UserRepository", "id = ${userPreference.uuid}")
+        Log.e("UserRepository", "id = ${userPreference.userId}")
         return flow { emit(userPreference.isLoggedIn) }
     }
 

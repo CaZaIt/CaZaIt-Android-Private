@@ -1,44 +1,69 @@
 package org.cazait.ui.useraccount.changepassword
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.cazait.core.data.repository.UserRepository
+import org.cazait.core.domain.model.Message
+import org.cazait.core.domain.model.network.onError
+import org.cazait.core.domain.model.network.onException
+import org.cazait.core.domain.model.network.onSuccess
+import org.cazait.core.domain.model.user.Password
+import org.cazait.core.domain.model.user.UserId
+import org.cazait.core.domain.usecase.ChangePasswordUseCase
+import org.cazait.core.domain.usecase.get.GetStoredUserInformationUseCase
 import org.cazait.core.model.Resource
 import org.cazait.ui.base.BaseViewModel
-import org.cazait.utils.SingleEvent
+import org.cazait.validate.check.PasswordChangingLogicValidator
+import org.cazait.validate.check.PasswordChangingValidationState
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class ChangePasswordViewModel @Inject constructor(private val userRepository: UserRepository) :
-    BaseViewModel() {
-    private val _changePasswordProcess = MutableLiveData<Resource<String>?>()
-    val changePasswordProcess: LiveData<Resource<String>?>
-        get() = _changePasswordProcess
+class ChangePasswordViewModel @Inject constructor(
+    private val getStoredUserInformationUseCase: GetStoredUserInformationUseCase,
+    private val changePasswordUseCase: ChangePasswordUseCase,
+) : BaseViewModel() {
+    private val _passwordChangingProcess: MutableStateFlow<Resource<Message>> =
+        MutableStateFlow(Resource.None())
+    val passwordChangingProcess: StateFlow<Resource<Message>> = _passwordChangingProcess.asStateFlow()
+    private val _passwordCheckingValidationState: MutableSharedFlow<PasswordChangingValidationState> =
+        MutableSharedFlow()
+    val passwordCheckingValidationState: SharedFlow<PasswordChangingValidationState> =
+        _passwordCheckingValidationState.asSharedFlow()
 
-    private val _showToast = MutableLiveData<SingleEvent<Any>>()
-    val showToast: LiveData<SingleEvent<Any>>
-        get() = _showToast
+    private val _serverMessage: MutableSharedFlow<Message> = MutableSharedFlow()
+    val serverMessage: SharedFlow<Message> = _serverMessage.asSharedFlow()
 
-    fun changePassword(password: String) {
-        _changePasswordProcess.value = Resource.Loading()
+    fun changePassword(password: String, confirmPassword: String) {
         viewModelScope.launch {
-            val userUuid = userRepository.getUserInfo().first().uuid
-            userRepository.changePassword(userUuid, password).collect {
-                _changePasswordProcess.value = it
+            PasswordChangingLogicValidator(
+                password = password,
+                confirmPassword = confirmPassword,
+            ).validate().let {
+                if (it != PasswordChangingValidationState.PASS) {
+                    _passwordCheckingValidationState.emit(it)
+                    return@launch
+                }
+            }
+
+            _passwordChangingProcess.update { Resource.Loading() }
+            getStoredUserInformationUseCase().collect { user ->
+                changePasswordUseCase(
+                    userId = UserId(UUID.fromString(user.userId)),
+                    password = Password(password),
+                ).onSuccess { message ->
+                    _passwordChangingProcess.update { Resource.Success(message) }
+                }.onError { _, message ->
+                    message?.let { _serverMessage.emit(Message(it)) }
+                }.onException(Throwable::printStackTrace)
             }
         }
-    }
-
-    fun showToastMessage(errorMessage: String?) {
-        if (errorMessage == null) return
-        _showToast.value = SingleEvent(errorMessage)
-    }
-
-    fun initViewModel() {
-        _changePasswordProcess.value = null
     }
 }

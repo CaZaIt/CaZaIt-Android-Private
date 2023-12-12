@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
-import org.cazait.databinding.FragmentChangeNicknameBinding
 import org.cazait.core.model.Resource
+import org.cazait.databinding.FragmentChangeNicknameBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.signup.CheckTextWatcher
 import org.cazait.utils.SingleEvent
@@ -66,7 +66,7 @@ class ChangeNicknameFragment : BaseFragment<FragmentChangeNicknameBinding, Chang
     }
 
     private fun observeViewModel() {
-        observe(viewModel.changeNicknameProcess, ::handleChangeNickname)
+        observe(viewModel.nicknameChangingProcess, ::handleChangeNickname)
         observe(viewModel.nickDupProcess, ::handleNickDup)
         observeToast(viewModel.showToast)
     }
