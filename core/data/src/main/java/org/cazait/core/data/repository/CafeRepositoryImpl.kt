@@ -125,15 +125,15 @@ class CafeRepositoryImpl @Inject constructor(
 
     override suspend fun getCafeSearch(
         cafeName: String,
-        longitude: String,
         latitude: String,
+        longitude: String,
         sort: String,
         limit: String,
     ): NetworkResult<Cafes> {
         return cafeListRemoteDataSource.getCafeSearch(
             cafeName = cafeName,
-            longitude = longitude,
             latitude = latitude,
+            longitude = longitude,
             sort = sort,
             limit = limit,
         ).map(ListCafesResponse::toData)

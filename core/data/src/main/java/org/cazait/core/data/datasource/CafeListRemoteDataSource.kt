@@ -34,14 +34,14 @@ class CafeListRemoteDataSource @Inject constructor(
 
     suspend fun getCafeSearch(
         cafeName: String,
-        longitude: String,
         latitude: String,
+        longitude: String,
         sort: String,
         limit: String,
     ): NetworkResult<ListCafesResponse> = cafeApi.getCafeSearch(
         cafeName = cafeName,
-        longitude = longitude,
         latitude = latitude,
+        longitude = longitude,
         sort = sort,
         limit = limit,
     )

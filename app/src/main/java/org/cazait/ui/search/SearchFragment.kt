@@ -11,18 +11,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentSearchBinding
-import org.cazait.core.model.cafe.Cafe
-import org.cazait.core.model.cafe.Cafes
-import org.cazait.core.model.cafe.FavoriteCafes
 import org.cazait.core.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.core.model.cafe.FavoriteCafes
+import org.cazait.databinding.FragmentSearchBinding
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.adapter.SearchAdapter
 import org.cazait.ui.adapter.SearchResultAdapter
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.search.clicklistener.OnResultClick
 import org.cazait.ui.search.clicklistener.OnSearchClick
-import org.cazait.utils.observe
+import org.cazait.utils.launch
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
 import kotlin.math.roundToInt
@@ -147,18 +146,19 @@ class SearchFragment :
     }
 
     private fun observeViewModel() {
-        observe(viewModel.cafeSearchData, ::handleCafeSearch)
-    }
-
-    private fun handleCafeSearch(status: Resource<Cafes>) {
-        when (status) {
-            is Resource.Error -> {}
-            is Resource.Loading -> {}
-            is Resource.Success -> {
-                val cafes = status.data?.cafes ?: emptyList()
-                viewModel.updateFavoriteStatus(favoriteCafes.cafes, cafes)
-                searchAdapter.submitList(cafes)
-                resultAdapter.submitList(cafes)
+        launch {
+            viewModel.cafeSearchData.collect { state ->
+                when (state) {
+                    is Resource.None -> Unit
+                    is Resource.Error -> Unit
+                    is Resource.Loading -> Unit
+                    is Resource.Success -> {
+                        val cafes = state.data.cafes
+                        viewModel.updateFavoriteStatus(favoriteCafes.cafes, cafes)
+                        searchAdapter.submitList(cafes)
+                        resultAdapter.submitList(cafes)
+                    }
+                }
             }
         }
     }

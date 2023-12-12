@@ -42,8 +42,8 @@ interface CafeRepository {
 
     suspend fun getCafeSearch(
         cafeName: String,
-        longitude: String,
         latitude: String,
+        longitude: String,
         sort: String = "distance",
         limit: String = "0",
     ): NetworkResult<Cafes>

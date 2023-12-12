@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.cazait.core.data.repository.CafeRepository
 import org.cazait.core.data.repository.UserRepository
+import org.cazait.core.domain.repository.UserRepository
 import org.cazait.core.model.cafe.Cafe
 import org.cazait.core.model.cafe.Cafes
 import org.cazait.core.model.cafe.FavoriteCafe

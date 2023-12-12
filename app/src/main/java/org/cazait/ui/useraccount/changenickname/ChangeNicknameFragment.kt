@@ -1,18 +1,16 @@
 package org.cazait.ui.useraccount.changenickname
 
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
 import org.cazait.core.model.Resource
 import org.cazait.databinding.FragmentChangeNicknameBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.signup.CheckTextWatcher
-import org.cazait.utils.SingleEvent
-import org.cazait.utils.observe
+import org.cazait.utils.launch
 import org.cazait.utils.showToast
 import org.cazait.utils.toGone
 import org.cazait.utils.toVisible
+import org.cazait.validate.check.NicknameFormatValidationState
 
 class ChangeNicknameFragment : BaseFragment<FragmentChangeNicknameBinding, ChangeNicknameViewModel>(
     ChangeNicknameViewModel::class.java,
@@ -29,86 +27,50 @@ class ChangeNicknameFragment : BaseFragment<FragmentChangeNicknameBinding, Chang
     }
 
     override fun initView() {
-        viewModel.initViewModel()
+        collectNicknameChangingProcess()
+        initNicknameButton()
+        initEditTextListener()
         binding.apply {
             clTop.includedTvTitle.text = resources.getString(R.string.change_nickname)
             clTop.btnBack.setOnClickListener { findNavController().popBackStack() }
         }
-        btnNicknameDupCheck()
-        btnChangeNickname()
-        initEditTextListener()
-        observeViewModel()
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() = Unit
 
-    private fun btnChangeNickname() {
-        binding.btnChangeNicknameJoin.setOnClickListener {
-            val nickname = binding.etChangeNicknameExample.text.toString()
-            if (nickname == "") {
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_check_nick))
-            } else {
-                viewModel.changeNickName(nickname)
-            }
-        }
-    }
-
-    private fun btnNicknameDupCheck() {
+    private fun initNicknameButton() {
         binding.btnChangeNicknameDoubleCheck.setOnClickListener {
-            val nickname = binding.etChangeNicknameExample.text.toString()
-            if (nickname == "") {
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_check_nick))
-            } else {
-                viewModel.checkNicknameDup(nickname)
+            binding.etChangeNicknameExample.text.toString().let(viewModel::checkNicknameDup)
+        }
+        binding.btnChangeNicknameJoin.setOnClickListener {
+            binding.etChangeNicknameExample.text.toString().let(viewModel::changeNickName)
+        }
+        launch {
+            viewModel.nicknameFormatValidationState.collect { nicknameFormat ->
+                when (nicknameFormat) {
+                    NicknameFormatValidationState.IS_BLANK -> showToast(getString(R.string.sign_up_check_nick))
+                    NicknameFormatValidationState.TOO_LONG -> showToast(getString(R.string.sign_up_check_nick_long))
+                    NicknameFormatValidationState.TOO_SHORT -> showToast(getString(R.string.sign_up_check_nick_short))
+                    NicknameFormatValidationState.PASS -> Unit
+                }
             }
         }
     }
 
-    private fun observeViewModel() {
-        observe(viewModel.nicknameChangingProcess, ::handleChangeNickname)
-        observe(viewModel.nickDupProcess, ::handleNickDup)
-        observeToast(viewModel.showToast)
-    }
-
-    private fun handleChangeNickname(status: Resource<String>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
+    private fun collectNicknameChangingProcess() {
+        launch {
+            viewModel.nicknameChangingProcess.collect { state ->
+                when (state) {
+                    is Resource.None -> Unit
+                    is Resource.Loading -> showLoading()
+                    is Resource.Error -> hideLoading()
+                    is Resource.Success -> {
+                        hideLoading()
+                        showToast(getString(R.string.find_password_done))
+                        findNavController().popBackStack()
+                    }
+                }
             }
-
-            is Resource.Success -> {
-                hideLoading()
-                viewModel.showToastMessage(resources.getString(R.string.find_password_done))
-                findNavController().popBackStack()
-            }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
-        }
-    }
-
-    private fun handleNickDup(status: Resource<String>?) {
-        when (status) {
-            is Resource.Loading -> {
-                showLoading()
-            }
-
-            is Resource.Success -> status.data.let {
-                hideLoading()
-                viewModel.showToastMessage(it)
-            }
-
-            is Resource.Error -> {
-                hideLoading()
-                viewModel.showToastMessage(status.message)
-            }
-
-            null -> {}
         }
     }
 
@@ -138,10 +100,6 @@ class ChangeNicknameFragment : BaseFragment<FragmentChangeNicknameBinding, Chang
                 nickNameFlag = true
             }
         }
-    }
-
-    private fun observeToast(event: LiveData<SingleEvent<Any>>) {
-        binding.root.showToast(this, event, Snackbar.LENGTH_LONG)
     }
 
     private fun showLoading() {

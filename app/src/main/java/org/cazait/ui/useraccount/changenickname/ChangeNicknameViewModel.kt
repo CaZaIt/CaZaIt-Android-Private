@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.cazait.core.domain.model.Message
@@ -34,18 +33,18 @@ class ChangeNicknameViewModel @Inject constructor(
     private val checkNicknameIsExistsUseCase: CheckNicknameIsExistsUseCase,
     private val changeNicknameUseCase: ChangeNicknameUseCase,
 ) : BaseViewModel() {
-    private val _nicknameChangingProcess: MutableStateFlow<Resource<ExistenceStatus>> =
+    private val _nicknameChangingProcess: MutableStateFlow<Resource<Message>> =
         MutableStateFlow(Resource.None())
-    val nicknameChangingProcess: StateFlow<Resource<ExistenceStatus>> =
+    val nicknameChangingProcess: StateFlow<Resource<Message>> =
         _nicknameChangingProcess.asStateFlow()
     private val _nicknameFormatValidationState: MutableSharedFlow<NicknameFormatValidationState> =
         MutableSharedFlow()
     val nicknameFormatValidationState: SharedFlow<NicknameFormatValidationState> =
         _nicknameFormatValidationState.asSharedFlow()
 
-    private val _checkingNicknameIsDuplicatedProcess: MutableStateFlow<Resource<Message>> =
+    private val _checkingNicknameIsDuplicatedProcess: MutableStateFlow<Resource<ExistenceStatus>> =
         MutableStateFlow(Resource.None())
-    val checkingNicknameIsDuplicatedProcess: StateFlow<Resource<Message>> =
+    val checkingNicknameIsDuplicatedProcess: StateFlow<Resource<ExistenceStatus>> =
         _checkingNicknameIsDuplicatedProcess.asStateFlow()
 
     private val _serverMessageFlow: MutableSharedFlow<Message> = MutableSharedFlow()
@@ -71,25 +70,20 @@ class ChangeNicknameViewModel @Inject constructor(
 
     fun checkNicknameDup(nickname: String) {
         viewModelScope.launch {
-            _checkingNicknameIsDuplicatedProcess.update { Resource.Loading() }
             NicknameFormatValidator(nickname).validate().let {
                 if (it != NicknameFormatValidationState.PASS) {
                     _nicknameFormatValidationState.emit(it)
                     return@launch
                 }
             }
-
+            _checkingNicknameIsDuplicatedProcess.update { Resource.Loading() }
             checkNicknameIsExistsUseCase(Nickname(nickname))
                 .onSuccess { existenceStatus ->
-                    _nicknameChangingProcess.update { Resource.Success(existenceStatus) }
+                    _checkingNicknameIsDuplicatedProcess.update { Resource.Success(existenceStatus) }
                 }.onError { _, message ->
-                    _nicknameChangingProcess.update { Resource.Error("") }
+                    _checkingNicknameIsDuplicatedProcess.update { Resource.Error("") }
                     message?.let { _serverMessageFlow.emit(Message(message)) }
                 }.onException(Throwable::printStackTrace)
         }
-    }
-
-    fun initViewModel() {
-        _nicknameChangingProcess.value = null
     }
 }

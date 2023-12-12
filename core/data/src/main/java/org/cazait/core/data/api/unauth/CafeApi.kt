@@ -47,8 +47,8 @@ interface CafeApi {
     @GET("/api/cafes/name/{cafeName}")
     suspend fun getCafeSearch(
         @Path("cafeName") cafeName: String,
-        @Query("longitude") longitude: String,
         @Query("latitude") latitude: String,
+        @Query("longitude") longitude: String,
         @Query("sort") sort: String,
         @Query("limit") limit: String,
     ): NetworkResult<ListCafesResponse>
