@@ -17,6 +17,7 @@ import retrofit2.http.Body
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
+import java.util.UUID
 
 interface UserApi {
     @POST("/api/users/sign-up")
@@ -46,13 +47,13 @@ interface UserApi {
 
     @POST("/api/users/reset-password/checkuserinfo/{userId}")
     suspend fun postCheckUserData(
-        @Path("userId") userId: String,
+        @Path("userId") userId: UUID,
         @Body checkUserDataRequest: CheckUserDataRequest,
     ): NetworkResult<CheckUserDataResponse>
 
     @PATCH("/api/users/reset-password/password/{userId}")
     suspend fun patchPassword(
-        @Path("userId") userId: String,
+        @Path("userId") userId: UUID,
         @Body resetPasswordRequest: ResetPasswordRequest,
     ): NetworkResult<ResetPasswordResponse>
 }

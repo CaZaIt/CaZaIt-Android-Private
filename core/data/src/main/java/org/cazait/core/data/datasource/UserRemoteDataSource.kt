@@ -54,7 +54,7 @@ class UserRemoteDataSource @Inject constructor(
     )
 
     suspend fun postCheckUserData(
-        userUuid: String,
+        userUuid: UUID,
         checkUserDataRequest: CheckUserDataRequest,
     ): NetworkResult<CheckUserDataResponse> = userApi.postCheckUserData(
         userId = userUuid,
@@ -68,10 +68,10 @@ class UserRemoteDataSource @Inject constructor(
     )
 
     suspend fun patchPassword(
-        userUuid: String,
+        userId: UUID,
         resetPasswordRequest: ResetPasswordRequest,
     ): NetworkResult<ResetPasswordResponse> = userApi.patchPassword(
-        userId = userUuid,
+        userId = userId,
         resetPasswordRequest = resetPasswordRequest,
     )
 

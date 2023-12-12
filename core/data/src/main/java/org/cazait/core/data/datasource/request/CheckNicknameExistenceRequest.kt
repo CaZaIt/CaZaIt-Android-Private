@@ -1,6 +1,6 @@
 package org.cazait.core.data.datasource.request
 
-import android.provider.ContactsContract.CommonDataKinds.Nickname
+import org.cazait.core.domain.model.user.Nickname
 
 class CheckNicknameExistenceRequest private constructor(
     val nickname: String,

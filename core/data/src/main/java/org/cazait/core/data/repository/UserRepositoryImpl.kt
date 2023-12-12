@@ -90,31 +90,31 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun checkUserData(
-        userId: String,
-        phoneNumber: String,
+        userId: UserId,
+        phoneNumber: PhoneNumber,
     ): NetworkResult<FindPassUserData> {
-        val checkUserDataRequest = CheckUserDataRequest(phoneNumber)
+        val checkUserDataRequest = CheckUserDataRequest.of(phoneNumber)
         return userRemoteDataSource.postCheckUserData(
-            userUuid = userId,
+            userUuid = userId.toUUID(),
             checkUserDataRequest = checkUserDataRequest,
         ).map(CheckUserDataResponse::toData)
     }
 
     override suspend fun findUserId(
-        userPhoneNumber: String,
+        userPhoneNumber: PhoneNumber,
     ): NetworkResult<UserAccount> {
-        val findUserIdRequest = FindUserIdRequest(userPhoneNumber)
+        val findUserIdRequest = FindUserIdRequest.of(userPhoneNumber)
         return userRemoteDataSource.postFindUserId(findUserIdRequest = findUserIdRequest)
             .map(FindUserIdResponse::toData)
     }
 
     override suspend fun resetPassword(
-        userId: String,
-        password: String,
+        userId: UserId,
+        password: Password,
     ): NetworkResult<UserPassword> {
-        val resetPasswordRequest = ResetPasswordRequest(password)
+        val resetPasswordRequest = ResetPasswordRequest.of(password)
         return userRemoteDataSource.patchPassword(
-            userUuid = userId,
+            userId = userId.toUUID(),
             resetPasswordRequest = resetPasswordRequest,
         ).map(ResetPasswordResponse::toData)
     }
