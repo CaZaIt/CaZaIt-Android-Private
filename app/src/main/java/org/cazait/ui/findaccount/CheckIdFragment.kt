@@ -5,9 +5,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
-import org.cazait.databinding.FragmentCheckIdBinding
 import org.cazait.core.model.ExistenceStatus
 import org.cazait.core.model.Resource
+import org.cazait.databinding.FragmentCheckIdBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -58,7 +58,7 @@ class CheckIdFragment : BaseFragment<FragmentCheckIdBinding, CheckIdViewModel>(
                 showLoading()
             }
 
-            is Resource.Success -> status.data?.let {
+            is Resource.Success -> status.data.let {
                 hideLoading()
                 viewModel.showToastMessage(it.message)
                 navigateToPhoneVerifyFragment(it.data.toString())

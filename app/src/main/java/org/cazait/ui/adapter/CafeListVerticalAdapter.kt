@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.databinding.ItemCafeWithLandscapeBinding
 import org.cazait.core.model.cafe.Cafe
+import org.cazait.databinding.ItemCafeWithLandscapeBinding
 
 class CafeListVerticalAdapter(
     private val onClick: (Cafe) -> Unit,

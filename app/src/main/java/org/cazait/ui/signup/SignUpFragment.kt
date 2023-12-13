@@ -161,7 +161,7 @@ class SignUpFragment :
                 password = password,
                 confirmPassword = confirmPassword,
                 phoneNumber = phoneNumber,
-                nickname = nickname
+                nickname = nickname,
             )
 
             if (accountName == "" || pw == "" || repw == "" || nickname == "" || phoneNumber == "") {

@@ -7,8 +7,8 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import org.cazait.R
-import org.cazait.databinding.DialogFragmentCafeMapBinding
 import org.cazait.core.model.cafe.Cafe
+import org.cazait.databinding.DialogFragmentCafeMapBinding
 
 open class CafeInfoDialogFragment(
     private val cafe: Cafe,

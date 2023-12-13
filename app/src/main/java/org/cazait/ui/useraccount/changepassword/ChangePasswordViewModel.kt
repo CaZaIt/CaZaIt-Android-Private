@@ -32,7 +32,8 @@ class ChangePasswordViewModel @Inject constructor(
 ) : BaseViewModel() {
     private val _passwordChangingProcess: MutableStateFlow<Resource<Message>> =
         MutableStateFlow(Resource.None())
-    val passwordChangingProcess: StateFlow<Resource<Message>> = _passwordChangingProcess.asStateFlow()
+    val passwordChangingProcess: StateFlow<Resource<Message>> =
+        _passwordChangingProcess.asStateFlow()
     private val _passwordCheckingValidationState: MutableSharedFlow<PasswordChangingValidationState> =
         MutableSharedFlow()
     val passwordCheckingValidationState: SharedFlow<PasswordChangingValidationState> =

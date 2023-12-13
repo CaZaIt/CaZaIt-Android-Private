@@ -14,12 +14,12 @@ import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.Constants
 import org.cazait.R
-import org.cazait.databinding.FragmentCafeMapBinding
+import org.cazait.core.model.Resource
 import org.cazait.core.model.cafe.Cafe
 import org.cazait.core.model.cafe.Cafes
 import org.cazait.core.model.cafe.FavoriteCafe
 import org.cazait.core.model.cafe.FavoriteCafes
-import org.cazait.core.model.Resource
+import org.cazait.databinding.FragmentCafeMapBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.cafeinfo.CafeInfoDialogFragment
 import org.cazait.utils.observe
@@ -110,7 +110,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
             is Resource.Loading -> {}
             is Resource.Error -> handleError(status)
             is Resource.Success -> {
-                favoriteCafeList = status.data?.cafes ?: emptyList()
+                favoriteCafeList = status.data.cafes
                 viewModel.updateMarker()
             }
 
@@ -123,7 +123,7 @@ class CafeMapFragment : OnMapReadyCallback, BaseFragment<FragmentCafeMapBinding,
         when (status) {
             is Resource.Loading -> {}
             is Resource.Success -> {
-                val markCafeList = status.data?.cafes ?: emptyList()
+                val markCafeList = status.data.cafes
                 viewModel.updateFavoriteStatus(favoriteCafeList, markCafeList)
                 handleSuccess(markCafeList)
             }

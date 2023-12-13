@@ -6,8 +6,8 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentReviewWriteBinding
 import org.cazait.core.model.Resource
+import org.cazait.databinding.FragmentReviewWriteBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe

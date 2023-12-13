@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentCafeInfoMenuBinding
+import org.cazait.core.model.Resource
 import org.cazait.core.model.cafe.Cafe
 import org.cazait.core.model.cafe.CafeMenus
-import org.cazait.core.model.Resource
+import org.cazait.databinding.FragmentCafeInfoMenuBinding
 import org.cazait.ui.adapter.CafeInfoMenuAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.cafeinfo.CafeInfoViewModel
@@ -72,11 +72,11 @@ class CafeInfoMenuFragment(
                 binding.lottieMenu.pauseAnimation()
                 binding.lottieMenu.toGone()
                 Log.d("Menu Status", status.data.toString())
-                Log.d("Menu Status Empty?", status.data?.menus?.isEmpty().toString())
-                when (status.data?.menus?.isEmpty()) {
+                Log.d("Menu Status Empty?", status.data.menus?.isEmpty().toString())
+                when (status.data.menus?.isEmpty()) {
                     true -> binding.tvNoMenu.toVisible()
                     else -> {
-                        val menus = status.data?.menus
+                        val menus = status.data.menus
                         menuAdapter.submitList(menus)
                     }
                 }

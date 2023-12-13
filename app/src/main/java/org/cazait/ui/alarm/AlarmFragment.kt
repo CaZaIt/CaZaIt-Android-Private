@@ -2,8 +2,8 @@ package org.cazait.ui.alarm
 
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentAlarmBinding
 import org.cazait.core.model.Alarm
+import org.cazait.databinding.FragmentAlarmBinding
 import org.cazait.ui.adapter.AlarmAdapter
 import org.cazait.ui.base.BaseFragment
 

@@ -17,9 +17,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentCafeInfoBinding
-import org.cazait.core.model.cafe.Cafe
 import org.cazait.core.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.databinding.FragmentCafeInfoBinding
 import org.cazait.ui.adapter.CafeImgAdapter
 import org.cazait.ui.adapter.ViewPagerAdapter
 import org.cazait.ui.cafeinfo.detail.CafeInfoMenuFragment

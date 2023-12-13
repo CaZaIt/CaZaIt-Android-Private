@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentCafeInfoReviewBinding
-import org.cazait.core.model.cafe.Cafe
 import org.cazait.core.model.CafeReview
 import org.cazait.core.model.CafeReviews
 import org.cazait.core.model.Resource
+import org.cazait.core.model.cafe.Cafe
+import org.cazait.databinding.FragmentCafeInfoReviewBinding
 import org.cazait.ui.adapter.CafeInfoReviewAdapter
 import org.cazait.ui.adapter.ItemDecoration
 import org.cazait.ui.cafeinfo.CafeInfoFragmentDirections
@@ -101,13 +101,13 @@ class CafeInfoReviewFragment(
             is Resource.Success -> status.data.let {
                 binding.lottieReview.pauseAnimation()
                 binding.lottieReview.toGone()
-                when (status.data?.reviews) {
+                when (status.data.reviews) {
                     null -> {
                         binding.tvNoReview.toVisible()
                     }
 
                     else -> {
-                        val reviews = status.data?.reviews
+                        val reviews = status.data.reviews
                         reviewAdapter.submitList(reviews)
                     }
                 }

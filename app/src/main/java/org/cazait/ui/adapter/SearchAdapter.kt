@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.cazait.databinding.ItemCafeSearchBinding
 import org.cazait.core.model.cafe.Cafe
+import org.cazait.databinding.ItemCafeSearchBinding
 import org.cazait.ui.search.clicklistener.OnSearchClick
 
 class SearchAdapter(private val listener: OnSearchClick) :

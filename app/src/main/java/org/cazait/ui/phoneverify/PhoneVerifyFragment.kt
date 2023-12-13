@@ -8,12 +8,12 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentPhoneVerifyBinding
 import org.cazait.core.model.FindPassUserData
 import org.cazait.core.model.Resource
 import org.cazait.core.model.UserAccount
 import org.cazait.core.model.VerificationCode
 import org.cazait.core.model.VerifyCode
+import org.cazait.databinding.FragmentPhoneVerifyBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -110,7 +110,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 showLoading()
             }
 
-            is Resource.Success -> status.data?.let {
+            is Resource.Success -> status.data.let {
                 hideLoading()
                 viewModel.showToastMessage(it)
                 val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
@@ -132,7 +132,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 showLoading()
             }
 
-            is Resource.Success -> status.data?.let {
+            is Resource.Success -> status.data.let {
                 hideLoading()
                 viewModel.showToastMessage(it.message)
                 binding.layoutAfterVerificationCodeSent.toVisible()
@@ -156,7 +156,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 showLoading()
             }
 
-            is Resource.Success -> status.data?.let {
+            is Resource.Success -> status.data.let {
                 hideLoading()
                 viewModel.showToastMessage(it.message)
                 val title = binding.clTop.includedTvTitle.text.toString()
@@ -204,10 +204,10 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 showLoading()
             }
 
-            is Resource.Success -> status.data?.let {
+            is Resource.Success -> status.data.let {
                 hideLoading()
                 timer.cancel()
-                val foundUserId = status.data?.userId
+                val foundUserId = status.data.userId
                 navigateToFindUserIdFragment(foundUserId)
             }
 
@@ -226,7 +226,7 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 showLoading()
             }
 
-            is Resource.Success -> status.data?.let {
+            is Resource.Success -> status.data.let {
                 hideLoading()
                 viewModel.showToastMessage(it.message)
                 foundUserData = it

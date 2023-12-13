@@ -5,9 +5,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import org.cazait.R
-import org.cazait.databinding.FragmentFindUserIdBinding
 import org.cazait.core.model.ExistenceStatus
 import org.cazait.core.model.Resource
+import org.cazait.databinding.FragmentFindUserIdBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.utils.SingleEvent
 import org.cazait.utils.observe
@@ -49,7 +49,7 @@ class FindUserIdFragment :
                 showLoading()
             }
 
-            is Resource.Success -> status.data?.let {
+            is Resource.Success -> status.data.let {
                 hideLoading()
                 navigateToFindUserPasswordFragment(
                     it.data.toString(),

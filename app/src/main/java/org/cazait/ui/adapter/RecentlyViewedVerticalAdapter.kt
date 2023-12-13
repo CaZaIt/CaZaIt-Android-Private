@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import org.cazait.databinding.ItemRecentlyCafeBinding
 import org.cazait.core.model.cafe.Cafe
+import org.cazait.databinding.ItemRecentlyCafeBinding
 import org.cazait.ui.holder.RecentlyViewedCafeViewHolder
 
 class RecentlyViewedVerticalAdapter(

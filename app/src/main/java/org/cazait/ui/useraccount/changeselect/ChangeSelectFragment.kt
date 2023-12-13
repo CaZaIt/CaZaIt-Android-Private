@@ -21,12 +21,14 @@ class ChangeSelectFragment : BaseFragment<FragmentChangeSelectBinding, ChangeSel
     override fun initAfterBinding() = Unit
 
     private fun navigateToChangePasswordFragment() {
-        val direction = ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangePasswordFragment()
+        val direction =
+            ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangePasswordFragment()
         findNavController().navigate(direction)
     }
 
     private fun navigateToChangeNicknameFragment() {
-        val direction = ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangeNicknameFragment()
+        val direction =
+            ChangeSelectFragmentDirections.actionChangeSelectFragmentToChangeNicknameFragment()
         findNavController().navigate(direction)
     }
 

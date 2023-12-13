@@ -6,9 +6,9 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentFindUserPasswordBinding
 import org.cazait.core.model.Resource
 import org.cazait.core.model.UserPassword
+import org.cazait.databinding.FragmentFindUserPasswordBinding
 import org.cazait.ui.base.BaseFragment
 import org.cazait.ui.signup.CheckTextWatcher
 import org.cazait.utils.SingleEvent
@@ -54,7 +54,7 @@ class FindUserPasswordFragment :
                 showLoading()
             }
 
-            is Resource.Success -> status.data?.let {
+            is Resource.Success -> status.data.let {
                 hideLoading()
                 viewModel.showToastMessage(resources.getString(R.string.find_password_done))
                 navigateToSignInFragment()

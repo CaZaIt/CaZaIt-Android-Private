@@ -69,7 +69,13 @@ class SignUpViewModel @Inject constructor(
         _signUpProcess.update { Resource.Loading() }
         viewModelScope.launch {
             // TODO
-            SignUpLogicValidator(accountName, password, confirmPassword, phoneNumber, nickname).run {
+            SignUpLogicValidator(
+                accountName,
+                password,
+                confirmPassword,
+                phoneNumber,
+                nickname,
+            ).run {
                 validateIsNotBlank().let {
                     _signUpProcessIsBlank.emit(it)
                     if (it != SignUpIsBlankValidationState.SUCCESS_ALL) return@launch

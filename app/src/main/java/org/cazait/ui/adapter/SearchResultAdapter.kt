@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.cazait.databinding.ItemSearchResultBinding
 import org.cazait.core.model.cafe.Cafe
+import org.cazait.databinding.ItemSearchResultBinding
 import org.cazait.ui.search.clicklistener.OnResultClick
 
 class SearchResultAdapter(private val listener: OnResultClick) :

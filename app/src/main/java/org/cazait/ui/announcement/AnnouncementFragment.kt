@@ -3,8 +3,8 @@ package org.cazait.ui.announcement
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.cazait.R
-import org.cazait.databinding.FragmentAnnouncementBinding
 import org.cazait.core.model.Announcement
+import org.cazait.databinding.FragmentAnnouncementBinding
 import org.cazait.ui.adapter.AnnouncementAdapter
 import org.cazait.ui.base.BaseFragment
 

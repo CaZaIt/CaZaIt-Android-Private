@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.cazait.core.data.repository.UserRepository
 import org.cazait.core.domain.repository.UserRepository
 import org.cazait.core.model.local.UserPreference
 import org.cazait.ui.base.BaseViewModel
