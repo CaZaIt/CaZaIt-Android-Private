@@ -72,8 +72,8 @@ class CafeInfoMenuFragment(
                 binding.lottieMenu.pauseAnimation()
                 binding.lottieMenu.toGone()
                 Log.d("Menu Status", status.data.toString())
-                Log.d("Menu Status Empty?", status.data.menus?.isEmpty().toString())
-                when (status.data.menus?.isEmpty()) {
+                Log.d("Menu Status Empty?", status.data.menus.isEmpty().toString())
+                when (status.data.menus.isEmpty()) {
                     true -> binding.tvNoMenu.toVisible()
                     else -> {
                         val menus = status.data.menus

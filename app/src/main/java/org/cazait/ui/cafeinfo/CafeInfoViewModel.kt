@@ -21,6 +21,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CafeInfoViewModel @Inject constructor(
+    private val getReviewsUseCase: GetReviewsUseCase,
+    private val postFavoriteCafeUseCase: PostFavoriteCafeUseCase,
+    private val deleteFavoriteCafeUseCase: DeleteFavoriteCafeUseCase,
+
     private val cafeRepository: CafeRepository,
     private val userRepository: UserRepository,
 ) : BaseViewModel() {

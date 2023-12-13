@@ -181,12 +181,12 @@ class CafeInfoFragment : Fragment() {
 
     private fun handleFavorite(status: Resource<String>) {
         when (status) {
-            is Resource.Loading -> {}
+            is Resource.Loading -> Unit
+            is Resource.Error -> Unit
+            is Resource.None -> Unit
             is Resource.Success -> status.data.let {
                 viewModel.showToastMessage(it)
             }
-
-            is Resource.Error -> {}
         }
     }
 }
