@@ -29,8 +29,8 @@ class SignInViewModel @Inject constructor(
         MutableStateFlow(Resource.Loading())
     val signInProcess: StateFlow<Resource<SignInInfo>> = _signInProcess.asStateFlow()
 
-    private val _toastMessage: MutableSharedFlow<String> = MutableSharedFlow()
-    val toastMessage: SharedFlow<String> = _toastMessage.asSharedFlow()
+    private val _serverMessage: MutableSharedFlow<String> = MutableSharedFlow()
+    val serverMessage: SharedFlow<String> = _serverMessage.asSharedFlow()
 
     fun signIn(userId: String, password: String) {
         viewModelScope.launch {
@@ -41,14 +41,8 @@ class SignInViewModel @Inject constructor(
                 }.onError { code, message ->
                     Log.e("SignInViewModel", "OnError code=$code, message=$message")
                     _signInProcess.update { Resource.Error(message) }
-                    _toastMessage.emit(message.toString())
+                    _serverMessage.emit(message.toString())
                 }.onException(Throwable::printStackTrace)
-        }
-    }
-
-    fun showToastMessage(errorMessage: String) {
-        viewModelScope.launch {
-            _toastMessage.emit(errorMessage)
         }
     }
 }

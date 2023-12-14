@@ -50,7 +50,7 @@ class CheckPasswordViewModel @Inject constructor(
             _checkPasswordProcess.update { Resource.Loading() }
             getUserInformationUseCase().collect { user ->
                 checkPasswordUseCase(
-                    userId = UserId(UUID.fromString(user.userId)),
+                    userId = UserId(user.userId),
                     password = Password(password),
                 ).onSuccess { message ->
                     _checkPasswordProcess.update { Resource.Success(message) }

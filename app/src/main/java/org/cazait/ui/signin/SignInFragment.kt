@@ -37,7 +37,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun collectToastMessage() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.toastMessage.collect {
+            viewModel.serverMessage.collect {
                 showToast(message = it)
             }
         }
@@ -62,7 +62,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
                     is Resource.Error -> {
                         binding.lottieSignin.pauseAnimation()
                         binding.lottieSignin.toGone()
-                        viewModel.showToastMessage(getString(R.string.sign_in_error))
+                        showToast(getString(R.string.sign_in_error))
                     }
                 }
             }
