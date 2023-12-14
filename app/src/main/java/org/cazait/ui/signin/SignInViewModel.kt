@@ -35,15 +35,14 @@ class SignInViewModel @Inject constructor(
     fun signIn(userId: String, password: String) {
         viewModelScope.launch {
             _signInProcess.update { Resource.Loading() }
-            postSignInUseCase(userId, password).onSuccess { signInInfo ->
-                _signInProcess.update { Resource.Success(signInInfo) }
-            }.onError { code, message ->
-                Log.e("SignInViewModel", "OnError code=$code, message=$message")
-                _signInProcess.update { Resource.Error(message) }
-                _toastMessage.emit(message.toString())
-            }.onException {
-                it.printStackTrace()
-            }
+            postSignInUseCase(userId, password)
+                .onSuccess { signInInfo ->
+                    _signInProcess.update { Resource.Success(signInInfo) }
+                }.onError { code, message ->
+                    Log.e("SignInViewModel", "OnError code=$code, message=$message")
+                    _signInProcess.update { Resource.Error(message) }
+                    _toastMessage.emit(message.toString())
+                }.onException(Throwable::printStackTrace)
         }
     }
 

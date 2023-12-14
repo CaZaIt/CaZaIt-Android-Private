@@ -4,16 +4,19 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.cazait.core.domain.repository.UserRepository
+import org.cazait.core.domain.usecase.GetIsLoggedInUseCase
+import org.cazait.core.domain.usecase.GetUserInformationUseCase
 import org.cazait.core.model.local.UserPreference
 import org.cazait.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SeeMoreViewModel @Inject constructor(private val userRepository: UserRepository) :
-    BaseViewModel() {
+class SeeMoreViewModel @Inject constructor(
+    private val getIsLoggedInUseCase: GetIsLoggedInUseCase,
+    private val getUserInformationUseCase: GetUserInformationUseCase,
+) : BaseViewModel() {
     private val _userInfo = MutableStateFlow<UserPreference?>(null)
     val userInfo = _userInfo.asStateFlow()
 
@@ -22,8 +25,16 @@ class SeeMoreViewModel @Inject constructor(private val userRepository: UserRepos
 
     fun updateSignInState() {
         viewModelScope.launch {
-            _signInStateFlow.value = userRepository.isLoggedIn().first()
-            _userInfo.value = userRepository.getUserInfo().first()
+            launch {
+                getIsLoggedInUseCase().collect { isLoggedIn ->
+                    _signInStateFlow.update { isLoggedIn }
+                }
+            }
+            launch {
+                getUserInformationUseCase().collect { user ->
+                    _userInfo.update { user }
+                }
+            }
         }
     }
 }

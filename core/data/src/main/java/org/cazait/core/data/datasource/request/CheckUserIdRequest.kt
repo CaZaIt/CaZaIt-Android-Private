@@ -2,12 +2,12 @@ package org.cazait.core.data.datasource.request
 
 import org.cazait.core.domain.model.user.AccountName
 
-class CheckUserIdRequest private constructor(
+data class CheckUserIdRequest(
     val accountName: String,
     val isExist: String,
 ) {
-    companion object {
-        fun of(accountName: AccountName, isExist: String): CheckUserIdRequest =
-            CheckUserIdRequest(accountName = accountName.toString(), isExist = isExist)
-    }
+    constructor(
+        accountName: AccountName,
+        isExist: String,
+    ) : this(accountName = accountName.toString(), isExist = isExist)
 }

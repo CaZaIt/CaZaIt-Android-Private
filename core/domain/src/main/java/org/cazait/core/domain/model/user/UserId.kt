@@ -4,5 +4,7 @@ import java.util.UUID
 
 @JvmInline
 value class UserId(private val userId: UUID) {
+    constructor(userId: String) : this(UUID.fromString(userId))
+
     fun toUUID(): UUID = userId
 }

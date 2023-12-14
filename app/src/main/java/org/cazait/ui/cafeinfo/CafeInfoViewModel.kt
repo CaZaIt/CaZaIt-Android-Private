@@ -9,8 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.cazait.core.data.repository.CafeRepository
-import org.cazait.core.data.repository.UserRepository
 import org.cazait.core.model.CafeReviews
 import org.cazait.core.model.Resource
 import org.cazait.core.model.cafe.Cafe
@@ -24,9 +22,6 @@ class CafeInfoViewModel @Inject constructor(
     private val getReviewsUseCase: GetReviewsUseCase,
     private val postFavoriteCafeUseCase: PostFavoriteCafeUseCase,
     private val deleteFavoriteCafeUseCase: DeleteFavoriteCafeUseCase,
-
-    private val cafeRepository: CafeRepository,
-    private val userRepository: UserRepository,
 ) : BaseViewModel() {
     private var cafe: Cafe? = null
 

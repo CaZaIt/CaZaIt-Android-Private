@@ -152,8 +152,8 @@ class SignUpFragment :
     private fun initSignUpBtn() {
         binding.btnSignUpJoin.setOnClickListener {
             val accountName = binding.etSignUpIdExample.text.toString()
-            val pw = binding.etSignUpPasswordInsert.text.toString()
-            val repw = binding.etSignUpPasswordInsertMore.text.toString()
+            val password = binding.etSignUpPasswordInsert.text.toString()
+            val confirmPassword = binding.etSignUpPasswordInsertMore.text.toString()
             val nickname = binding.etSignUpNickNameExample.text.toString()
             val phoneNumber = navArgs.phoneNum.toString()
             viewModel.signUp(
@@ -163,15 +163,6 @@ class SignUpFragment :
                 phoneNumber = phoneNumber,
                 nickname = nickname,
             )
-
-            if (accountName == "" || pw == "" || repw == "" || nickname == "" || phoneNumber == "") {
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_req_all))
-            } else if (pw == repw) {
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_req_suc))
-                viewModel.signUp(accountName, pw, phoneNumber, nickname)
-            } else {
-                viewModel.showToastMessage(resources.getString(R.string.sign_up_req_nopw))
-            }
         }
     }
 

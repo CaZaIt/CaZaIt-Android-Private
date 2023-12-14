@@ -13,7 +13,14 @@ import org.cazait.core.data.datasource.response.ListCafesResponse
 import org.cazait.core.data.datasource.response.ListFavoritesResponse
 import org.cazait.core.data.mapper.toData
 import org.cazait.core.data.mapper.toEntity
+import org.cazait.core.domain.model.cafe.CafeId
+import org.cazait.core.domain.model.cafe.CafeName
+import org.cazait.core.domain.model.cafe.Limit
+import org.cazait.core.domain.model.cafe.Sort
+import org.cazait.core.domain.model.location.Latitude
+import org.cazait.core.domain.model.location.Longitude
 import org.cazait.core.domain.model.network.NetworkResult
+import org.cazait.core.domain.model.user.UserId
 import org.cazait.core.domain.repository.CafeRepository
 import org.cazait.core.model.CafeReviews
 import org.cazait.core.model.cafe.Cafe
@@ -26,21 +33,22 @@ import org.cazait.database.model.entity.RecentlyViewedCafeEntity
 import java.io.IOException
 import javax.inject.Inject
 
-class CafeRepositoryImpl @Inject constructor(
+internal class CafeRepositoryImpl @Inject constructor(
     private val cafeInfoRemoteDataSource: CafeInfoRemoteDataSource,
     private val cafeListRemoteDataSource: CafeListRemoteDataSource,
     private val recentlyViewedCafeDAO: RecentlyViewedCafeDAO,
 ) : CafeRepository {
 
-    override suspend fun getCafeById(cafeId: String): NetworkResult<Cafe> {
-        return cafeInfoRemoteDataSource.getCafe(cafeId = cafeId).map(CafeResponse::toData)
-    }
+    override suspend fun getCafeById(
+        cafeId: CafeId,
+    ): NetworkResult<Cafe> =
+        cafeInfoRemoteDataSource.getCafe(cafeId = cafeId).map(CafeResponse::toData)
 
     override suspend fun getListCafes(
-        latitude: String,
-        longitude: String,
-        sort: String,
-        limit: String,
+        latitude: Latitude,
+        longitude: Longitude,
+        sort: Sort,
+        limit: Limit,
     ): NetworkResult<Cafes> {
         return cafeListRemoteDataSource.getListCafes(
             latitude = latitude,
@@ -50,17 +58,17 @@ class CafeRepositoryImpl @Inject constructor(
         ).map(ListCafesResponse::toData)
     }
 
-    override suspend fun getListFavoritesAuth(userId: String): NetworkResult<FavoriteCafes> {
+    override suspend fun getListFavoritesAuth(userId: UserId): NetworkResult<FavoriteCafes> {
         return cafeListRemoteDataSource.getListFavoritesAuth(userId = userId)
             .map(ListFavoritesResponse::toData)
     }
 
-    override suspend fun getMenus(cafeId: String): NetworkResult<CafeMenus> {
+    override suspend fun getMenus(cafeId: CafeId): NetworkResult<CafeMenus> {
         return cafeInfoRemoteDataSource.getMenus(cafeId = cafeId).map(CafeMenuResponse::toData)
     }
 
     override suspend fun getReviews(
-        cafeId: String,
+        cafeId: CafeId,
         sortBy: String?,
         score: Int?,
         lastId: Long?,
@@ -74,8 +82,8 @@ class CafeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postReviewAuth(
-        userId: String,
-        cafeId: String,
+        userId: UserId,
+        cafeId: CafeId,
         score: Int,
         content: String,
     ): NetworkResult<String> {
@@ -88,8 +96,8 @@ class CafeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postFavoriteCafeAuth(
-        userId: String,
-        cafeId: String,
+        userId: UserId,
+        cafeId: CafeId,
     ): NetworkResult<String> {
         return cafeInfoRemoteDataSource.postFavoriteCafe(
             userId = userId,
@@ -98,8 +106,8 @@ class CafeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteFavoriteCafeAuth(
-        userId: String,
-        cafeId: String,
+        userId: UserId,
+        cafeId: CafeId,
     ): NetworkResult<String> {
         return cafeInfoRemoteDataSource.deleteFavoriteCafe(
             userId = userId,
@@ -124,11 +132,11 @@ class CafeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCafeSearch(
-        cafeName: String,
-        latitude: String,
-        longitude: String,
-        sort: String,
-        limit: String,
+        cafeName: CafeName,
+        latitude: Latitude,
+        longitude: Longitude,
+        sort: Sort,
+        limit: Limit,
     ): NetworkResult<Cafes> {
         return cafeListRemoteDataSource.getCafeSearch(
             cafeName = cafeName,

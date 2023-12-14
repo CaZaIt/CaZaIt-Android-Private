@@ -120,8 +120,8 @@ class CafeListFragment :
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
 
     private fun observeViewModel() {
-        viewLifecycleOwner.observe(viewModel.listCafesData, ::handleVerticalCafeList)
-        viewLifecycleOwner.observe(viewModel.listFavoritesData, ::handleHorizontalCafeList)
+        viewLifecycleOwner.observe(viewModel.cafes, ::handleVerticalCafeList)
+        viewLifecycleOwner.observe(viewModel.favoriteCafes, ::handleHorizontalCafeList)
     }
 
     private fun setUpLayout() {

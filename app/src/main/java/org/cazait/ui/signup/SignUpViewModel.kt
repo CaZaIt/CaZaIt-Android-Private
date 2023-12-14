@@ -15,7 +15,9 @@ import org.cazait.core.domain.model.network.onError
 import org.cazait.core.domain.model.network.onException
 import org.cazait.core.domain.model.network.onSuccess
 import org.cazait.core.domain.model.user.AccountName
+import org.cazait.core.domain.model.user.Nickname
 import org.cazait.core.domain.model.user.Password
+import org.cazait.core.domain.model.user.PhoneNumber
 import org.cazait.core.domain.usecase.post.PostCheckAccountNameExistenceUseCase
 import org.cazait.core.domain.usecase.post.PostCheckNicknameExistenceUseCase
 import org.cazait.core.domain.usecase.post.SignUpUseCase
@@ -86,8 +88,8 @@ class SignUpViewModel @Inject constructor(
             signUpUseCase(
                 accountName = AccountName(accountName),
                 password = Password(password),
-                phoneNumber = phoneNumber,
-                nickname = nickname,
+                phoneNumber = PhoneNumber(phoneNumber),
+                nickname = Nickname(nickname),
             ).onSuccess { signUpInfo ->
                 _signUpProcess.update { Resource.Success(signUpInfo) }
             }.onError { code, message ->
@@ -121,7 +123,7 @@ class SignUpViewModel @Inject constructor(
     fun checkNicknameExistence(nickname: String) {
         _nicknameExistence.update { Resource.Loading() }
         viewModelScope.launch {
-            postCheckNicknameExistenceUseCase(nickname = nickname).onSuccess { existence ->
+            postCheckNicknameExistenceUseCase(nickname = Nickname(nickname)).onSuccess { existence ->
                 _nicknameExistence.update { Resource.Success(existence) }
             }.onError { code, message ->
                 if (code == 400) {

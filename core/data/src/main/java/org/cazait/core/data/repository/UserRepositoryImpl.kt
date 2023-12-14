@@ -38,7 +38,7 @@ import org.cazait.core.model.local.UserPreference
 import org.cazait.datastore.data.repository.UserPreferenceRepository
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
+internal class UserRepositoryImpl @Inject constructor(
     private val userRemoteDataSource: UserRemoteDataSource,
     private val userPreferenceRepository: UserPreferenceRepository,
 ) : UserRepository {
@@ -49,7 +49,7 @@ class UserRepositoryImpl @Inject constructor(
         phoneNumber: PhoneNumber,
         nickname: Nickname,
     ): NetworkResult<SignUpInfo> {
-        val request = SignUpRequest.of(
+        val request = SignUpRequest(
             accountName = accountName,
             password = password,
             phoneNumber = phoneNumber,
@@ -63,7 +63,10 @@ class UserRepositoryImpl @Inject constructor(
         phoneNumber: PhoneNumber,
         isExist: String,
     ): NetworkResult<ExistenceStatus> {
-        val request = CheckPhoneNumberExistenceRequest.of(phoneNumber, isExist)
+        val request = CheckPhoneNumberExistenceRequest(
+            phoneNumber = phoneNumber,
+            isExist = isExist,
+        )
         return userRemoteDataSource.postCheckPhoneNumberExistence(
             checkPhoneNumRequest = request,
         ).map(ExistenceResponse::toData)
@@ -73,7 +76,10 @@ class UserRepositoryImpl @Inject constructor(
         accountName: AccountName,
         isExist: String,
     ): NetworkResult<ExistenceStatus> {
-        val checkUserIdRequest = CheckUserIdRequest.of(accountName, isExist)
+        val checkUserIdRequest = CheckUserIdRequest(
+            accountName = accountName,
+            isExist = isExist,
+        )
         return userRemoteDataSource.postCheckAccountNameExistence(
             checkUserIdRequest = checkUserIdRequest,
         ).map(ExistenceResponse::toData)
@@ -83,7 +89,10 @@ class UserRepositoryImpl @Inject constructor(
         nickname: Nickname,
         isExist: String,
     ): NetworkResult<ExistenceStatus> {
-        val checkNicknameRequest = CheckNicknameExistenceRequest.of(nickname, isExist)
+        val checkNicknameRequest = CheckNicknameExistenceRequest(
+            nickname = nickname,
+            isExist = isExist,
+        )
         return userRemoteDataSource.postCheckNicknameExistence(
             checkNicknameRequest,
         ).map(ExistenceResponse::toData)
@@ -93,9 +102,9 @@ class UserRepositoryImpl @Inject constructor(
         userId: UserId,
         phoneNumber: PhoneNumber,
     ): NetworkResult<FindPassUserData> {
-        val checkUserDataRequest = CheckUserDataRequest.of(phoneNumber)
+        val checkUserDataRequest = CheckUserDataRequest(phoneNumber)
         return userRemoteDataSource.postCheckUserData(
-            userUuid = userId.toUUID(),
+            userId = userId.toUUID(),
             checkUserDataRequest = checkUserDataRequest,
         ).map(CheckUserDataResponse::toData)
     }
@@ -103,7 +112,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun findUserId(
         userPhoneNumber: PhoneNumber,
     ): NetworkResult<UserAccount> {
-        val findUserIdRequest = FindUserIdRequest.of(userPhoneNumber)
+        val findUserIdRequest = FindUserIdRequest(userPhoneNumber)
         return userRemoteDataSource.postFindUserId(findUserIdRequest = findUserIdRequest)
             .map(FindUserIdResponse::toData)
     }
@@ -112,7 +121,7 @@ class UserRepositoryImpl @Inject constructor(
         userId: UserId,
         password: Password,
     ): NetworkResult<UserPassword> {
-        val resetPasswordRequest = ResetPasswordRequest.of(password)
+        val resetPasswordRequest = ResetPasswordRequest(password)
         return userRemoteDataSource.patchPassword(
             userId = userId.toUUID(),
             resetPasswordRequest = resetPasswordRequest,
@@ -123,7 +132,7 @@ class UserRepositoryImpl @Inject constructor(
         userId: UserId,
         password: Password,
     ): NetworkResult<Message> {
-        val checkPasswordRequest = CheckPasswordRequest.of(password)
+        val checkPasswordRequest = CheckPasswordRequest(password)
         return userRemoteDataSource.postCheckPassword(
             userId = userId.toUUID(),
             checkPasswordRequest = checkPasswordRequest,
@@ -134,7 +143,7 @@ class UserRepositoryImpl @Inject constructor(
         userId: UserId,
         password: Password,
     ): NetworkResult<Message> {
-        val changePasswordRequest = ChangePasswordRequest.of(password)
+        val changePasswordRequest = ChangePasswordRequest(password.toString())
         return userRemoteDataSource.patchChangePassword(
             userId = userId.toUUID(),
             changePasswordRequest = changePasswordRequest,
@@ -145,7 +154,7 @@ class UserRepositoryImpl @Inject constructor(
         userId: UserId,
         nickname: Nickname,
     ): NetworkResult<Message> {
-        val changeNicknameRequest = ChangeNicknameRequest.of(nickname)
+        val changeNicknameRequest = ChangeNicknameRequest(nickname)
         return userRemoteDataSource.patchChangeNickname(
             userId = userId.toUUID(),
             changeNicknameRequest = changeNicknameRequest,

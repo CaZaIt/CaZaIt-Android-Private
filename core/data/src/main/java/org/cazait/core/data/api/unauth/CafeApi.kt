@@ -8,17 +8,18 @@ import org.cazait.core.domain.model.network.NetworkResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.util.UUID
 
 interface CafeApi {
     @GET("/api/cafes/{cafeId}")
     suspend fun getCafe(
-        @Path("cafeId") cafeId: String,
+        @Path("cafeId") cafeId: UUID,
     ): NetworkResult<CafeResponse>
 
     @GET("/api/cafes/all")
     suspend fun getListCafesWithGuest(
-        @Query("longitude") longitude: String,
         @Query("latitude") latitude: String,
+        @Query("longitude") longitude: String,
         @Query("sort") sort: String,
         @Query("limit") limit: String,
     ): NetworkResult<ListCafesResponse>
@@ -33,12 +34,12 @@ interface CafeApi {
 
     @GET("/api/menus/cafe/{cafeId}")
     suspend fun getMenus(
-        @Path("cafeId") cafeId: String,
+        @Path("cafeId") cafeId: UUID,
     ): NetworkResult<CafeMenuResponse>
 
     @GET("/api/reviews/{cafeId}/all")
     suspend fun getReviews(
-        @Path("cafeId") cafeId: String,
+        @Path("cafeId") cafeId: UUID,
         @Query("sortBy") sortBy: String?,
         @Query("score") score: Int?,
         @Query("lastId") lastId: Long?,

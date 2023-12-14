@@ -2,15 +2,12 @@ package org.cazait.core.data.datasource.request
 
 import org.cazait.core.domain.model.user.PhoneNumber
 
-class CheckPhoneNumberExistenceRequest private constructor(
+data class CheckPhoneNumberExistenceRequest(
     val phoneNumber: String,
     val isExist: String,
 ) {
-    companion object {
-        fun of(phoneNumber: PhoneNumber, isExist: String): CheckPhoneNumberExistenceRequest =
-            CheckPhoneNumberExistenceRequest(
-                phoneNumber = phoneNumber.toString(),
-                isExist = isExist,
-            )
-    }
+    constructor(
+        phoneNumber: PhoneNumber,
+        isExist: String,
+    ) : this(phoneNumber = phoneNumber.toString(), isExist = isExist)
 }

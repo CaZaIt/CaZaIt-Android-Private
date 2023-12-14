@@ -23,6 +23,7 @@ internal class AuthRepositoryImpl @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository,
     private val authRemoteDataSource: AuthRemoteDataSource,
 ) : AuthRepository {
+
     override suspend fun getRefreshToken(): NetworkResult<RefreshToken> {
         val userPreference = userPreferenceRepository.getUserPreference().first()
         return authRemoteDataSource.getRefreshToken(

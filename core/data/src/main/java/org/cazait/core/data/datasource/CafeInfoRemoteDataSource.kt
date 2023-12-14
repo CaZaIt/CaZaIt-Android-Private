@@ -11,7 +11,9 @@ import org.cazait.core.data.datasource.response.CafeReviewResponse
 import org.cazait.core.data.datasource.response.DeleteFavoriteCafeResponse
 import org.cazait.core.data.datasource.response.PostFavoriteCafeResponse
 import org.cazait.core.data.di.Authenticated
+import org.cazait.core.domain.model.cafe.CafeId
 import org.cazait.core.domain.model.network.NetworkResult
+import org.cazait.core.domain.model.user.UserId
 import javax.inject.Inject
 
 class CafeInfoRemoteDataSource @Inject constructor(
@@ -20,52 +22,52 @@ class CafeInfoRemoteDataSource @Inject constructor(
     @Authenticated private val favoriteApi: FavoriteApi,
 ) {
     suspend fun getCafe(
-        cafeId: String,
-    ): NetworkResult<CafeResponse> = cafeApi.getCafe(cafeId = cafeId)
+        cafeId: CafeId,
+    ): NetworkResult<CafeResponse> = cafeApi.getCafe(cafeId = cafeId.toUUID())
 
     suspend fun getMenus(
-        cafeId: String,
+        cafeId: CafeId,
     ): NetworkResult<CafeMenuResponse> =
-        cafeApi.getMenus(cafeId = cafeId)
+        cafeApi.getMenus(cafeId = cafeId.toUUID())
 
     suspend fun getReviews(
-        cafeId: String,
+        cafeId: CafeId,
         sortBy: String?,
         score: Int?,
         lastId: Long?,
     ): NetworkResult<CafeReviewResponse> = cafeApi.getReviews(
-        cafeId = cafeId,
+        cafeId = cafeId.toUUID(),
         sortBy = sortBy,
         score = score,
         lastId = lastId,
     )
 
     suspend fun postReview(
-        userId: String,
-        cafeId: String,
+        userId: UserId,
+        cafeId: CafeId,
         cafeReviewPostRequest: CafeReviewPostRequest,
     ): NetworkResult<CafeReviewPostResponse> =
         reviewApi.postReviewAuth(
-            userId = userId,
-            cafeId = cafeId,
+            userId = userId.toUUID(),
+            cafeId = cafeId.toUUID(),
             cafeReviewPostRequest = cafeReviewPostRequest,
         )
 
     suspend fun postFavoriteCafe(
-        userId: String,
-        cafeId: String,
+        userId: UserId,
+        cafeId: CafeId,
     ): NetworkResult<PostFavoriteCafeResponse> =
         favoriteApi.postFavoriteCafeAuth(
-            userId = userId,
-            cafeId = cafeId,
+            userId = userId.toUUID(),
+            cafeId = cafeId.toUUID(),
         )
 
     suspend fun deleteFavoriteCafe(
-        userId: String,
-        cafeId: String,
+        userId: UserId,
+        cafeId: CafeId,
     ): NetworkResult<DeleteFavoriteCafeResponse> =
         favoriteApi.deleteFavoriteCafeAuth(
-            userId = userId,
-            cafeId = cafeId,
+            userId = userId.toUUID(),
+            cafeId = cafeId.toUUID(),
         )
 }

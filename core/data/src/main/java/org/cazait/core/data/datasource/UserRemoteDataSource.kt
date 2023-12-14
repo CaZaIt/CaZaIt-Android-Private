@@ -54,10 +54,10 @@ class UserRemoteDataSource @Inject constructor(
     )
 
     suspend fun postCheckUserData(
-        userUuid: UUID,
+        userId: UUID,
         checkUserDataRequest: CheckUserDataRequest,
     ): NetworkResult<CheckUserDataResponse> = userApi.postCheckUserData(
-        userId = userUuid,
+        userId = userId,
         checkUserDataRequest = checkUserDataRequest,
     )
 
