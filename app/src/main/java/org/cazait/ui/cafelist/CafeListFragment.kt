@@ -61,8 +61,8 @@ class CafeListFragment :
     }
 
     override fun initAfterBinding() {
-        var sData = resources.getStringArray(R.array.my_array)
-        var sadapter = ArrayAdapter<String>(
+        val sData = resources.getStringArray(R.array.my_array)
+        val sadapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
             sData,

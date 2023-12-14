@@ -1,6 +1,9 @@
 package org.cazait.core.domain.repository
 
 import org.cazait.core.domain.model.network.NetworkResult
+import org.cazait.core.domain.model.user.Password
+import org.cazait.core.domain.model.user.PhoneNumber
+import org.cazait.core.domain.model.user.UserId
 import org.cazait.core.model.VerificationCode
 import org.cazait.core.model.VerifyCode
 import org.cazait.core.model.sign.SignInInfo
@@ -10,8 +13,8 @@ interface AuthRepository {
     suspend fun getRefreshToken(): NetworkResult<RefreshToken>
 
     suspend fun postSignIn(
-        userId: String,
-        password: String,
+        userId: UserId,
+        password: Password,
     ): NetworkResult<SignInInfo>
 
     suspend fun postVerifyCode(
@@ -20,6 +23,6 @@ interface AuthRepository {
     ): NetworkResult<VerifyCode>
 
     suspend fun postVerificationCode(
-        recipientPhoneNumber: String,
+        recipientPhoneNumber: PhoneNumber,
     ): NetworkResult<VerificationCode>
 }
