@@ -169,37 +169,27 @@ class PhoneVerifyFragment : BaseFragment<FragmentPhoneVerifyBinding, PhoneVerify
                 viewModel.showToastMessage(it.message)
                 val title = binding.clTop.includedTvTitle.text.toString()
                 val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-                if (title == resources.getString(R.string.btn_find_id)) {
-                    viewModel.findUserId(phoneNumber)
-                } else if (title == resources.getString(R.string.btn_find_password)) {
-                    timer.cancel()
-                    navigateToFindUserPasswordFragment(
-                        navArgs.userUuid.toString(),
-                        foundUserData.userId
-                    )
-                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
-                    timer.cancel()
-                    navigateToSignUpFragment(phoneNumber)
+                when (title) {
+                    resources.getString(R.string.btn_find_id) -> {
+                        viewModel.findUserId(phoneNumber)
+                    }
+                    resources.getString(R.string.btn_find_password) -> {
+                        timer.cancel()
+                        navigateToFindUserPasswordFragment(
+                            navArgs.userUuid.toString(),
+                            foundUserData.userId
+                        )
+                    }
+                    resources.getString(R.string.sign_up_sign_up) -> {
+                        timer.cancel()
+                        navigateToSignUpFragment(phoneNumber)
+                    }
                 }
             }
 
             is Resource.Error -> {
                 hideLoading()
                 viewModel.showToastMessage(status.message)
-                val title = binding.clTop.includedTvTitle.text.toString()
-                val phoneNumber = binding.etFindUserIdPhoneNumber.text.toString()
-                if (title == resources.getString(R.string.btn_find_id)) {
-                    viewModel.findUserId(phoneNumber)
-                } else if (title == resources.getString(R.string.btn_find_password)) {
-                    timer.cancel()
-                    navigateToFindUserPasswordFragment(
-                        navArgs.userUuid.toString(),
-                        foundUserData.userId
-                    )
-                } else if (title == resources.getString(R.string.sign_up_sign_up)) {
-                    timer.cancel()
-                    navigateToSignUpFragment(phoneNumber)
-                }
             }
 
             null -> {}
