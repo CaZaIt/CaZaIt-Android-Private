@@ -23,3 +23,13 @@ include(
     ":core:datastore",
     ":core:domain"
 )
+include(":feature:signin")
+include(":feature:navigation")
+include(":feature:splash")
+include(":feature:home")
+include(":feature:map")
+include(":feature:mypage")
+include(":feature:history")
+include(":feature:plus")
+include(":main")
+include(":core:designsystem")

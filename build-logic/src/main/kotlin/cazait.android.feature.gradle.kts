@@ -4,6 +4,7 @@ import org.cazait.libs
 plugins {
     id("cazait.android.library")
     id("cazait.android.compose")
+    id("cazait.android.view")
 }
 
 android {

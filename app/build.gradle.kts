@@ -1,6 +1,7 @@
 plugins {
     id("cazait.android.application")
     id("cazait.android.view")
+    id("cazait.android.compose")
 }
 
 android {
